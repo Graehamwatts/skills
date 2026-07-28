@@ -106,7 +106,7 @@ Does the hook sound like Graeham? Match his calibrated, direct, working-agent to
 - **3** = Adjacent — Graeham would say it but slightly off
 - **1** = Off-brand — too hype, too sales-y, too academic
 
-Reference `video-script-creation-engine/references/phases/script-writer/references/voice-and-style.md` if available — that's the canonical voice doc.
+Reference `content-creation-engine/references/phases/script-writer/references/voice-and-style.md` if available — that's the canonical voice doc.
 
 ## Hook Pacing — The First 5 Seconds Matter Most
 

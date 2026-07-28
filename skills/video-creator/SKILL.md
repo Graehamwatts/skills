@@ -76,8 +76,8 @@ Best for: Property showcases, open house promos, just-listed/just-sold announcem
     "agent_name": "Graeham Watts",
     "agent_title": "REALTOR® | DRE# 01466876",
     "agent_contact": "graehamwatts@gmail.com",
-    "agent_phone": "408-XXX-XXXX",
-    "brokerage": "Compass",
+    "agent_phone": "650-308-4727",
+    "brokerage": "Intero Real Estate",
     "theme": "luxury",
     "aspect_ratio": "landscape",
     "duration_per_photo": 4.0,
@@ -223,11 +223,11 @@ If no photos are provided, the skill creates text-only slides with colored backg
 
 ## Agent Info Defaults
 
-When the user doesn't specify agent info, use these defaults for Graeham:
+When the user doesn't specify agent info, read Graeham's brand details from `shared-references/identity.json` rather than hardcoding them (never hardcode DRE, brokerage, or contact info — that file is the single source of truth and is audited by `scripts/verify_brand_identity.py`). As of this writing that resolves to:
 - Name: Graeham Watts
 - Title: REALTOR® | DRE# 01466876
 - Email: graehamwatts@gmail.com
-- Brokerage: Compass
+- Brokerage: Intero Real Estate
 
 ## Step-by-Step Workflow
 

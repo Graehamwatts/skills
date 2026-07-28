@@ -1,6 +1,6 @@
 # Transcript Repurposer
 
-The fast-lane sibling of `video-script-creation-engine`. Takes a transcript Graeham already has (SurfFast download, paste, .srt, .vtt) and produces a Graeham-voiced, data-backed, humanized content package across all platforms — YouTube Long, Short, IG Reel, TikTok, Carousel, Blog, GMB, Facebook — plus HeyGen and Higgsfield production handoff blocks.
+The fast-lane sibling of `content-creation-engine`. Takes a transcript Graeham already has (SurfFast download, paste, .srt, .vtt) and produces a Graeham-voiced, data-backed, humanized content package across all platforms — YouTube Long, Short, IG Reel, TikTok, Carousel, Blog, GMB, Facebook — plus HeyGen and Higgsfield production handoff blocks.
 
 ## Why this skill exists
 
@@ -21,7 +21,7 @@ This skill fixes that. Same script-quality pipeline as the Content Engine, but t
 | 7 | HeyGen + Higgsfield + ElevenLabs production handoff | `references/07-handoff.md` |
 | 8 | Humanizer auto-pass (required, not optional) | `references/08-humanizer.md` |
 
-## When this fires vs. video-script-creation-engine
+## When this fires vs. content-creation-engine
 
 **This skill** = the user already has the transcript. SurfFast download, manual paste, .srt file, anything text.
 
@@ -29,7 +29,7 @@ This skill fixes that. Same script-quality pipeline as the Content Engine, but t
 
 ## Integration with other skills
 
-- **Pulls from:** `video-script-creation-engine` (voice and style refs, market config, GHL keyword set)
+- **Pulls from:** `content-creation-engine` (voice and style refs, market config, GHL keyword set)
 - **Auto-invokes:** `humanizer` (final pass on the content package)
 - **Hands off to:** `heygen-video` (avatar render), `higgsfield-video` (B-roll generation), `vaibhav-template` (if Graeham wants the Vaibhav aesthetic on top)
 

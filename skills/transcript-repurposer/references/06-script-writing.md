@@ -21,7 +21,7 @@ The user can request one derivative or all. Default behavior: produce all of the
 
 ## Voice and Style — Graeham's Calibration
 
-Match the voice rules from `video-script-creation-engine/references/phases/script-writer/references/voice-and-style.md`. If that file isn't accessible in the current session, fall back to these baselines:
+Match the voice rules from `content-creation-engine/references/phases/script-writer/references/voice-and-style.md`. If that file isn't accessible in the current session, fall back to these baselines:
 
 - **Direct.** No throat-clearing. State the point.
 - **Confident but calibrated.** Strong opinions, room for nuance. Don't overclaim.

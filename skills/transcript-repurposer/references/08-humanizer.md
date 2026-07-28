@@ -15,7 +15,7 @@ After Phase 7 completes, invoke the humanizer skill on the full content package.
 1. **The text to humanize.** Pass the full content package — every hook variant, every script body across platforms, captions, blog, editing notes prose.
 2. **A voice-matching sample (optional but strongly recommended).** Graeham's voice and style reference from the Content Engine is the right sample. Path:
    ```
-   video-script-creation-engine/references/phases/script-writer/references/voice-and-style.md
+   content-creation-engine/references/phases/script-writer/references/voice-and-style.md
    ```
    If that file is accessible in the current session, pass it as the sample so humanizer's rewrites match Graeham's actual cadence, not a generic "natural" voice. If not accessible, humanizer falls back to default natural-voice rules.
 

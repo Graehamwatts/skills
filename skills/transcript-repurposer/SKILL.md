@@ -1,24 +1,24 @@
 ---
 name: transcript-repurposer
-description: "Transcript-to-script repurposing engine for Graeham Watts. Takes either a video URL (Instagram, TikTok, YouTube, Vimeo, podcast — auto-transcribed) or an existing transcript (.srt, .vtt, .txt, paste) and rebuilds it as a Graeham-voiced, data-backed, multi-platform content package with stronger hooks, real research, and HeyGen + Higgsfield handoff prompts. Use ANY time the user mentions: repurpose this video, rewrite this Instagram, rewrite this TikTok, rewrite this YouTube, take this script and make it mine, redo this hook, transcribe and repurpose, SurfFast, downloaded transcript, transcribed video, transcript file, .srt, .vtt, subtitle file, or hands over a video URL and wants a Graeham-style version. Also trigger when the user uploads a .txt, .srt, .vtt, .mp3, or .mp4 file and asks for a rewritten script. Auto-transcribes URLs by default. Auto-runs the humanizer on final output. Use this for repurposing existing content; use content-creation-engine for original content."
+description: "Transcript-to-script repurposing engine for Graeham Watts. Use ANY time the user mentions: repurpose this video, rewrite this Instagram, rewrite this TikTok, rewrite this YouTube, take this script and make it mine, redo this hook, transcribe and repurpose, SurfFast, downloaded transcript, transcribed video, transcript file, .srt, .vtt..."
 ---
 
 # Transcript Repurposer
 
 Take a transcript from anywhere — SurfFast download, manual paste, .srt file, .vtt file, podcast transcript, YouTube auto-captions — and turn it into a Graeham-voiced, data-backed content package with stronger hooks, real research grounding, and production-ready handoff to HeyGen and Higgsfield.
 
-This skill is the **transcript-first cousin** of `video-script-creation-engine`. The Content Engine builds scripts from scratch starting at audience demand research. This skill starts from an existing transcript and rebuilds it — same data/research quality, but skipping the BOFU query generator and Reddit ideation phases because the source video already supplies the topic and angle.
+This skill is the **transcript-first cousin** of `content-creation-engine`. The Content Engine builds scripts from scratch starting at audience demand research. This skill starts from an existing transcript and rebuilds it — same data/research quality, but skipping the BOFU query generator and Reddit ideation phases because the source video already supplies the topic and angle.
 
-## When this skill fires vs. video-script-creation-engine
+## When this skill fires vs. content-creation-engine
 
 | Situation | Use |
 |---|---|
 | User pastes a transcript or uploads .srt/.vtt/.txt and wants their own version | **This skill** |
 | User says "I downloaded this Instagram, rewrite it for me" | **This skill** |
 | User says "SurfFast pulled this — make it mine" | **This skill** |
-| User says "give me content ideas for this week" | `video-script-creation-engine` |
-| User says "write me a script about AB 1482" (no source video) | `video-script-creation-engine` |
-| User has a YouTube URL but NO transcript yet | `video-script-creation-engine` (it has its own YouTube transcriber in Phase 0) |
+| User says "give me content ideas for this week" | `content-creation-engine` |
+| User says "write me a script about AB 1482" (no source video) | `content-creation-engine` |
+| User has a YouTube URL but NO transcript yet | `content-creation-engine` (it has its own YouTube transcriber in Phase 0) |
 
 The distinguishing signal: **does the user already have the words?** If yes, this skill. If no, the Content Engine.
 
@@ -101,10 +101,10 @@ This is the phase that fixes the problem you flagged. SurfFast's default output 
 
 **If real-estate / Bay Area adjacent:**
 
-- Pull market stats from `video-script-creation-engine/references/market-config.md` if relevant (price ranges, days on market, etc. — date-stamp everything)
+- Pull market stats from `content-creation-engine/references/market-config.md` if relevant (price ranges, days on market, etc. — date-stamp everything)
 - Reference AB 1482 / California-specific rules where applicable, with current year date anchor
 - If a specific neighborhood is named, pull the right talking points (zoning, housing stock, commute, walkability — never demographics, see Fair Housing block below)
-- If the topic appears in `video-script-creation-engine/references/topic-history.json`, link to or note Graeham's prior coverage
+- If the topic appears in `content-creation-engine/references/topic-history.json`, link to or note Graeham's prior coverage
 
 **If universal (non-real-estate):**
 
@@ -141,7 +141,7 @@ Produce the full content package with these derivatives:
 
 **Inline shot direction tags** — embed these directly in the script text the same way the Content Engine does. Don't separate them into their own section. Format examples in `references/06-script-writing.md`.
 
-**Voice & style** — Match Graeham's voice and style guide. Reference `video-script-creation-engine/references/phases/script-writer/references/voice-and-style.md` if available — same voice rules apply.
+**Voice & style** — Match Graeham's voice and style guide. Reference `content-creation-engine/references/phases/script-writer/references/voice-and-style.md` if available — same voice rules apply.
 
 **Active GHL keywords** — `SELL`, `BUY`, `COSTS`, `OPTIONS`, `1482`, `EPA`, `VALUE`, `READY`, `INVEST`, `NUMBERS`, `RELOCATING`, `MARKET`, `CHECKLIST`, `WATCH`, `RWC`, `PA`, `MP`, `SF`. Format CTA as: "Comment [KEYWORD] below and I'll send you [lead magnet]."
 
@@ -181,7 +181,7 @@ Use in edit: <where this clip lands in the timeline>
 
 **C. ElevenLabs SSML Block**
 
-Wrap the script in `<speak>` tags with `<prosody>` and `<break>` markup so Graeham can paste directly into ElevenLabs. Same format as the Content Engine — see `video-script-creation-engine/references/phases/script-writer/references/elevenlabs-audio-tags.md` if it's available, otherwise apply the standard pattern: hook = faster/higher pitch, education = medium, CTA = slower/louder.
+Wrap the script in `<speak>` tags with `<prosody>` and `<break>` markup so Graeham can paste directly into ElevenLabs. Same format as the Content Engine — see `content-creation-engine/references/phases/script-writer/references/elevenlabs-audio-tags.md` if it's available, otherwise apply the standard pattern: hook = faster/higher pitch, education = medium, CTA = slower/louder.
 
 **Output of Phase 7:** All three handoff blocks appended to the content package.
 

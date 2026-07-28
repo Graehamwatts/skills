@@ -54,7 +54,7 @@ If SurfFast exports JSON, look for a `text`, `transcript`, or `subtitles` field.
 
 **Stop. We don't transcribe in this skill.** Tell the user one of:
 
-> "I can rebuild this once we have the transcript. You have two options: (1) run the audio through SurfFast's own subtitle download, or (2) use the Content Engine's Whisper transcriber (`video-script-creation-engine/scripts/youtube_transcriber.py`) — it's free and local. Paste the transcript back here when ready."
+> "I can rebuild this once we have the transcript. You have two options: (1) run the audio through SurfFast's own subtitle download, or (2) use the Content Engine's Whisper transcriber (`content-creation-engine/scripts/youtube_transcriber.py`) — it's free and local. Paste the transcript back here when ready."
 
 This isn't dodging — transcription is a separate concern with its own tooling, and the Content Engine already has it solved.
 

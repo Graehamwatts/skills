@@ -12,7 +12,7 @@ From Phase 2's source brief, you tagged the topic as one of: strongly local, rea
 
 The Content Engine already has a rich set of references for Graeham's markets. Reuse them — don't reinvent.
 
-**Step 1:** Read `video-script-creation-engine/references/market-config.md` for:
+**Step 1:** Read `content-creation-engine/references/market-config.md` for:
 - Primary market: East Palo Alto
 - Secondary markets: Redwood City, Palo Alto, Menlo Park, San Mateo County, Peninsula
 - Lead magnets and CTA matrix
@@ -27,7 +27,7 @@ The Content Engine already has a rich set of references for Graeham's markets. R
 
 **Step 3:** Pull market data with explicit date anchors. NEVER quote a bare statistic. Always frame as "As of <Month Year>, <stat>." If we don't have a fresh stat for the month, web-search for the most recent and date-stamp accurately.
 
-**Step 4:** Check `video-script-creation-engine/references/topic-history.json` — if Graeham has covered this topic before, reference his prior coverage in a "see also" line so the content cross-links. Don't repeat exactly what he said last time.
+**Step 4:** Check `content-creation-engine/references/topic-history.json` — if Graeham has covered this topic before, reference his prior coverage in a "see also" line so the content cross-links. Don't repeat exactly what he said last time.
 
 ## Branch B — Real Estate Universal
 
