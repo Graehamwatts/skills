@@ -38,12 +38,12 @@ If the user has given you enough, don't stall. Write.
 
 The framework is a shortcut to the right structure. Pick based on the format and the audience's awareness level.
 
-| Framework | Best for | Why |
-|---|---|---|
-| **AIDA** — Attention → Interest → Desire → Action | Email subject lines, ads, cold outreach, short landing page heroes | Works when you have one moment to earn the next moment. Linear, punchy, CTA-focused. |
-| **PAS** — Problem → Agitate → Solution | Problem-aware audiences, sales pages for painful problems | The reader already knows they have a problem. Naming it and twisting the knife earns trust faster than any feature list. |
-| **FAB** — Features → Advantages → Benefits | Feature-heavy products (SaaS, physical products, technical tools) | Forces you to translate specs into what they do (advantages) into what the reader gains (benefits). The only way to sell complicated things. |
-| **BAB** — Before → After → Bridge | Transformation-based offers (coaching, courses, health, career) | Reader is buying a future state, not a product. Show the gap and position the offer as the bridge. |
+| Framework | Best for |
+|---|---|
+| **AIDA** | Email subject lines, ads, cold outreach, short landing page heroes — one moment to earn the next moment |
+| **PAS** | Problem-aware audiences, sales pages for painful problems — name it, agitate it, resolve it |
+| **FAB** | Feature-heavy products (SaaS, physical products, technical tools) — translate specs into reader gains |
+| **BAB** | Transformation-based offers (coaching, courses, health, career) — reader's buying a future state |
 
 If none of these feel right, write in plain direct-response voice: concrete, specific, short sentences, lead with the benefit. Read `references/frameworks.md` for deeper examples and less common frameworks (4Us, 4Cs, PASTOR, Storybrand) if the job calls for something more specialized.
 
@@ -121,22 +121,9 @@ This step is non-negotiable. Ad copy that sounds like a model wrote it does not 
 
 ---
 
-## The psychological levers — a toolkit
+## Psychological levers
 
-These are the moves good direct-response copy makes. Mix and match across your three variations:
-
-- **Loss aversion** — fear of losing is 2x stronger than desire to gain. "Stop losing deals to follow-up gaps" beats "Win more deals with better follow-up."
-- **Social proof** — "Used by 47,000 agencies" / "4.9 stars from 2,000 reviews" / "As seen in..."
-- **Specificity** — specific numbers and details read as true. "Closed $2.3M in Q2" beats "had a great quarter."
-- **Curiosity gap** — imply information the reader needs but doesn't have. "The email trick that booked us 3 demos last week."
-- **Status / identity** — "For founders who actually ship" / "Designed for operators, not tourists."
-- **Urgency / scarcity** — real, not manufactured. Deadlines, limited runs, calendar slots.
-- **Contrast** — before/after, us/them, old way/new way. The mind reads in contrast.
-- **Speed / ease** — "Setup in 90 seconds" / "One click."
-- **Authority** — credentials, named proof, pedigree. "Built by the team that shipped X."
-- **Story / specificity together** — "Last Tuesday at 2:47 PM, Sarah was about to lose a $40K deal..." — narrative anchors abstract claims.
-
-`references/levers.md` has deeper writeups of each with example copy and when to use (and avoid) them.
+For the full persuasion-lever library, load `marketing-psychology`.
 
 ---
 
@@ -168,22 +155,4 @@ Ask or infer the tone from context. Default defaults:
 
 If the user has a brand voice guide or existing copy to mimic, ask for it or ask them to paste samples. Copy that doesn't match existing brand voice is worse than no copy.
 
----
-
-## What to avoid
-
-- **Weasel words.** "Innovative," "leading," "world-class," "revolutionary." These say nothing. Cut them.
-- **Feature lists masquerading as benefits.** "100GB storage" isn't a benefit. "Never delete a file to free up space again" is.
-- **Headline that explains everything.** The headline earns the next line, not the sale. Don't cram.
-- **CTAs that describe the click.** "Click here" / "Submit" describe the mouse action. Good CTAs describe the outcome: "Get my plan" / "Start my free trial" / "Send me the guide."
-- **Copy that apologizes for itself.** "We're just a small team trying to..." — write like you're worth the reader's time, or the reader won't read.
-- **Three variations that are the same variation.** If you wrote the same angle three times with different words, pick one and start over on the other two.
-
----
-
-## Philosophy
-
-Direct-response copy isn't about tricking people. It's about matching a real offer to a real audience in clear language that moves them to act. The frameworks, levers, and formats are just tools to make that match faster and more reliably.
-
-The best copy sounds like one human talking to another about something that matters. If your three variations don't sound like something a person would actually say out loud, go again.
                                                                                                                                                                                                                                                 

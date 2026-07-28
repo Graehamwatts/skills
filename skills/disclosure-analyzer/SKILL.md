@@ -1,6 +1,6 @@
 ---
 name: disclosure-analyzer
-description: "Disclosure & Inspection Report Analyzer for real estate transactions. Use this skill ANY time the user mentions: disclosures, inspection report, TDS, SPQ, AVID, seller disclosures, pest report, termite report, foundation inspection, roof inspection, sewer lateral, home inspection, property condition, inspection findings, disclosure review, inspection analysis, cross-reference disclosures, buyer review, contingency review, seller credit, repair request, credit request, negotiate repairs, inspection objection, or anything related to analyzing property condition documents in a real estate transaction. Also trigger when the user uploads PDF inspection reports or disclosure forms, asks about issues found in inspections, wants to know what the seller disclosed vs. what the inspector found, needs a summary of property condition findings for their buyer, or wants help drafting a seller credit request based on inspection findings. Supports PDF report and email-ready HTML output plus seller credit request drafting."
+description: "Disclosure & Inspection Report Analyzer for real estate transactions. Use this skill ANY time the user mentions: disclosures, inspection report, TDS, SPQ, AVID, seller disclosures, pest report, termite report, foundation inspection, roof inspection, sewer lateral, home inspection, property condition, inspection findings..."
 ---
 
 # Disclosure & Inspection Report Analyzer
@@ -58,27 +58,19 @@ Seller disclosures are forms where the seller checks boxes and writes notes abou
 - Written notes in the margins or explanation sections — sellers sometimes bury important info here
 - Items the seller marks as "Unknown" or leaves blank — note these, especially if they relate to something an inspector flagged
 
-Keep in mind that disclosures reflect the seller's *knowledge*, not the property's actual condition. A 90-year-old seller who has never been in her crawl space genuinely may not know about foundation issues that an inspector finds. That doesn't make her dishonest — it means she's answering based on what she knows.
-
-When discrepancies come up, state them as simple facts — no ominous language, no implications. Just: "The seller indicated no knowledge of foundation issues on the TDS. The foundation inspection report identified X." That's it. Let the facts speak. The goal is to inform, not alarm. We're giving people the cold hard truth without drama.
+Disclosures reflect the seller's *knowledge*, not the property's actual condition — state discrepancies as simple facts, no ominous language or implications ("The seller indicated no knowledge of foundation issues on the TDS. The foundation inspection report identified X.").
 
 ### Reading Inspection Reports
 
-For each inspection report, extract:
+For each inspection report, extract and categorize findings by severity:
 
-- **Critical findings** — things that affect safety, structural integrity, or could cause major damage (active leaks, foundation movement, electrical hazards, structural deficiencies, active pest damage to structural members, sewer line failures, etc.)
-- **Moderate findings** — things that need attention and cost real money but aren't emergencies (aging roof with 3-5 years of life left, outdated electrical panel that still functions, minor pest damage, HVAC nearing end of life, etc.)
-- **Minor findings** — maintenance items and cosmetic stuff (small sidewalk cracks, weathered caulking, minor grading issues, slow drains, etc.)
-
-Use your judgment on severity. A crack in a sidewalk is minor. A crack in a foundation stem wall is critical. Context matters — if a report says "evidence of past moisture intrusion, area is currently dry, no active damage" that's moderate (monitor it), not critical.
+- **Critical** — safety, structural integrity, or major-damage risk (active leaks, foundation movement, electrical hazards, structural deficiencies, active pest damage to structural members, sewer line failures, etc.)
+- **Moderate** — needs attention, costs real money, not an emergency (aging roof with 3-5 years left, outdated but functional electrical panel, minor pest damage, HVAC nearing end of life, etc.)
+- **Minor** — maintenance/cosmetic (small sidewalk cracks, weathered caulking, minor grading issues, slow drains, etc.)
 
 ### Practical Scope Callouts
 
-When damage to one area is extensive enough that fixing it essentially means remodeling that area, say so. This is important context for the buyer — they need to understand the real scope of what they're getting into.
-
-For example: if a bathroom has severe dry rot in the subfloor, joists, and walls, fixing it means tearing out the flooring, replacing structural members, re-doing plumbing connections, and putting everything back together. By the time you're doing all that, you're essentially remodeling the bathroom. Say that plainly: "The extent of damage in this area means that repair work would effectively constitute a full bathroom remodel."
-
-Same logic applies to other areas — if the kitchen has extensive pest damage plus outdated electrical plus plumbing issues all in the same walls, note that addressing everything together is realistically a renovation, not a series of small fixes. This helps the buyer think about costs and timeline realistically.
+When damage to one area is extensive enough that fixing it essentially means remodeling that area (e.g., severe dry rot through subfloor, joists, and walls), say so plainly — this helps the buyer understand real scope and cost.
 
 ### Cross-Referencing
 
@@ -237,11 +229,7 @@ If the user has provided the MLS listing or property profile, use it to help det
 ---
 
 
-
-- **Clear and direct.** No jargon without explanation. If you say "efflorescence on the foundation walls," add "(white mineral deposits that can indicate moisture migration through the concrete)."
-- **Fair to the seller.** Never imply dishonesty. Sellers disclose what they know; inspectors find things sellers may not know about.
-- **Honest about severity.** Don't downplay critical issues and don't exaggerate minor ones. A buyer needs accurate information to make decisions.
-- **Practical.** Frame findings in terms of what it means for the buyer: does this need immediate attention? Can it wait? Is it just something to monitor?
+Write clear, jargon-explained, fair-to-the-seller, accurately-severity-scored, practical language throughout (e.g., explain "efflorescence" in plain terms the first time it's used).
 
 ---
 

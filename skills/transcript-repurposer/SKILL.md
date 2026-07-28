@@ -69,13 +69,13 @@ Accept any of these inputs and normalize to a single clean text block:
 
 Decompose the source transcript along these axes so we know what to keep, what to throw out, and what to upgrade:
 
-1. **Core claim** — In one sentence, what is the video actually saying?
-2. **Hook strategy used** — What pattern interrupt did the original creator open with? (See `references/hook-frameworks.md` for the 8 patterns.)
-3. **Evidence quality** — Does the source cite data, anecdotes, or just opinion? Flag any specific numbers, dates, or claims that need fact-checking.
-4. **Structure** — Hook → setup → payoff → CTA? Or list format? Or story format? Tag the structure.
-5. **Target audience signal** — Who is the original creator talking to? First-time buyers? Investors? Renters? General audience?
-6. **Length and pace** — Word count, approximate spoken duration, density of ideas per 30 seconds.
-7. **Localization need** — Is this topic real-estate adjacent / Bay Area relevant, or universal? This drives Phase 4.
+1. **Core claim** (see `references/hook-frameworks.md` for hook patterns referenced below)
+2. **Hook strategy used**
+3. **Evidence quality**
+4. **Structure**
+5. **Target audience signal**
+6. **Length and pace**
+7. **Localization need** (drives Phase 4)
 
 **Output of Phase 2:** A `source_brief` markdown block with all 7 fields filled in.
 
@@ -85,11 +85,11 @@ Decompose the source transcript along these axes so we know what to keep, what t
 
 Don't just rewrite the same video. Decide HOW Graeham's version is going to be different and better. Pick ONE of these angles (or hybrid two):
 
-1. **Same claim, better evidence** — Original makes a point, Graeham backs it with real data, dates, and citations.
-2. **Contrarian take** — Original says X, Graeham respectfully argues why X is incomplete or wrong with his market expertise.
-3. **Local lens** — Original is a universal real estate take, Graeham reframes it for Bay Area / Peninsula specifically.
-4. **Deeper expert breakdown** — Original is surface-level, Graeham goes one layer deeper as a working agent.
-5. **Personal story wrapper** — Original is informational, Graeham frames it around a real client situation he's seen.
+1. **Same claim, better evidence** — backed with real data/dates/citations
+2. **Contrarian take** — respectfully argues the original is incomplete or wrong
+3. **Local lens** — reframed for Bay Area / Peninsula specifically
+4. **Deeper expert breakdown** — one layer deeper as a working agent
+5. **Personal story wrapper** — framed around a real client situation
 
 **Output of Phase 3:** A single sentence — `Repurpose Angle: <angle name> — <one-sentence rationale>`.
 

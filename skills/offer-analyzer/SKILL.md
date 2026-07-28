@@ -62,10 +62,7 @@ The user wants to generate a net sheet without any specific offers — typically
 
 ## Tone & Style
 
-- **Professional but approachable.** This report might be read by a seller who isn't a real estate expert. Keep language clear.
-- **Fair to every offer.** Don't editorialize about which offer is "best" — present the analysis and let the seller decide with their agent's guidance. The ranking is a suggested starting point, not a verdict.
-- **Specific about numbers.** When talking about money, use exact figures, not vague language. "$487,500 net" not "approximately half a million."
-- **Transparent about estimates.** Whenever you're estimating a cost, say so. Sellers trust you more when you're upfront about what's exact and what's approximate.
+Professional, clear, fair to every offer (no editorializing on "best"), exact figures not vague language, and transparent whenever a number is an estimate.
 
 ---
 
@@ -74,9 +71,9 @@ The user wants to generate a net sheet without any specific offers — typically
 Before delivering any output, verify:
 
 0. **Default-mode check** — If the user did not explicitly ask for nets, ranking, or counters, confirm the output contains NONE of them. Info-only means info-only.
-1. **Math check** (when net sheets were requested) — Do the net sheet calculations add up? Verify every net sheet's arithmetic. This is the most important thing to get right — a math error on a net sheet is a serious problem.
-2. **Completeness** — Did you extract all the key terms from every offer? Cross-check against the field list above.
-3. **Consistency** — Do the same numbers appear across all three output formats? The PDF, Excel, and HTML should all show the same figures.
+1. **Math check** (when net sheets were requested) — verify every net sheet's arithmetic; this is the most important thing to get right.
+2. **Completeness** — all key terms extracted from every offer.
+3. **Consistency** — same numbers across all output formats (PDF, Excel, HTML).
 4. **Highlight accuracy** — Are the notable items actually notable? Don't highlight something as "worth discussing" if it's completely standard.
 5. **Ranking logic** (when a ranking was requested) — Does the ranking make sense given the numbers? If Offer B has higher net proceeds but ranks below Offer A, there better be a clear reason explained.
 

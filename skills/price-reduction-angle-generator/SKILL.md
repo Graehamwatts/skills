@@ -82,27 +82,15 @@ Collect the following before generating the angle:
 
 ### Step 1: What's Moving
 
-From the comp data, identify properties that **sold** (closed) recently. Note:
-- Price range where closings are concentrated (median, 25th/75th percentile)
-- Average DOM for sold properties vs. the subject's DOM
-- List-to-sale ratio for sold properties (selling at, above, or below list?)
-- Features or price brackets that sold fastest
-- Any properties that received multiple offers (these are the market-aligned comps)
+From sold comps, note: price range where closings concentrate (median, 25th/75th percentile), average DOM vs. subject, list-to-sale ratio, features/brackets selling fastest, and any multiple-offer properties (market-aligned comps).
 
 ### Step 2: What's Sitting
 
-Identify **active listings** that have been on market for 30+ days (or the equivalent threshold for the local market velocity). Note:
-- Price points where stale listings cluster
-- How they compare to the subject in features and price-per-square-foot
-- Pattern in what's not selling (overpriced per sqft, missing key features, wrong price tier for the condition tier)
+From active listings stale 30+ days (or local threshold), note: price points where they cluster, how they compare to subject on features/price-per-sqft, and the pattern in what's not selling.
 
 ### Step 3: Where the Subject Fits
 
-Place the subject property in context:
-- Is it priced above, at, or below the range where properties are actually closing?
-- Price-per-square-foot vs. sold comps?
-- Feature gaps that explain low activity (no garage in an area where every sold comp had one, fixer in an area where renovated comps are moving, etc.)?
-- What price position would the data suggest for offers within [seller's timeline]?
+Place the subject in context: priced above/at/below where properties are closing, price-per-sqft vs. sold comps, feature gaps explaining low activity, and what price position the data suggests for offers within the seller's timeline.
 
 ### Step 4: Pick the Strategy
 
@@ -159,11 +147,10 @@ The next step is concrete and time-bound. "Let's discuss" is not a next step —
 
 ## Tone Rules
 
-- **Empathetic but honest.** The agent's credibility depends on telling the truth without being harsh.
-- **Never use urgency or fear tactics** ("if you don't reduce now, you'll never sell").
-- **Never reference the seller's personal situation in the positioning statement** — that's for the agent to manage in conversation. The data speaks for itself.
-- **Never imply the home is "too good" for the market** — that frames the seller as the victim and undermines the data.
-- **Never blame the staging, the photos, the season, or the agents who showed it without an offer** — unless that's specifically what the data points to AND the agent wants to address marketing rather than price.
+- Empathetic but honest; no urgency or fear tactics.
+- No reference to the seller's personal situation in the positioning statement.
+- No "home is too good for the market" framing.
+- No blaming staging, photos, season, or showing agents unless the data specifically points there.
 
 ---
 

@@ -1,6 +1,6 @@
 ---
 name: website-builder
-description: "Graeham Watts website, landing page, and UI build system. Use ANY time the user mentions building, designing, coding, or improving a website, landing page, marketing site, product UI, web app screen, dashboard UI, PropertyOS UI, PropIQ screen, hero section, nav bar, CTA, feature grid, pricing page, component library, or design tokens. Also trigger on: make this page nicer, redesign this section, build me a site, turn this into HTML, give this a glassy look, add motion, match my brand, use my branding, clone this style, ship to Vercel, push to GitHub, or requests for page screenshots. Covers design tokens, typography, component patterns (nav, hero, cards, tables, forms, CTAs), backgrounds (glassmorphism, orbs, noise, grids), motion, screenshot-review loop, and GitHub + Vercel deployment. Complements the frontend-design plugin — this skill adds concrete tokens, reusable HTML snippets, and Graeham's project context."
+description: "Graeham Watts website, landing page, and UI build system. Use ANY time the user mentions building, designing, coding, or improving a website, landing page, marketing site, product UI, web app screen, dashboard UI, PropertyOS UI, PropIQ screen, hero section, nav bar, CTA, feature grid, pricing page, component library, or design tokens."
 license: Proprietary - Graeham Watts
 ---
 
@@ -34,15 +34,7 @@ Don't read every file. Start with this SKILL.md for orientation, then pull only 
 
 ## Core design philosophy
 
-Four rules that apply to everything this skill ships.
-
-**One, pick a confident aesthetic direction per project and hold it.** Generic "neutral gray card" UI is the default failure mode. Commit to a visual identity — editorial/serif, dark/glassy, warm/earthy — at the start of a project and keep it consistent across screens.
-
-**Two, use CSS custom properties for every recurring value.** Colors, spacing, radius, shadows all live in `:root`. This makes brand swaps trivial. See `references/design-tokens.md` for the baseline block.
-
-**Three, never ship default system fonts.** `Inter`, `Roboto`, `Arial`, `system-ui` all read as unfinished. Pick a distinctive display font for headers and a quiet geometric sans for body. See `references/typography.md`.
-
-**Four, always review your own output.** After generating HTML, run the screenshot loop in `references/screenshot-loop.md`. Looking at the page is the difference between "looks right in code" and "actually looks right".
+See `frontend-design` for general design taste. Always use CSS custom properties in `:root` for every recurring value (`references/design-tokens.md`) and always run the screenshot loop (`references/screenshot-loop.md`) after generating HTML — looking at the page is the difference between "looks right in code" and "actually looks right".
 
 ## Standard build flow
 
@@ -69,14 +61,11 @@ Copy-paste HTML fragments — not generic boilerplate, but the specific patterns
 
 ## Anti-patterns — never ship these
 
-Skip all of the following without exception. They make generated UI immediately recognizable as AI output.
+See `frontend-design` for the general list. Repo-specific flags from Graeham's own reviews:
 
-- System fonts (`Inter`, `Roboto`, `Arial`, `system-ui`) for headers.
 - Purple-on-white gradient heroes.
 - Centered single-column layouts with three identical cards below.
 - Emojis used as feature icons (use inline SVG or icon libraries).
-- `bg-gray-50` / `bg-white` as the only background treatment.
-- Generic copy like "Welcome to our platform" or "Built for modern teams".
 
 ## Project contexts
 

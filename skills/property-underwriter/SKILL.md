@@ -13,7 +13,7 @@ This skill turns any property — a listing URL, an MLS export, or a few typed f
 
 ## Design note — read this once (it's the whole reason this skill exists)
 
-Anthropic's **Model Builder** agent (in the `financial-services` plugin / `financial-analysis` vertical) is excellent, but it is built to value **company stock** — equity DCF from SEC filings, WACC via CAPM, implied share price. A property is a **different model**: rental income, NOI, cap rate, a loan amortization schedule, and *levered* cash-on-cash / IRR. If you point the equity Model Builder at a listing, it improvises the real-estate structure (which is exactly why its own debt-schedule can come out wrong). This skill encodes the **correct real-estate pro forma** so the structure is right every time.
+Anthropic's equity-focused **Model Builder** (`financial-analysis` plugin) gets the real-estate debt schedule wrong if pointed at a property listing — it improvises company-stock DCF structure onto a rental deal, so this skill encodes the correct real-estate pro forma instead.
 
 How it uses the Anthropic engine:
 
@@ -44,66 +44,29 @@ How it uses the Anthropic engine:
 
 ## The pro forma — methodology (build in this order, verify each block with the user)
 
-### 1. Income → NOI
-```
-Gross Potential Rent (GPR)        = Σ (unit rent × 12)
-(−) Vacancy & credit loss          = GPR × vacancy%        (default 5%)
-(+) Other income                   = parking, laundry, storage, pet
-= Effective Gross Income (EGI)
-(−) Operating Expenses (OpEx):
-      Property tax  (CA: reassessed to PURCHASE PRICE — see refs)
-      Insurance
-      Property management  (default 8% of EGI if managed)
-      Repairs & maintenance  (default 5–8% of EGI)
-      Reserves / CapEx  (default ~$250–300/unit/mo or 5% EGI)
-      HOA, utilities owner-paid, landscaping, trash
-= Net Operating Income (NOI)
-```
-**OpEx never includes** the mortgage payment, depreciation, or income tax. NOI is pre-debt.
+Full derivations moved to `references/pro-forma-derivations.md` (standard real-estate finance math) — load it if you need the build-order detail. Quick reference:
 
-### 2. Valuation (cap rate)
-```
-Going-in cap rate  = NOI (Yr 1) / Purchase price
-Implied value      = NOI / market cap rate     (cross-check vs price)
-GRM                = Price / GPR                (quick sanity screen only)
-```
+| Metric | One-line formula |
+|---|---|
+| EGI | GPR − vacancy/credit loss + other income |
+| NOI | EGI − OpEx (tax, insurance, mgmt, repairs, reserves, HOA/utilities — never mortgage, depreciation, or income tax) |
+| Going-in cap rate | NOI (Yr1) / Purchase price |
+| Implied value | NOI / market cap rate |
+| GRM | Price / GPR (sanity screen only) |
+| Monthly P&I | standard amortization (loan, rate, term) |
+| Mortgage constant | Annual debt service / Loan amount |
+| DSCR | NOI / Annual debt service (lenders want ≥1.20–1.25) |
+| CFBT | NOI − Annual debt service |
+| Cash-on-cash (Yr1) | CFBT / Total cash invested |
+| Exit value | Exit-year NOI / Exit cap rate |
+| Levered IRR | IRR(−equity at t0, CFBT each year, + net sale proceeds at exit) |
+| Equity multiple / MOIC | (Σ CFBT + net sale proceeds) / equity invested |
 
-### 3. Debt schedule
-```
-Loan amount        = Price × LTV
-Monthly P&I        = standard amortization (loan, rate, term)
-Annual debt service= P&I × 12
-Mortgage constant  = Annual debt service / Loan amount
-DSCR               = NOI / Annual debt service   (lenders want ≥ 1.20–1.25)
-```
-Build a real **amortization schedule** (beginning balance → interest → principal → ending balance) so the loan payoff at exit is correct. This is the row the equity Model Builder gets wrong — get it right here.
+Build a real **amortization schedule** (beginning balance → interest → principal → ending balance) — this is the row the equity Model Builder gets wrong.
 
-### 4. Levered returns
-```
-Cash flow before tax (CFBT) = NOI − Annual debt service
-Total cash invested         = Down payment + closing costs + rehab
-Cash-on-cash (Yr 1)         = CFBT / Total cash invested
-```
-Then project the hold (default 5 yr) with rent growth + expense inflation, and compute:
-```
-Exit value     = Exit-year NOI / Exit cap rate      (or appreciation path)
-Net sale proceeds = Exit value − selling costs − loan payoff (from amort schedule)
-Levered IRR    = IRR( −equity at t0, CFBT each year, + net sale proceeds at exit )
-Equity multiple / MOIC = (Σ CFBT + net sale proceeds) / equity invested
-```
+**Strategy overlays (only when relevant):** BRRRR (rehab to ARV → refi at ARV × refi-LTV → recompute cash-in), ADU (if Zoneomics/PropSearch confirms permitted, add ADU rent/cost as a value-add scenario), Flip (ARV − purchase − rehab − holding − selling = profit, annualized).
 
-### 5. Strategy overlays (only when relevant)
-- **BRRRR:** rehab to ARV → refinance at ARV × refi-LTV → capital pulled out → recompute cash-in and infinite-return case.
-- **ADU:** if Zoneomics/PropSearch confirms an ADU is permitted, add ADU rent and ADU build cost as a value-add scenario (incremental NOI ÷ cost = ADU yield; show the post-ADU cap rate and value lift).
-- **Flip:** ARV − purchase − rehab − holding − selling = profit; annualize.
-
-### 6. Sensitivity (bear / base / bull)
-Three 2-D tables, every cell a live recalculation (follow the `dcf-model` 5×5 odd-grid, base-case-centered pattern):
-1. **Appreciation × Rent growth** → levered IRR
-2. **Exit cap × Hold period** → IRR / equity multiple
-3. **Interest rate × LTV** → cash-on-cash + DSCR
-
-**Read the bear case first.** If the deal still works when rents fall and the exit cap expands, it's real. Treat the recommendation as a vote, not a verdict — the data justifies the call, not the label.
+**Sensitivity (bear/base/bull):** three live 2-D tables — Appreciation × Rent growth → IRR; Exit cap × Hold period → IRR/equity multiple; Interest rate × LTV → cash-on-cash + DSCR. **Read the bear case first** — if the deal still works when rents fall and the exit cap expands, it's real. The data justifies the call, not the label.
 
 ---
 
@@ -148,6 +111,7 @@ Match Graeham's black-and-gold brand for any client-facing PDF (see `../website-
 
 ## References
 - `references/bay-area-assumptions.md` — default assumptions + the figures that MUST be verified per deal (CA property tax, transfer taxes, AB 1482 + city rent control, insurance, ADU).
+- `references/pro-forma-derivations.md` — full formula derivations (NOI, cap rate, debt schedule, levered returns) with build order and rationale.
 - `../xlsx/SKILL.md` — Excel construction + `recalc.py` audit (the model engine).
 - `../website-builder/references/realtor-brand-kit.md` — brand for client-facing PDFs.
 - Optional: Anthropic `financial-analysis` plugin (`/lbo`, `/returns`) for heavy sensitivity + audit if installed.

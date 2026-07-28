@@ -1,6 +1,6 @@
 ---
 name: cma-generator
-description: "CMA Generator for Graeham Watts — Comparative Market Analysis expert tool for real estate agents. Use this skill ANY time the user mentions: CMA, comps, comparable sales, market analysis, listing presentation, pricing strategy, property valuation, price opinion, broker price opinion, BPO, running comps, pulling comps, what's my home worth, home value, list price recommendation, or anything related to analyzing real estate sales data to determine property value. Also trigger when the user uploads MLS data, mentions MLSListings.com, or asks about pricing a property. This skill encodes Graeham's exact CMA methodology including search criteria, three-strategy pricing framework, and presentation style. Supports both premium branded PDF reports and email-ready HTML format. ALSO supports a Past-Client / Home-Value-Update mode — trigger on: past client CMA, home value update, equity update, anniversary CMA, keep them posted, PCFS CMA, or any CMA for an owner who is not actively selling (see CMA Mode section + references/past_client_mode.md)."
+description: "CMA Generator for Graeham Watts — Comparative Market Analysis expert tool for real estate agents. Use this skill ANY time the user mentions: CMA, comps, comparable sales, market analysis, listing presentation, pricing strategy, property valuation, price opinion, broker price opinion, BPO, running comps, pulling comps..."
 ---
 
 
@@ -120,10 +120,7 @@ This structure applies to all output formats. The Interactive HTML includes all 
 
 ### Section 3: The Market Story (Full Narrative) — COMES BEFORE DATA
 - Section header: "THE MARKET STORY"
-- 4-6 paragraphs of detailed narrative written as Graeham would say it in a meeting
-- This section is NARRATIVE ONLY. No stats boxes, no charts. Just the story.
-- Tone: honest, direct, data-backed, human — not corporate, not stiff
-- No dashes as punctuation, no hedging ("it appears"), no cliches ("priced to sell")
+- This section is NARRATIVE ONLY. No stats boxes, no charts. Just the story. Voice and style (paragraph count, tone, AI-writing avoidance) are handled by the `humanizer` skill pass at the end — write naturally here, don't over-specify.
 - Cover: what the market is doing, what's selling and for how much, where this property fits, honest expectations
 - For buyer CMAs: address the seller's likely pricing expectations and how data supports or contradicts them
 - For listing CMAs: frame the conversation around realistic pricing and the three strategies

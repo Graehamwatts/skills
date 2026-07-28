@@ -18,7 +18,7 @@ This skill pairs with `video-transcriber`. They're standalone but compose natura
 | **video-transcriber** | What was SAID — every word, timestamped |
 | **video-watcher** | What was SHOWN — every visual beat, timestamped |
 
-Use video-transcriber alone when you only need the words (pulling quotes for cuts, blog source material). Use video-watcher alone when you only need the visual blueprint (replicating a reference video's style). Use BOTH together when you need complete understanding of a video to recreate it end-to-end.
+Use either alone for its half, or both together for complete end-to-end understanding.
 
 The user can invoke both at once by saying something like:
 > "Watch and transcribe this video: [URL]"
@@ -244,12 +244,3 @@ This means content-creation-engine becomes a *composer* of skills rather than an
 The 6 Python scripts in `scripts/` were lifted from `content-creation-engine/scripts/video-research/` on 2026-05-15. They are now the canonical owners of this logic. If content-creation-engine still has copies, those are deprecated — refer here.
 
 When yt-dlp's platform list expands, frame extraction expands automatically. When Claude's vision model improves, the analysis output improves automatically. No code changes needed in this skill.
-
-## Why this exists (history)
-
-Before this skill, visual analysis of a video required:
-1. Knowing about content-creation-engine's Phase 0 Mode B (most users didn't)
-2. Explicitly opting into Mode B in a content-engine invocation (most invocations didn't)
-3. Going through all the content-engine ceremony just to get a shot list
-
-That meant the capability existed in the codebase but was effectively dormant. Extracting it into a standalone skill with the right trigger keywords makes it discoverable and usable on its own. The 6 worker scripts (download/frames/transcribe/analyze/library/dataforseo) didn't change — only the wrapper changed.

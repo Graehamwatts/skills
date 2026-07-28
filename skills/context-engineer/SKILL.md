@@ -1,6 +1,6 @@
 ---
 name: context-engineer
-description: Context-window diagnostic and optimization engine for Claude sessions and skills. Explains what's eating the context budget (system prompt, history, loaded files, skill bodies, tool results), estimates token usage by category, and helps decide what to keep, move to references, summarize, or drop. Audits SKILL.md files — flags anything over ~500 lines, recommends tiered structure (frontmatter vs body vs references/ vs assets/). Use ANY time the user mentions context window, context length, token budget, token limit, running out of context, context engineering, optimize my prompt, optimize my skill, my skill is too long, my prompt is too long, context management, context bloat, what's in my context, trim my prompt, tiered context, progressive disclosure, skill audit, or skill review. Over-trigger — if the user mentions prompt length, context, or asks "why is this slow", use this skill.
+description: "Context-window diagnostic and optimization engine for Claude sessions and skills. Use ANY time the user mentions context window, context length, token budget, token limit, running out of context, context engineering, optimize my prompt, optimize my skill, my skill is too long, my prompt is too long, context management, context bloat..."
 ---
 
 # Context Engineer — Diagnose & Optimize the Context Window
@@ -17,33 +17,9 @@ When the user says "my context is full" or "my prompt is too long", don't guess.
 
 ### Step 1: Categorize what's in the window
 
-Every token in a Claude session falls into one of these categories:
+Break the window down by category (system prompt, conversation history, loaded files, skill bodies, tool results, last response) and produce a table with estimated tokens and % of window per category.
 
-1. **System prompt** — instructions, app-level context, tool descriptions. Usually fixed for a given surface (Claude.ai, Claude Code, Cowork, etc.) but can include user-preferences blocks.
-2. **Conversation history** — prior user messages + Claude's prior responses. Grows every turn.
-3. **Loaded files** — file contents read via Read or attached. These persist in the window until the conversation ends.
-4. **Skill bodies** — any SKILL.md that's been loaded, plus any references/ the skill has pulled in.
-5. **Tool results** — search results, bash output, subagent reports, MCP responses. Can be huge (especially web fetch / directory listings).
-6. **Your own last response** — assistant messages count too.
-
-When asked "what's in my context?", produce a table like this:
-
-| Category | Est. tokens | % of window | Notes |
-|---|---|---|---|
-| System prompt | 15,000 | 7% | Fixed, includes user prefs block |
-| Conversation history | 48,000 | 24% | Last 12 turns, heavy on file reads |
-| Loaded files | 62,000 | 31% | 3 PDFs, 1 large CSV |
-| Skill bodies | 8,000 | 4% | 2 skills loaded (pdf, xlsx) |
-| Tool results | 55,000 | 28% | One bash call returned a 40k char log |
-| Last response | 12,000 | 6% | Report with inline tables |
-| **Total** | **200,000** | **100%** | |
-
-You usually won't have exact counts. Estimate:
-- **English prose:** ~0.75 tokens per word, or ~4 chars per token
-- **Code:** ~0.5 tokens per character of source (slightly more dense than prose)
-- **JSON / structured data:** ~3 chars per token (punctuation overhead)
-
-See `references/token_estimation.md` for more precise heuristics and how to compute this from files on disk.
+For token-count estimation heuristics and worked examples, see `references/token_estimation.md` — don't re-derive them here.
 
 ### Step 2: Identify the offenders
 
@@ -183,27 +159,13 @@ See `references/patterns.md` for more tiered-context patterns (domain-organized,
 
 ## Part 4 — Common anti-patterns
 
-Load this via `references/anti_patterns.md` when diagnosing a specific mess. Quick summary here:
-
-1. **The kitchen sink** — one giant SKILL.md that handles every case. Fix: split by domain/variant into references.
-2. **The repeat offender** — rules restated in three places. Fix: pick one canonical spot, link.
-3. **The stale tool result** — old bash output sitting in context for 20 turns. Fix: summarize or drop.
-4. **The silent re-read** — same file Read 5 times because model didn't track it. Fix: Read once, reference subsequent needs.
-5. **The verbose example** — a 300-line example used once. Fix: condense or move to references.
-6. **The unused lookup table** — a long table the skill rarely uses. Fix: move to references.
-7. **The restatement of defaults** — the user (or the skill) repeats what Claude already does by default. Fix: delete; trust the defaults.
+See `references/anti_patterns.md` for the seven anti-patterns (kitchen sink, repeat offender, stale tool result, silent re-read, verbose example, unused lookup table, restatement of defaults), each with a diagnostic signature and fix.
 
 ---
 
 ## Part 5 — When the user pushes back
 
-Context engineering involves tradeoffs. Users sometimes push back:
-
-- **"But I want the examples in the main file so I don't have to click through."** — Fair. Ask how often the skill runs. If it's daily, the examples earn their place. If it's weekly, the cost of loading them every time doesn't pay off.
-- **"But the AI might not know when to load the reference."** — Real concern. The fix is strong pointers: "When the user asks for X, read `references/x.md`." Be specific about the trigger.
-- **"My window is huge, why does it matter?"** — Latency and attention. Even on a 200k window, the model's attention is finite. Information crowded out by noise is information the model misses.
-
-Engage with these seriously. The goal isn't minimum tokens; it's right-sized context for the task. Sometimes that's generous, sometimes tight.
+The goal isn't minimum tokens, it's right-sized context for the task — weigh invocation frequency against the cost of loading something every run before deciding to inline vs. move to a reference.
 
 ---
 

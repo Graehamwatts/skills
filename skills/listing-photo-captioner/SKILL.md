@@ -49,38 +49,11 @@ If a photo is unclear, ambiguous, or low-quality, write a generic caption and no
 
 ---
 
-## Caption Style
+## Caption Checklist
 
-- **Lead with the room or space name.** ("Kitchen — ...") This is the most searchable token; AI search engines and MLS users both scan room names first.
-- **Follow with 1–2 specific features visible in the image.** Name materials, finishes, fixtures, layout characteristics.
-- **Use noun-dense, descriptive language** consistent with the listing-remarks-writer "nouns over pronouns" approach.
-- **Keep each caption to 1–2 sentences.** MLS photo captions are meant to be brief and scannable.
-- **Sentence case, not Title Case.**
-- **No emojis. No hashtags. No promotional language.** No "stunning," "gorgeous," "amazing," "must-see."
-
-**Good:** "Kitchen with white quartz countertops, stainless steel appliances, and a subway tile backsplash. Center island seats four."
-
-**Weak:** "Beautiful kitchen with amazing finishes!"
-
----
-
-## What To Describe vs. What To Skip
-
-**Describe (when clearly visible):**
-- Room type and layout
-- Materials: hardwood, tile, quartz, granite, marble, carpet — only if you can tell
-- Fixtures: lighting type, faucet style, built-in shelving
-- Architectural details: vaulted ceilings, crown molding, exposed beams, wainscoting, coffered ceilings, built-ins
-- Outdoor features: fencing type, landscaping (without quality judgment), patio material, view (only if view subject is in frame)
-- Appliances if visible and notable: gas range, double oven, wine fridge, built-in microwave
-- Smart home: visible thermostats (Nest), doorbells (Ring), EV chargers — only if currently installed and visible
-
-**Skip:**
-- Personal belongings, family photos, identifiable people, pets
-- Anything you're guessing at — only describe what is clearly visible
-- Decorative staging items unless they highlight the space's function (a staged dining table is fine; "elegant staged decor" is not)
-- Quality judgments — don't say "high-end" unless the materials clearly indicate it (and even then, prefer naming the material specifically)
-- Subjective light descriptors like "warm and inviting" — describe the actual light source instead ("south-facing windows," "skylight," "recessed lighting")
+- Lead with room/space name, 1-2 sentences, sentence case, no emojis/hashtags/promotional language ("stunning," "gorgeous," "amazing," "must-see").
+- Describe only what's clearly visible: room type/layout, materials (hardwood, tile, quartz, etc. — only if you can tell), fixtures, architectural details, outdoor features, notable visible appliances, visible smart-home tech (Nest, Ring, EV chargers).
+- Skip: people/pets/personal belongings, anything you're guessing at, decorative staging items (unless they show function), quality judgments ("high-end"), and subjective descriptors ("warm and inviting" — name the actual light source instead).
 
 ---
 

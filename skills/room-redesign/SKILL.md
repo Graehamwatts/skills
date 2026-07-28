@@ -86,13 +86,11 @@ These are pre-tuned for Graeham's workflow. Mix and match based on the actual ph
 
 ## Pro Moves
 
-These move the needle on output quality:
-
-- **Always tell it what to keep.** "Keep flooring, windows, and ceiling height identical" stops the model from fabricating a different room.
-- **Reference real places.** "Like a Soho House lounge" or "feels like a Parisian apartment" beats generic adjectives.
-- **Describe the light.** "South-facing, bright afternoon" or "dim evening vibe, lamps on" changes the whole mood.
-- **One change at a time on iterations.** After the first render, adjust a single thing per prompt. "Now make the sofa green." "Now add plants."
-- **Ask for a shopping list.** After a design Graeham loves, ask the model to "list every piece of furniture and decor used, with approximate price range and where to buy." Graeham gets a seller handout or buyer upsell.
+- Tell it what to keep (flooring, windows, ceiling height)
+- Reference real places, not generic adjectives ("like a Soho House lounge")
+- Describe the light (south-facing bright afternoon, dim evening lamps-on)
+- One change at a time on iterations
+- Ask for a shopping list (furniture/decor + price range + where to buy) as a seller handout or buyer upsell
 
 ## Output Handling
 
@@ -121,10 +119,7 @@ These move the needle on output quality:
 
 ## Why This Is Better Than the Third-Party Wrapper
 
-- **Zero dependencies on strangers' code.** The only thing running on Graeham's machine is this Python script he can read top to bottom.
-- **API key never leaves his environment.** It's only used in the one HTTPS call to `generativelanguage.googleapis.com`.
-- **Works offline from GitHub.** Even if the `cc-nano-banana` repo disappeared tomorrow, this skill keeps working.
-- **Tuned for real estate.** Prompts, trigger words, and pro moves are all built around listing staging and buyer visualization.
+Zero dependencies, API key never leaves the environment, works fully offline of GitHub — this replaces the retired `cc-nano-banana` repo wrapper with a single Python script Graeham controls end to end.
 
 ## What This Skill Does NOT Do
 

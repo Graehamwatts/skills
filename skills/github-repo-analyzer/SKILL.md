@@ -1,6 +1,6 @@
 ---
 name: github-repo-analyzer
-description: "GitHub Repository & Developer Activity Analyzer. Use ANY time user mentions: GitHub repo review, code review, developer activity, commit history analysis, PR review, pull request audit, repo health check, code quality audit, developer productivity, sprint review, dev team analysis, GitHub audit, repo analysis, codebase review, contributor analysis, branch strategy review, merge patterns, or anything related to analyzing GitHub repositories or developer work patterns."
+description: "GitHub Repository & Developer Activity Analyzer. Use ANY time user mentions: GitHub repo review, code review, developer activity, commit history analysis, PR review, pull request audit, repo health check, code quality audit, developer productivity, sprint review, dev team analysis, GitHub audit, repo analysis, codebase review..."
 ---
 
 # GitHub Repository & Developer Activity Analyzer
@@ -163,17 +163,14 @@ For each developer being analyzed, pull:
 
 ### Ghost Developer Detection
 
-When the number of active GitHub contributors is LESS than the number of billed developers:
+If active contributor count < billed developer count, flag each "missing" developer 🔴 CRITICAL with possible explanations:
+- Working in repos the client can't see
+- Pair programming under another account
+- Non-code contributions (design, DevOps, planning)
+- Recently hired / hasn't started committing yet
+- Working on internal tool not yet pushed
 
-1. List all unique committer accounts across all repos in scope
-2. Compare against the billed team size
-3. For each "missing" developer, flag as 🔴 CRITICAL with a fairness section listing possible explanations:
-   - Working in repos the client can't see
-   - Pair programming under another account
-   - Non-code contributions (design, DevOps, planning)
-   - Recently hired / hasn't started committing yet
-   - Working on internal tool that hasn't been pushed yet
-4. **Always recommend** the client request GitHub usernames for all billed developers and verify which repos each is assigned to
+Always recommend the client get GitHub usernames for all billed developers and verify repo assignment.
 
 ---
 
@@ -267,77 +264,26 @@ Process improvements based on patterns observed, including:
 
 ## Quality Control Verification (MANDATORY)
 
-**This step is not optional.** Before delivering any report, you MUST run a full verification pass. Developer reviews affect real people's careers and reputations. An inaccurate report — flagging someone as inactive when they were on PTO, or missing a developer who's actually falling behind — undermines the user's trust and can cause real team problems.
+Before delivering any report, do a second pass against the raw source data (not just re-reading what you wrote):
 
-### The Verification Process
+- Repo attribution: right repos analyzed, correctly labeled, previous-developer commits excluded
+- Data accuracy: re-count commits/PRs per developer, verify date ranges, verify merge-time calc, spot-check 3+ claims
+- Flag accuracy: re-check every CRITICAL against `references/review-criteria.md`, watching for false criticals (PTO, non-code work, bot/CI commits, external-tool false positives, unfair junior/senior comparisons)
+- External tool pattern: confirm it's real, check migration compliance status
+- PR/review metrics: verify self-merge counts, review-vs-comment counts, outlier-skewed averages
+- Completeness: every requested developer/metric covered, failed API calls noted, attribution table included
+- Tone: replace accusatory phrasing with data-observation phrasing; surface positives too
 
-After generating the report, perform a distinct second pass. Do NOT just re-read what you wrote — go back to the source data (GitHub API results, commit logs, PR lists) and cross-check against the report.
-
-### What the Verification Checks
-
-**1. Repo Attribution Accuracy**
-- Are you analyzing the right repos? (Not the client's self-built repos, not abandoned repos from previous teams)
-- Is every repo correctly labeled in the attribution table?
-- Were previous developer commits properly excluded from current-team scoring?
-
-**2. Data Accuracy**
-- Re-count commits and PRs for every developer from the raw data. Does the report match?
-- Verify date ranges — if the report says "last 14 days" make sure no commits outside that range were included or excluded
-- Check that PR merge times are calculated correctly (opened date to merged date, not created date to closed date)
-- Spot-check at least 3 specific claims (e.g., "Developer X opened 5 PRs") against the actual data
-
-**3. Flag Accuracy**
-- Re-check every CRITICAL developer against the flag criteria in `references/review-criteria.md`
-- Watch for these common errors:
-  - **False Critical**: Developer flagged for "zero commits" but they were doing code reviews, documentation, or non-code work
-  - **Missed context**: Developer was on PTO, recently hired, or working part-time — should adjust thresholds
-  - **Wrong period comparison**: "Commit count dropped 50%" but the comparison period included a holiday or sprint planning week
-  - **Bot/CI commits**: Automated commits (dependabot, CI, auto-formatting) inflating one developer's numbers or deflating another's
-  - **External tool false positive**: Developer appears inactive but is building on internal tool (still flag for governance, but note the nuance)
-
-**4. External Tool Pattern Verification** (if applicable)
-- Confirm the external tool pattern is real and not just a slow development period
-- Check if the client has explicitly requested migration — if yes, verify compliance status is accurately reported
-- Ensure governance flags match the criteria in review-criteria.md
-
-**5. Fair Assessment**
-- For every developer flagged Critical or Warning, ask: "Is there a reasonable explanation I haven't considered?"
-- If the user hasn't mentioned PTO, hiring dates, or role changes, and a developer shows unusual patterns, note the uncertainty rather than making a definitive negative judgment
-- Make sure the report doesn't compare a junior developer's output to a senior's without noting the context
-
-**6. PR and Review Metrics**
-- Verify self-merge counts — check that the PR author actually merged their own PR (not that someone with a similar name did)
-- Check that "reviews given" counts actual review submissions, not just comments
-- Verify "average review time" isn't skewed by a single outlier
-
-**7. Completeness**
-- Did you cover every developer the user asked about?
-- Did you cover every metric relevant to the analysis mode?
-- If any API calls failed or returned incomplete data, note it explicitly
-- Did you include the Repo Attribution Table?
-- Did you address external tool workflow if applicable?
-
-**8. Tone Check**
-- Scan for language that could feel like a personal attack rather than a data observation
-- Replace "Developer X is not contributing" with "Developer X had [N] commits this period, below the team average of [Y]"
-- Make sure positive findings are highlighted too, not just problems
-- Check that recommendations are constructive
-
-### Verification Output
-
-Fix any errors found during verification. If a developer's flag level changed, update the report and mention the correction to the user. If any metric was wrong, correct it.
-
-**Only deliver the report after verification is complete.**
+Fix any errors found and only deliver after this pass is complete.
 
 ### Common Pitfalls
-
-- **Bot commits**: Dependabot, auto-formatters, and CI bots can inflate commit counts. Filter these out or note them separately.
-- **Squash merges hiding work**: If the repo uses squash-and-merge, a developer who made 50 commits across a feature branch shows up as 1 commit on main. Check PR commit counts, not just main branch commits.
-- **Timezone issues**: GitHub API returns timestamps in UTC. A commit at 11 PM PST on Friday shows as Saturday UTC.
-- **Multiple accounts**: Some developers use different GitHub accounts. If commit patterns look unusual, ask the user.
-- **Non-code contributions**: Some developers contribute through issues, project management, design, or documentation that doesn't show in commit stats.
-- **External tool batch pushes**: Don't interpret a bulk push as "one day of work" — it may represent weeks of development done elsewhere. Flag the pattern, but don't use it to claim the developer only worked one day.
-- **Misattribution**: The most damaging error. Always verify WHO built WHICH repo before scoring. Praising the dev team for the client's work (or vice versa) destroys credibility.
+- Bot commits (dependabot, auto-formatters, CI) inflating counts — filter or note separately
+- Squash merges hiding real commit volume — check PR commit counts, not just main branch
+- Timezone offsets (GitHub API is UTC) shifting apparent commit days
+- Multiple accounts per developer — ask the user if patterns look unusual
+- Non-code contributions (issues, PM, design, docs) not showing in commit stats
+- External tool batch pushes — don't read a bulk push as "one day of work"
+- Misattribution — verify WHO built WHICH repo before scoring; this is the most damaging error
 
 ---
 
@@ -356,10 +302,4 @@ Default to HTML report unless the user specifies otherwise.
 
 ## Tone and Communication
 
-- Be direct about what you find. If a developer isn't pulling their weight, say so clearly but professionally.
-- Frame findings as "observations" not "accusations" — you're providing data, the user makes the people decisions.
-- When you see good patterns, call them out too. Positive reinforcement matters.
-- If the data is limited (small repo, few commits), say so upfront and adjust expectations.
-- Explain technical GitHub concepts in plain English when needed — the user may not be a developer themselves.
-- **When external tool patterns are detected**, explain the governance risk clearly: the client is paying for code they can't see being built, and if the engagement ends, unfinished work may never be delivered.
-- **When ghost developers are flagged**, be fair but direct: the data shows zero activity, here are possible explanations, but the client needs to verify.
+Be direct but professional; frame findings as observations, not accusations. When external tool patterns or ghost developers are flagged, state the governance risk plainly but note the possible innocent explanations.

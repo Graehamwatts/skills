@@ -1,9 +1,6 @@
 ---
 name: job-search-engine
-description: >
-  Full job-search pipeline for any user helping themselves or someone else land a new role.
-  Covers the complete sequence from resume audit through offer negotiation, encoded from the
-  MaverickAI "How to Use Claude to Land Your Next Job" playbook (2026 Edition).
+description: "Full job-search pipeline for any user helping themselves or someone else land a new role. Use this skill ANY time the user mentions: resume, ATS, job application, job search, cover letter, interview prep, salary negotiation, LinkedIn optimizer, follow-up email after interview, auto-apply, job offer, counter-offer, resume rewrite..."
 
   Use this skill ANY time the user mentions: resume, ATS, job application, job search, cover
   letter, interview prep, salary negotiation, LinkedIn optimizer, follow-up email after interview,
@@ -43,11 +40,7 @@ confirmation.
 
 ## The Core Problem to Solve
 
-Most resumes are rejected before a human reads them. ATS (Applicant Tracking Systems) scan for
-specific keywords and formatting before passing resumes to a real person. Even when a human sees
-it, they spend ~7 seconds scanning before deciding to read more or move on.
-
-The goal is to fix both: pass the ATS filter, then stop the hiring manager's scroll.
+Fix both: pass the ATS keyword filter, then stop the hiring manager's scroll.
 
 ---
 
@@ -89,12 +82,6 @@ the gap is half the work.
 **When to use:** After the audit. Stay in the same chat so context carries forward.
 
 The XYZ formula: **Accomplished [X] as measured by [Y] by doing [Z].**
-
-Weak: "Managed a team of 5 engineers."
-Strong: "Reduced deployment time by 40% (measured by weekly release velocity) by restructuring
-the engineering team into cross-functional pods."
-
-The first describes a task. The second describes an outcome. Hiring managers care about outcomes.
 
 Run this prompt (same chat, after audit):
 
@@ -253,7 +240,7 @@ real thing.
 
 ## Step 7 — Salary Negotiation Script
 
-**When to use:** User has an offer. Almost every offer has room to negotiate.
+**When to use:** User has an offer.
 
 ```
 I got an offer for [ROLE] at [COMPANY].
@@ -384,19 +371,7 @@ Tone for all: Confident, not desperate. Specific, not generic. Human, not templa
 
 ## Full Workflow Sequence
 
-For someone starting from scratch:
-
-| Step | Task | Time |
-|------|------|------|
-| 1 | Resume Audit — match score, gaps, red flags | 5 min |
-| 2 | Experience Rewrite — XYZ formula, metrics | 5 min |
-| 3 | ATS + Hiring Manager Test — final polish | 5 min |
-| 4 | LinkedIn Optimizer — rewrite for inbound | 10 min |
-| 5 | Cover Letter — one per application | 30 sec each |
-| 6 | Auto-Apply — 10 customized apps via Cowork | 10 min setup |
-| 7 | Interview Prep — research + mock interview | 20 min per company |
-| 8 | Salary Negotiation — market data + scripts | 15 min |
-| 9 | Follow-Up — 3 emails at the right times | 2 min |
+For someone starting from scratch: Resume Audit → Experience Rewrite → ATS + Hiring Manager Test → LinkedIn Optimizer → Cover Letter (per application) → Auto-Apply → Interview Prep → Salary Negotiation → Follow-Up.
 
 **Repeat steps 1-3 for each job applied to.** The same resume does not work for every role.
 Keywords and red flags change with each job description.

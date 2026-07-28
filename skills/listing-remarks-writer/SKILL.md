@@ -62,13 +62,7 @@ When in doubt, omit. A factually accurate listing with fewer claims is always be
 
 ## Core Principle: Nouns Over Pronouns
 
-AI search engines match buyer queries to listing text through nouns, verbs, and modifiers — not vague pronouns or generic filler. Every sentence should contain specific, searchable terms.
-
-**Weak:** "This beautiful home has been lovingly updated throughout."
-
-**Strong:** "Renovated 4-bedroom Colonial in West Menlo Park with quartz countertops, white oak hardwood floors, and a screened-in porch overlooking a fenced backyard."
-
-The strong version contains 12+ searchable nouns. The weak version contains zero.
+AI search engines match buyer queries to listing text through nouns, verbs, and modifiers — not vague pronouns or generic filler. Every sentence should contain specific, searchable terms (property type, materials, room names, neighborhood, features) instead of vague praise.
 
 **Test:** Could ChatGPT, Perplexity, or Google's AI Overview cite this sentence as a direct answer to a buyer's question? If not, rewrite.
 
@@ -77,16 +71,13 @@ The strong version contains 12+ searchable nouns. The weak version contains zero
 ## Writing Framework
 
 ### Nouns (What it is and where it is)
-- **Property type:** Eichler, ranch, contemporary, Mediterranean, craftsman, mid-century, Spanish revival, transitional, traditional, modern farmhouse, townhouse, condo, duplex, multi-unit
+- **Property type:** include Eichler and mid-century when accurate — these are Bay Area-specific search terms buyers actually use; otherwise name the style factually (ranch, craftsman, townhouse, condo, etc.)
 - **Location specifics:** neighborhood name, subdivision, city, ZIP, proximity landmarks ("two blocks from Cooley Landing," "walking distance to downtown Redwood City," "five-minute drive to Stanford")
 - **Features:** specific materials, room names, upgrades, systems
 - **Nearby amenities:** parks, retail, transit (Caltrain stations especially), employers (Meta, Google, Stanford, SLAC, etc.) — name them factually, don't rank them
 
-### Verbs (What it offers)
-- features, overlooks, includes, connects to, opens to, sits on, backs to, offers, provides, anchored by, stretches across, leads to, opens onto
-
-### Modifiers (What makes it searchable)
-- **Use:** renovated, updated, turnkey, open-concept, move-in ready, low-maintenance, energy-efficient, single-level, two-story, gated, corner lot, end-unit, top-floor, ground-floor, solar-equipped, EV-charger-installed
+### Verbs and Modifiers
+- Use concrete, factual verbs (features, overlooks, connects to, sits on, backs to) and searchable modifiers (renovated, turnkey, open-concept, solar-equipped, corner lot, etc.) over generic ones.
 - **Avoid:** stunning, gorgeous, amazing, dream home, must-see, breathtaking, one-of-a-kind, rare opportunity (these are zero-information words AI search ignores)
 
 ---

@@ -95,21 +95,15 @@ Where the reader sits dictates everything else.
 | Product-aware | Know about your product, haven't bought | Disarm objections. Specifics, proof, risk reversal |
 | Most-aware | Ready to buy, just need a nudge | Direct offer, real urgency, friction removal |
 
-Most common failure: writing problem-aware copy to a most-aware audience (boring them) or writing most-aware copy to an unaware audience (confusing them).
-
 ### Q2: Market sophistication stage (Schwartz)
 
-How exposed the market is to claims like yours.
-
-| Stage | The market | What works |
-|---|---|---|
-| 1: First | Nobody has made this claim before | Plain, direct claim |
-| 2: Repeated | Others have made the claim | Bigger or more specific claim |
-| 3: Skeptical | Basic claim is tired | New mechanism |
-| 4: Numb | Mechanism claims are tired | Bigger mechanism, or new identity |
-| 5: Exhausted | Heard everything | Identification — sell tribe membership, not outcome |
-
-Most established markets are at stage 4 or 5. Most copy still operates at stage 1 or 2 — which is why it bounces.
+| Stage | What works |
+|---|---|
+| 1: First | Plain, direct claim |
+| 2: Repeated | Bigger or more specific claim |
+| 3: Skeptical | New mechanism |
+| 4: Numb | Bigger mechanism, or new identity |
+| 5: Exhausted | Identification — sell tribe membership, not outcome |
 
 ### Q3: Emotional state right now
 
@@ -170,17 +164,7 @@ Is this troubleshooting/support content?
   NO → No framework needed; structure with information design + selective levers
 ```
 
-**Hook-Story-Offer** — Hook stops the scroll. Story creates the curiosity gap or names the pain. Offer collapses friction.
-
-**Monroe's Motivated Sequence** — Attention → Need → Satisfaction → Visualization → Action. The visualization step is what most writers skip; it's the step that converts.
-
-**StoryBrand** — Customer is the hero with a problem. Brand is the guide with empathy + authority. Plan, call to action, stakes named.
-
-**PAS** — Problem, Agitate, Solve. Compressed StoryBrand for short troubleshooting copy.
-
-(AIDA is acknowledged as predecessor to Monroe but largely superseded.)
-
-For deep reference on each framework, see `references/frameworks.md`.
+For deep reference on each framework (Hook-Story-Offer, Monroe's Motivated Sequence, StoryBrand, PAS), see `references/frameworks.md`.
 
 ### Pre-framing — the opening move of any framework
 
@@ -226,26 +210,13 @@ Pick 1 dominant lever, optionally 1 supporting. The diagnosis from Step 1 determ
 
 ### Lever library at-a-glance
 
-**Fear-based** (use when reader is in pain or complacent)
-Loss aversion · The Gap · Time bankruptcy · Status threat · Cost of inaction
-
-**Desire-based** (use when reader is curious or aspirational)
-Gain framing · Unfair advantage · Compounding system · Identity reinforcement · The vision
-
-**Social** (Cialdini's 7 principles)
-Reciprocity · Commitment/consistency · Social proof · Authority · Liking · Scarcity · Unity
-
-**Cognitive** (use to break thinking patterns)
-Curiosity gap · Pattern interrupt · Specificity · Anchoring · Reframing
-
-**Action** (use to remove the last barrier)
-Real urgency · Friction removal · Risk reversal · Named-objection disarmament
-
-**Identity** (use when self-concept is the door in)
-"You're already that person" reframe · Peer signal · Tribe markers
-
-**Stickiness** (use only when shareability is part of the goal)
-STEPPS (Berger) · SUCCESs (Heath brothers)
+- **Fear-based:** Loss aversion · The Gap · Time bankruptcy · Status threat · Cost of inaction
+- **Desire-based:** Gain framing · Unfair advantage · Compounding system · Identity reinforcement · The vision
+- **Social (Cialdini's 7):** Reciprocity · Commitment/consistency · Social proof · Authority · Liking · Scarcity · Unity
+- **Cognitive:** Curiosity gap · Pattern interrupt · Specificity · Anchoring · Reframing
+- **Action:** Real urgency · Friction removal · Risk reversal · Named-objection disarmament
+- **Identity:** "You're already that person" reframe · Peer signal · Tribe markers
+- **Stickiness (shareability only):** STEPPS (Berger) · SUCCESs (Heath brothers)
 
 For full descriptions of each lever — when each fires, what each pairs with, what each fails at — see `references/levers.md`.
 
@@ -315,17 +286,19 @@ Note on Cialdini and Schwartz: their primary work is in Step 1 (Schwartz's aware
 
 ### The eleven minds
 
-- **Ogilvy** — Headlines, specificity, respect for the reader
-- **Miller** — Customer-as-hero structure, clarity
-- **Brunson** — Direct response, hook-story-offer, real offers
-- **Godin** — Voice, remarkability, no filler
-- **Phil M. Jones** — Bridge phrases, transitions, sales conversation patterns
-- **Kennedy** — Filtering, calling the reader by name, real urgency
-- **Bernbach** — Wit, anti-advertising honesty, "sound least like an ad"
-- **Cialdini** — The 7 principles, behavioral grounding
-- **Schwartz** — Awareness stages, market sophistication, channeling existing desire
-- **Voss** — Tactical empathy, mirroring, labeling, objection handling
-- **Ries** — Positioning, category strategy, market laws
+| Mind | Specialty |
+|---|---|
+| Ogilvy | Headlines, specificity, respect for the reader |
+| Miller | Customer-as-hero structure, clarity |
+| Brunson | Direct response, hook-story-offer, real offers |
+| Godin | Voice, remarkability, no filler |
+| Phil M. Jones | Bridge phrases, transitions, sales conversation patterns |
+| Kennedy | Filtering, calling the reader by name, real urgency |
+| Bernbach | Wit, anti-advertising honesty, "sound least like an ad" |
+| Cialdini | The 7 principles, behavioral grounding |
+| Schwartz | Awareness stages, market sophistication, channeling existing desire |
+| Voss | Tactical empathy, mirroring, labeling, objection handling |
+| Ries | Positioning, category strategy, market laws |
 
 For each mind's deeper lens, anchor moves, and the specific test they apply — see `references/panel.md`.
 

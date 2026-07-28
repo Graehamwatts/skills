@@ -1,6 +1,6 @@
 ---
 name: contract-estimate-builder
-description: "Contract Estimate Builder for Graeham Watts. Turns a plain-language list of property work tasks into a clean Excel bid sheet (with auto-calculating formulas) plus a PDF scope of work (with a comprehensive courtesy disclaimer) that can be emailed to a contractor for pricing or shared with a client. Trigger ANY time the user mentions: contract estimate, contractor bid, scope of work, SOW, bid sheet, contractor quote, send to contractor for pricing, itemize a job, itemize landscaping/repairs, write up the scope, punch list, prep list, listing prep scope, vendor scope, handyman/landscape/painter/cleaning scope, bid request, or RFQ. Also trigger when the user describes work tasks at a property and wants them organized for a contractor to price, mentions alternative options that need separate pricing (bark vs. flagstone vs. mulch), or says 'put this in a spreadsheet for my contractor.' Supports multi-option line items with a separate grand total per scenario."
+description: "Contract Estimate Builder for Graeham Watts. Trigger ANY time the user mentions: contract estimate, contractor bid, scope of work, SOW, bid sheet, contractor quote, send to contractor for pricing, itemize a job, itemize landscaping/repairs, write up the scope, punch list, prep list, listing prep scope, vendor scope..."
 ---
 
 # Contract Estimate Builder
@@ -37,18 +37,9 @@ If the user mentions "options" — like "for the middle, we could do bark, flags
 
 Before generating anything, you need:
 
-### Required
-1. **Property address** — for the header and filenames. If Graeham only gives a street name, ask for the city too (East Palo Alto, Redwood City, Palo Alto, etc.). Always confirm spelling — Menalto Avenue in EPA is commonly misspelled as "Minalto" by autocomplete and dictation tools.
-2. **Work scope** — the tasks themselves. Usually Graeham provides these as a bulleted list or in conversation. Parse them into individual line items.
-
-### Conditional — Ask if Not Provided
-3. **Contractor name** — Ask: "Do you have the contractor's name?" If yes, fill it in. If no, leave a blank field labeled `Contractor: __________________` on the PDF and an empty cell in the Excel.
-4. **Client / seller name** — Ask: "Do you have the seller's name?" If yes, fill it in. If no, leave blank similarly.
-5. **Trade category** — landscaping, painting, cleaning, handyman, electrical, plumbing, general prep, etc. Used for the document title. If unclear, infer from the scope.
-6. **Date** — defaults to today unless specified.
-
-### Don't Over-Ask
-If Graeham just dropped a list of tasks with the address and said "build the estimate" — go. Don't make him answer four questions before you produce anything. Generate with reasonable defaults (today's date, blank contractor/client fields) and let him fill gaps after he sees the draft.
+- **Required:** Property address (confirm city if only a street name is given — Menalto Avenue in EPA is commonly misspelled as "Minalto" by autocomplete/dictation); Work scope (parse Graeham's list/conversation into individual line items).
+- **Conditional (ask if not provided, else leave blank):** Contractor name, Client/seller name, Trade category (infer from scope if unclear), Date (defaults to today).
+- **Don't over-ask:** if Graeham dropped a task list with an address and said "build the estimate," go — generate with reasonable defaults and let him fill gaps after seeing the draft.
 
 ---
 
@@ -128,13 +119,7 @@ The contractor fills in **only** the `Unit Cost` cells (blue text per the xlsx s
 | Base + Option 2 (Flagstone + gravel)  | = Base Total + Option 2  |
 | Base + Option 3 (Mulch)               | = Base Total + Option 3  |
 
-**Excel formatting rules** (per the xlsx skill):
-- Blue text for editable input cells, black for formulas
-- `Total` rows: bold, light fill background
-- Grand total row in the Summary tab: bold, larger font, green fill
-- Currency format `$#,##0.00` with zeros as `-`
-- Frozen header row
-- Auto-width columns
+Follow the `xlsx` skill's formatting conventions.
 
 ### What the PDF Looks Like
 

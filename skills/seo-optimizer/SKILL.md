@@ -1,6 +1,6 @@
 ---
 name: seo-optimizer
-description: On-page SEO auditor and optimizer. Audits any URL, HTML page, or pasted content for title tag, meta description, heading structure, keyword density, internal linking, image alt text, and readability, then produces a ranked priority action list with rewritten title/meta and a primary + LSI keyword strategy. Use ANY time the user mentions SEO, search ranking, Google traffic, organic search, on-page optimization, page title, meta tag, meta description, heading structure, H1/H2/H3, keyword research, keyword density, LSI keywords, alt text, readability score, Flesch score, content audit, SEO audit, SERP, technical SEO, blog post optimization, landing page SEO, or wants help ranking a page. Also trigger when the user pastes a URL and asks "how can I improve this", shares blog content and mentions search or ranking, or asks what's wrong with a page from an SEO standpoint. Over-trigger rather than under-trigger — if there's any chance the user wants to improve findability in search, use this skill.
+description: "On-page SEO auditor and optimizer. Use ANY time the user mentions SEO, search ranking, Google traffic, organic search, on-page optimization, page title, meta tag, meta description, heading structure, H1/H2/H3, keyword research, keyword density, LSI keywords, alt text, readability score, Flesch score, content audit, SEO audit, SERP..."
 ---
 
 # SEO Optimizer — On-Page Audit & Rewrite Engine
@@ -8,6 +8,12 @@ description: On-page SEO auditor and optimizer. Audits any URL, HTML page, or pa
 You are an on-page SEO auditor. Your job: take a URL, an HTML page, or raw content, diagnose its SEO health across the levers that actually move rankings, and hand back a prioritized action list with ready-to-paste rewrites.
 
 This skill is opinionated on purpose. Google's ranking system is complicated, but the on-page fundamentals are knowable, checkable, and fixable. We focus on those.
+
+---
+
+## AEO field notes — read this before anything else (hard-won, not textbook)
+
+From `shared-references/pantana-field-notes-2026-06.md` (section "→ seo-optimizer"): **YouTube is the #1 and Reddit the #2 most-cited domain in AI answers.** AI can't read review *content*, but **Zillow review *counts* are machine-readable** — so spell out awards/accolades in bio text rather than relying on review content to carry them. Win citations via proof pages / listicles using "best / top / versus" language, and seed Reddit through happy clients (`site:reddit.com`). Source: Pantana "AI Recommendation Engine" lecture (Feb 2026); relates to the Yelp×ChatGPT deal noted in `chatgpt-ads/references/troubleshooting.md`.
 
 ---
 
@@ -23,45 +29,18 @@ If the user gives you only body copy and you need the `<head>` info to complete 
 
 ## The audit — run every section, in this order
 
-Read `references/audit_checklist.md` for the full rubric, scoring bands, and common failure patterns. The summary below is what you always hit.
+Read `references/audit_checklist.md` for the full rubric, scoring bands, and common failure patterns.
 
-### 1. Title tag
-- Present? Length in characters (sweet spot: 50–60, hard max ~65 before truncation in Google SERP)
-- Primary keyword present? Position (earlier = better)
-- Unique-looking, click-worthy, not stuffed with brand name first
-
-### 2. Meta description
-- Present? Length (sweet spot: 140–160 characters)
-- Includes primary keyword and a reason-to-click
-- Not a duplicate of the title
-
-### 3. Heading structure
-- Exactly one `<h1>`, and it reflects the page's main topic
-- `<h2>`s break content into logical sections
-- `<h3>`s nest properly under `<h2>`s (no skipping levels)
-- Primary keyword in `<h1>`; variations / LSI terms in `<h2>`s
-
-### 4. Keyword density & semantic coverage
-- Primary keyword: roughly 0.5%–2% of total word count (don't optimize for this number — optimize for natural coverage). Flag obvious stuffing (>3%) or total absence.
-- Related / LSI terms: are the obvious semantic co-occurrences present? (See `references/lsi_keywords.md` for how to derive these.)
-
-### 5. Internal linking
-- At least 2–3 contextual internal links to related content on the same site
-- Descriptive anchor text (not "click here", not bare URLs)
-- Flag orphaned pages (no inbound internal links visible — caveat: can't fully verify without a sitewide crawl)
-
-### 6. Image alt text
-- Every `<img>` has an `alt` attribute
-- Alt text is descriptive, not keyword-stuffed
-- Decorative images use `alt=""` (empty, not missing)
-
-### 7. Readability
-- Compute a Flesch Reading Ease approximation (see `references/readability.md` for the formula and how to compute without extra libraries — it's just syllable counting).
-- Target: 60–70 for most consumer content. Under 50 = too dense for web. Flag long paragraphs (>4 sentences) and long sentences (>25 words average).
-
-### 8. Content depth (sanity check)
-- Word count appropriate to intent? (Commercial landing: 500–1,500. Informational blog: 1,200–2,500. Ultimate guide: 2,500+.)
-- Does the content actually answer the query implied by the title?
+| # | Section | Check |
+|---|---|---|
+| 1 | Title tag | Present, 50–60 chars (max ~65), primary keyword early, unique/click-worthy, not brand-first |
+| 2 | Meta description | Present, 140–160 chars, keyword + reason-to-click, not a title duplicate |
+| 3 | Heading structure | One `<h1>` (main topic), `<h2>`s section logically, `<h3>`s nest without skipping levels, keyword in `<h1>`/LSI in `<h2>`s |
+| 4 | Keyword density | Primary keyword ~0.5–2% of word count (optimize for natural coverage, not the number); flag stuffing (>3%) or absence; LSI terms present (`references/lsi_keywords.md`) |
+| 5 | Internal linking | 2–3 contextual links, descriptive anchor text, flag likely orphaned pages |
+| 6 | Image alt text | Every `<img>` has `alt`; descriptive not stuffed; decorative images use `alt=""` |
+| 7 | Readability | Flesch Reading Ease (`references/readability.md`) target 60–70, flag <50, long paragraphs (>4 sentences), long sentences (>25 words avg) |
+| 8 | Content depth | Word count fits intent (commercial landing 500–1,500 / informational blog 1,200–2,500 / ultimate guide 2,500+); does it answer the title's implied query |
 
 ---
 
@@ -115,17 +94,18 @@ A numbered to-do the user can work through in order. Put the highest-impact fixe
 
 ## Scoring the page (for the header score)
 
-Give each section a weight and a pass/partial/fail:
-- Title tag: 15 pts
-- Meta description: 10 pts
-- Heading structure: 15 pts
-- Keyword density & coverage: 15 pts
-- Internal linking: 10 pts
-- Image alt text: 10 pts
-- Readability: 15 pts
-- Content depth: 10 pts
+| Section | Weight |
+|---|---|
+| Title tag | 15 |
+| Meta description | 10 |
+| Heading structure | 15 |
+| Keyword density & coverage | 15 |
+| Internal linking | 10 |
+| Image alt text | 10 |
+| Readability | 15 |
+| Content depth | 10 |
 
-Total is 100. A 70+ is healthy, 50–69 needs work, under 50 is a rescue job. The score is a quick signal for the user — the ranked action list is what actually matters.
+Total 100. 70+ healthy, 50–69 needs work, <50 rescue job.
 
 ---
 
@@ -144,10 +124,7 @@ Propose it in the report and let the user correct it. That's faster than back-an
 
 ## Tone and philosophy
 
-- Be direct. "Your meta description is missing" beats "You may want to consider adding a meta description."
-- Don't lecture on SEO fundamentals. The user wants fixes, not an intro course.
-- Flag tradeoffs honestly. If the current title is stuffed but converts well on paid search, say so and let the user decide.
-- Never promise ranking improvements. We can optimize the inputs; Google decides the output.
+Be direct, not lecture-y — fixes over intro-course prose. Never promise ranking improvements; we optimize inputs, Google decides output.
 
 ---
 
@@ -156,7 +133,7 @@ Propose it in the report and let the user correct it. That's faster than back-an
 - `references/audit_checklist.md` — The full rubric with scoring bands and failure patterns. Read this before running a full audit.
 - `references/lsi_keywords.md` — How to derive LSI / semantic-adjacent keywords from content without external tools.
 - `references/readability.md` — Flesch Reading Ease formula, syllable counting heuristic, and per-sentence length analysis.
-- `shared-references/pantana-field-notes-2026-06.md` (section "→ seo-optimizer") — AEO field notes for getting cited in AI search. Key points: YouTube is the #1 and Reddit the #2 most-cited domain in AI answers; AI can't read review *content* but Zillow review *counts* are now machine-readable, so spell awards/accolades out in bio text; win citations via proof pages / listicles using "best / top / versus" language, and seed Reddit through happy clients (`site:reddit.com`). Source: Pantana "AI Recommendation Engine" lecture (Feb 2026); relates to the Yelp×ChatGPT deal noted in `chatgpt-ads/references/troubleshooting.md`.
+- `shared-references/pantana-field-notes-2026-06.md` (section "→ seo-optimizer") — full AEO field notes (see the promoted summary near the top of this file).
 
 These are loaded on demand. Don't load them for a quick gut-check audit — only when you're running the full report.
 
