@@ -6,7 +6,7 @@ metadata:
 ---
 ## When to use
 
-Use this skills whenever you are dealing with Remotion code to obtain the domain-specific knowledge.
+Use this skills whenever you are dealing with Remotion code to obtain the domain-specific knowledge. This is a reference-only lookup library — it does not scaffold projects. When a user wants an actual new Remotion project (or `watts-motion-graphics` needs the underlying project scaffolded), that's `remotion-video`; come back here for the API/technique specifics once the project exists.
 
 ## Captions
 

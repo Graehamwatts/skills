@@ -1,6 +1,6 @@
 ---
 name: remotion-video
-description: "Remotion Video Generator — creates professional React-based video projects using Remotion. Use this skill ANY time the user mentions: Remotion, React video, programmatic video, component-based video, animated video with React, Remotion composition, video template system, video from code, code-based video, or anything related to creating videos using React components and Remotion. Also trigger when the user wants reusable video components, animated compositions, property showcase videos, or asks to build a video template system. This skill generates complete Remotion projects with TypeScript, proper compositions, and render-ready output."
+description: "Remotion Video Generator — scaffolds professional React-based video projects using Remotion. Use this skill ANY time the user mentions: Remotion, React video, programmatic video, component-based video, animated video with React, Remotion composition, video template system, video from code, code-based video, or anything related to creating videos using React components and Remotion. Also trigger when the user wants reusable video components, animated compositions, property showcase videos, or asks to build a video template system. This skill owns project scaffolding, the Cowork sandbox rendering constraint, and Graeham's brand defaults; for Remotion API/technique syntax (animations, captions, audio, charts, transitions, etc.) it loads the remotion-rules skill rather than duplicating that reference material here."
 ---
 
 # Remotion Video Skill
@@ -20,6 +20,10 @@ Remotion is a framework for creating videos programmatically using React. Instea
 3. The user renders locally with one command: `npm run render`
 
 If the user needs a fully rendered MP4 without local setup, use the **video-creator** skill instead (Python + ffmpeg, renders in-sandbox).
+
+## Where to Look Things Up
+
+This skill owns scaffolding, the sandbox constraint above, and Graeham's brand defaults below. It does **not** own Remotion API/technique reference material — for animation curves, sequencing, captions, audio, charts, transitions, fonts, 3D, or any "how do I do X in Remotion" question, load the **remotion-rules** skill and read the matching `rules/*.md` file instead of guessing from general React knowledge. That skill's index is the source of truth for current Remotion APIs; this skill's job is turning the answer into a real project.
 
 ## Project Structure
 
@@ -115,45 +119,6 @@ npx tsc --noEmit  # Must pass with zero errors
 - Save to outputs folder
 - Include clear render instructions
 
-## Key Remotion APIs
-
-### Animation
-```tsx
-import { useCurrentFrame, interpolate, Easing, spring } from "remotion";
-
-const frame = useCurrentFrame();
-const opacity = interpolate(frame, [0, 30], [0, 1], {
-  extrapolateLeft: "clamp",
-  extrapolateRight: "clamp",
-  easing: Easing.out(Easing.cubic),
-});
-```
-
-### Sequencing
-```tsx
-import { Sequence } from "remotion";
-
-<Sequence from={90} durationInFrames={150} name="Section Name">
-  <MyComponent />
-</Sequence>
-```
-
-### Images
-```tsx
-import { Img, staticFile } from "remotion";
-
-<Img src={staticFile("photo.jpg")} style={{ objectFit: "cover" }} />
-// Or from props:
-<Img src={photoUrl} />
-```
-
-### Frame Math
-```tsx
-const FPS = 30;
-const sec = (s: number) => Math.round(s * FPS);
-// sec(5) = 150 frames = 5 seconds
-```
-
 ## Aspect Ratios
 
 | Format | Width | Height | Use Case |
@@ -180,23 +145,10 @@ When building videos for Graeham (default user), use these brand values:
 
 ## Common Patterns
 
-### Staggered entrance
-```tsx
-const items = ["A", "B", "C"];
-{items.map((item, i) => (
-  <AnimatedItem key={item} delay={baseDelay + i * 15} />
-))}
-```
+Staggered entrances, Ken Burns effects, and other animation techniques are generic Remotion patterns — load `remotion-rules` (`rules/animations.md`, `rules/timing.md`, `rules/text-animations.md`) for current syntax rather than reconstructing it here.
 
-### Ken Burns effect
-```tsx
-const scale = interpolate(frame, [0, totalFrames], [1, 1.12]);
-<div style={{ transform: `scale(${scale})` }}>
-  <Img src={photo} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-</div>
-```
+The one pattern worth keeping local is the gold accent line, since it's a Graeham-brand-specific motif (not a generic Remotion technique):
 
-### Gold accent line animation
 ```tsx
 const lineWidth = interpolate(frame, [delay, delay + 30], [0, 300], {
   easing: Easing.out(Easing.cubic),
