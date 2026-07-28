@@ -13,8 +13,8 @@ One page that ends the wrong-skill problem. Read this FIRST when a request is co
 │
 ├─ Topic already picked, need the FACTS + SCRIPT + PACKAGE?
 │   └─ content-creation-engine  ................. Jobs 3+4 (Intent Score, Phase R research, Phase G scripts)
-│       ├─ video script → heygen-elevenlabs-renderer (avatar MP4, full auto)
-│       │                 or heygen-video (one-off avatar video)
+│       ├─ video script → heygen-video (avatar MP4, manual — auto-render pipeline
+│       │                 retired 2026-07-29, moving to PropertyIQ)
 │       ├─ b-roll inserts → higgsfield-video (cinematic-hooks writes the prompts)
 │       ├─ email/blog sections → newsletter-generator (assembles The EPA Report)
 │       └─ ad deployment → meta-ads (deploys copy; engine writes it)

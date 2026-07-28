@@ -26,7 +26,7 @@ No Graeham, no talking-head plates. Everything is the property, the community, t
 
 ## Avatar look selection (per placement)
 
-`digital_twin` for the authentic full-frame intro/outro and any face-critical PIP · `freshly_ironed` for polished value/seller pieces · `fashion_flip` for high-energy hook reels · `suburban_serenity` for landscape / YouTube 16:9 · the broader ~70-variation library (incl. walking shots) for walk-and-talk PIP. Voice = the ElevenLabs clone. Full inventory + IDs: `heygen-avatars.md`. Render via `heygen-video` / `heygen-elevenlabs-renderer` straight from the SSML in the Script Library.
+`digital_twin` for the authentic full-frame intro/outro and any face-critical PIP · `freshly_ironed` for polished value/seller pieces · `fashion_flip` for high-energy hook reels · `suburban_serenity` for landscape / YouTube 16:9 · the broader ~70-variation library (incl. walking shots) for walk-and-talk PIP. Voice = the ElevenLabs clone. Full inventory + IDs: `heygen-avatars.md`. Render via `heygen-video` straight from the SSML in the Script Library (manual — the auto-render pipeline is retired, moving to PropertyIQ).
 
 ## How it changes the packets
 

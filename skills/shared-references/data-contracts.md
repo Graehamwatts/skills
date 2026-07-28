@@ -1,6 +1,6 @@
 # Data Contracts — Content System
 
-> **Shared reference across `content-creation-engine`, `content-calendar`, `content-ideation-engine`, and `heygen-elevenlabs-renderer`.** This file is the single source of truth for folder names, file naming, JSON schemas, and the two-score model. Updated April 2026 during the scoring-architecture streamline.
+> **Shared reference across `content-creation-engine`, `content-calendar`, and `content-ideation-engine`.** This file is the single source of truth for folder names, file naming, JSON schemas, and the two-score model. Updated April 2026 during the scoring-architecture streamline; `heygen-elevenlabs-renderer` (formerly listed here) was retired 2026-07-29.
 
 ---
 
@@ -258,11 +258,13 @@ Consumed by Phase 2 (for exclusion lists) and Phase 3 (for freshness penalty/bon
        │    BOTH scores (Table A + Table B)  │
        │  Research Data Panel shows Job 4    │
        └──────────────┬──────────────────────┘
-                      │ HeyGen render
+                      │ HeyGen render (manual, via heygen-video —
+                      │ the old auto-render skill is retired 2026-07-29,
+                      │ moving to PropertyIQ)
                       ▼
        ┌─────────────────────────────────────┐
-       │  heygen-elevenlabs-renderer         │
-       │  outputs: MP4, .meta.json           │
+       │  heygen-video                       │
+       │  outputs: MP4                       │
        └─────────────────────────────────────┘
 ```
 

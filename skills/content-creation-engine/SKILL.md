@@ -386,7 +386,7 @@ Once approved:
 - **Blog:** Ready-to-publish format with SEO metadata
 - **Social:** Platform-specific posts queued for posting
 - **Ads:** Ready for deployment with targeting recommendations
-- **Video:** Hand off to heygen-elevenlabs-renderer for avatar video rendering (see Auto-Render Hand-off section below)
+- **Video:** Hand off to `heygen-video` for avatar video rendering (manual — see note below)
 
 ---
 
@@ -603,11 +603,13 @@ All phase outputs save to the user's selected folder (or `outputs/` in Cowork). 
 - **Supplementary:** Claude web search for market context, news events, and competitor research.
 - **Supplementary:** Chrome browser for MLS data, local government sites, and Google Trends.
 
-## Auto-Render Hand-off (v6.2 — Apr 2026)
+## Video Rendering Hand-off
 
-Once a V6 script is finalized, it no longer needs to be manually copy-pasted into ElevenLabs and HeyGen. The `heygen-elevenlabs-renderer` skill owns the full render pipeline and this skill hands off to it.
+**Auto-render is retired (2026-07-29)** — the old v6.2 HeyGen+ElevenLabs pipeline (`heygen-elevenlabs-renderer`) is being replaced by PropertyIQ's own rendering. Until that ships, hand a finished V6 script to `heygen-video` for manual rendering instead of the old one-command auto-render invocation.
 
-**Read `references/rendering-handoff.md`** at the point a script is finalized and ready for rendering. It covers: what this skill must produce for the renderer (the companion `.ssml.txt` file), known SSML quirks (ElevenLabs v2 silently drops `<prosody>`, use `<break>` and bracket audio tags instead), the one-command hand-off invocation to `heygen-elevenlabs-renderer`, and Rule 15 (the two-register freshness check in `topic-history.json` — `history` for posted topics, `in_production` for shot-but-not-posted, so the ideation engine never queues a near-duplicate of a video already in the edit pipeline).
+**ElevenLabs SSML quirk (still applies, not HeyGen-specific):** `<prosody>` is silently dropped on `eleven_multilingual_v2` — use `<break>` tags and bracket audio tags for pacing instead.
+
+**Rule 15** — the two-register freshness check in `topic-history.json` still applies: `history` for posted topics, `in_production` for shot-but-not-posted, so the ideation engine never queues a near-duplicate of a video already in the edit pipeline.
 
 ---
 

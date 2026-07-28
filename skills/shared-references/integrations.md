@@ -186,7 +186,7 @@ This document covers:
 | **Purpose** | Avatar video generation from script + voice |
 | **Integration type** | HeyGen MCP server |
 | **Auth** | HeyGen API key |
-| **Used by** | `heygen-elevenlabs-renderer`, dashboard auto-render buttons |
+| **Used by** | `heygen-video` (manual). The old `heygen-elevenlabs-renderer` auto-render pipeline and dashboard buttons are retired 2026-07-29, moving to PropertyIQ. |
 | **Avatars** | digital_twin, casual_chic, freshly_ironed, fashion_flip, bespectacled, suburban_serenity (6 looks) |
 | **Reliability** | Stable when API key is current. |
 | **Verification status** | Last confirmed working: Apr 2026 |
@@ -201,7 +201,7 @@ This document covers:
 | **Integration type** | ElevenLabs API |
 | **Auth** | ElevenLabs API key |
 | **Voice ID** | `717249201f7745988219b9aeb9041b42` (Graeham Watts Voice Clone) |
-| **Used by** | `heygen-elevenlabs-renderer`, content-creation-engine Phase 5 (SSML generation) |
+| **Used by** | content-creation-engine Phase 5 (SSML generation), podcast-studio |
 | **Model** | `eleven_multilingual_v2` |
 | **Reliability** | Stable. Note: `<prosody>` tags are accepted but silently dropped â use bracket audio tags `[whispers]` etc. for inflection control. |
 | **Verification status** | Last confirmed working: Apr 2026 |

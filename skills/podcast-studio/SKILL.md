@@ -65,7 +65,7 @@ like a living organism — when something new comes up, alter the relevant show 
   Matilda 0.96.
 - **Script format:** `scripts/dialogue-format.md` — one `A:`/`B:`/`PAUSE` per line. SSML/XML
   `<break time="0.6s"/>` tags are honored by ElevenLabs for deterministic pauses; `<prosody>` is
-  accepted but NOT truly applied (see heygen-elevenlabs-renderer notes) so rely on `<break>` +
+  accepted but NOT truly applied on `eleven_multilingual_v2`, so rely on `<break>` +
   wording for pacing, not prosody. Use bracket audio tags sparingly ([laughs] etc.) only if a
   show calls for it.
 - **Render engine:** `scripts/synth_dialogue.py <script.txt> <album> <track#> "<title>"` —
@@ -130,4 +130,4 @@ need a podcast on X" — add the show here first, then produce it.
 ## RELATED
 [[gym-podcast-preferences]] (voice/format/delivery memory + the iPhone-sync gotcha) ·
 `humanizer` skill (mandatory pass) · `website-crawler` skill (fresh research) ·
-`founder-academy` skill (co-owns PropIQ Academy) · `heygen-elevenlabs-renderer` (SSML notes).
+`founder-academy` skill (co-owns PropIQ Academy).

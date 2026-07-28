@@ -139,4 +139,4 @@ These go to Graeham for **Greenlight 1** (concept + avatar availability). The pi
 - **Fugu Ultra** is the standing QA gate on the final 5 (per `comedy-craft` convention).
 
 ## Pipeline position
-Called by `content-creation-engine` (generic/geographic) or `listing-launch-engine` (listing) → concept-forge returns 5 cards → Graeham greenlights → `cinematic-video-engine` executes → `heygen-video` + `heygen-elevenlabs-renderer` render → `humanizer` polishes captions. Loads `comedy-craft` (voice) and `marketing-psychology` (CTA).
+Called by `content-creation-engine` (generic/geographic) or `listing-launch-engine` (listing) → concept-forge returns 5 cards → Graeham greenlights → `cinematic-video-engine` executes → `heygen-video` renders → `humanizer` polishes captions. Loads `comedy-craft` (voice) and `marketing-psychology` (CTA).

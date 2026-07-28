@@ -25,7 +25,7 @@ Source: "AI Recommendation Engine" lecture (Feb 2026).
 - **Neighborhood News Blueprint** (green-screen hyperlocal news reels): source via Google Alerts / Newsbreak / Grok → custom GPT 1-paragraph script → BigVu teleprompter → Canva 3-image frame + CapCut auto-remove-BG; eye-contact correction; 8–15 posts/wk for topic authority.
 - **Right content / right platform / right format:** market-snapshot videos underperform on IG, win on YouTube; weak IG engagement actively *hurts* reach — be selective about what posts to IG.
 
-## → heygen-elevenlabs-renderer (voice clone)
+## → content-creation-engine / podcast-studio (ElevenLabs voice clone — heygen-elevenlabs-renderer retired 2026-07-29)
 Source: "Using AI to Tell Better Stories."
 - Clone with **30+ min clean audio**; use **Pro mode**; tune speed / similarity / stability; keep all VO scripts in ONE ChatGPT thread so it learns your tone; **ElevenLabs Voice Changer** to match inflection from a temp recording.
 
@@ -40,4 +40,4 @@ Source: "Using AI to Tell Better Stories."
 
 ## Wiring status (2026-06-27)
 - Wired (pointer added to SKILL.md): `seo-optimizer`, `newsletter-generator`, `content-creation-engine`.
-- Staged here for quick wiring when next touched: `past-client-follow-up-system`, `heygen-elevenlabs-renderer`, `higgsfield-video`. (`context-engineer` intentionally not wired.)
+- Staged here for quick wiring when next touched: `past-client-follow-up-system`, `higgsfield-video`. (`context-engineer` intentionally not wired.)

@@ -244,4 +244,4 @@ On-screen text: [overlays per beat]
 Editing notes: [music drop on the hero beat, cut points, graphic IDs, avatar look]
 ```
 
-**Rules:** full scripts, never hooks-only. Show the timing math. Strip every price/rate/credit from any spoken or on-screen line (street address ok; say "under nine" / "over asking", never the figure). Run `humanizer` on the prose. Talking-head segments render from the chosen look (e.g. `digital_twin`) via `heygen-video` / `heygen-elevenlabs-renderer` straight from the SSML, so the editor never rewrites them. Live segments (e.g. the raw POV walkthrough) skip the SSML.
+**Rules:** full scripts, never hooks-only. Show the timing math. Strip every price/rate/credit from any spoken or on-screen line (street address ok; say "under nine" / "over asking", never the figure). Run `humanizer` on the prose. Talking-head segments render from the chosen look (e.g. `digital_twin`) via `heygen-video` straight from the SSML, so the editor never rewrites them. Live segments (e.g. the raw POV walkthrough) skip the SSML.

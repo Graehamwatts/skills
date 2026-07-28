@@ -20,7 +20,7 @@ The DRE number must **never** appear in any script line, text overlay, caption, 
 
 - **Voice** = Graeham's ElevenLabs clone, by default, on every asset. Only override if Graeham explicitly says so in Step 0.
 - **Avatar look** = the one chosen in Step 0 (never a silent default).
-- **Settings/IDs** are owned by `heygen-elevenlabs-renderer` (registry.json) and `heygen-video`. Do **not** hardcode voice/avatar IDs into the Call Sheet — reference those skills so the IDs stay in one place.
+- **Settings/IDs** are owned by `heygen-video` (references/avatars.md). Do **not** hardcode voice/avatar IDs into the Call Sheet — reference that skill so the IDs stay in one place.
 
 ## 5. Audio rules on B-roll
 

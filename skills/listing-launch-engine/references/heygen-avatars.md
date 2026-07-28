@@ -1,6 +1,6 @@
 # HeyGen Avatar Inventory + Selection (what we have, what to render, what to capture)
 
-A big share of the launch's "videos" are **talking-head segments rendered by HeyGen**, not filmed. So the skill should know what avatars exist, pick the right look per segment, and only put Graeham on camera for what genuinely needs him (or for capturing a NEW look). Source of truth for IDs: `../../heygen-video/references/avatars.md` and `../../heygen-elevenlabs-renderer/references/registry.json` (read those for exact look/voice IDs at render time; don't hardcode here).
+A big share of the launch's "videos" are **talking-head segments rendered by HeyGen**, not filmed. So the skill should know what avatars exist, pick the right look per segment, and only put Graeham on camera for what genuinely needs him (or for capturing a NEW look). Source of truth for IDs: `../../heygen-video/references/avatars.md` (read it for exact look/voice IDs at render time; don't hardcode here). The old `heygen-elevenlabs-renderer` auto-render registry is retired (2026-07-29) — the ~70-variation raw avatar pool it tracked is not part of the current manual workflow.
 
 ## What Graeham already has (no filming needed to use these)
 
@@ -27,7 +27,7 @@ A big share of the launch's "videos" are **talking-head segments rendered by Hey
    - `AVATAR (HEYGEN — NEW look, capture this trip)` → we want a fresh look; capture avatar-source on the shoot (see `avatar-source-specs.md`).
    - `LIVE` → Graeham filmed on camera (e.g. the raw POV walkthrough, or a piece that needs the real location behind him).
 3. **Voice** defaults to the Voice Clone; note `--voice` only if A/B testing the Twin.
-4. The SSML for each rendered segment lives in the Script Library (PART 5); `heygen-video` / `heygen-elevenlabs-renderer` render straight from it.
+4. The SSML for each rendered segment lives in the Script Library (PART 5); `heygen-video` renders straight from it.
 
 ## Creating NEW avatars (when the long shoot is worth it)
 
