@@ -1,6 +1,6 @@
 ---
 name: video-transcriber
-description: "Universal video-to-text transcriber for Graeham's team (Peter, Ellie, John, Adrian). Hand it any video — paste a URL (YouTube, Facebook, Instagram, TikTok, Vimeo, Twitter/X, Reddit, LinkedIn) OR upload/point to a local video file (.mp4, .mov, .m4a, .mp3, .wav) — and get a clean transcript back. Auto-detects whether the input is a URL or a local file, then picks the cheapest working backend: free caption pull first, then local faster-whisper on Graeham's Windows machine for everything else. Trigger on: transcribe, transcript, get the transcript, video to text, captions, subtitles, what does this video say, YouTube/Reel/Short/TikTok transcript, transcribe this file, transcribe this video I uploaded. Also triggers when user just pastes a video URL or uploads a video file with no other context. Pairs with video-watcher (visual analysis) when full A+V breakdown needed."
+description: "Universal video-to-text transcriber for Graeham's team (Peter, Ellie, John, Adrian). Trigger on: transcribe, transcript, get the transcript, video to text, captions, subtitles, what does this video say, YouTube/Reel/Short/TikTok transcript, transcribe this file, transcribe this video I uploaded."
 ---
 
 # Video Transcriber

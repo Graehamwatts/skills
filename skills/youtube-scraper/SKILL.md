@@ -1,6 +1,6 @@
 ---
 name: youtube-scraper
-description: "Monitors YouTube channels for new uploads (long-form Videos tab + Shorts tab) and extracts metadata + transcripts for downstream automation. Different job from youtube_transcriber.py (which transcribes a single URL on demand). Use this skill ANY time the user asks to: check YouTube for new videos, scrape a YouTube channel, monitor a channel for uploads, get the latest videos from [channel], pull new videos from my channel, check competitor YouTube channels, find new videos posted today, scrape YouTube channel for last 24 hours. Trigger when the user mentions: YouTube channel monitoring, new YouTube uploads, YouTube channel scraper, YouTube channel feed, daily YouTube check, channel watch list, competitor video tracking, or feeding new YouTube content into the content-creation-engine for repurposing. Hands off transcript extraction to youtube_transcriber.py. Outputs structured video data the content-creation-engine reads for repurposing into blog / social / script derivatives."
+description: "Monitors YouTube channels for new uploads (long-form Videos tab + Shorts tab) and extracts metadata + transcripts for downstream automation. Use this skill ANY time the user asks to: check YouTube for new videos, scrape a YouTube channel, monitor a channel for uploads, get the latest videos from [channel], pull new videos from my channel."
 ---
 
 # YouTube Scraper

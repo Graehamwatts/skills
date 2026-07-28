@@ -1,6 +1,6 @@
 ---
 name: trackabi-va-payroll
-description: Semi-monthly VA payroll run for Graeham Watts ("TrackBee VA assistance") — pulls each virtual assistant's Trackabi timesheet PDF, stages Wise payments one at a time for Graeham to personally approve, files the Wise receipt emails as PDFs, updates Peter's loan tracker, and sends per-person bookkeeping emails with both PDFs attached. Use ANY time Graeham says run the VA payroll, pay my VAs, pay my assistants, TrackBee, Trackabi, trackabi timesheets, pull the timesheets, VA timesheets, pay period, 1st to the 15th, 16th to the end of the month, Wise payments, pay Adrian/Eleanor/John/Jason/Giselle, timesheet PDFs, assistant payroll, bi-monthly payroll, or anything about paying or documenting his virtual assistants' hours. Also trigger on partial asks (just the timesheets, just the receipts, just the bookkeeping emails) — each step runs independently.
+description: "Semi-monthly VA payroll run for Graeham Watts (\"TrackBee VA assistance\") — pulls each virtual assistant's Trackabi timesheet PDF, stages Wise payments one at a time for Graeham to personally approve, files the Wise receipt emails as PDFs, updates Peter's loan tracker, and sends per-person bookkeeping emails with both PDFs attached."
 ---
 
 # Trackabi VA Payroll ("TrackBee VA assistance")

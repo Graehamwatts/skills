@@ -1,6 +1,6 @@
 ---
 name: switchy-engine
-description: "Tracked-link + retargeting-pixel engine for Graeham Watts. The single source of truth for creating Switchy short links / QR codes that fire Meta/Google/etc. retargeting pixels on the redirect layer, and for pulling per-link scan/click analytics. Use this skill ANY time the user mentions: tracked link, short link, Switchy, shortlink, QR code, retargeting link, pixeled link, link analytics, scan count, click count, custom audience, retargeting audience, link in bio, UTM, swappable link, CTA link, or wants to know how a postcard/newsletter/listing/GBP link is performing. OTHER skills (content-creation-engine, newsletter-generator, weekly-listing-update, html-email, the postcard/Canva workflow, listing pages) CALL INTO this skill to mint tracked links instead of dropping raw destination URLs — build once, reference everywhere, so pixel + tracking logic never drifts. Also trigger on: 'wrap this link', 'make a tracked QR for the postcard', 'how many scans did X get', 'build the retargeting report', 'which links are feeding my audiences'."
+description: "Tracked-link + retargeting-pixel engine for Graeham Watts. Use this skill ANY time the user mentions: tracked link, short link, Switchy, shortlink, QR code, retargeting link, pixeled link, link analytics, scan count, click count, custom audience, retargeting audience, link in bio, UTM, swappable link, CTA link..."
 ---
 
 # Switchy Engine — Tracked Links & Retargeting Pixels

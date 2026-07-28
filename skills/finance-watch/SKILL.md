@@ -1,14 +1,7 @@
 ---
 name: finance-watch
-description: >
-  Graeham's personal finance pipeline brain — Plaid bank transactions + SparkReceipt receipts → the
-  Finance Google Sheet → entity tax tabs. Use ANY time Graeham mentions: watch my finances, my finances,
-  Plaid, Chase, bank transactions, pull my transactions, refresh finances, finance sheet, bookkeeping,
-  SparkReceipt, receipt workflow, tax totals, chase_transactions, FTB / franchise tax payments, "is the
-  finance pipeline up", "pull my bank data", "reconcile receipts", or anything about reading or refreshing
-  his bank/expense data. ALSO trigger when n8n has just been fixed/restarted and he wants the bank pull run
-  ("n8n is back", "go live", "run the finance pull now"). This skill knows the architecture, the failure
-  modes, the exact go-live sequence, and where every credential lives.
+description: "Graeham's personal finance pipeline brain — Plaid bank transactions + SparkReceipt receipts → the Finance Google Sheet → entity tax tabs. Use ANY time Graeham mentions: watch my finances, my finances, Plaid, Chase, bank transactions, pull my transactions, refresh finances, finance sheet, bookkeeping, SparkReceipt, receipt workflow..."
+
 ---
 
 # finance-watch — Graeham's finance pipeline operator

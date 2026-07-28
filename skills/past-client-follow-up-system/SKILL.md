@@ -1,6 +1,6 @@
 ---
 name: past-client-follow-up-system
-description: "Past Client Follow-up System (PCFS) — central hub for Graeham Watts' past-client operations. Use ANY time Graeham mentions: PCFS, past client follow up, new deal closed, just closed, COE today, onboard new client, add new past client, new buyer closed, new seller closed, just funded, sync new deal, push new deal to GHL, edit past client, update address, fix client info, pause PCFS, unsubscribe from PCFS, stop follow up, mark deceased, snooze contact, audit PCFS, check PCFS health, missing COE dates, anniversary date wrong, cadence not firing, daily call rotation, anniversary batch, CMA digest, Sharon notes, Adrian briefing, birthday touch, By_Date events, propagate contact to GHL, or anything touching Master_Past_Clients Google Sheet, the Excel master, or GoHighLevel COE_date custom field. Also trigger on: add this person to my system, set up follow-up, put in the rotation, enroll in PCFS, fix a client record, or pasting a closing summary."
+description: "Past Client Follow-up System (PCFS) — central hub for Graeham Watts' past-client operations. Use ANY time Graeham mentions: PCFS, past client follow up, new deal closed, just closed, COE today, onboard new client, add new past client, new buyer closed, new seller closed, just funded, sync new deal, push new deal to GHL, edit past client.."
 ---
 
 # Past Client Follow-up System (PCFS)

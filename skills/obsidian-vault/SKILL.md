@@ -1,6 +1,6 @@
 ---
 name: obsidian-vault
-description: "Orientation and navigation layer for Graeham Watts's Obsidian vault. Use this skill ANY time the user says 'the vault', 'my vault', 'Obsidian', 'my notes', 'my second brain', 'put this in Obsidian', 'check the vault', 'find in my notes', 'log to the vault', 'where did I save', or refers to daily notes, listings notes, client notes, the AI Library, Content Intelligence, PropIQ, or PropertyCast notes. This skill tells you WHERE the vault is, HOW it's organized, and WHICH folder a given note belongs in, so you never have to ask Graeham for the path again. The vault lives at C:\\Users\\Graeham Watts\\Documents\\Obsidian. For saving VIDEO references specifically, hand off to video-to-obsidian instead."
+description: "Orientation and navigation layer for Graeham Watts's Obsidian vault. Use this skill ANY time the user says 'the vault', 'my vault', 'Obsidian', 'my notes', 'my second brain', 'put this in Obsidian', 'check the vault', 'find in my notes', 'log to the vault', 'where did I save', or refers to daily notes, listings notes, client notes..."
 ---
 
 # Obsidian Vault — Navigation & Orientation

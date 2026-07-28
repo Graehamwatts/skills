@@ -1,6 +1,6 @@
 ---
 name: flow-dictation
-description: Local Wispr-Flow-style push-to-talk dictation for Graeham — hold Ctrl+Alt anywhere in Windows, speak, release, and the text is pasted into the focused app (tap Shift while talking for AI-polish via the Claude API). Runs locally on the RTX 5090 with faster-whisper large-v3-turbo kept warm in VRAM (~0.3s transcription latency), with a live waveform overlay, dictation history + stats window, and personal vocabulary. Use ANY time the user mentions flow dictation, dictation app, push to talk, whisper flow, wispr flow, voice typing, talk to type, dictate into any app, the Ctrl+Alt mic, my dictation hotkey, polish mode, or wants to change the dictation hotkey/vocabulary/settings, debug why dictation isn't working, or rebuild the desktop shortcut.
+description: "Local Wispr-Flow-style push-to-talk dictation for Graeham — hold Ctrl+Alt anywhere in Windows, speak, release, and the text is pasted into the focused app (tap Shift while talking for AI-polish via the Claude API). Use ANY time the user mentions flow dictation, dictation app, push to talk, whisper flow, wispr flow, voice typing..."
 ---
 
 # Flow Dictation — local push-to-talk dictation

@@ -1,6 +1,6 @@
 ---
 name: website-crawler
-description: "General-purpose web page crawler — hand it any URL (a competitor's blog post, a market/housing data page, a news article, a city or county site, any arbitrary webpage) and get back clean markdown text instead of raw messy HTML. Built on Crawl4AI, running locally on Graeham's Windows machine. Use this whenever content-creation-engine, disclosure-analyzer, off-market-property-search, ai-library, price-reduction-angle-generator, or any other skill needs to read a webpage that isn't a social platform post — this is NOT for Reddit/Instagram/YouTube (those have their own dedicated scrapers/skills). Trigger on: crawl this site, crawl this page, scrape this URL, get clean text from this webpage, pull this article, fetch this page as markdown, read this webpage for me, general web crawling, structured extraction from a webpage. Also trigger any time the user pastes a plain article/blog/report URL and wants its content pulled into a doc, comparison, or research summary — even if they don't say 'crawl' explicitly."
+description: "General-purpose web page crawler — hand it any URL (a competitor's blog post, a market/housing data page, a news article, a city or county site, any arbitrary webpage) and get back clean markdown text instead of raw messy HTML."
 ---
 
 # Website Crawler

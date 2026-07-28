@@ -1,6 +1,6 @@
 ---
 name: switchy-qr
-description: "Generate a tracked QR code for a real-estate postcard via Switchy. Built for Peter (Jason) — the ONLY job is: take a finished postcard and produce a scannable QR code that points to a tracked Switchy short link (with the right landing page, UTM, folder, and retargeting pixels already set), then hand back the QR PNG to embed in the postcard. Use this skill ANY time the user says: generate a QR code for this postcard, make a postcard QR, QR for the mailer, tracked QR, Switchy QR, create the postcard link, or uploads a postcard and asks for a QR. This is the lightweight QR-only companion to the full switchy-engine skill (analytics/dashboard live there, not here)."
+description: "Generate a tracked QR code for a real-estate postcard via Switchy. Use this skill ANY time the user says: generate a QR code for this postcard, make a postcard QR, QR for the mailer, tracked QR, Switchy QR, create the postcard link, or uploads a postcard and asks for a QR."
 ---
 
 # Switchy QR (postcard QR generator) — for Peter / Jason

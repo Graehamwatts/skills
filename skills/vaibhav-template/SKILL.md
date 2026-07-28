@@ -1,6 +1,6 @@
 ---
 name: vaibhav-template
-description: Turn any script into a Vaibhav Sisinty-style talking-head video for Graeham Watts — the visual formula reverse-engineered from @vaibhavsisinty's 1.7M-follower Instagram reels. Fires on "run this script through the template I love", "make this Vaibhav-style", "use my video template", "convert to Vaibhav format", "add the warm desk aesthetic", "put this in my rotation", or any request to produce a video where Graeham's face appears with the burned-in visual system (locked talking-head, fast front-loaded cuts, serif-italic captions, color-highlighted keywords, emoji pop-ins). Encodes Graeham's 5 pre-generated warm-lit avatar looks (rotate across videos for variety without breaking brand consistency), the 5-mode composition system, cut pacing arc, and typography specs. Hands script + look off to heygen-video for rendering and higgsfield-video for B-roll. Use this instead of freestyling a HeyGen render when the user wants the Vaibhav aesthetic.
+description: "Turn any script into a Vaibhav Sisinty-style talking-head video for Graeham Watts — the visual formula reverse-engineered from @vaibhavsisinty's 1.7M-follower Instagram reels."
 ---
 
 # Vaibhav-Style Video Template — Graeham Watts

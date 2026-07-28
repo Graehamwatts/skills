@@ -1,15 +1,7 @@
 ---
 name: founder-academy
-description: >
-  Graeham's private PropertyIQ Academy — his condensed founder's-MBA + AI-fluency + operator
-  course (8 courses, 61 lessons + capstone) that teaches him everything he needs to build, run,
-  fund, staff, and intelligently TALK about PropertyIQ and AI, without learning to code. Use ANY
-  time Graeham says: PropertyIQ Academy, the Academy, my course, teach me lesson X, next lesson,
-  quiz me, run the lesson, founder course, my MBA, the curriculum, "I have a question about the
-  lesson", role-play the investor/engineer, or asks to learn about LLMs/agents/RAG/MCP, the model
-  landscape, SaaS metrics, fundraising/SAFEs/cap tables, hiring/firing, moats, or the PropertyIQ
-  architecture in a teaching context. Runs interactive lessons, answers mid-listen questions from
-  the gym MP3s, tracks his progress, and (with skill-author help) produces new lesson audio.
+description: "Graeham's private PropertyIQ Academy — his condensed founder's-MBA + AI-fluency + operator course (8 courses, 61 lessons + capstone) that teaches him everything he needs to build, run, fund, staff, and intelligently TALK about PropertyIQ and AI, without learning to code. Use ANY time Graeham says: PropertyIQ Academy, the Academy..."
+
 ---
 
 # PropertyIQ Academy — tutor

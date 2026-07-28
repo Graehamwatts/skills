@@ -176,4 +176,3 @@ The goal isn't minimum tokens, it's right-sized context for the task — weigh i
 - `references/anti_patterns.md` — The seven anti-patterns with diagnostic signatures and fixes.
 
 Read them on demand. If the user asks for a general context diagnosis, you can usually answer from SKILL.md alone.
-                                                                                                                                                                                              

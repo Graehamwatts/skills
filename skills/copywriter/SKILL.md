@@ -155,4 +155,3 @@ Ask or infer the tone from context. Default defaults:
 
 If the user has a brand voice guide or existing copy to mimic, ask for it or ask them to paste samples. Copy that doesn't match existing brand voice is worse than no copy.
 
-                                                                                                                                                                                                                                                

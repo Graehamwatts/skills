@@ -1,6 +1,6 @@
 ---
 name: local-news-scraper
-description: Local news scraper for Graeham Watts' Bay Area markets. Pulls news headlines, press releases, and permit/zoning updates from official city websites (cityofepa.org, redwoodcity.org, cityofpaloalto.org, menlopark.gov, smcgov.org) and regional outlets (SF Chronicle, Mercury News, KTVU, Palo Alto Weekly, Daily Post). Use ANY time the user mentions: pull local news, find news stories for this week, scan city websites, news for EPA / RWC / PA / MP, city council approvals, new development permits, press releases, timeliness research, news hook for video, refresh local news feed. Also trigger when a day view or weekly calendar shows "Demo Data" on the Local News card and user wants it live, OR when content-calendar's Timeliness scoring needs fresh input.
+description: "Local news scraper for Graeham Watts' Bay Area markets. Use ANY time the user mentions: pull local news, find news stories for this week, scan city websites, news for EPA / RWC / PA / MP, city council approvals, new development permits, press releases, timeliness research, news hook for video, refresh local news feed."
 ---
 
 # Local News Scraper

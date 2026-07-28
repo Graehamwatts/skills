@@ -1,6 +1,6 @@
 ---
 name: ai-library
-description: "Personal AI Library — Graeham's private cross-reference combining Pantana's AI Marketing Academy library (72 items: 22 bots, 29 prompts, 20 guides, 1 video), 20 community prompts from Prompt Studio, 12 lectures, 9 lessons, 45 Personal Claude Skills with diagrams, and 2 Personal Custom Prompts. 398-page PDF + interactive HTML with 49 inline SVG diagrams. PRIVATE — do not share publicly. Use ANY time the user asks about AiM, AI Marketing Academy, Pantana, Jason Pantana, the library, BOFU library, AEO library, what does AiM say about a topic, find a prompt for a task, which of my skills cover a topic, cross-reference my skills with AiM, what skills do I have for a topic, what's in the AI library, or look up a Pantana bot or prompt. Also trigger when user mentions implementation plan, gaps to build, schema-builder gap, or llm-listing-engine gap. Source of truth at C:\\Users\\Graeham Watts\\Documents\\Claude\\AI-Library\\."
+description: "Personal AI Library — Graeham's private cross-reference combining Pantana's AI Marketing Academy library (72 items: 22 bots, 29 prompts, 20 guides, 1 video), 20 community prompts from Prompt Studio, 12 lectures, 9 lessons, 45 Personal Claude Skills with diagrams, and 2 Personal Custom Prompts. Use ANY time the user asks about AiM, AI Mark"
 ---
 
 # AI Library — Personal Reference + Cross-Index

@@ -1,7 +1,7 @@
 ---
 name: travel-hq
-description: >
-  Dedicated travel agent, trip planner, and points strategist for Graeham Watts. Handles all travel planning, comparison, optimization, and booking prep. Use ANY time the user mentions: book a flight, book a hotel, plan a trip, travel planning, travel itinerary, trip comparison, flight search, hotel search, points optimization, credit card rewards for travel, lounge access, trip prep, packing list for a trip, travel emergency card, companion traveler, price drop monitor, post-trip review, points earned, miles earned, book a trip, trip prep brief, emergency travel card, travel HQ, travel assistant, what card should I use for flights, how many points will I earn, compare these trips, prep me for my trip, which airline, what lounge, or anything related to planning, comparing, booking, or reviewing travel. Also trigger when the user pastes a booking confirmation, flight itinerary, or hotel reservation. Over-trigger rather than under-trigger — if there is any travel intent in the message, use this skill.
+description: "Dedicated travel agent, trip planner, and points strategist for Graeham Watts. Use ANY time the user mentions: book a flight, book a hotel, plan a trip, travel planning, travel itinerary, trip comparison, flight search, hotel search, points optimization, credit card rewards for travel, lounge access, trip prep, packing list for a trip..."
+
 ---
 
 # TRAVEL HQ

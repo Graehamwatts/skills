@@ -1,6 +1,6 @@
 ---
 name: chatgpt-ads
-description: ChatGPT Ads campaign builder for Graeham Watts — builds ready-to-launch ad campaigns for ads.openai.com, where ads appear alongside live ChatGPT conversations about buying or selling homes. Merges two AiM resources (the Bulk-Build ChatGPT Ads Cowork agent and the 25-hint Context Hint Library, both May 2026) into one skill. Produces a bulk-upload spreadsheet (campaigns/adgroups/ads), a context-hints document, and a setup checklist. Use ANY time the user mentions ChatGPT ads, OpenAI ads, ads.openai.com, context hint, ad inside ChatGPT, advertise in ChatGPT conversations, ChatGPT ad campaign, build my ChatGPT ads, light test campaign on ChatGPT, John's ChatGPT test, bulk upload ads, CPC bid for ChatGPT, or expanding/optimizing an existing ChatGPT Ads campaign. Also trigger when planning the ads channel mix alongside meta-ads — this skill owns the ChatGPT channel; meta-ads owns Facebook/Instagram.
+description: "ChatGPT Ads campaign builder for Graeham Watts — builds ready-to-launch ad campaigns for ads.openai.com, where ads appear alongside live ChatGPT conversations about buying or selling homes. Use ANY time the user mentions ChatGPT ads, OpenAI ads, ads.openai.com, context hint, ad inside ChatGPT, advertise in ChatGPT conversations..."
 ---
 
 # ChatGPT Ads — Campaign Builder

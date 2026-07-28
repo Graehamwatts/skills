@@ -1,6 +1,6 @@
 ---
 name: instagram-competitor-scraper
-description: "Instagram competitive intelligence scraper for Graeham Watts. Pulls top-engagement posts by hashtag and by competitor handle via Apify, returns ranked metadata (URL, creator, views, likes, comments, engagement rate, caption, post date). Standalone callable, also called by content-creation-engine for weekly market signal, and by video-to-obsidian for vault logging. Use this skill ANY time the user mentions: scrape Instagram, competitor analysis, top performing posts, what's working on Instagram, find viral reels, hashtag scrape, competitor monitoring, IG market signal, content benchmarking, what are competitors posting, find me the top reels for [hashtag], who's crushing it in my niche, build a swipe file, defensible content strategy, find replicable content, or any time they want to see top-engagement Instagram content in a niche. Always preserves the source URL in every result — non-negotiable, because Instagram is a visual medium and the user needs to click back to see the actual treatment."
+description: "Instagram competitive intelligence scraper for Graeham Watts. Use this skill ANY time the user mentions: scrape Instagram, competitor analysis, top performing posts, what's working on Instagram, find viral reels, hashtag scrape, competitor monitoring, IG market signal, content benchmarking, what are competitors posting..."
 ---
 
 # Instagram Competitor Scraper

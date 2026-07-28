@@ -1,13 +1,7 @@
 ---
 name: cowork-task-shutoff
-description: >
-  Disable the Cowork-side copies of Graeham's recurring scheduled tasks so they don't double-fire
-  alongside the live copies now running in Claude Code (migrated 2026-06-09). Use ANY time Graeham
-  says: turn off the Cowork tasks, disable the duplicate scheduled tasks, stop the double emails,
-  Cowork is firing tasks twice, shut off Cowork automations, kill the Cowork-side schedules, or
-  "make sure the Cowork tasks are off and the Claude Code ones are on." RUN THIS INSIDE COWORK —
-  it disables Cowork's own scheduled tasks and verifies the result. Report-only safe: it never
-  deletes a task, only toggles it off, and it lists exactly what it changed.
+description: "Disable the Cowork-side copies of Graeham's recurring scheduled tasks so they don't double-fire alongside the live copies now running in Claude Code (migrated 2026-06-09). Use ANY time Graeham says: turn off the Cowork tasks, disable the duplicate scheduled tasks, stop the double emails, Cowork is firing tasks twice..."
+
 ---
 
 # Cowork Scheduled-Task Shut-Off

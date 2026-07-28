@@ -1,6 +1,6 @@
 ---
 name: concept-forge
-description: The writers' room — a divergent ideation engine that generates novel, avatar-realizable, truth-anchored video/content CONCEPTS with strong scored hooks, then returns the top 5 as concept cards for Graeham to greenlight. Use whenever the task is to come up with original video or content IDEAS, concepts, angles, hooks, or "what should this video be" — for a listing, a geographic farming push, a market/education piece, or a direct-response ad. This is an EXECUTABLE engine (it generates, scores, and selects), not a passive reference. It is CALLED BY content-creation-engine (generic/geographic content) and listing-launch-engine (listing content); it does not orchestrate them. It loads comedy-craft for the hook/VO voice and marketing-psychology for the CTA. It hands the chosen concept to cinematic-video-engine for execution. Trigger phrases: concept ideas, video concepts, give me concepts, unique angles, strong hooks, creative ideas for this listing, farming video ideas, make it not generic, pitch me concepts, what's the hook. Every concept is anchored to a real real-estate truth, realizable with an existing avatar + videographer plates, and brand-safe (clean with a little bite). Fugu Ultra is the standing QA gate.
+description: "The writers' room — a divergent ideation engine that generates novel, avatar-realizable, truth-anchored video/content CONCEPTS with strong scored hooks, then returns the top 5 as concept cards for Graeham to greenlight."
 ---
 
 # Concept Forge — the writers' room
