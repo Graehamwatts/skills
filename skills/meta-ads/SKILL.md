@@ -132,7 +132,7 @@ Chat tables by default; date range + currency always stated. For client-facing o
 | Video creative / b-roll | `higgsfield-video`, `heygen-video`, `vaibhav-template` |
 | What converts in ads → feed content topics | `content-calendar` (paid signal informs the weekly plan) |
 | Lead follow-up after the form fill | `ghl-crm-audit` / GoHighLevel connector |
-| Weekly organic report | `social-media-analyzer` / `content-calendar` |
+| Weekly organic report | `content-calendar` |
 
 ## Troubleshooting
 

@@ -1,6 +1,6 @@
 ---
 name: ai-library
-description: "Personal AI Library — Graeham's private cross-reference combining Pantana's AI Marketing Academy library (72 items: 22 bots, 29 prompts, 20 guides, 1 video), 20 community prompts from Prompt Studio, 12 lectures, 9 lessons, 45 Personal Claude Skills with diagrams, and 2 Personal Custom Prompts. Use ANY time the user asks about AiM, AI Mark"
+description: "Personal AI Library — Graeham's private cross-reference combining Pantana's AI Marketing Academy library (72 items: 22 bots, 29 prompts, 20 guides, 1 video), 20 community prompts from Prompt Studio, 12 lectures, 9 lessons, 43 Personal Claude Skills with diagrams, and 2 Personal Custom Prompts. Use ANY time the user asks about AiM, AI Mark"
 ---
 
 # AI Library — Personal Reference + Cross-Index

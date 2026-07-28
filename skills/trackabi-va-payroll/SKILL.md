@@ -65,7 +65,7 @@ File: `Documents\Assistants\Peter Jason Alabanza\peter loan tracker.xlsx` (sheet
 - Loan: $1,030 financed at 7%, 10 payments of **$106.33**. Ledger drives the Summary via formulas — fill only the input cells (wage, deduction, transfer #, date, status, notes) with openpyxl (`data_only=False` so formulas survive).
 - **Before deducting, check the deduction is actually due** — history shows skipped periods (May 16–31 and Jun 1–15 2026 went out full-wage). Cross-check the Ledger against actual Wise payment history; when the tracker and reality disagree, Wise history wins. Correct the Ledger to match.
 - When deducting: Jason's net = wage − 106.33. Log the row (payment N of 10), update the Summary "THIS PERIOD" block and "Last updated" date.
-- Status as of Jul 1 2026: payment 5 of 10 done, remaining balance $522.49.
+- Current payment count and remaining balance live in the tracker's Summary sheet — read it fresh each run rather than trusting a remembered figure, it changes every pay period.
 - Email Jason the updated tracker: **graehamwattsvideo@gmail.com**. The Gmail connector's create_draft DOES accept base64 attachments (ignore its description saying otherwise). Create a draft for Graeham to review/send, summarizing wage, deduction, net, and remaining balance.
 
 ## Step 4 — Wise receipt emails → PDFs

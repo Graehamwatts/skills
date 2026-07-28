@@ -33,7 +33,7 @@ If it fails, **fix the file paths it lists before pushing.** Do not bypass.
 This repo holds **source code only** — no outputs, no data bins.
 
 The repo root contains exactly these items:
-- `skills/` — all 39 skills, each in its own folder. **Source of truth.**
+- `skills/` — every skill, each in its own folder (run `ls skills/` for the current count — it drifts, don't hardcode it). **Source of truth.**
 - `scripts/` — repo-wide infrastructure scripts (currently just the brand-identity tripwire).
 - `.claude-plugin/` — Cowork plugin manifest.
 - `.nojekyll` — disables Jekyll on GitHub Pages.

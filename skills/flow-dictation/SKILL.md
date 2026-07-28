@@ -127,5 +127,5 @@ calls from workers go through `UI.q` (a queue polled with `root.after`).
 
 ## Roadmap (not built yet)
 
-- Phase 3: voice commands ("new line", "scratch that"), toggle/lock mode for
-  long dictation, optional AI-polish pass before pasting.
+- Phase 3: voice commands ("new line", "scratch that"). Lock mode and the
+  AI-polish pass have since shipped (see above) — only voice commands remain.
