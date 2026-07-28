@@ -1,11 +1,13 @@
 ---
 name: cinematic-trailer-pipeline
-description: End-to-end cinematic trailer production pipeline for Graeham Watts — from concept to finished MP4. Use ANY time the user mentions cinematic trailer, movie trailer ad, epic trailer, 60-second trailer, brand trailer, narrative video with VO, Drive-style video, Sicario-style trailer, multi-scene story video, "make me a trailer," "build a trailer," "trailer for my brand," "movie ad," "epic ad," or any request for a polished cinematic short-form video with narration, music, and a story arc. Also trigger when user wants to combine AI video generation (PAI / UTOPAI), ElevenLabs voiceover, and music into one finished piece. Encodes the full pipeline we built and the painful lessons learned — PAI content filter pitfalls, character drift workarounds, the editorial pass with color grade + music duck + VO mix, proper trailer pacing. Over-trigger — if the request smells like "epic cinematic video with a story," use this.
+description: End-to-end cinematic trailer production pipeline for Graeham Watts — from concept to finished MP4. Use ANY time the user mentions cinematic trailer, movie trailer ad, epic trailer, 60-second trailer, brand trailer, narrative video with VO, Drive-style video, Sicario-style trailer, multi-scene story video, "make me a trailer," "build a trailer," "trailer for my brand," "movie ad," "epic ad," or any request for a polished cinematic short-form video with narration, music, and a story arc. Also trigger when user wants to combine AI video generation (Higgsfield/Seedance/Kling), ElevenLabs voiceover, and music into one finished piece. Encodes the full pipeline we built and the painful lessons learned — character-consistency technique across scenes, the editorial pass with color grade + music duck + VO mix, proper trailer pacing. Over-trigger — if the request smells like "epic cinematic video with a story," use this.
 ---
 
 # Cinematic Trailer Pipeline
 
 > The complete brand-trailer production system for Graeham Watts. Codifies the full workflow from concept to finished MP4. Built from the lessons of building "The Last 47 Days" — what worked, what failed twice, and the editorial craft that saved it.
+>
+> **Stack updated 2026-07-29:** the video-generation engine changed from PAI 2.0/UTOPAI (retired) to Higgsfield (Seedance 2.0 primary, Kling 3.0 fallback), matching `higgsfield-video`/`cinematic-hooks`. Phase 3 below reflects the new stack. **This has not been run end-to-end on a real trailer yet** — unlike the PAI version, which was battle-tested on "The Last 47 Days." Treat the new Phase 3 as a first draft; expect to discover new gotchas on the first live run and update this file afterward, the same way the PAI gotchas got documented.
 
 ---
 
@@ -34,7 +36,7 @@ If the user wants a single talking-head video, route to `heygen-video` instead. 
 ```
 Phase 1: Concept Lock           → Tagline, dominant tone, 60s beat sheet
 Phase 2: Character Refs         → Higgsfield Nano Banana Pro keepers
-Phase 3: AI Video Generation    → PAI 2.0 (or fallback)
+Phase 3: AI Video Generation    → cinematic-hooks (prompts) + higgsfield-video (Seedance 2.0 / Kling 3.0), one scene at a time
 Phase 4: Voiceover              → ElevenLabs (narrator + Graeham clone)
 Phase 5: Editorial Pass         → ffmpeg cut + color grade + music + mix
 ```
@@ -72,15 +74,15 @@ Adjust durations for shorter trailers (30s = compress each beat by half, drop on
 
 ## Phase 2: Character Refs (Higgsfield Nano Banana Pro)
 
-Why this matters: **PAI 2.0's character module is only as good as the reference image you give it.** A great selfie produces about a 25% face-match hit rate. Bootstrapping from a "keeper" first reference gets that to 75%+.
+Why this matters: with no dedicated "character module" on the new stack, consistency across scenes depends entirely on how strong these reference images are — see `cinematic-hooks`' Character Consistency Guide for the technique (same physical description repeated in every shot, reference images anchor each generation). A great selfie produces about a 25% face-match hit rate. Bootstrapping from a "keeper" first reference gets that to 75%+.
 
-Workflow:
+Workflow (uses `higgsfield-video`'s Stage 1 — Nano Banana Pro path):
 1. Start with a clean, front-facing, well-lit anchor photo of the user.
 2. In Higgsfield, open Nano Banana Pro, upload anchor, generate 4 variants of the user in **Look 1** (the dominant wardrobe — usually formal/overcoat for real estate trailers).
 3. The user picks the keeper that "looks like them" (the user's eye is better than ours — proven twice this session).
 4. Download the keeper as a JPG.
 5. **Bootstrap technique:** Re-upload the keeper as the NEW seed photo. Generate 4 more variants at a TIGHTER framing (chest-up close-up). NBP locks much better when the seed is already in the target style.
-6. Take the strongest 2 chest-up close-ups as the final ref material for PAI.
+6. Take the strongest 2 chest-up close-ups as the final ref material — these get re-attached as the reference image on every Phase 3 scene generation.
 
 **Reusable Higgsfield prompt template (Look 1 — formal arrival):**
 
@@ -92,36 +94,23 @@ For Look 2 (different mood/wardrobe), keep the camera direction same, change war
 
 ---
 
-## Phase 3: AI Video Generation (PAI 2.0)
+## Phase 3: AI Video Generation (cinematic-hooks + higgsfield-video)
 
-PAI is the strongest narrative continuity tool, but it has pitfalls we hit hard tonight. See `references/pai-gotchas.md` for the full list. Top 3 you MUST know:
+There is no single "character module" upload on this stack — each scene is its own generation, anchored by the Phase 2 reference images and a repeated character description. Read `higgsfield-video`'s SKILL.md before starting; this phase is 8 separate passes through its Stage 1 + Stage 2 workflow, not one batch job.
 
-1. **Content filter blocks emotional adjectives.** Words like "tense," "suspenseful," "intense," "dread," "fear" trip a content policy filter that kills the render. Describe the *visual* mood instead: "low-key lit, quiet pacing, soft afternoon light, contemplative expression." Don't name the emotion.
+**Key constraint:** `higgsfield-video` is explicitly scoped to one clip per session, iterating from there — it does not batch-generate. Budget one generation pass per scene (8 passes for a standard 8-beat trailer), each following `higgsfield-video`'s full Stage 1 (image) → Stage 2 (animate) flow.
 
-2. **PAI auto-overrides aspect ratio.** When you mention "35mm anamorphic" in a prompt, PAI auto-switches to 16:9 even if the project is set to 9:16. Fix on the canvas node settings BEFORE running, or you waste 440 credits on the wrong aspect.
+**Per-scene workflow:**
+1. Use `cinematic-hooks` to write the shot prompt — it owns prompt structure, the Character Consistency Guide (repeat the SAME physical description in every shot the character appears in), and generator-specific tips for Higgsfield/Seedance/Kling.
+2. Stage 1 (image): Nano Banana Pro, with the Phase 2 keeper images attached as reference. Follow `higgsfield-video`'s Realism Rescue Protocol and Anonymization Strategy for place-specific shots.
+3. Stage 2 (video): Seedance 2.0 primary, Kling 3.0 fallback (per `higgsfield-video`'s standing model-selection rule). Duration is chosen upfront (5s/10s/15s) — no post-hoc trim-to-length like the old stack.
+4. Read `higgsfield-video`'s `references/classifier-rules.md` before writing motion prompts — it has its own content-classifier rules (different from the old PAI content filter), including aerial-shot duration gating and a documented failure-mode auto-pivot ladder (Seedance flag → retry shorter → pivot to Kling).
 
-3. **"Run" requires a manual click on the canvas node.** PAI's chat will compose and ask for confirmation, then say "click Run on the canvas node." The Run button is the small up-arrow at the bottom-right of the composition panel. Auto-launch toggle is in the bottom bar of the chat — but enabling it requires accepting their IP rights modal, which is a per-action authorization the user must give.
+**Cost estimate (Higgsfield credits, not PAI credits — separate economy):** per scene, ~16 credits (image, 4 variants) + ~110–165 credits (Seedance 10–15s) or ~20 credits (Kling fallback) ≈ **~130–180 credits/scene**, **~1,000–1,450 credits for an 8-scene trailer** — roughly a third of the old PAI estimate, though downloads are per-clip so total *time* may not drop proportionally. Convert to dollars via Graeham's actual Higgsfield plan; not verified here.
 
-**Standard project setup:**
-- Aspect: 9:16 vertical for social trailers (most common)
-- Quality: Pro 1080p (44 credits/sec → ~440 credits per 10s scene)
-- Mode: Enhance (multi-shot decomposition) for narrative scenes; Raw for title cards
-- Character module: upload all 3 ref images
+**Not yet verified on this stack (flag to Graeham before a real run):** whether "keep the reference images attached across generations" alone reproduces PAI's ~75% face-match consistency, or whether it drifts faster since there's no dedicated character-lock feature. Expect this to need a real test trailer before the numbers above are trustworthy.
 
-**Per-scene prompt structure:**
-- Lead with: "Scene: [setting]. [time of day]. [lighting]."
-- Add: "Character [name] from the reference images, [wardrobe], [action]."
-- Visual style: "Cinematic 35mm look, [color direction], Drive (2011) cinematography reference."
-- Character lock: "CRITICAL: keep [name]'s facial features identical to the reference images."
-- End with: "Generate a video clip, use Enhance mode." (or Raw for title cards)
-
-**Cost estimate:** ~3,000 credits per 60s trailer assuming each scene runs first-try. Budget 50% more for retries. The Scene 1 / cold open is most likely to trip content filters — write it visually-focused first time.
-
-**Extraction:** After all 8 scenes render, extract URLs via Chrome console JS:
-```javascript
-[...new Set([...document.querySelectorAll('video')].map(v => v.src || v.currentSrc).filter(Boolean))]
-```
-Then bash download. See `scripts/extract_and_download.py` for the helper.
+**Downloading clips:** `higgsfield-video`'s workflow requires downloading the hero to local Downloads after each scene (mandatory step in its Stage 1/2) — no batch URL-extraction script exists for this stack; do it per-scene as you go.
 
 ---
 
@@ -146,12 +135,12 @@ Then bash download. See `scripts/extract_and_download.py` for the helper.
 
 ## Phase 5: Editorial Pass (the part that makes it land)
 
-**This is where the trailer goes from "AI footage with VO" to actually epic.** The PAI clips alone are too long, the colors don't match between scenes, and there's no music. The editorial pass fixes all three.
+**This is where the trailer goes from "AI footage with VO" to actually epic.** The raw clips alone are too long, the colors don't match between scenes, and there's no music. The editorial pass fixes all three.
 
 ### What an editor actually does here
 
-1. **Re-time every shot.** PAI gives you 5–10s shots. A trailer needs 2–4s shots. Trim to the meaningful moment in each, drop the setup tail.
-2. **Apply a unifying color grade.** PAI's scene-by-scene color is inconsistent. One LUT across everything (warm shadows, slight teal midtones, light vignette) pulls the trailer into one visual world.
+1. **Re-time every shot.** Even though Higgsfield lets you pick clip duration upfront (5s/10s/15s), a trailer still needs 2–4s cuts. Trim to the meaningful moment in each, drop the setup tail.
+2. **Apply a unifying color grade.** Scene-by-scene color will be inconsistent across separate generations. One LUT across everything (warm shadows, slight teal midtones, light vignette) pulls the trailer into one visual world.
 3. **Music bed at ~30% volume.** Music carries the emotion. Dial it under the VO so the words still cut through, but the score does the heavy lifting between lines.
 4. **VO mix at 1.4–1.7x.** Narrator at 1.4x, character dialogue at 1.6–1.7x for punch.
 5. **Brick-wall limiter on master** to catch any peak.
@@ -178,7 +167,7 @@ Three grades defined in `references/ffmpeg-grades.md`:
 - **Standard warm** (Scenes 1–5, 7): `colorbalance=rs=.06:bs=-.08,eq=contrast=1.10:saturation=0.92:gamma=0.96,vignette=angle=PI/5`
 - **Cool crisis** (Scene 6): `colorbalance=rs=.04:bs=.02,eq=contrast=1.15:saturation=0.85:gamma=0.92,vignette=angle=PI/5`
 - **Hero soft** (Scene 7, alternative): `colorbalance=rs=.05:bs=-.05,eq=contrast=1.08:saturation=0.95:gamma=0.97,vignette=angle=PI/5`
-- **Title card**: no grade (PAI nails text cards as-is)
+- **Title card**: grade TBD on new stack — verify title-card rendering quality on first real run before deciding whether it needs a grade
 
 ### Music sourcing
 
