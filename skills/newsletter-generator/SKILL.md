@@ -108,7 +108,7 @@ Generate these three outputs for every newsletter:
 
 Matches the content-creation-engine single-topic dashboard design language:
 
-- **Palette:** Navy `#1B2A4A`, Gold `#C5A258`, background `#f4f5f7`
+- **Palette:** Navy `#1B2A4A`, Gold (unverified — check the content-creation-engine single-topic dashboard's actual current hex before using; do not guess), background `#f4f5f7`
 - **Fonts:** System fallback stack (email-safe: `-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif`)
 - **CTA button:** Gold background, navy text, bold, 14px padding, 8px border-radius
 - **Max-width:** 600px (email-safe)
@@ -315,7 +315,7 @@ The newsletter HTML must:
 - Contain DRE 01466876 in the sign-off
 - NOT contain the blocklisted DRE# (the blocklist verifier in `scripts/verify_brand_identity.py` enforces this)
 - NOT contain the name of any former team member (see content-calendar/SKILL.md canonical template section for current team)
-- Use brand colors: navy `#1B2A4A`, gold `#C5A258`/`#B8860B`, with white background for email-client compatibility
+- Use brand colors: navy `#1B2A4A`, gold (unverified — see Brand Standards note above), with white background for email-client compatibility
 - Use email-safe HTML: `<table>`-based layout, inline CSS, no external stylesheets
 
 ### Last verified
