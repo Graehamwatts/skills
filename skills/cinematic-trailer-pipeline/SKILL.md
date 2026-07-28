@@ -193,19 +193,19 @@ It produces a graded, cut, mixed, limited final MP4. The script is broken into t
 
 ## Honest reality checks (tell the user these upfront)
 
-1. **Character drift across scenes is unavoidable.** Even with bootstrapped refs, you'll get 2–3 versions of the user's face across 8 scenes. **The fix is editorial:** fast cuts (under 4s each), lean on silhouettes and close-ups where the face is less recognizable, use a unifying color grade to mask differences.
+1. **Character drift across scenes is unavoidable — and likely worse on this stack than the old one.** PAI's dedicated character module got ~75% face-match consistency from bootstrapped refs; Higgsfield relies on manually re-attaching the same reference images and repeating the character description per `cinematic-hooks`' technique, with no dedicated lock feature. Expect drift until this is tested. **The fix is still editorial:** fast cuts (under 4s each), lean on silhouettes and close-ups where the face is less recognizable, use a unifying color grade to mask differences.
 
-2. **Scene 5 (buyer / romance beat) is most likely to miss the brief.** PAI tends to over-emphasize architectural shots (hardwood floors, marble counters) and underdeliver on the human moment. Plan to either regenerate Scene 5 with more aggressive human-focused prompting, or accept it and use editorial trimming to hide the worst part.
+2. **Scene 5 (buyer / romance beat) tendencies are unknown on the new stack.** On PAI it over-emphasized architectural shots and underdelivered on the human moment — worth watching for on Higgsfield too, but unconfirmed. Plan to either regenerate with more aggressive human-focused prompting, or accept it and use editorial trimming to hide the worst part.
 
-3. **PAI's content filter will kill at least one scene per trailer.** Budget for 1–2 retries on the alternate model. The cold open (Scene 1) is most vulnerable because it sets tension.
+3. **Expect at least one scene to trip Higgsfield's own classifiers.** See `higgsfield-video`'s `references/classifier-rules.md` for the known trigger patterns (aerial duration, certain motion+color combos) and its auto-pivot ladder. Budget 1–2 retries.
 
 4. **Music + VO + tight pacing = ~70% of the "epic" feeling.** AI video alone, no matter how good, will not feel epic without these three elements. Do not deliver the trailer with just clips assembled — always do the editorial pass.
 
-5. **Total cost estimate:**
-   - PAI credits: ~$30–50 per trailer
+5. **Total cost estimate (unverified end-to-end on the new stack — see Phase 3):**
+   - Higgsfield credits: ~1,000–1,450 credits per 8-scene trailer (convert via Graeham's plan)
    - ElevenLabs: pennies (we're well under the monthly char limit)
    - Music: $0 (Pixabay) or $30 (Artlist)
-   - Time: 1.5–2 hours end-to-end if everything runs first-try; 3–4 hours with retries
+   - Time: unknown until a real run — PAI's 1.5–2 hours (3–4 with retries) is not a reliable estimate here since Higgsfield generates one clip per session, not a multi-shot batch
 
 ---
 
@@ -215,10 +215,10 @@ It produces a graded, cut, mixed, limited final MP4. The script is broken into t
 - `scripts/synthesize_vos.py` — ElevenLabs VO generation for the 5 standard trailer lines
 - `scripts/editorial_pass.sh` — the ffmpeg cut + grade + mix pipeline
 - `scripts/download_music.py` — known-good Pixabay cinematic trailer URLs + downloader
-- `scripts/extract_and_download.py` — PAI clip URL extraction + download helper
 - `references/brief-template.md` — the 8-scene trailer brief structure with prompts
-- `references/pai-gotchas.md` — full list of PAI 2.0 pitfalls and fixes
 - `references/ffmpeg-grades.md` — color grade presets + when to use each
+
+For scene generation itself, see `higgsfield-video`'s own `references/realism-protocol.md`, `references/classifier-rules.md`, and `references/failure-modes.md` — this skill doesn't duplicate them.
 
 ---
 
