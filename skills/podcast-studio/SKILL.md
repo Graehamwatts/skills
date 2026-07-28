@@ -30,8 +30,9 @@ like a living organism — when something new comes up, alter the relevant show 
    it before rendering. No em dashes anywhere. Concreteness (real names, real numbers, real
    quotes) is what makes it sound real — favor specifics over generic phrasing.
 4. **Research shows crawl FRESH every time.** Any show marked `research: fresh` below must pull
-   live data at production time — load WebSearch/WebFetch via ToolSearch and use the
-   `website-crawler` skill. NEVER script a research show from training memory or a prior run's
+   live data at production time — load WebSearch/WebFetch via ToolSearch (`website-crawler`
+   retired 2026-07-29, unused for years — WebFetch already does URL-to-clean-text directly).
+   NEVER script a research show from training memory or a prior run's
    findings. Cite sources; mark anything unverifiable as UNVERIFIED; never fabricate a number.
 5. **Check the ElevenLabs quota before generating** and tell Graeham the number. Cost ≈ 1
    character per character of spoken text; a ~40-min episode ≈ 35-40k chars. If the batch exceeds
@@ -129,5 +130,5 @@ need a podcast on X" — add the show here first, then produce it.
 
 ## RELATED
 [[gym-podcast-preferences]] (voice/format/delivery memory + the iPhone-sync gotcha) ·
-`humanizer` skill (mandatory pass) · `website-crawler` skill (fresh research) ·
+`humanizer` skill (mandatory pass) · WebFetch/WebSearch (fresh research) ·
 `founder-academy` skill (co-owns PropIQ Academy).

@@ -36,7 +36,7 @@ Any CMA or home-value update this system sends (CMA Digest, anniversary touch, e
 |---|---|---|
 | **Google Sheet** `Master_Past_Clients` (29 cols) | Operational source of truth — every cadence reads this | N8N workflow `3BsV1POSI3pdKNmY` (Targeted Sheet batch update) or direct Sheets API |
 | **Google Sheet** `By_Date` | Anniversary + CMA event rows that drive Daily Call, Anniversary Batch, CMA Digest | Append rows directly |
-| **GoHighLevel** | Live CRM, has `COE_date` custom field (`MYBybCgfZiUZTl9aSvSd`), `Selling Property Address` (`aMXm4T9X30OrJmCbFz4l`), `Buying Property Address` (verify ID), tags | N8N workflows: `rwgvg3NFd53pqbdm` (new-deal upsert), `1EiwS1ttwyHXAR0V` (update contact), `Mz9p77tNAdW6Jrne` (push COE only) |
+| **GoHighLevel** | Live CRM, has `COE_date` custom field (`MYBybCgfZiUZTl9aSvSd`), `Selling Property Address` (`aMXm4T9X30OrJmCbFz4l`), tags. **`Buying Property Address` is NOT wired up** — verified 2026-07-29 by reading the live workflow code: it only ever pushes the Selling field, no buyer-side branch exists at all. Set it manually in GHL until the workflow is extended, or ask Graeham for the field ID and add a buyer branch. | N8N workflows: `rwgvg3NFd53pqbdm` (new-deal + update, upsert), `Mz9p77tNAdW6Jrne` (push COE only) |
 | **Excel master** `Past_Client_Master_FINAL_v*.xlsx` | Graeham's downloadable backup, 26 cols | xlsx skill, regenerate after meaningful edits |
 
 **7 active cadence workflows** (don't touch unless asked):
@@ -144,7 +144,7 @@ The workflow will:
 - If found, UPDATE (PUT /contacts/{id})
 - If not found, CREATE (POST /contacts/)
 - Set custom field `COE_date` (ID: `MYBybCgfZiUZTl9aSvSd`) to COE date
-- Set custom field `Buying Property Address` (ID: `bGn4kT9X30OrJmCbFz4l` — confirm before run, see references/data-spec.md) if buyer
+- **Buying Property Address is NOT actually set by the live workflow for buyers** (verified 2026-07-29 — no buyer branch exists in `rwgvg3NFd53pqbdm`'s code). Set it manually in GHL for now.
 - Set custom field `Selling Property Address` (ID: `aMXm4T9X30OrJmCbFz4l`) if seller
 - Add tags: `past-client`, `buyer` or `seller`, `[year]`, `epa` if applicable
 - Return `contactId` in response
@@ -269,7 +269,7 @@ When Graeham wants to fix or update info on an EXISTING past client (address cha
 1. Look up the contact by name → confirm Contact ID with Graeham
 2. Determine which fields are changing
 3. Build the change set in this order: GHL → Sheet → Excel
-   - GHL via N8N workflow `1EiwS1ttwyHXAR0V` (GHL Update Contact) for address1/city/state/postalCode + custom fields
+   - GHL via N8N workflow `rwgvg3NFd53pqbdm` (PCFS — New Deal Onboarding, POST /contacts/upsert) for address1/city/state/postalCode + custom fields — **verified 2026-07-29**: the old dedicated `1EiwS1ttwyHXAR0V` "GHL Update Contact" workflow no longer exists in the live N8N account; upsert handles both create and update, so this is the correct target now
    - Sheet via `3BsV1POSI3pdKNmY` (Targeted Sheet batch update) — patch only the cells that changed
    - Excel — regenerate from Sheet, or hand-edit if a single cell change
 4. **Preserve the Notes column.** Always READ the existing notes first, then APPEND new info as a sentence. Never overwrite.
