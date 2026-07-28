@@ -120,7 +120,7 @@ This structure applies to all output formats. The Interactive HTML includes all 
 
 ### Section 3: The Market Story (Full Narrative) — COMES BEFORE DATA
 - Section header: "THE MARKET STORY"
-- This section is NARRATIVE ONLY. No stats boxes, no charts. Just the story. Voice and style (paragraph count, tone, AI-writing avoidance) are handled by the `humanizer` skill pass at the end — write naturally here, don't over-specify.
+- This section is NARRATIVE ONLY. No stats boxes, no charts. Just the story. Voice and style are handled by the `humanizer` skill pass at the end — write naturally here, don't over-specify.
 - Cover: what the market is doing, what's selling and for how much, where this property fits, honest expectations
 - For buyer CMAs: address the seller's likely pricing expectations and how data supports or contradicts them
 - For listing CMAs: frame the conversation around realistic pricing and the three strategies

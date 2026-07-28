@@ -85,17 +85,19 @@ Five questions, in order. Answer all five before moving to Step 2.
 
 ### Q1: Awareness stage (Schwartz)
 
-Where the reader sits dictates everything else.
+Where the reader sits dictates everything else. Diagnose which of the five classic Schwartz awareness stages (unaware → most-aware) the reader is at, and apply the standard approach for that stage.
 
-| Stage | What they know | What works |
-|---|---|---|
-| Unaware | Don't know they have a problem | Storytelling, intrigue, indirect approach |
-| Problem-aware | Know the problem, don't know solutions exist | Name and dimensionalize the problem |
-| Solution-aware | Know solutions exist, don't know yours | Differentiate. Why this, not the others |
-| Product-aware | Know about your product, haven't bought | Disarm objections. Specifics, proof, risk reversal |
-| Most-aware | Ready to buy, just need a nudge | Direct offer, real urgency, friction removal |
+| Stage | What works |
+|---|---|
+| Unaware | Storytelling, intrigue, indirect approach |
+| Problem-aware | Name and dimensionalize the problem |
+| Solution-aware | Differentiate. Why this, not the others |
+| Product-aware | Disarm objections. Specifics, proof, risk reversal |
+| Most-aware | Direct offer, real urgency, friction removal |
 
 ### Q2: Market sophistication stage (Schwartz)
+
+Diagnose which of the five Schwartz market-sophistication stages the market is at.
 
 | Stage | What works |
 |---|---|
@@ -286,21 +288,7 @@ Note on Cialdini and Schwartz: their primary work is in Step 1 (Schwartz's aware
 
 ### The eleven minds
 
-| Mind | Specialty |
-|---|---|
-| Ogilvy | Headlines, specificity, respect for the reader |
-| Miller | Customer-as-hero structure, clarity |
-| Brunson | Direct response, hook-story-offer, real offers |
-| Godin | Voice, remarkability, no filler |
-| Phil M. Jones | Bridge phrases, transitions, sales conversation patterns |
-| Kennedy | Filtering, calling the reader by name, real urgency |
-| Bernbach | Wit, anti-advertising honesty, "sound least like an ad" |
-| Cialdini | The 7 principles, behavioral grounding |
-| Schwartz | Awareness stages, market sophistication, channeling existing desire |
-| Voss | Tactical empathy, mirroring, labeling, objection handling |
-| Ries | Positioning, category strategy, market laws |
-
-For each mind's deeper lens, anchor moves, and the specific test they apply — see `references/panel.md`.
+Ogilvy, Miller, Brunson, Godin, Phil M. Jones, Kennedy, Bernbach, Cialdini, Schwartz, Voss, Ries. For each mind's deeper lens, anchor moves, and the specific test they apply — see `references/panel.md`.
 
 If a draft fails any consulted panel member's test, rewrite that piece before moving on.
 

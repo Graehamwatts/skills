@@ -7,8 +7,6 @@ description: "AI video analysis skill for Graeham Watts's team. Paste any video 
 
 > **One job:** Watch any video with AI vision. Output a literal blueprint of how to recreate it.
 
-This skill exists because the transcript of a video only tells you what was *said* — it tells you nothing about what was *shown*. For Peter and Ellie editing video content, the visual structure matters as much as the script. video-watcher closes that gap.
-
 ## The two-skill split (read this first)
 
 This skill pairs with `video-transcriber`. They're standalone but compose naturally:
@@ -225,8 +223,6 @@ The engine's Phase 0 (Source Ingestion) has two modes:
 - **Mode B (transcript + visual analysis)** — invoked when the user wants to replicate a reference video's style, not just its message
 
 In Mode B, content-creation-engine now calls `video-watcher` as an external skill instead of running the embedded analysis code. The output flows into the script-writer Phase to inform shot direction in the generated content package (which inline shot tags to use, what B-roll types to source, what production style fingerprint to match).
-
-This means content-creation-engine becomes a *composer* of skills rather than an *owner* of code. It's cleaner architecture and makes each capability discoverable as its own skill.
 
 ## Failure handling
 

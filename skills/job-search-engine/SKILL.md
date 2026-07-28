@@ -17,37 +17,21 @@ description: "Full job-search pipeline for any user helping themselves or someon
 
 # Job Search Engine
 
-A structured, repeatable system for winning job searches. Works for the user themselves, a
-friend they're helping, or anyone navigating the job market. The full sequence runs from raw
-resume to signed offer. Users can enter at any stage.
-
----
+Runs from raw resume to signed offer. Users can enter at any stage.
 
 ## How to Orient
 
-When the user first engages, figure out where they are in the process:
+- **Just starting** → Step 1 (Resume Audit)
+- **Resume already done, applying now** → Cover Letter or Auto-Apply
+- **Got an interview** → Interview Prep
+- **Have an offer** → Salary Negotiation
+- **Profile visibility problem** → LinkedIn Optimizer
 
-- **Just starting** → Begin at Step 1 (Resume Audit)
-- **Resume already done, applying now** → Jump to Cover Letter or Auto-Apply
-- **Got an interview** → Jump to Interview Prep
-- **Have an offer** → Jump to Salary Negotiation
-- **Profile visibility problem** → Jump to LinkedIn Optimizer
-
-If they paste a resume and a job description, start the audit immediately without asking for
-confirmation.
-
----
-
-## The Core Problem to Solve
-
-Fix both: pass the ATS keyword filter, then stop the hiring manager's scroll.
+If they paste a resume and a job description, start the audit immediately without asking for confirmation.
 
 ---
 
 ## Step 1 — Resume Audit
-
-**When to use:** User uploads/pastes a resume and a job description. This is always the first
-step if they haven't run it yet.
 
 Upload both the resume and job description, then run this prompt:
 
@@ -66,24 +50,11 @@ Give me:
 Be brutally honest. I would rather fix problems now than get ghosted later.
 ```
 
-**What to deliver:**
-- Match score with a clear verdict (under 70 = needs significant work)
-- Missing keywords with frequency count from the job description (e.g., "appears 3x in JD")
-- Red flags stated plainly — missing metrics, title mismatch, unexplained gaps, etc.
-- Honest section-by-section breakdown
-
-**Don't skip this step.** Most people are surprised by what the ATS penalizes. Understanding
-the gap is half the work.
-
 ---
 
 ## Step 2 — Experience Rewrite (Google XYZ Formula)
 
-**When to use:** After the audit. Stay in the same chat so context carries forward.
-
-The XYZ formula: **Accomplished [X] as measured by [Y] by doing [Z].**
-
-Run this prompt (same chat, after audit):
+Same chat, after the audit:
 
 ```
 Rewrite my experience section using these rules:
@@ -104,9 +75,7 @@ Rewrite my experience section using these rules:
 
 ## Step 3 — ATS + Hiring Manager Stress Test
 
-**When to use:** After the rewrite. Still in the same chat.
-
-This prompt evaluates the rewritten resume from two angles simultaneously:
+Same chat, after the rewrite:
 
 ```
 Now act as two different people:
@@ -127,15 +96,13 @@ Scan my resume and tell me:
 Give me the final version of my resume after all fixes are applied.
 ```
 
-**After this step:** Ask Claude to output the final resume as a clean artifact. Download as
-.docx and replace all `[FILL IN]` placeholders with real numbers before submitting.
+After this step: output the final resume as a clean artifact. Download as .docx and replace all `[FILL IN]` placeholders with real numbers before submitting.
 
 ---
 
-## Step 4 — Cover Letter (30 seconds per job)
+## Step 4 — Cover Letter (per application)
 
-**When to use:** After the resume is optimized, for each specific job application. Use in the
-same chat as the resume audit so Claude has full context.
+Same chat as the resume audit so Claude has full context:
 
 ```
 Write a cover letter for this role. Rules:
@@ -158,15 +125,11 @@ Total length: Under 250 words.
 Tone: Confident, specific, human. Do NOT sound like AI wrote it.
 ```
 
-**The secret:** The third paragraph — addressing the gap head-on — is what separates good
-cover letters from everyone else's. It signals self-awareness and confidence.
-
 ---
 
 ## Step 5 — Auto-Apply with Cowork + Chrome
 
-**When to use:** Resume is optimized, user wants to apply to multiple jobs at once. Requires
-Claude Pro, Cowork mode, and the Claude in Chrome extension. User must be logged into LinkedIn.
+Requires Claude Pro, Cowork mode, and the Claude in Chrome extension. User must be logged into LinkedIn.
 
 ```
 Now that my resume is optimized, go to LinkedIn and do the following:
@@ -194,14 +157,13 @@ Now that my resume is optimized, go to LinkedIn and do the following:
 Pause before submitting each application and show me the customized version first.
 ```
 
-**Start with "pause before submitting"** until the user is confident in quality. Then they
-can remove the pause for fully automated runs.
+Start with "pause before submitting" until the user is confident in quality, then remove it for fully automated runs.
 
 ---
 
 ## Step 6 — Interview Prep System
 
-**When to use:** User says they got an interview. Trigger immediately.
+Trigger immediately when the user says they got an interview:
 
 ```
 I have an interview for [ROLE] at [COMPANY] on [DATE].
@@ -232,15 +194,11 @@ After I review the above, run a 15-minute mock interview. Ask me the top 5 quest
 one at a time. After each answer, give me feedback on what was strong and what to fix.
 ```
 
-**The mock interview is the most valuable part.** Reading answers is helpful; actually
-answering questions and getting real-time feedback is what builds muscle memory before the
-real thing.
-
 ---
 
 ## Step 7 — Salary Negotiation Script
 
-**When to use:** User has an offer.
+When the user has an offer:
 
 ```
 I got an offer for [ROLE] at [COMPANY].
@@ -290,9 +248,6 @@ discussing numbers. What is the budgeted range for this role?"
 
 ## Step 8 — LinkedIn Profile Optimizer
 
-**When to use:** User wants recruiters to come to them rather than always applying outbound.
-Most profiles are invisible in recruiter searches. This fixes that.
-
 ```
 I want to optimize my LinkedIn profile so recruiters find me and reach out.
 Here is my current profile: [paste or upload screenshot]
@@ -330,14 +285,9 @@ Rewrite these sections:
      that would make a recruiter stop and look closer
 ```
 
-**The headline is the most important field.** "Marketing Manager at XYZ Corp" is invisible.
-"B2B SaaS Growth Marketer | Scaled pipeline from $2M to $14M | Demand Gen + ABM" gets clicked.
-
 ---
 
 ## Step 9 — Follow-Up Email Templates
-
-**When to use:** After application or after interview. Most candidates drop the ball here.
 
 ```
 I need follow-up emails for my application at [COMPANY] for the [ROLE] position.
@@ -371,14 +321,9 @@ Tone for all: Confident, not desperate. Specific, not generic. Human, not templa
 
 ## Full Workflow Sequence
 
-For someone starting from scratch: Resume Audit → Experience Rewrite → ATS + Hiring Manager Test → LinkedIn Optimizer → Cover Letter (per application) → Auto-Apply → Interview Prep → Salary Negotiation → Follow-Up.
+Resume Audit → Experience Rewrite → ATS + Hiring Manager Test → LinkedIn Optimizer → Cover Letter (per application) → Auto-Apply → Interview Prep → Salary Negotiation → Follow-Up.
 
-**Repeat steps 1-3 for each job applied to.** The same resume does not work for every role.
-Keywords and red flags change with each job description.
-
-**Always review and personalize outputs.** Generic AI content hurts more than it helps. Claude
-provides the structure; the user provides the substance — their voice, their stories, their
-real numbers.
+Repeat steps 1-3 for each job applied to — keywords and red flags change with each job description.
 
 ---
 

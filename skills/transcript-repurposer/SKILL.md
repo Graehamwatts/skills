@@ -83,7 +83,7 @@ Decompose the source transcript along these axes so we know what to keep, what t
 
 **Read:** `references/03-angle.md` for the angle-selection logic.
 
-Don't just rewrite the same video. Decide HOW Graeham's version is going to be different and better. Pick ONE of these angles (or hybrid two):
+Pick ONE of these angles (or hybrid two):
 
 1. **Same claim, better evidence** — backed with real data/dates/citations
 2. **Contrarian take** — respectfully argues the original is incomplete or wrong

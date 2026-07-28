@@ -40,10 +40,10 @@ The framework is a shortcut to the right structure. Pick based on the format and
 
 | Framework | Best for |
 |---|---|
-| **AIDA** | Email subject lines, ads, cold outreach, short landing page heroes — one moment to earn the next moment |
-| **PAS** | Problem-aware audiences, sales pages for painful problems — name it, agitate it, resolve it |
-| **FAB** | Feature-heavy products (SaaS, physical products, technical tools) — translate specs into reader gains |
-| **BAB** | Transformation-based offers (coaching, courses, health, career) — reader's buying a future state |
+| **AIDA** | Email subject lines, ads, cold outreach, short landing page heroes |
+| **PAS** | Problem-aware audiences, sales pages for painful problems |
+| **FAB** | Feature-heavy products (SaaS, physical products, technical tools) |
+| **BAB** | Transformation-based offers (coaching, courses, health, career) |
 
 If none of these feel right, write in plain direct-response voice: concrete, specific, short sentences, lead with the benefit. Read `references/frameworks.md` for deeper examples and less common frameworks (4Us, 4Cs, PASTOR, Storybrand) if the job calls for something more specialized.
 

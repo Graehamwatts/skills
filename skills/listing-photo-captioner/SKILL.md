@@ -51,7 +51,6 @@ If a photo is unclear, ambiguous, or low-quality, write a generic caption and no
 
 ## Caption Checklist
 
-- Lead with room/space name, 1-2 sentences, sentence case, no emojis/hashtags/promotional language ("stunning," "gorgeous," "amazing," "must-see").
 - Describe only what's clearly visible: room type/layout, materials (hardwood, tile, quartz, etc. — only if you can tell), fixtures, architectural details, outdoor features, notable visible appliances, visible smart-home tech (Nest, Ring, EV chargers).
 - Skip: people/pets/personal belongings, anything you're guessing at, decorative staging items (unless they show function), quality judgments ("high-end"), and subjective descriptors ("warm and inviting" — name the actual light source instead).
 

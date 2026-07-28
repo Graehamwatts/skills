@@ -145,15 +145,6 @@ The next step is concrete and time-bound. "Let's discuss" is not a next step —
 
 ---
 
-## Tone Rules
-
-- Empathetic but honest; no urgency or fear tactics.
-- No reference to the seller's personal situation in the positioning statement.
-- No "home is too good for the market" framing.
-- No blaming staging, photos, season, or showing agents unless the data specifically points there.
-
----
-
 ## Bay Area / Peninsula Market Notes
 
 When the subject is in Graeham's primary markets, factor in market-velocity norms:

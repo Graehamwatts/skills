@@ -60,14 +60,6 @@ When in doubt, omit. A factually accurate listing with fewer claims is always be
 
 ---
 
-## Core Principle: Nouns Over Pronouns
-
-AI search engines match buyer queries to listing text through nouns, verbs, and modifiers — not vague pronouns or generic filler. Every sentence should contain specific, searchable terms (property type, materials, room names, neighborhood, features) instead of vague praise.
-
-**Test:** Could ChatGPT, Perplexity, or Google's AI Overview cite this sentence as a direct answer to a buyer's question? If not, rewrite.
-
----
-
 ## Writing Framework
 
 ### Nouns (What it is and where it is)
@@ -77,7 +69,6 @@ AI search engines match buyer queries to listing text through nouns, verbs, and 
 - **Nearby amenities:** parks, retail, transit (Caltrain stations especially), employers (Meta, Google, Stanford, SLAC, etc.) — name them factually, don't rank them
 
 ### Verbs and Modifiers
-- Use concrete, factual verbs (features, overlooks, connects to, sits on, backs to) and searchable modifiers (renovated, turnkey, open-concept, solar-equipped, corner lot, etc.) over generic ones.
 - **Avoid:** stunning, gorgeous, amazing, dream home, must-see, breathtaking, one-of-a-kind, rare opportunity (these are zero-information words AI search ignores)
 
 ---

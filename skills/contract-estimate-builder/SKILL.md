@@ -108,7 +108,7 @@ The script writes two files into `<output_dir>`:
 
 **Sheet 1 — "Bid Sheet"** (the working document for the contractor):
 
-The contractor fills in **only** the `Unit Cost` cells (blue text per the xlsx skill convention). Everything else is formulas. The contractor (or Graeham, or the client) instantly sees how each option changes the bottom line.
+The contractor fills in **only** the `Unit Cost` cells. Everything else is formulas. The contractor (or Graeham, or the client) instantly sees how each option changes the bottom line.
 
 **Sheet 2 — "Totals Summary"** auto-calculates a grand total for each scenario:
 

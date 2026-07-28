@@ -62,11 +62,7 @@ Disclosures reflect the seller's *knowledge*, not the property's actual conditio
 
 ### Reading Inspection Reports
 
-For each inspection report, extract and categorize findings by severity:
-
-- **Critical** — safety, structural integrity, or major-damage risk (active leaks, foundation movement, electrical hazards, structural deficiencies, active pest damage to structural members, sewer line failures, etc.)
-- **Moderate** — needs attention, costs real money, not an emergency (aging roof with 3-5 years left, outdated but functional electrical panel, minor pest damage, HVAC nearing end of life, etc.)
-- **Minor** — maintenance/cosmetic (small sidewalk cracks, weathered caulking, minor grading issues, slow drains, etc.)
+For each inspection report, extract and categorize findings by severity: Critical, Moderate, or Minor.
 
 ### Practical Scope Callouts
 
@@ -228,8 +224,6 @@ If the user has provided the MLS listing or property profile, use it to help det
 
 ---
 
-
-Write clear, jargon-explained, fair-to-the-seller, accurately-severity-scored, practical language throughout (e.g., explain "efflorescence" in plain terms the first time it's used).
 
 ---
 

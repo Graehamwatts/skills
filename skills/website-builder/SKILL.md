@@ -32,10 +32,6 @@ Don't read every file. Start with this SKILL.md for orientation, then pull only 
 | Applying Graeham's realtor brand | `references/realtor-brand-kit.md` |
 | PropIQ placeholder tokens | `references/propiq-placeholder-tokens.md` |
 
-## Core design philosophy
-
-See `frontend-design` for general design taste. Always use CSS custom properties in `:root` for every recurring value (`references/design-tokens.md`) and always run the screenshot loop (`references/screenshot-loop.md`) after generating HTML — looking at the page is the difference between "looks right in code" and "actually looks right".
-
 ## Standard build flow
 
 When the user asks for a new page or site, follow this sequence unless they ask for something else.
@@ -58,14 +54,6 @@ Copy-paste HTML fragments — not generic boilerplate, but the specific patterns
 - `cta-card.html` — gradient card with headline, supporting copy, primary button
 - `kpi-card.html` — dashboard metric card with label, value, delta
 - `feature-grid.html` — three-column icon-headline-blurb row
-
-## Anti-patterns — never ship these
-
-See `frontend-design` for the general list. Repo-specific flags from Graeham's own reviews:
-
-- Purple-on-white gradient heroes.
-- Centered single-column layouts with three identical cards below.
-- Emojis used as feature icons (use inline SVG or icon libraries).
 
 ## Project contexts
 

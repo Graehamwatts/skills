@@ -60,12 +60,6 @@ The user wants to generate a net sheet without any specific offers — typically
 
 ---
 
-## Tone & Style
-
-Professional, clear, fair to every offer (no editorializing on "best"), exact figures not vague language, and transparent whenever a number is an estimate.
-
----
-
 ## Quality Control (Mandatory)
 
 Before delivering any output, verify:

@@ -29,18 +29,7 @@ If the user gives you only body copy and you need the `<head>` info to complete 
 
 ## The audit — run every section, in this order
 
-Read `references/audit_checklist.md` for the full rubric, scoring bands, and common failure patterns.
-
-| # | Section | Check |
-|---|---|---|
-| 1 | Title tag | Present, 50–60 chars (max ~65), primary keyword early, unique/click-worthy, not brand-first |
-| 2 | Meta description | Present, 140–160 chars, keyword + reason-to-click, not a title duplicate |
-| 3 | Heading structure | One `<h1>` (main topic), `<h2>`s section logically, `<h3>`s nest without skipping levels, keyword in `<h1>`/LSI in `<h2>`s |
-| 4 | Keyword density | Primary keyword ~0.5–2% of word count (optimize for natural coverage, not the number); flag stuffing (>3%) or absence; LSI terms present (`references/lsi_keywords.md`) |
-| 5 | Internal linking | 2–3 contextual links, descriptive anchor text, flag likely orphaned pages |
-| 6 | Image alt text | Every `<img>` has `alt`; descriptive not stuffed; decorative images use `alt=""` |
-| 7 | Readability | Flesch Reading Ease (`references/readability.md`) target 60–70, flag <50, long paragraphs (>4 sentences), long sentences (>25 words avg) |
-| 8 | Content depth | Word count fits intent (commercial landing 500–1,500 / informational blog 1,200–2,500 / ultimate guide 2,500+); does it answer the title's implied query |
+Run a standard on-page SEO audit covering: title tag, meta description, heading structure, keyword density/coverage, internal linking, image alt text, readability, and content depth. Apply normal SEO best-practice targets for each (you already know these) rather than reinventing thresholds from scratch. Read `references/audit_checklist.md` for this toolkit's scoring bands and common failure patterns; `references/lsi_keywords.md` for deriving LSI terms without external tools; `references/readability.md` for the syllable-counting heuristic used here.
 
 ---
 
@@ -69,12 +58,12 @@ One-sentence summary of overall health.
 
 ### Title tag
 **Current:** [original, or "Missing"]
-**Proposed:** [new title, 50–60 chars, primary keyword early]
+**Proposed:** [new title, within standard length limits, primary keyword early]
 **Why:** [one sentence]
 
 ### Meta description
 **Current:** [original, or "Missing"]
-**Proposed:** [new meta, 140–160 chars, keyword + reason to click]
+**Proposed:** [new meta, within standard length limits, keyword + reason to click]
 **Why:** [one sentence]
 
 ## Keyword Strategy
@@ -94,18 +83,7 @@ A numbered to-do the user can work through in order. Put the highest-impact fixe
 
 ## Scoring the page (for the header score)
 
-| Section | Weight |
-|---|---|
-| Title tag | 15 |
-| Meta description | 10 |
-| Heading structure | 15 |
-| Keyword density & coverage | 15 |
-| Internal linking | 10 |
-| Image alt text | 10 |
-| Readability | 15 |
-| Content depth | 10 |
-
-Total 100. 70+ healthy, 50–69 needs work, <50 rescue job.
+Weight the eight audit sections roughly evenly for the header score (out of 100). Bands: 70+ healthy, 50–69 needs work, <50 rescue job.
 
 ---
 

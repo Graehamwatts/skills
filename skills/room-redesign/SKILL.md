@@ -86,10 +86,6 @@ These are pre-tuned for Graeham's workflow. Mix and match based on the actual ph
 
 ## Pro Moves
 
-- Tell it what to keep (flooring, windows, ceiling height)
-- Reference real places, not generic adjectives ("like a Soho House lounge")
-- Describe the light (south-facing bright afternoon, dim evening lamps-on)
-- One change at a time on iterations
 - Ask for a shopping list (furniture/decor + price range + where to buy) as a seller handout or buyer upsell
 
 ## Output Handling
