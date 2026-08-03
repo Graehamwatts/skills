@@ -61,6 +61,8 @@ After generating the report, perform a distinct second pass. Do NOT just re-read
 - Check that no comp appears twice in the tables
 
 **3. Pricing Recommendation Accuracy**
+- **Confirm the report actually contains a dollar price recommendation before doing anything else in this step.** If the draft only has qualitative language ("price to compete," "a reasonable buy") with no explicit $ figure the client can act on, this is a failed report — stop and add one. Under genuine uncertainty (e.g. unverified sqft), multiple labeled dollar scenarios with confidence levels are required, not a substitute for a single answer.
+- **Confirm the subject's last sold price and date, if any exist, appear in the top stats/hero row**, not only in a lower price-history table. Pull this from MLS listing history / county sale records — it is always available for a previously-sold property and must never be silently omitted.
 - Verify each pricing range (Conservative, Competitive, Stretch) is actually supported by the comp data
 - The Conservative range should align with the lower tier of comparable sales
 - The Competitive range should align with the cluster of most similar comps
@@ -69,6 +71,7 @@ After generating the report, perform a distinct second pass. Do NOT just re-read
 - If strategies reference specific comps ("like 123 Main St which sold for $X"), verify those numbers match
 
 **4. Chart and Visual Accuracy**
+- **Count the charts. Minimum three per report** (comp comparison, DOM or list-to-sale, plus a third fitted to the property's specific story — price-history-over-time, $/sqft, cap rate, or rate sensitivity). A one-chart report is incomplete; go back and add the missing ones before delivering.
 - Verify that all charts render correctly (no broken images, no empty charts)
 - Check that chart data matches the tables — if the table shows 12 comps, the chart should show 12 data points
 - Verify the Subject Property Positioning bubble/chart places the subject correctly relative to comp data
