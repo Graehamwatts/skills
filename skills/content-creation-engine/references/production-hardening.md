@@ -33,9 +33,11 @@ Manual builds: run this gate as the final step before pushing or sending, and re
 
 Automated daily email: the gate is implemented as the **Validate Date + DRE** Code node in the N8N workflow below. The date is injected from the system clock in the **Compute Today** node (never guessed), and the validation node fails closed — on failure the workflow routes to an alert to Graeham instead of sending to Peter.
 
-## Daily Automation — Peter's Daily Email (N8N)
+## Daily Automation — Peter's Daily Email (N8N) — SUPERSEDED 2026-08-07
 
-A weekday email to Peter is produced by the N8N workflow **"Daily Content Email — Peter (script + SSML + production)"** (instance `n8n.graehamwattsn8n.com`, workflow id `REVqxrlAb3CHJumM`). It complements the weekly dashboard: Peter can work from the dashboard OR act straight from the email.
+> **This N8N workflow is retired and must not be stood back up.** `content-calendar/SKILL.md`'s "Email Delivery" section replaced it with a Cowork scheduled task, `scheduled-tasks/daily-content-focus-email/SKILL.md`, which sends to John/Peter/Ellie (cc Graeham) via SMTP (`switchy-engine/scripts/send_email.py`) instead of N8N + OpenAI. The fail-closed Date/DRE gate concept described below still applies — the new task enforces it via `weekly_overlap_check.py` and `verify_output_brand.py` instead of the N8N "Validate Date + DRE" Code node. The rest of this section is kept for historical reference only.
+
+A weekday email to Peter was produced by the N8N workflow **"Daily Content Email — Peter (script + SSML + production)"** (instance `n8n.graehamwattsn8n.com`, workflow id `REVqxrlAb3CHJumM`). It complemented the weekly dashboard: Peter could work from the dashboard OR act straight from the email.
 
 Flow: Schedule (Mon-Fri 6:00 AM PT) → CONFIG (`peter_email`, `cc_email`, `dashboard_url`) → Compute Today (system date → topic t1..t5, Mon=t1) → Fetch Dashboard HTML (the live weekly calendar is the single source of truth) → Parse Topic (pulls that day's `prod_script` + `prod_video` out of `COPY_DATA`) → Generate (OpenAI runs both prompts: script + SSML, then production assets) → Validate Date + DRE (fail-closed gate above) → IF passed → Email Peter (dashboard link + the day's full package); ELSE → Alert Graeham.
 

@@ -615,7 +615,7 @@ All phase outputs save to the user's selected folder (or `outputs/` in Cowork). 
 
 ## Workflow Quality Rules — MUST ride along in every script + production copy (June 2026)
 
-These rules fix the recurring generation failures (voice garbles, uptalk, weak/scarce b-roll, generic maps). Mandatory for every content package, and they MUST be prepended to: every **Copy Script Prompt**, every **Copy Production Prompt**, and the **daily Peter email** (N8N workflow `REVqxrlAb3CHJumM`) so whoever pastes the copy into Claude gets the rules inline.
+These rules fix the recurring generation failures (voice garbles, uptalk, weak/scarce b-roll, generic maps). Mandatory for every content package, and they MUST be prepended to: every **Copy Script Prompt**, every **Copy Production Prompt**, and the **daily content-focus email** (Cowork scheduled task `daily-content-focus-email` — see `scheduled-tasks/daily-content-focus-email/SKILL.md`; supersedes the retired N8N workflow `REVqxrlAb3CHJumM`) so whoever pastes the copy into Claude gets the rules inline.
 
 **Voice / SSML (full detail in `references/phases/script-writer/references/elevenlabs-audio-tags.md`):** NO em/en dashes in the ElevenLabs variant (periods, commas, or `<break>`); question marks ONLY on real questions (a trailing `?` causes uptalk); spell out numbers/currency/symbols; end every statement with a period; synthesize sentence-by-sentence and QC each chunk (Whisper diff), re-roll only the bad sentence.
 
