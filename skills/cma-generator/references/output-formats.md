@@ -52,6 +52,7 @@ After generating the report, perform a distinct second pass. Do NOT just re-read
 - Check that no comp from a different city was included without being explicitly flagged
 - If a comp is in the "Most Similar" tier, verify it truly is the most comparable — right sqft range, similar condition, same city
 - If fewer than 3 primary comps, verify the report flags "Limited data — use with caution"
+- **Date sanity check (required, added 2026-08-07 — MLS date filters have shipped silently-wrong results before, see `references/search-criteria-rules.md`): confirm every sold comp's date shown in the table actually falls inside the time frame claimed in the report's own narrative.** Do not trust that a search filter enforced this. If the narrative says "recent" or "since [year]" or "last N months," each row must match. If any comp predates the claimed window, the report is not ready to ship, either remove that comp from the pricing math and re-label it as historical context, or narrow the narrative's claimed window to match reality.
 
 **2. Data Accuracy**
 - Spot-check at least 5 comp entries against the source MLS data: sold price, list price, sqft, lot size, bed/bath count, DOM, sold date
