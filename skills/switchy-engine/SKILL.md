@@ -3,6 +3,12 @@ name: switchy-engine
 description: "Tracked-link + retargeting-pixel engine for Graeham Watts. Use this skill ANY time the user mentions: tracked link, short link, Switchy, shortlink, QR code, retargeting link, pixeled link, link analytics, scan count, click count, custom audience, retargeting audience, link in bio, UTM, swappable link, CTA link..."
 ---
 
+> **Absorbed on 2026-08-07:** `switchy-qr` was merged into this skill. All capabilities of
+> `switchy-qr` (the simplified postcard-QR quick-start for non-technical users like Peter/Jason)
+> now live here — see "Quick-start for postcards (Peter / Jason)" below. The folder
+> `skills/switchy-qr/` was deleted in the same commit. If you find any reference to
+> `skills/switchy-qr/` anywhere in this repo, that reference is a bug — it should point here.
+
 # Switchy Engine — Tracked Links & Retargeting Pixels
 
 The **one** place link-shortening, QR generation, pixel-tagging, and click/scan
@@ -176,6 +182,26 @@ depends on our snapshots, the FIRST run only establishes a baseline (deltas star
 - Constants (pixel IDs, default domain, tag vocab) live in `shared-references/switchy.json`.
 
 ---
+
+## Quick-start for postcards (Peter / Jason)
+
+**What this does, in one line:** finish a postcard, say *"generate a QR code for this
+postcard,"* and Claude creates a tracked Switchy link + QR to drop into the design.
+Switchy then tracks every scan and adds scanners to Graeham's ad audience.
+
+**You only do two things:** (1) say the command + upload the postcard, and (2) log into
+Switchy once when asked. Claude does the rest — see the full workflow steps below, or run
+`scripts/create_postcard_link.py --date <YYYY-MM-DD> --hook "<hook>"` directly (prints the
+short URL; Claude still needs Chrome + your login to fetch the QR PNG from the dashboard).
+
+**One-time setup:** you need access to Graeham's Switchy (your own team login, or the
+shared login Graeham gives you) plus the Switchy API token so Claude can create the link
+automatically — Graeham will provide it; save it as `switchy-token.txt` in your Cowork
+Skills folder, or set the `SWITCHY_API_TOKEN` environment variable. Never paste the token
+into chat.
+
+> Need scan numbers, the dashboard, or retargeting reports beyond a single postcard QR?
+> That's the rest of this skill (below) — this section is QR-only on purpose.
 
 ## QR generation workflow (Cowork → Chrome → Switchy → dashboard)
 
