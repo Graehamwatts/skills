@@ -2,17 +2,18 @@
 
 These tokens are NEVER negotiable per card. Continuity is the brand.
 
+**CORRECTED 2026-07-27:** The prior version of this file (and the master template it drove) had drifted from Graeham's real mailed house style — a cream back panel and a glossy 3-stop gold gradient with drop-shadow crept in when this skill was built, and were never actually part of his 2025 cards. Graeham flagged the 08/01/26 card as visually off-brand; comparing it against the real mailed 03/01/25, 03/15/25, and 04/15/25 cards confirmed the drift. Corrected below — **flat single-tone gold, no panel, no gradient, no gloss.** Always sanity-check a new card against a real mailed PDF from `Farming Flyers to mail\`, not just against this file, if anything looks uncertain.
+
 ## Colors
 
 | Token | Hex | CMYK (approx) | Use |
 |---|---|---|---|
-| Gold (primary) | `#C2A14E` | C:25 M:35 Y:75 K:5 | Border, headline highlights, CTA color, logo roof accent |
-| Gold (deep) | `#A88638` | C:30 M:42 Y:85 K:15 | Gradient bottom of gold-box words |
-| Gold (light) | `#EAD9A8` | C:8 M:15 Y:40 K:0 | Gradient top of gold-box words, light fills |
+| Gold (primary) | `#C2A14E` | C:25 M:35 Y:75 K:5 | Border, headline highlights, CTA color, logo roof accent — the ONLY gold used anywhere on the card, flat, no gradient |
 | Dark ink | `#1A1D2E` | C:80 M:75 Y:50 K:60 | Headlines, body text, logo |
-| Cream | `#FBF7EC` | C:2 M:3 Y:10 K:0 | Back panel background |
 | Pattern color | `#E6DABC` (~35% opacity) | n/a | Chevron house pattern overlay |
-| White | `#FFFFFF` | 0,0,0,0 | Postcard background |
+| White | `#FFFFFF` | 0,0,0,0 | Postcard background — FRONT AND BACK. No panel, no cream box, no fill color changes anywhere. Copy sits directly on the white chevron background exactly like the QR side. |
+
+**Retired tokens (do not use):** Gold-deep `#A88638` and Gold-light `#EAD9A8` were used for a 3-stop gradient effect that never matched Graeham's real mailed cards — removed 2026-07-27. Cream `#FBF7EC` back-panel fill was likewise never part of the real house style — removed the same day. If you see either reappear in a rendered card, it's a bug — flatten to solid `#C2A14E`.
 
 ## Typography
 
@@ -34,6 +35,8 @@ These tokens are NEVER negotiable per card. Continuity is the brand.
 - **Chevron pattern:** SVG repeat, 80x40px tile, 0.35 stroke opacity, 0.55 layer opacity
 - **Bleed:** 0.125" each side (total canvas 6.25" × 4.25")
 - **Safe zone:** Keep type 0.25" from all edges minimum
+
+**Front headline rule (corrected 2026-07-27):** the headline dominates the top third of the FRONT — full width, sized to nearly fill the safe zone left-to-right, sitting high on the card. Don't leave it clustered small in a top corner with a large empty middle; that empty-space imbalance was the other half of the 08/01/26 drift. **No decorative arrow on the front.** The master template has no arrow element at all — the QR's own black "SCAN ME" pill is the visual anchor, no arrow needed. The 08/01/26 card's front arrow (pointing at empty space) was a one-off addition that shouldn't have been there; it's been removed from the master template.
 
 ## LOCKED Bottom Contact Block (NEVER edit)
 
@@ -80,22 +83,18 @@ DRE #01466876     www.graehamwatts.com
 
 ## Gold-highlight treatments
 
-Two variants only. Choose per word/phrase:
+Two variants only — both FLAT, single-tone `#C2A14E`, no gradient, no gloss, no drop-shadow. Choose per word/phrase:
 
-**Variant A — Solid gold box** (for short emphasized phrases on light background):
+**Variant A — Solid gold box** (for short emphasized phrases, back headline):
 ```css
-background: linear-gradient(180deg, #EAD9A8 0%, #C2A14E 60%, #A88638 100%);
+background: #C2A14E;
 color: #fff;
 padding: 0 6px;
-text-shadow: 1px 1px 0 rgba(0,0,0,0.15);
 ```
 
-**Variant B — Gold text fill** (for emphasized words inline with regular headline):
+**Variant B — Gold text fill** (for emphasized words inline with regular front headline):
 ```css
-background: linear-gradient(180deg, #EAD9A8, #C2A14E, #A88638);
--webkit-background-clip: text;
-background-clip: text;
--webkit-text-fill-color: transparent;
+color: #C2A14E;
 ```
 
 **Variant C — Gold underline** (for action verbs):
