@@ -93,10 +93,14 @@ Competitor deep-dive series so Graeham can mine competitors (the Bill Gates move
 the founder-in-love-with-the-idea blind spot, and know the landscape cold. Two-host, LONG
 (30-45 min/episode — he's at the gym 90 min/day, longer is better). Album `Know Your Enemy`.
 Planned episodes: (1) The Map — the whole landscape + the one thing none of them have (the
-outcome graph); (2) The Legacy All-in-Ones (Lofty, BoldTrail/kvCORE, BoomTown); (3) Follow Up
-Boss + Zillow; (4) Sierra & Viktor and the enterprise-agent frontier — what to steal for
-Wattson/Chevy; (5) GoHighLevel — the engine he rents; (6) The AI Theater (Serhant, Luxury
-Presence, "AI for AI's sake"); (7) The Scorecard — honest win/lose per player + build-first list.
+outcome graph); (2) Rechat — the closest positioning collision ("AI Operating System for Real
+Estate," Ryan Serhant customer); Lucy vs Chevy, the draft-vs-execute question (answered: Lucy
+drafts, human approves), and the fast-but-generic listing-fan-out finding — added 2026-08-09,
+source `Competitor Research\rechat-analysis.md` §9; (3) The Legacy All-in-Ones (Lofty,
+BoldTrail/kvCORE, BoomTown); (4) Follow Up Boss + Zillow; (5) Sierra & Viktor and the
+enterprise-agent frontier — what to steal for Wattson/Chevy [rendered]; (6) GoHighLevel — the
+engine he rents; (7) The AI Theater (Serhant, Luxury Presence, "AI for AI's sake"); (8) The
+Scorecard — honest win/lose per player + build-first list.
 Source of truth: `Documents\PropIQ\PropIQ\Competitor Research\` (research agents write here).
 RULE: re-crawl before scripting; every claim sourced.
 
