@@ -7,7 +7,14 @@
   "identity": {
     "name": "Graeham Watts",
     "title": "REALTOR",
-    "brokerage": "Intero Real Estate",
+    "_brand_rule": "Graeham Watts is the PRIMARY brand and always leads. The brokerage/team is a supporting attribution line underneath, never the lead. Use `brand_line` verbatim for footers and contact strips. Updated 2026-08-13 on Graeham's move from Intero to Compass.",
+    "brokerage": "Compass",
+    "team": "The Boyenga Team",
+    "brand_line": "Powered by The Boyenga Team at Compass",
+    "_brokerage_history": {
+      "Intero Real Estate": "Former brokerage through mid-2026. Do NOT use in new output. ~67 files across this repo still hardcode it as of 2026-08-13 and are being migrated; if you encounter it in a file you are editing, fix it.",
+      "_spelling": "Boyenga (NOT Boyanga). Named for Eric and Janet Boyenga."
+    },
     "dre": "01466876",
     "phone": "650-308-4727",
     "email": "graehamwatts@gmail.com",
