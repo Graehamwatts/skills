@@ -57,7 +57,7 @@ DEFAULTS = {
     "beam_size": 1,
     "beeps": True,
     "polish_key": "shift",
-    "polish_model": "claude-opus-4-8",
+    "polish_model": "claude-opus-5",
 }
 
 # Optional Claude API key for polish mode. Resolution order: env var, then a

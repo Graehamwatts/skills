@@ -2,15 +2,23 @@
 
 ## Agent Identity
 
-- **Name:** Graeham Watts
-- **Title:** REALTOR® | DRE# 01466876
-- **Brokerage:** Compass *(NEVER "Compass" — if you see Compass anywhere, it is wrong and must be corrected)*
-- **Email:** graehamwatts@gmail.com
-- **Website:** graehamwatts.com
+> **Identity is NOT defined here. Read `../shared-references/identity.json` at runtime and copy values from it.**
+> Do not hardcode name, DRE, brokerage, or contact details in this file or in generated content.
+> As of 2026-08 the brokerage is **Compass**; the client-facing attribution line is
+> **"Powered by The Boyenga Team at Compass"**. Use the plain brokerage name ("Compass")
+> in structured fields and in legal/DRE advertising contexts, where the licensed broker
+> must be named. "Intero Real Estate" is the FORMER brokerage and must not appear in output.
+>
+> *(Historical note, 2026-08-13: this file previously hardcoded Intero AND carried an
+> instruction to "correct" any occurrence of Compass back to Intero. That single line
+> re-introduced the wrong brokerage on every run. It is gone. Do not reintroduce a
+> hardcoded brokerage here.)*
+
+- **Name / Title / DRE / Brokerage / Email / Website:** see `../shared-references/identity.json`
 - **Instagram:** @graeham.watts
 - **YouTube:** Graeham Watts
 - **Facebook:** /GraehamWattsRealtor
-- **CRM:** GoHighLevel (Compass account `6wuU3haUH7uNeT20E3UZ`)
+- **CRM:** GoHighLevel (account `6wuU3haUH7uNeT20E3UZ`)
 - **Uses AI avatar** for much of his video delivery
 - **Cross-posts Instagram Reels to YouTube Shorts regularly**
 

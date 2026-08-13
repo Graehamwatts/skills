@@ -85,7 +85,7 @@ and would leak into the focused app.
    Alto, GHL...). There is NO length limit — audio is buffered in RAM
    (~2 MB/min) and Whisper chunks internally.
 5. Optional polish pass (only when Shift was tapped): raw transcript →
-   Claude API (`polish_model` in config, default `claude-opus-4-8`, official
+   Claude API (`polish_model` in config, default `claude-opus-5`, official
    `anthropic` SDK) with a cleanup system prompt (no em dashes, keep tone,
    return only cleaned text). Key resolution: `ANTHROPIC_API_KEY` env var,
    else the gitignored `<repo-root>/anthropic-token.txt`. No key or API error

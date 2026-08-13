@@ -138,7 +138,7 @@ When building videos for Graeham (default user), use these brand values:
 - Accent Green: #1a7a56
 - Headline Font: Eagle CG Bold (fallback: Bebas Neue, Oswald)
 - Body Font: SF Pro Display (fallback: Inter, system)
-- Agent: Graeham Watts, REALTOR®, Compass (Berkshire Hathaway)
+- Agent: Graeham Watts, REALTOR®, Compass (see `../shared-references/identity.json`)
 - DRE: 01466876
 - Phone: 650-308-4727
 - Email: graehamwatts@gmail.com

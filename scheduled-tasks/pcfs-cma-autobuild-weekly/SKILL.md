@@ -3,7 +3,7 @@ name: pcfs-cma-autobuild-weekly
 description: Weekly: build past-client CMA value-update reports for clients due in the next 7 days and send review emails to Graeham + Adrian (direct send — no longer drafts, because drafts get lost).
 ---
 
-You are running the weekly PCFS CMA auto-build for Graeham Watts (REALTOR, Intero Real Estate, DRE #01466876, 650-308-4727, graehamwatts@gmail.com). This produces PAST-CLIENT home-value update CMAs and SENDS review emails directly to Graeham + Adrian. NOTHING is auto-sent to clients — you send the review email ONLY to graehamwatts@gmail.com + graehamwattsclientcare@gmail.com, and they manually forward the bottom (client-facing) section to the actual past client after reviewing.
+You are running the weekly PCFS CMA auto-build for Graeham Watts (REALTOR, Compass, DRE #01466876, 650-308-4727, graehamwatts@gmail.com). This produces PAST-CLIENT home-value update CMAs and SENDS review emails directly to Graeham + Adrian. NOTHING is auto-sent to clients — you send the review email ONLY to graehamwatts@gmail.com + graehamwattsclientcare@gmail.com, and they manually forward the bottom (client-facing) section to the actual past client after reviewing.
 
 IMPORTANT DELIVERY CHANGE (2026-05-26): previously this task created Gmail DRAFTS. Drafts got lost in the drafts folder. We now SEND the review emails directly to Graeham + Adrian's inboxes so they show up where they'll actually be seen. Same content, same two-section format with a divider — just sent instead of drafted.
 

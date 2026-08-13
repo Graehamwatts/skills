@@ -5,7 +5,7 @@ import { BRAND } from "../lib/brand";
 interface Props {
   /** Person's name (e.g., "Graeham Watts") */
   name: string;
-  /** Role/contact line (e.g., "Intero Real Estate · Peninsula") */
+  /** Role/contact line (e.g., "Powered by The Boyenga Team at Compass · Peninsula") */
   role: string;
   /** Optional CTA text on the right side (e.g., "Comment OPTIONS below") */
   cta?: string;

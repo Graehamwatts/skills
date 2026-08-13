@@ -43,12 +43,17 @@ def main() -> int:
         identity = json.load(f)
 
     blocked = identity.get("_blocked_values", {})
-    blocklist = blocked.get("dre_blocklist", [])
+    # Two registers, same enforcement mechanism: a wrong DRE and a stale
+    # brokerage fail identically (a buried stale string propagates into every
+    # generated output), so both are grep-blocked at push time.
+    blocklist = blocked.get("dre_blocklist", []) + blocked.get("brand_blocklist", [])
     correct_dre = identity["identity"]["dre"]
+    correct_brokerage = identity["identity"].get("brokerage", "")
 
     print(f"Brand identity tripwire — checking {len(blocklist)} blocked values")
     print(f"  Source of truth: {identity_path.relative_to(repo_root)}")
     print(f"  Correct DRE: {correct_dre}")
+    print(f"  Correct brokerage: {correct_brokerage}")
     print(f"  Blocklist: {blocklist}")
     print()
 
@@ -65,6 +70,9 @@ def main() -> int:
         # legitimately need to reference them (e.g. CLAUDE.md warns about
         # the blocked DRE so future sessions know not to add it).
         exempt = set(blocked.get("_documentation_exempt", ["skills/shared-references/identity.json"]))
+        # Path fragments cover whole classes of file (generated catalogs,
+        # historical outputs) rather than naming each file individually.
+        exempt_fragments = blocked.get("_exempt_path_fragments", [])
         hits = []
         for line in result.stdout.strip().splitlines():
             if not line:
@@ -74,6 +82,8 @@ def main() -> int:
             if normalized in exempt:
                 continue
             if line.endswith("identity.json"):  # legacy fallback
+                continue
+            if any(frag in normalized.replace("\\", "/") for frag in exempt_fragments):
                 continue
             hits.append(line)
         if hits:

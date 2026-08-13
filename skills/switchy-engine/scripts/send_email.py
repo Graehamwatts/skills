@@ -21,7 +21,14 @@ from email.mime.base import MIMEBase
 from email import encoders
 from pathlib import Path
 
-DEFAULT_PWFILE = Path.home().parent / "Graeham Watts" / "Documents" / "Claude" / "Skills" / "gmail-app-password.txt"
+# Workspace moved 2026-07: Documents\Claude\ -> Documents\Skills LLMS\Claude\.
+# This default silently pointed at the dead path, so every scheduled report that
+# relied on the SMTP fallback (per the workspace "reports SEND, never draft" rule)
+# exited with "No Gmail app password found" unless --pwfile or the env var was set.
+DEFAULT_PWFILE = (
+    Path.home().parent / "Graeham Watts" / "Documents" / "Skills LLMS" / "Claude"
+    / "Skills" / "gmail-app-password.txt"
+)
 
 
 def load_pw(args):
