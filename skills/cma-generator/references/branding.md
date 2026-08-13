@@ -35,7 +35,7 @@
 - For the cover page, create a prominent header bar in black with gold text
 
 ## Contact Footer (appears on every page)
-Graeham Watts | Intero Real Estate | DRE #01466876
+Graeham Watts | Powered by The Boyenga Team at Compass | DRE #01466876
 650-308-4727 | graehamwatts@gmail.com | www.graehamwatts.com
 
 ## Design Principles

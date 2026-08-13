@@ -23,7 +23,7 @@ The **"What's My Home Worth?"** CTA in every newsletter is the primary conversio
    "Generate a CMA for 1234 Example Ave, East Palo Alto CA 94303"
    ```
 6. **CMA generates:** The skill pulls comps from MLS, produces Interactive HTML + Email-Safe HTML + PDF formats.
-7. **Auto-publish:** CMA HTML auto-publishes to `https://graehamwatts.github.io/online-content/cmas/CMA_[address].html` via the GitHub Contents API call documented in `cma-generator/references/github_publishing.md`.
+7. **Auto-publish:** CMA HTML publishes to `https://graehamwatts.github.io/online-content/cma/CMA_[address].html` via direct git push. See `cma-generator/references/publishing.md`. (The old `cmas/` path and the GitHub Contents API method are both retired.)
 8. **Delivery:** Graeham sends the lead the CMA URL with a personalized intro via Gmail (optionally using Gmail MCP).
 
 ### Why this is the right current-state flow

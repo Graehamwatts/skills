@@ -19,7 +19,7 @@ description: "Create new skills, modify and improve existing skills, and measure
 > 1. Run `python scripts/verify_brand_identity.py` from the repo root (must PASS).
 > 2. Commit and push to `Graehamwatts/skills` (`PAT=$(tr -d '[:space:]' < github-token.txt); git -c http.version=HTTP/1.1 push "https://${PAT}@github.com/Graehamwatts/skills.git" HEAD:main`). The SessionEnd auto-push hook is a safety net, not a substitute — verify `git status -sb` shows in-sync with origin/main before calling the work done.
 > 3. If the skill is invoked by automation (n8n cadences, Claude Code scheduled tasks, PCFS), confirm the automation reads the canonical SKILL.md from `Documents\Skills LLMS\Claude\Skills\skills\<skill>\` at run time (scheduled-task wrappers in `Documents\Skills LLMS\Claude\Scheduled\` must point there). Cached skill content is never the source of truth.
-> 4. Skills that produce client-facing output must read brand identity from `shared-references/identity.json` at runtime and follow the banned-language rules in `cma-generator/references/search-criteria-rules.md` (no data-source/tooling apologies, no "no agenda" / "no-pressure" phrasing, humanizer pass on all client copy).
+> 4. Skills that produce client-facing output must read brand identity from `shared-references/identity.json` at runtime and follow the banned-language rules in `cma-generator/references/report-build.md` Part 3 (no data-source/tooling apologies, no "no agenda" / "no-pressure" phrasing, no em-dashes, humanizer pass on all client copy).
 
 A skill for creating new skills and iteratively improving them.
 
