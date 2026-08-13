@@ -44,6 +44,7 @@ def load_pw(args):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--to", required=True, action="append", help="recipient (repeatable)")
+    ap.add_argument("--cc", action="append", default=[], help="cc recipient (repeatable)")
     ap.add_argument("--subject", required=True)
     ap.add_argument("--html-file")
     ap.add_argument("--text-file")
@@ -86,6 +87,9 @@ def main():
     msg["Subject"] = a.subject
     msg["From"] = a.sender
     msg["To"] = ", ".join(a.to)
+    if a.cc:
+        msg["Cc"] = ", ".join(a.cc)
+    all_recipients = a.to + a.cc
 
     ctx = ssl.create_default_context()
     # try STARTTLS:587 then SSL:465
@@ -97,9 +101,9 @@ def main():
             else:
                 s = smtplib.SMTP_SSL(host, port, context=ctx, timeout=30)
             s.login(a.sender, pw)
-            s.sendmail(a.sender, a.to, msg.as_string())
+            s.sendmail(a.sender, all_recipients, msg.as_string())
             s.quit()
-            print(f"SENT via {host}:{port} to {', '.join(a.to)}")
+            print(f"SENT via {host}:{port} to {', '.join(a.to)}" + (f" (cc: {', '.join(a.cc)})" if a.cc else ""))
             return
         except Exception as e:
             last = f"{host}:{port} -> {type(e).__name__}: {e}"
