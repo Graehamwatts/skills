@@ -52,11 +52,21 @@ Generate all charts using matplotlib in Python, save as PNG images, then embed i
 - This is the single most persuasive chart in a listing CMA. Title: "PRICE SHARP, SELL FAST — LIST-TO-SALE % vs DAYS ON MARKET"
 - See `references/pricing-behavior-analysis.md` for the full spec, metrics, and narrative.
 
-### 6. Market Trend (if data available)
-- Line chart showing median sold prices over the last 6-12 months
-- Gold line with data points marked
-- Shaded area under the line in light gold
-- Title: "MARKET TREND — [CITY] — MEDIAN SOLD PRICE"
+### 6. Market Trend Chart (MANDATORY, not optional — hard rule added 2026-08-13 after the third repeated failure on this exact point)
+
+**Do not hand-plot this from your own comp set.** A line connecting 2-4 comps you happened to pull is not a market trend chart, it is a handful of dots with a line drawn between them, and it has been called out as wrong three separate times now. A real trend chart comes from the MLS's own Stats module, which aggregates the full population of listings (hundreds to tens of thousands), not the handful you individually verified for the comp table.
+
+**How to source it, every time, no exceptions:**
+1. In MLS Matrix, go to Search → Stats (not Residential Search).
+2. Customize tab: set **Time Frame** (default Past 3 Years unless the report calls for a different window), **Statistic** = Sale Price, Average (or Median if that's what the client's own reference chart used), **Chart Type** = Smooth Line, **Group By** = Month.
+3. Set the search criteria to match the report's geography and property type as narrowly as is still statistically meaningful (Postal City, or Zip Code, or MLS Area — property sub type filtered the same way as the comp search, e.g. "Duplex" or "Single Family Home").
+4. Open the **Chart** tab to see the rendered line, and the **Data** tab to get the underlying monthly values.
+5. Reproduce this exact series as a Chart.js smooth line chart in the HTML report, using the brand gold line (#C5A55A) with a light-gold shaded area beneath it. Caption the chart with the exact criteria shown at the bottom of the MLS Stats page (time frame, geography, property type, listing count), the same way MLS itself captions it — this caption is what makes the chart verifiable rather than decorative.
+6. If MLS Stats access is genuinely unavailable for a given geography (e.g., no reciprocal data), do not silently fall back to a hand-plotted line. Say so explicitly in the report and in your response to the user, and use a clearly-labeled third-party source (Redfin, Zillow) instead, captioned as such.
+
+**Before delivering any CMA, confirm out loud (in your own response to the user, not just in the file) that this chart was pulled from MLS Stats and not hand-plotted.** This is the check that has been skipped three times; saying it explicitly is the fix.
+
+- Title: "MARKET TREND — [CITY/ZIP] — [STATISTIC] SALE PRICE"
 
 ### 7. Subject Property Positioning Map
 - A visual showing where the subject falls within the comp range
