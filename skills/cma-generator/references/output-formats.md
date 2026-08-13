@@ -73,6 +73,7 @@ After generating the report, perform a distinct second pass. Do NOT just re-read
 
 **4. Chart and Visual Accuracy**
 - **Count the charts. Minimum three per report** (comp comparison, DOM or list-to-sale, plus a third fitted to the property's specific story — price-history-over-time, $/sqft, cap rate, or rate sensitivity). A one-chart report is incomplete; go back and add the missing ones before delivering.
+- **Market trend chart source check (hard rule, added 2026-08-13 after the third repeated failure — see `references/charts.md` #6): confirm the market trend chart was pulled from the MLS Stats module, not hand-plotted from the comp table's own 2-4 data points.** A line connecting a handful of individually-verified comps is not a trend chart. If this step was skipped, the report is not ready to ship — go pull it from MLS Stats (Search → Stats → Customize: Time Frame / Statistic / Smooth Line / Group By Month) before delivering. State explicitly to the user, in your own response, that this chart came from MLS Stats.
 - Verify that all charts render correctly (no broken images, no empty charts)
 - Check that chart data matches the tables — if the table shows 12 comps, the chart should show 12 data points
 - Verify the Subject Property Positioning bubble/chart places the subject correctly relative to comp data
