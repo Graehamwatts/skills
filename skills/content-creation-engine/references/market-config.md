@@ -4,13 +4,13 @@
 
 - **Name:** Graeham Watts
 - **Title:** REALTOR® | DRE# 01466876
-- **Brokerage:** Intero Real Estate *(NEVER "Compass" — if you see Compass anywhere, it is wrong and must be corrected)*
+- **Brokerage:** Compass *(NEVER "Compass" — if you see Compass anywhere, it is wrong and must be corrected)*
 - **Email:** graehamwatts@gmail.com
 - **Website:** graehamwatts.com
 - **Instagram:** @graeham.watts
 - **YouTube:** Graeham Watts
 - **Facebook:** /GraehamWattsRealtor
-- **CRM:** GoHighLevel (Intero Real Estate account `6wuU3haUH7uNeT20E3UZ`)
+- **CRM:** GoHighLevel (Compass account `6wuU3haUH7uNeT20E3UZ`)
 - **Uses AI avatar** for much of his video delivery
 - **Cross-posts Instagram Reels to YouTube Shorts regularly**
 

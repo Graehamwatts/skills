@@ -59,7 +59,7 @@
 
 *The secret's not going to last forever. If you want more EPA content (food AND real estate), follow me. And drop your favorite EPA spot in the comments — I'm always hunting for the next one.*
 
-*#BayAreaRealEstate #EastPaloAlto #BayAreaFood #BayAreaLife #SiliconValley #PeninsulaRealEstate #EPA #BayAreaRealtor #InteroRealEstate #GraehamWatts #EastPaloAltoRealEstate #BayAreaTacos #SiliconValleyHomes #BayAreaEats #PeninsulaFood #BayAreaLiving #TaqueriaLife #BayAreaHiddenGems*
+*#BayAreaRealEstate #EastPaloAlto #BayAreaFood #BayAreaLife #SiliconValley #PeninsulaRealEstate #EPA #BayAreaRealtor #Compass #GraehamWatts #EastPaloAltoRealEstate #BayAreaTacos #SiliconValleyHomes #BayAreaEats #PeninsulaFood #BayAreaLiving #TaqueriaLife #BayAreaHiddenGems*
 
 ---
 
@@ -100,7 +100,7 @@ East Palo Alto > The Mission for tacos. Here are my 3 favorite spots in EPA — 
 
 **Headline:** Why East Palo Alto is the Peninsula's best-kept secret
 
-*Between world-class tacos, walkable streets, and proximity to Stanford and Meta, East Palo Alto is the most underrated neighborhood on the Peninsula. I'm Graeham Watts with Intero Real Estate and I help clients find homes in EPA every month. If you're curious about the neighborhood, let's talk.*
+*Between world-class tacos, walkable streets, and proximity to Stanford and Meta, East Palo Alto is the most underrated neighborhood on the Peninsula. I'm Graeham Watts with The Boyenga Team at Compass and I help clients find homes in EPA every month. If you're curious about the neighborhood, let's talk.*
 
 **CTA button:** Call now → Graeham's number
 

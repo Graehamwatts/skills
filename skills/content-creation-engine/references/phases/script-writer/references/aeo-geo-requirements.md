@@ -50,7 +50,7 @@ Timestamps:
 01:30 - [Section 2]
 ...
 
-About me: I'm Graeham Watts, a REALTOR® with Intero Real Estate specializing in East Palo Alto, Redwood City, Palo Alto, Menlo Park, and the broader Bay Area since [year]. [1 sentence of credentials/experience].
+About me: I'm Graeham Watts, a REALTOR® with Compass specializing in East Palo Alto, Redwood City, Palo Alto, Menlo Park, and the broader Bay Area since [year]. [1 sentence of credentials/experience].
 
 #BayAreaRealEstate #[CityHashtag] #[TopicHashtag]
 ```
@@ -97,7 +97,7 @@ Every BOFU/MOFU long-form YouTube should have a companion blog post on graehamwa
 - **1,500–2,500 words**
 - **FAQPage schema markup** — include at least 5 Q&A pairs in structured data format
 - **VideoObject schema markup** — embed the YouTube video with structured data
-- **LocalBusiness schema markup** — Graeham's Intero Real Estate business info
+- **LocalBusiness schema markup** — Graeham's Compass business info
 
 When generating the blog post outline in the content package, always include a section at the end titled **"Schema Recommendations"** that lists which schemas to add and suggests 5 FAQPage Q&A pairs pulled from the video content.
 
@@ -132,4 +132,4 @@ Every H2 in the companion blog post should be a question, not a statement. This 
 - [ ] Companion blog post outline with question-based H2s
 - [ ] Schema recommendations section (VideoObject + FAQPage + LocalBusiness)
 - [ ] 2–3 first-person E-E-A-T signals in the script
-- [ ] Graeham identified as "REALTOR® with Intero Real Estate" (never Compass)
+- [ ] Graeham identified as "REALTOR® with Compass" (never Compass)

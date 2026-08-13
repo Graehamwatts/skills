@@ -86,7 +86,7 @@ ALWAYS:
 
 ## Brand identity
 
-Per `shared-references/identity.json` — every output that mentions Graeham must use DRE# **01466876** (Intero Real Estate). The blocklisted DRE that has leaked historically is in `_blocked_values` of identity.json — never write it. The AI Library content has been audited and contains zero hits for the blocklisted value.
+Per `shared-references/identity.json` — every output that mentions Graeham must use DRE# **01466876** (Compass). The blocklisted DRE that has leaked historically is in `_blocked_values` of identity.json — never write it. The AI Library content has been audited and contains zero hits for the blocklisted value.
 
 ## Repos this skill is part of
 

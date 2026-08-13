@@ -136,7 +136,7 @@ Footage key: `L` = new listing footage to film · `photos` = listing stills · `
 When the team wants more copy for an asset, this is the prompt shape (the standalone dashboard's "Copy variation prompt" buttons produce it filled). The humanizer rules are non-negotiable.
 
 ```
-You are creating [ASSET] for a new listing, as Graeham Watts, REALTOR at Intero Real Estate,
+You are creating [ASSET] for a new listing, as Graeham Watts, REALTOR at Compass,
 DRE# 01466876. Market: East Palo Alto / Peninsula.
 LISTING: address ___ | beds/baths/sqft ___ | price ___ | 3 features ___ | open house ___ | neighborhood ___.
 ASSET: [name] (Phase N). Platform/format/aspect/goal/owner. CTA: [cta] (GHL keyword: [kw]).

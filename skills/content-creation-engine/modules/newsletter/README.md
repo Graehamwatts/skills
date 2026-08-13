@@ -96,7 +96,7 @@ Build the newsletter as a single-file HTML email using inline CSS for email clie
 **Template specs:**
 - Max width: 600px (centered)
 - Font: Arial/Helvetica fallback stack (email-safe)
-- Header: Graeham's headshot + name + "Intero Real Estate" + DRE#
+- Header: Graeham's headshot + name + "Compass" + DRE#
 - Brand colors: Reference `../../../shared-references/branding.md` if available; otherwise use the brand colors from `references/market-config.md` or the cma-generator/references/branding.md as a fallback
 - Footer: Unsubscribe link, physical address (CAN-SPAM required), social links, DRE#
 - Mobile-responsive: single-column layout, minimum 14px body text, 44px minimum touch targets for buttons
@@ -175,7 +175,7 @@ Every newsletter MUST comply with the CAN-SPAM Act. Non-compliance carries penal
 **Required elements:**
 1. **Accurate "From" line** — Must identify Graeham Watts as the sender
 2. **Non-deceptive subject line** — Must reflect the actual content of the email
-3. **Physical mailing address** — Graeham's brokerage address must appear in the footer (Intero Real Estate office address)
+3. **Physical mailing address** — Graeham's brokerage address must appear in the footer (Compass office address)
 4. **Unsubscribe mechanism** — A clear, conspicuous unsubscribe link that works for at least 30 days after sending. Must process opt-outs within 10 business days.
 5. **Ad identification** — If the email is an advertisement, it must be identified as such (most newsletters are informational, but if promoting a listing, disclose)
 6. **No purchased lists** — Only email people who have opted in or have an existing business relationship
@@ -183,7 +183,7 @@ Every newsletter MUST comply with the CAN-SPAM Act. Non-compliance carries penal
 **Footer template:**
 ```
 Graeham Watts | REALTOR® | DRE# 01466876
-Intero Real Estate
+Compass
 [Brokerage Address]
 [Phone Number]
 

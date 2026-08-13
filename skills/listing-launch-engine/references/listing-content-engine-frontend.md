@@ -46,7 +46,7 @@ For a visual-spectacle hook, draw from `Hook Database\Cinematic Concepts` — re
 Two *different* rules — do not conflate them (this is the fix from Fugu's review):
 - **Price is medium-gated:** never in listing-VIDEO audio or on-screen graphics (address OK); fine in captions / scripts / approved ad copy.
 - **Financing terms are content-gated on EVERY surface:** mortgage rate, APR, monthly payment, down-payment, credit/seller-credit are Reg Z / TILA "trigger terms" — keep them out of video AND captions AND landing pages/SMS unless the full required disclosures are attached. Default: leave them out.
-- **Disclosure guarantee:** the license (DRE# 01466876) + brokerage (Intero) must appear **somewhere in each published unit** — if not on-screen, then in the caption/bio. Never let disclosure vanish. *(Exact placement requirement is jurisdiction-specific — verify per surface/state; add the Equal Housing Opportunity logo + MLS attribution where required.)*
+- **Disclosure guarantee:** the license (DRE# 01466876) + brokerage (Compass) must appear **somewhere in each published unit** — if not on-screen, then in the caption/bio. Never let disclosure vanish. *(Exact placement requirement is jurisdiction-specific — verify per surface/state; add the Equal Housing Opportunity logo + MLS attribution where required.)*
 - **Address:** OK by default, but withhold for coming-soon/off-market, tenant-occupied/safety, or seller-privacy listings.
 
 Every hook stores both a `caption` and a `video_safe` version. Schools = neutral fact only, never used to steer.

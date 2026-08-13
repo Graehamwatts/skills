@@ -34,7 +34,7 @@ For heavy-text pages (disclosure reports, long buyer guides), switch `--bg` to `
 
 ## Typography
 
-Header font: **Eagle CG Bold**. Paid font — license lives in Graeham's Intero account.
+Header font: **Eagle CG Bold**. Paid font — license lives in Graeham's Compass account.
 
 Body font: **SF Pro Display**. Free on Apple platforms. Web fallback stack:
 
@@ -89,7 +89,7 @@ Usage rules:
   <div class="gw-contact">
     <div>graehamwatts@gmail.com</div>
     <div>650-308-4727</div>
-    <div>Intero Real Estate · DRE #01466876</div>
+    <div>Compass · DRE #01466876</div>
   </div>
 </footer>
 ```

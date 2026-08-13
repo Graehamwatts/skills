@@ -1,6 +1,6 @@
 ---
 name: farming-postcard
-description: "Generate print-ready 6x4 farming postcards for Graeham Watts in his locked brand system (gold + black, chevron pattern, Intero + Graeham Watts lockup). Use ANY time the user mentions farming postcard, direct mail postcard, EPA postcard, neighborhood postcard, mailer, mail piece, Wise Pelican, Universal Mail Works, Corefact, ProspectsPLUS."
+description: "Generate print-ready 6x4 farming postcards for Graeham Watts in his locked brand system (gold + black, chevron pattern, Compass + Graeham Watts lockup). Use ANY time the user mentions farming postcard, direct mail postcard, EPA postcard, neighborhood postcard, mailer, mail piece, Wise Pelican, Universal Mail Works, Corefact, ProspectsPLUS."
 ---
 
 # Farming Postcard Skill

@@ -43,7 +43,7 @@ When Graeham asks for a "light test" (e.g., John's first run): ONE campaign, Cli
 ## Rules (non-negotiable)
 
 - **Fair Housing always** — target the housing situation, never the household. No protected-class language or proxies (no school quality, no "safe/family-friendly neighborhoods"). Same guardrails as content-creation-engine.
-- **California DRE advertising rules** — ads identify Intero Real Estate and DRE# 01466876 (from identity.json) where required; brokerage ad review before first launch.
+- **California DRE advertising rules** — ads identify Compass and DRE# 01466876 (from identity.json) where required; brokerage ad review before first launch.
 - **Financial-services copy gets flagged** — OpenAI's ad policies restrict money/financing language; the "pre-approved buyer" hint (#15) has been auto-disabled in testing. Keep ad copy off financing; mortgage/lender angles will struggle to run. (Detail in `references/troubleshooting.md`.)
 - **Persuasion, never manipulation** — marketing-psychology's litmus applies to every hint and ad. No fabricated urgency, no promised outcomes.
 - **Three ad groups, three ads each** is the sweet spot — more fragments spend; push back once if asked for more, then comply.

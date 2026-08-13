@@ -77,7 +77,7 @@ Best for: Property showcases, open house promos, just-listed/just-sold announcem
     "agent_title": "REALTOR® | DRE# 01466876",
     "agent_contact": "graehamwatts@gmail.com",
     "agent_phone": "650-308-4727",
-    "brokerage": "Intero Real Estate",
+    "brokerage": "Compass",
     "theme": "luxury",
     "aspect_ratio": "landscape",
     "duration_per_photo": 4.0,
@@ -227,7 +227,7 @@ When the user doesn't specify agent info, read Graeham's brand details from `sha
 - Name: Graeham Watts
 - Title: REALTOR® | DRE# 01466876
 - Email: graehamwatts@gmail.com
-- Brokerage: Intero Real Estate
+- Brokerage: Compass
 
 ## Step-by-Step Workflow
 

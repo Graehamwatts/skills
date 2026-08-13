@@ -110,10 +110,10 @@ For video scripts and especially AI avatar scripts, always use contractions. Gra
 
 ## Brokerage Rule (NON-NEGOTIABLE)
 
-Graeham is with **Intero Real Estate**. Never **Compass**. Never any other brokerage. If you see "Compass" anywhere in a reference file or example output, it's wrong and must be fixed immediately.
+Graeham is with **Compass**. Never **Compass**. Never any other brokerage. If you see "Compass" anywhere in a reference file or example output, it's wrong and must be fixed immediately.
 
 Credentials to include when relevant:
-- *"I'm Graeham Watts, REALTOR® with Intero Real Estate."*
+- *"I'm Graeham Watts, REALTOR® with Compass."*
 - *"DRE# 01466876"* (include in long-form YouTube descriptions and blog posts)
 
 ---
@@ -126,7 +126,7 @@ These are style negatives — patterns to avoid:
 - ❌ **Trendy real estate clichés** — No "this is where dreams are made," "welcome to your forever home," "location location location." Boring and low-signal.
 - ❌ **Fear-based selling** — No "buy now or miss out forever" or "the market is about to crash." Graeham leads with facts, not fear.
 - ❌ **Generic CTAs** — No "DM me," "reach out," "let's connect." Always specific: "Comment [KEYWORD] for [DELIVERABLE]."
-- ❌ **Bragging about the brokerage** — Intero Real Estate is mentioned for credentials, not as a sales pitch.
+- ❌ **Bragging about the brokerage** — Compass is mentioned for credentials, not as a sales pitch.
 - ❌ **Overloading with real estate jargon** — If a first-time buyer wouldn't understand a term, explain it in plain English or pick a simpler word.
 - ❌ **Filler and throat-clearing** — No "let's dive in," "quick context because the why matters," "hear me out," "here's the thing," "and that's where it gets interesting." Cut warm-up phrases. Every spoken line should carry a number, a concrete local detail, or a clear "why it matters to you." Read the draft aloud; if a line sounds like a blog intro, cut it.
 - ❌ **False precision in spoken lines** — Don't read exact figures aloud ("32 days," "4.1%," "$808/sqft"). Say the range or the "about" version on camera ("about a month," "up roughly four percent") and keep the exact sourced number in the verify block and description. See `data-verification-and-nuance.md`.

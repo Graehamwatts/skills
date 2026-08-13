@@ -7,7 +7,7 @@
   "identity": {
     "name": "Graeham Watts",
     "title": "REALTOR",
-    "_brand_rule": "Graeham Watts is the PRIMARY brand and always leads. The brokerage/team is a supporting attribution line underneath, never the lead. Use `brand_line` verbatim for footers and contact strips. Updated 2026-08-13 on Graeham's move from Intero to Compass.",
+    "_brand_rule": "Graeham Watts is the PRIMARY brand and always leads. The brokerage/team is a supporting attribution line underneath, never the lead. Use `brand_line` verbatim for footers and contact strips; use `brokerage` alone ('Compass') in structured fields and in legal/DRE advertising contexts, where the licensed broker must be named. Updated 2026-08-13 on Graeham's move to Compass.",
     "brokerage": "Compass",
     "team": "The Boyenga Team",
     "brand_line": "Powered by The Boyenga Team at Compass",

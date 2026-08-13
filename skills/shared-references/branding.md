@@ -65,7 +65,7 @@ For human reference (do not hardcode — read from identity.json):
 
 - Name: Graeham Watts
 - Title: REALTOR
-- Brokerage: Intero Real Estate
+- Brokerage: Compass
 - DRE: see identity.json
 - Email: see identity.json
 - Website: see identity.json

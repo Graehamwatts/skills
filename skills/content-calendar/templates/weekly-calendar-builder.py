@@ -382,7 +382,7 @@ def render_calendar(cal):
         + render_conflicts(cal)
         + render_overrides(cal)
         + '<div class="footer">Week of ' + week_of + ' &middot; Goal: ' + goal + ' &middot; Generated ' + generated + '<br>'
-        + 'Content Creation Engine v2 (April 2026 streamline) &middot; Rule 14 compliant &middot; Intero Real Estate &middot; DRE #01466876<br>'
+        + 'Content Creation Engine v2 (April 2026 streamline) &middot; Rule 14 compliant &middot; Powered by The Boyenga Team at Compass &middot; DRE #01466876<br>'
         + 'Data sources: Windsor MCP (IG/FB/YT perf, GSC), Apify Reddit (via content-ideation-engine), content-calendar Performance Analysis Layer (competitors), web search (market context)'
         + '</div></div></body></html>'
     )

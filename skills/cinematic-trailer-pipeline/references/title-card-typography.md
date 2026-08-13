@@ -57,7 +57,7 @@ The Scene 8 title card on "The Last 47 Days." Two-stanza fade-in structure on de
 
 ## Brand card (separate card after the title card)
 
-If the title card flows into a brand identification card (e.g., "GRAEHAM WATTS / Intero Real Estate / DRE# 01466876 / graehamwatts.com"):
+If the title card flows into a brand identification card (e.g., "GRAEHAM WATTS / Compass / DRE# 01466876 / graehamwatts.com"):
 
 - Same deep matte black background, same grain
 - "GRAEHAM WATTS" in elegant sans-serif (NOT serif — visual differentiation from the title card)

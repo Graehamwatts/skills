@@ -94,7 +94,7 @@ Full-width black bar `#1A1A1A`, 48px vertical padding, centered content, gold th
 
 ```
        ━━━━━━━━━ thin gold rule ━━━━━━━━━
-  Graeham Watts  |  Intero Real Estate  |  DRE #01466876
+  Graeham Watts  |  Compass  |  DRE #01466876
   650-308-4727  |  graehamwatts@gmail.com  |  www.graehamwatts.com
 ```
 

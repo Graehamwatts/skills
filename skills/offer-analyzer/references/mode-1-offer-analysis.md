@@ -374,7 +374,7 @@ This is the premium output — the one the seller sees when the agent sends them
 **I. Footer**
 - Black background, padding 36px 48px, text-align center
 - "GRAEHAM WATTS" wordmark in gold, 14px, letter-spacing 0.15em
-- Contact line: "Intero Real Estate Services | DRE #01466876 | 650-308-4727 | graehamwatts@gmail.com" in light gray (13px)
+- Contact line: "Powered by The Boyenga Team at Compass | DRE #01466876 | 650-308-4727 | graehamwatts@gmail.com" in light gray (13px)
 - Disclaimer (max-width 720px, centered): explains estimates, transfer tax basis, title company will provide final figures
 
 **Styling Details (mandatory brand palette):**

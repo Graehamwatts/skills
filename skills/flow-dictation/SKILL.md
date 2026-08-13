@@ -81,7 +81,7 @@ and would leak into the focused app.
    importing faster_whisper. Falls back to CPU int8 if CUDA fails.
 4. `vad_filter=True` + `condition_on_previous_text=False` (prevents
    repetition loops on multi-minute audio) + `initial_prompt` built from
-   `vocab.txt` (names/brands spelled right: PropertyIQ, Intero, East Palo
+   `vocab.txt` (names/brands spelled right: PropertyIQ, Compass, East Palo
    Alto, GHL...). There is NO length limit — audio is buffered in RAM
    (~2 MB/min) and Whisper chunks internally.
 5. Optional polish pass (only when Shift was tapped): raw transcript →

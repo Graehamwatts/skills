@@ -3,7 +3,7 @@ name: off-market-property-search
 description: "Off-Market Property Search & Branded Report Generator for Graeham Watts. Use this skill ANY time the user mentions: off-market properties, members only listings, MLS members only, pocket listings, off-market search, exclusive listings, agent-only listings, properties not on Zillow, hidden listings, off-market report, find me off-market, pull off-market, off-market in [city], MLS Members Only, run the off-market search, what's off market in [city], properties not syndicated, or anything related to finding and presenting MLS Members-Only properties as a branded report. This skill logs into MLSListings.com via the already-authenticated browser, filters for Members Only listings (red-circled M or green M indicators), extracts property details and photos, and produces a premium branded HTML report (and optional PDF) in Graeham's black-and-gold visual style that looks like the agent's own research — NOT an MLS printout. No MLS numbers, no MLS branding, prices shown as 'Estimated price around $X'."
 ---
 
-# Off-Market Property Search — Graeham Watts | Intero Real Estate
+# Off-Market Property Search — Graeham Watts | Compass
 
 This skill finds **Members Only (off-market)** listings on MLSListings.com — properties that are listed through the MLS but withheld from public syndication (Zillow, Redfin, Realtor.com). It then produces a premium branded HTML report that presents these properties as if they came from Graeham's own research network, **not** as an MLS printout.
 
@@ -158,7 +158,7 @@ Use `assets/report_template.html` as the base. Follow `references/html_template.
   - Card: white background, subtle drop shadow, thin gold top or left border accent
 - **Footer on every visual "page" of the report:**
 
-  > Graeham Watts | Intero Real Estate | DRE #01466876 | 650-308-4727 | graehamwatts@gmail.com | www.graehamwatts.com
+  > Graeham Watts | Compass | DRE #01466876 | 650-308-4727 | graehamwatts@gmail.com | www.graehamwatts.com
 
 - **No MLS branding anywhere.** No MLS numbers, no "Courtesy of..." disclaimers, no MLS logos, no agent-remarks language. This is Graeham's research, not an MLS printout.
 - **Generous white space.** Don't cram. Cards get breathing room.

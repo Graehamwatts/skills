@@ -873,7 +873,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);lin
     <div class="hm-pill">GHL Keyword: EPA</div>
     <div class="hm-pill">Target: ~4:30</div>
   </div>
-  <div class="pow">Generated April 18, 2026 &middot; Content Creation Engine v4 &middot; Intero Real Estate &middot; DRE #01466876</div>
+  <div class="pow">Generated April 18, 2026 &middot; Content Creation Engine v4 &middot; Powered by The Boyenga Team at Compass &middot; DRE #01466876</div>
 </div>
 
 __RESEARCH_DATA_TOP__
@@ -928,7 +928,7 @@ __RESEARCH_DATA_TOP__
     </div>
     <div class="isp-card">
       <h4>&#x1F3DB;&#xFE0F; GoHighLevel CRM <span class="used-badge">ACTIVE</span></h4>
-      <p style="font-size:12px;color:var(--muted)"><strong>Location:</strong> Intero Real Estate &middot; ID 6wuU3haUH7uNeT20E3UZ</p>
+      <p style="font-size:12px;color:var(--muted)"><strong>Location:</strong> Powered by The Boyenga Team at Compass &middot; ID 6wuU3haUH7uNeT20E3UZ</p>
       <div class="finding"><strong>Use this topic:</strong> Validated the GHL keyword for this topic&apos;s CTA is active in a workflow (comment-keyword trigger + follow-up sequence). Pre-flight check before shipping.</div>
     </div>
     <div class="isp-card">
@@ -1144,7 +1144,7 @@ __COPY_BANK__
 </div>
 
 <div class="footer">
-  <div class="brand">Graeham Watts &mdash; Intero Real Estate &middot; DRE #01466876</div>
+  <div class="brand">Graeham Watts &mdash; Powered by The Boyenga Team at Compass &middot; DRE #01466876</div>
   <div style="margin-top:6px">Content Creation Engine &middot; Phase G Per-Topic Dashboard &middot; v5 Scoring Architecture Panel &middot; Generated April 18, 2026</div>
   <div style="margin-top:6px">Sources: Local News Matters &middot; The Almanac &middot; Redfin &middot; Benson Group &middot; Own Team &middot; Palo Alto Online &middot; City of East Palo Alto</div>
 </div>

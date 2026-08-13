@@ -232,7 +232,7 @@ For single-offer analyses, use a simple vertical table instead — item label on
 
 - Background `#1A1A1A`, padding 36px 48px, text-align center
 - Wordmark "GRAEHAM WATTS" in gold, 14px, weight 700, letter-spacing 0.15em
-- Contact line: "Intero Real Estate Services | DRE #01466876 | 650-308-4727 | graehamwatts@gmail.com" in light gray
+- Contact line: "Powered by The Boyenga Team at Compass | DRE #01466876 | 650-308-4727 | graehamwatts@gmail.com" in light gray
 - Disclaimer block (max-width 720px, centered, 10.5px, color `#666666`, separated by 1px `#333333` top border)
 
 ## Mobile Behavior

@@ -23,7 +23,7 @@
 
 `[PAUSE]`
 
-*"I'm Graeham Watts, REALTOR® with Intero Real Estate, and I've helped clients navigate exactly this situation — tech layoff plus Bay Area home equity — more times in the last 18 months than in the previous 5 years combined. Today I'm going to walk you through your real options, what to avoid, and the specific numbers you need to know."*
+*"I'm Graeham Watts, REALTOR® with Compass, and I've helped clients navigate exactly this situation — tech layoff plus Bay Area home equity — more times in the last 18 months than in the previous 5 years combined. Today I'm going to walk you through your real options, what to avoid, and the specific numbers you need to know."*
 
 `[AEO KEY STATEMENT]` *"If you were laid off from a Bay Area tech company in 2026 and own a home in Menlo Park, you have four realistic options: sell and preserve equity, refinance to lower the monthly payment, rent out the home, or hold and ride it out. Each has a different break-even timeline."*
 
@@ -93,7 +93,7 @@
 
 *"If this helped, like the video and subscribe — I post Bay Area real estate content weekly, and I'm tracking every major tech layoff and its real estate impact so you don't have to."*
 
-*"I'm Graeham Watts with Intero Real Estate. Talk soon."*
+*"I'm Graeham Watts with The Boyenga Team at Compass. Talk soon."*
 
 ---
 
@@ -101,7 +101,7 @@
 
 > Just got laid off from Meta, Amazon, Google, or another Bay Area tech company? If you own a home in Menlo Park, your biggest decision right now isn't about your career — it's about your house. In this video, I walk through the four realistic options for laid-off Bay Area tech homeowners: sell and preserve equity, refinance while you still can, rent out and relocate, or hold and ride it out.
 >
-> I'm Graeham Watts, REALTOR® with Intero Real Estate (DRE# 01466876), and I've helped more clients navigate tech-layoff-plus-home-equity situations in the last 18 months than in the previous 5 years combined. Here are the specific numbers, timelines, and decision frameworks you need.
+> I'm Graeham Watts, REALTOR® with Compass (DRE# 01466876), and I've helped more clients navigate tech-layoff-plus-home-equity situations in the last 18 months than in the previous 5 years combined. Here are the specific numbers, timelines, and decision frameworks you need.
 >
 > In this video, I answer:
 > • What are my options if I got laid off and own a house in Menlo Park?
@@ -121,7 +121,7 @@
 >
 > Want a personalized analysis of YOUR situation? Comment **OPTIONS** below and I'll send you a custom equity analysis + a 30-minute call.
 >
-> About me: I'm Graeham Watts, REALTOR® with Intero Real Estate, specializing in East Palo Alto, Redwood City, Palo Alto, Menlo Park, and the broader Bay Area. DRE# 01466876.
+> About me: I'm Graeham Watts, REALTOR® with Compass, specializing in East Palo Alto, Redwood City, Palo Alto, Menlo Park, and the broader Bay Area. DRE# 01466876.
 >
 > #BayAreaRealEstate #MenloPark #TechLayoff #MetaLayoff #BayAreaRealtor
 
@@ -167,7 +167,7 @@
 
 *And if you want the full 8-minute breakdown on YouTube, comment **WATCH** and I'll send you the link.*
 
-*#BayAreaRealEstate #MenloPark #TechLayoff #MetaLayoff #BayAreaRealtor #InteroRealEstate #GraehamWatts #SiliconValleyHomes #BayAreaRealEstate #PeninsulaRealEstate #SiliconValley #MenloParkHomes #BayAreaLife #HomeEquity #TechHomes #PaloAltoRealEstate #RedwoodCity #EastPaloAlto*
+*#BayAreaRealEstate #MenloPark #TechLayoff #MetaLayoff #BayAreaRealtor #Compass #GraehamWatts #SiliconValleyHomes #BayAreaRealEstate #PeninsulaRealEstate #SiliconValley #MenloParkHomes #BayAreaLife #HomeEquity #TechHomes #PaloAltoRealEstate #RedwoodCity #EastPaloAlto*
 
 ### TikTok Caption (short)
 
@@ -187,7 +187,7 @@
 
 **Slide 5:** "OPTION 3: RENT IT OUT. Watch AB 1482 if the home was built before 2005 (rent increase caps)."
 
-**Slide 6 (CTA):** "Comment **OPTIONS** below — I'll send you a custom equity analysis and a free 30-min call. Save this if it's useful. — Graeham, Intero Real Estate"
+**Slide 6 (CTA):** "Comment **OPTIONS** below — I'll send you a custom equity analysis and a free 30-min call. Save this if it's useful. — Graeham, Compass"
 
 ---
 
@@ -201,7 +201,7 @@
 
 *Full 8-minute video is on my YouTube. If you're in this situation and want to talk, drop a comment below or message me directly. I've been doing this for 7 years and I'm not going to pitch you — I'm going to give you real numbers.*
 
-*— Graeham Watts, Intero Real Estate*
+*— Graeham Watts, Compass*
 
 ---
 
@@ -219,7 +219,7 @@
 
 **Title:** Just Got Laid Off From Meta? Here's What to Do With Your Menlo Park Home in 2026
 
-**Meta description:** If you were laid off from a Bay Area tech company and own a home in Menlo Park, you have 4 real options. Here's how to pick the right one based on your runway. — Graeham Watts, Intero Real Estate
+**Meta description:** If you were laid off from a Bay Area tech company and own a home in Menlo Park, you have 4 real options. Here's how to pick the right one based on your runway. — Graeham Watts, Compass
 
 **URL slug:** `/blog/laid-off-from-meta-menlo-park-home-options-2026`
 
@@ -243,7 +243,7 @@
   3. Q: "Does AB 1482 apply if I rent out my Menlo Park home?" A: "AB 1482 applies to rental properties built before 2005..."
   4. Q: "What is the median home price in Menlo Park in 2026?" A: "[Specific number]"
   5. Q: "How much equity do I need to sell profitably?" A: "Your equity needs to cover closing costs (typically 7-8% of sale price) plus any remaining mortgage..."
-- **LocalBusiness** — Graeham Watts, Intero Real Estate, with address, phone, service area
+- **LocalBusiness** — Graeham Watts, Compass, with address, phone, service area
 
 **Internal links:** Link to Graeham's AB 1482 post, Menlo Park market update, and "how to prep your home for sale" post.
 
@@ -278,7 +278,7 @@ I just recorded an 8-minute YouTube video walking through each option with speci
 And if you want a custom equity analysis of YOUR specific home, just reply to this email with the word **OPTIONS** and I'll get back to you personally.
 
 — Graeham Watts
-REALTOR® | Intero Real Estate
+REALTOR® | Compass
 DRE# 01466876
 
 **P.S.** Comment **OPTIONS** under any of my Instagram or YouTube posts for the same custom analysis + a free 30-minute call. No pitch, just numbers.
@@ -289,7 +289,7 @@ DRE# 01466876
 
 `[SEGMENT 1 — 60 seconds]`
 
-*"Hey, I'm Graeham Watts with Intero Real Estate."*
+*"Hey, I'm Graeham Watts with The Boyenga Team at Compass."*
 
 `[PAUSE]`
 
@@ -341,4 +341,4 @@ DRE# 01466876
 
 `[PAUSE]`
 
-*"I'm Graeham Watts with Intero Real Estate. Talk soon."*
+*"I'm Graeham Watts with The Boyenga Team at Compass. Talk soon."*

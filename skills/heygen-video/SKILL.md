@@ -98,7 +98,7 @@ bash scripts/setup.sh
 
 # 2. Submit
 python3 scripts/create.py \
-  --script "Hi, I'm Graeham Watts with Intero Real Estate. This is a test of my new HeyGen video pipeline." \
+  --script "Hi, I'm Graeham Watts with The Boyenga Team at Compass. This is a test of my new HeyGen video pipeline." \
   --title "Pipeline test - $(date +%Y-%m-%d)"
 
 # 3. Report the video_id and dashboard URL back to the user

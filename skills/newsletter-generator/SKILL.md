@@ -1,6 +1,6 @@
 ---
 name: newsletter-generator
-description: "Weekly newsletter generator for Graeham Watts (REALTOR, Intero Real Estate, DRE# 01466876). Produces per-segment PERSONALIZED, brand-matched, multi-section email newsletters (The EPA Report) assembling a lead story + market update + community news + featured content + home-value CTA that ties into the cma-generator skill. Use ANY time the user mentions: newsletter, weekly newsletter, weekly email, email blast, subscriber email, EPA Report, weekly digest, send a newsletter, generate newsletter, assemble newsletter, newsletter HTML, email-ready newsletter, Gmail newsletter, multi-section email, or turning a single topic content package into a full newsletter. Also trigger when the user says 'send out the newsletter this week', 'prep the email for Friday', or 'package the content as a full weekly email'. Pairs with content-creation-engine (which generates the per-topic content) and cma-generator (which the What's My Home Worth CTA handoff targets)."
+description: "Weekly newsletter generator for Graeham Watts (REALTOR, Compass, DRE# 01466876). Produces per-segment PERSONALIZED, brand-matched, multi-section email newsletters (The EPA Report) assembling a lead story + market update + community news + featured content + home-value CTA that ties into the cma-generator skill. Use ANY time the user mentions: newsletter, weekly newsletter, weekly email, email blast, subscriber email, EPA Report, weekly digest, send a newsletter, generate newsletter, assemble newsletter, newsletter HTML, email-ready newsletter, Gmail newsletter, multi-section email, or turning a single topic content package into a full newsletter. Also trigger when the user says 'send out the newsletter this week', 'prep the email for Friday', or 'package the content as a full weekly email'. Pairs with content-creation-engine (which generates the per-topic content) and cma-generator (which the What's My Home Worth CTA handoff targets)."
 ---
 
 # Newsletter Generator — The EPA Report
@@ -31,7 +31,7 @@ description: "Weekly newsletter generator for Graeham Watts (REALTOR, Intero Rea
 
 **Story-page depth layer (added 2026-07-03).** The email item stays ONE sentence (never expand it; skimmability is the whole game). The story page carries the depth, in this order: quick version (3 short paragraphs) → "The details" (3-4 fuller paragraphs: scope, timeline, numbers, what happens next) → "Watch" (a REAL embedded YouTube player via iframe — web pages have no email restrictions; pick the best-matching video from the published library, a related channel video if no exact match, or omit the block entirely if nothing fits — never force it) → "Go deeper" (2-3 arrow links: original source/city file, the YouTube channel, the month's newsletter) → the "What this means for you" box → the single CTA. Reference implementation: the three 2026-07 pages.
 
-**Per-agent brand skin (multi-tenant).** The structural template is SHARED; the skin is per-agent. Each agent's Brand Vault (colors, fonts, logo) is derived from their website (Search Atlas Website Studio model). PropertyIQ's own product brand is never used on the client newsletter. Pilot instance = Graeham's gold/black Intero brand (gold `#C2A14E`, ink `#1A1D2E`, Anton + Inter, DRE 01466876 from `identity.json`). These colors are the pilot's brand, not a locked product palette.
+**Per-agent brand skin (multi-tenant).** The structural template is SHARED; the skin is per-agent. Each agent's Brand Vault (colors, fonts, logo) is derived from their website (Search Atlas Website Studio model). PropertyIQ's own product brand is never used on the client newsletter. Pilot instance = Graeham's gold/black Compass brand (gold `#C2A14E`, ink `#1A1D2E`, Anton + Inter, DRE 01466876 from `identity.json`). These colors are the pilot's brand, not a locked product palette.
 
 **Every link is a Switchy tracked link** (UTM + retargeting pixel) via the `switchy-engine` skill, so the analytics loop (review last sends, learn what gets clicked) actually works.
 
@@ -49,7 +49,7 @@ description: "Weekly newsletter generator for Graeham Watts (REALTOR, Intero Rea
 
 ## Agent Identity
 
-Graeham Watts — REALTOR at Intero Real Estate, DRE #01466876. Bay Area real estate specialist, East Palo Alto home base. The weekly newsletter is branded **"The EPA Report"** — sent to his subscriber list every Friday/Saturday.
+Graeham Watts — REALTOR at Compass, DRE #01466876. Bay Area real estate specialist, East Palo Alto home base. The weekly newsletter is branded **"The EPA Report"** — sent to his subscriber list every Friday/Saturday.
 
 ## Scope Boundary (Who Owns What)
 

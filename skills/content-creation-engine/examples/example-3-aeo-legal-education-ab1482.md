@@ -24,7 +24,7 @@
 
 `[PAUSE]`
 
-*"I'm Graeham Watts, REALTOR® with Intero Real Estate. I've helped landlords and property owners across East Palo Alto, Redwood City, Palo Alto, and the Bay Area navigate AB 1482 compliance since it was enacted. Today I'm walking you through exactly what AB 1482 says in 2026, what's exempt, what the notice requirements are, and the two things I see Bay Area landlords get wrong most often."*
+*"I'm Graeham Watts, REALTOR® with Compass. I've helped landlords and property owners across East Palo Alto, Redwood City, Palo Alto, and the Bay Area navigate AB 1482 compliance since it was enacted. Today I'm walking you through exactly what AB 1482 says in 2026, what's exempt, what the notice requirements are, and the two things I see Bay Area landlords get wrong most often."*
 
 `[AEO KEY STATEMENT]` *"AB 1482, California's statewide rent control law, caps annual rent increases at 5% plus the local Consumer Price Index, with a hard maximum of 10%, for qualifying properties and is still in effect as of 2026."*
 
@@ -124,7 +124,7 @@
 
 *"And if you're a landlord thinking about selling your rental because AB 1482 is making it not worth the hassle — that's a common conversation too. Comment SELL and I'll send you a landlord seller analysis."*
 
-*"I'm Graeham Watts with Intero Real Estate. DRE# 01466876. Talk soon."*
+*"I'm Graeham Watts with The Boyenga Team at Compass. DRE# 01466876. Talk soon."*
 
 ---
 
@@ -132,7 +132,7 @@
 
 > Yes, AB 1482 is still in effect in California in 2026. It caps rent increases at 5% plus local CPI (maximum 10%) for most rental properties built before 2011 and requires just cause for evictions after 12 months of tenancy. But most landlords get two critical things wrong — and the exemption rules are more complicated than they appear.
 >
-> I'm Graeham Watts, REALTOR® with Intero Real Estate (DRE# 01466876). I've helped Bay Area landlords and property owners navigate AB 1482 compliance since it became law. In this video, I walk through exactly what AB 1482 says in 2026, which properties are exempt, how to calculate the maximum rent increase, what qualifies as just cause for eviction, and the two most common mistakes I see Bay Area landlords make.
+> I'm Graeham Watts, REALTOR® with Compass (DRE# 01466876). I've helped Bay Area landlords and property owners navigate AB 1482 compliance since it became law. In this video, I walk through exactly what AB 1482 says in 2026, which properties are exempt, how to calculate the maximum rent increase, what qualifies as just cause for eviction, and the two most common mistakes I see Bay Area landlords make.
 >
 > In this video, I answer:
 > • Is AB 1482 still in effect in California in 2026?
@@ -157,9 +157,9 @@
 >
 > Thinking about selling your rental because AB 1482 is making it not worth the hassle? Comment **SELL** for a landlord seller analysis.
 >
-> About me: I'm Graeham Watts, REALTOR® with Intero Real Estate, specializing in East Palo Alto, Redwood City, Palo Alto, Menlo Park, and the broader Bay Area. DRE# 01466876.
+> About me: I'm Graeham Watts, REALTOR® with Compass, specializing in East Palo Alto, Redwood City, Palo Alto, Menlo Park, and the broader Bay Area. DRE# 01466876.
 >
-> #AB1482 #CaliforniaRentControl #BayAreaLandlord #BayAreaRealEstate #InteroRealEstate
+> #AB1482 #CaliforniaRentControl #BayAreaLandlord #BayAreaRealEstate #Compass
 
 **Tags:** ab 1482, california rent control, ab 1482 exemptions, ab 1482 notice, rent increase cap california, ab 1482 2026, california landlord law, bay area landlord, ab 1482 single family home, tenant protection act california, just cause eviction california, ab 1482 explained, menlo park landlord, bay area rental property, intero real estate, graeham watts
 
@@ -173,7 +173,7 @@
 - [x] 3+ unique data points (CPI calculation, 2011 cutoff, notice requirement specifics, relocation assistance formula)
 - [x] Timestamps (8 timestamps)
 - [x] E-E-A-T signals ("In my 7 years...", "I've had multiple landlord clients in Menlo Park and Palo Alto...", specific case reference)
-- [x] Intero Real Estate branding (not Compass)
+- [x] Compass branding (not Compass)
 - [x] DRE# included
 
 ---
@@ -182,7 +182,7 @@
 
 **Title:** Is AB 1482 Still in Effect in California for 2026? (Full Landlord Guide)
 
-**Meta description:** Yes, AB 1482 is still in effect in California in 2026. Here's what it caps, which properties are exempt, and the two mistakes most Bay Area landlords make. — Graeham Watts, Intero Real Estate
+**Meta description:** Yes, AB 1482 is still in effect in California in 2026. Here's what it caps, which properties are exempt, and the two mistakes most Bay Area landlords make. — Graeham Watts, Compass
 
 **URL slug:** `/blog/is-ab-1482-still-in-effect-california-2026`
 
@@ -228,7 +228,7 @@
 **Schema recommendations:**
 - **VideoObject** — embed YouTube video at top of blog
 - **FAQPage** — the 7 Q&A pairs above
-- **LocalBusiness** — Graeham Watts, Intero Real Estate business info
+- **LocalBusiness** — Graeham Watts, Compass business info
 - **Article** — standard article schema for the blog post
 
 **Internal links:** Link to Graeham's posts on landlord selling, Bay Area rental market, and how to prep a rental for sale.

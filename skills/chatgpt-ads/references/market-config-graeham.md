@@ -6,7 +6,7 @@ Pre-filled config for the chatgpt-ads skill. Brand identity fields mirror `../..
 
 ## The Agent
 - Name: Graeham Watts
-- Brokerage: Intero Real Estate (DRE# 01466876)
+- Brokerage: Compass (DRE# 01466876)
 - Contact: graehamwatts@gmail.com · 650-308-4727
 - Years in business: Licensed Peninsula agent since 2004
 - Career volume: 429 closings, $354M career volume, peak years of 41 transactions
@@ -39,10 +39,10 @@ Pre-filled config for the chatgpt-ads skill. Brand identity fields mirror `../..
 ## Campaign Settings (per-run — confirm each campaign)
 - Objective: Clicks (CPC) default, $3–5 starting max bid
 - Budget total / type / dates: per run
-- Brokerage ad review required: Confirm with Graeham/Intero before first launch
+- Brokerage ad review required: Confirm with Graeham/Compass before first launch
 
 ## Compliance Notes (US / California)
 - Fair Housing Act: no targeting or implied preference by protected class; target the housing situation, never the household. No school-quality or "safe neighborhood" proxies (see content-creation-engine Fair Housing guardrails).
 - RESPA: no referral kickbacks for settlement services.
-- California DRE advertising rules: ads must identify the brokerage (Intero Real Estate) and license number (DRE# 01466876 — from identity.json, never from memory).
-- Brokerage ad review per Intero policy.
+- California DRE advertising rules: ads must identify the brokerage (Compass) and license number (DRE# 01466876 — from identity.json, never from memory).
+- Brokerage ad review per Compass policy.

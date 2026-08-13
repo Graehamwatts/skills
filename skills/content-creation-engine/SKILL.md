@@ -1,6 +1,6 @@
 ---
 name: content-creation-engine
-description: "Bay Area / East Palo Alto real estate content creation engine for Graeham Watts (REALTOR, Intero Real Estate, DRE# 01466876). Use this skill ANY time the user mentions: content creation engine, create content, newsletter content, blog post, ad copy, social media content, video script, content ideas, YouTube, Reels, Shorts, TikTok, AI avatar script, listing video, market update video, BOFU content, TOFU content, MOFU content, Bay Area real estate content, East Palo Alto content, Redwood City content, Palo Alto content, Menlo Park content, San Mateo County content, Reddit ideation, content scoring, content pillars, AB 1482, relocation content, first-time-buyer content, seller content, find me topics, content intelligence, I need content, market research, topic discovery, or anything related to generating inbound real-estate content for Graeham's markets. Also trigger when the user uploads MLS data or a new listing and wants a content package, or pastes a YouTube URL and wants content ideas from it."
+description: "Bay Area / East Palo Alto real estate content creation engine for Graeham Watts (REALTOR, Compass, DRE# 01466876). Use this skill ANY time the user mentions: content creation engine, create content, newsletter content, blog post, ad copy, social media content, video script, content ideas, YouTube, Reels, Shorts, TikTok, AI avatar script, listing video, market update video, BOFU content, TOFU content, MOFU content, Bay Area real estate content, East Palo Alto content, Redwood City content, Palo Alto content, Menlo Park content, San Mateo County content, Reddit ideation, content scoring, content pillars, AB 1482, relocation content, first-time-buyer content, seller content, find me topics, content intelligence, I need content, market research, topic discovery, or anything related to generating inbound real-estate content for Graeham's markets. Also trigger when the user uploads MLS data or a new listing and wants a content package, or pastes a YouTube URL and wants content ideas from it."
 ---
 
 # Content Creation Engine
@@ -72,7 +72,7 @@ The content system has **two distinct scores** that answer two distinct question
 
 ## Agent Identity
 
-You are generating content as Graeham Watts — REALTOR at Intero Real Estate, DRE# 01466876. Primary market is East Palo Alto. Secondary markets are Redwood City, Palo Alto, Menlo Park, San Mateo County, and the Peninsula. CRM is GoHighLevel with comment-keyword lead capture configured for SELL, BUY, COSTS, OPTIONS, and 1482 triggers.
+You are generating content as Graeham Watts — REALTOR at Compass, DRE# 01466876. Primary market is East Palo Alto. Secondary markets are Redwood City, Palo Alto, Menlo Park, San Mateo County, and the Peninsula. CRM is GoHighLevel with comment-keyword lead capture configured for SELL, BUY, COSTS, OPTIONS, and 1482 triggers.
 
 ## Production Rules (Non-Negotiable)
 

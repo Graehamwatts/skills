@@ -47,8 +47,8 @@ If you're a buyer and you keep crossing East Palo Alto off your search because o
 [TALKING HEAD — direct, confident]
 "If you want the real, current data on what EPA homes are actually selling for right now — drop 'EPA' in the comments. I'll send you the April 2026 market report, pulled straight from MLS, with every neighborhood broken out. Zero fluff, zero pressure.
 [TEXT OVERLAY: "Comment 'EPA' ↓"]
-I'm Graeham Watts, REALTOR with Intero Real Estate. If you're serious about the Peninsula and you want somebody who actually knows what's happening on the ground in East Palo Alto — you know where to find me."
-[END CARD: Graeham Watts | REALTOR | Intero Real Estate | DRE #01466876]
+I'm Graeham Watts, REALTOR with Compass. If you're serious about the Peninsula and you want somebody who actually knows what's happening on the ground in East Palo Alto — you know where to find me."
+[END CARD: Graeham Watts | REALTOR | Compass | DRE #01466876]
 
 ═══ ELEVENLABS SSML BLOCK ═══
 <speak>
@@ -91,7 +91,7 @@ If you're a buyer and you keep crossing East Palo Alto off your search — you'r
 
 If you want the real data on what EPA homes are actually selling for right now — drop "EPA" in the comments. I'll send you the April 2026 market report, pulled straight from MLS, with every neighborhood broken out. Zero fluff, zero pressure.
 <break time="800ms"/>
-I'm Graeham Watts, REALTOR with Intero Real Estate.
+I'm Graeham Watts, REALTOR with Compass.
 </speak>"""
 
 CONTENT["yt-long-pt2"] = """═══ EDITING NOTES FOR JASON ═══
@@ -115,7 +115,7 @@ TEXT OVERLAY TIMING:
 • 3:18 → "Median: +1.7% YoY (as of April 2026)" (4s)
 • 3:35 → "SMC: -7.2% YoY. EPA: +1.7% YoY." (5s)
 • 4:15 → "Comment 'EPA' ↓" (8s — hold through CTA)
-• 4:28 → "Graeham Watts | REALTOR | Intero Real Estate | DRE #01466876" (5s)
+• 4:28 → "Graeham Watts | REALTOR | Compass | DRE #01466876" (5s)
 
 PACING:
 • Hook (0:00-0:20): Fast but measured. No smile. Cut on beat.
@@ -169,7 +169,7 @@ As of April 2026, EPA homes are selling in 32 days (down from 66), with median p
 
 🎯 Want the current EPA MLS report? Comment "EPA" and I'll send you the April 2026 neighborhood-by-neighborhood breakdown.
 
-Graeham Watts — REALTOR | Intero Real Estate | DRE# 01466876
+Graeham Watts — REALTOR | Compass | DRE# 01466876
 graehamwatts@gmail.com | graehamwatts.com | @graeham.watts
 
 KEYWORDS:
@@ -260,7 +260,7 @@ TEXT OVERLAY TIMING:
 3:18 → "Median: +1.7% YoY (as of April 2026)" (4s)
 3:35 → "SMC: -7.2% YoY. EPA: +1.7% YoY." (5s)
 4:15 → "Comment 'EPA' ↓" (8s — hold through CTA)
-4:28 → "Graeham Watts | REALTOR | Intero Real Estate | DRE #01466876" (5s)
+4:28 → "Graeham Watts | REALTOR | Compass | DRE #01466876" (5s)
 
 PACING: Fast on hook, slow on milestone reveal (Act 3), pick up on Act 4 data.
 
@@ -335,7 +335,7 @@ Peninsula shoppers who keep skipping EPA are leaving money on the table.
 
 Comment 'EPA' and I'll send you the April 2026 MLS report — neighborhood by neighborhood. Zero pressure, zero fluff.
 
-#EastPaloAlto #EPA #BayAreaRealEstate #PeninsulaRealEstate #EastPaloAltoHomes #BayAreaHomes #SiliconValleyRealEstate #PeninsulaHomes #SanMateoCounty #BayAreaRealtor #PeninsulaRealtor #GraehamWattsRealtor #InteroRealEstate #BayAreaProperty #PeninsulaLiving
+#EastPaloAlto #EPA #BayAreaRealEstate #PeninsulaRealEstate #EastPaloAltoHomes #BayAreaHomes #SiliconValleyRealEstate #PeninsulaHomes #SanMateoCounty #BayAreaRealtor #PeninsulaRealtor #GraehamWattsRealtor #Compass #BayAreaProperty #PeninsulaLiving
 
 ═══ PINNED FIRST COMMENT ═══
 📊 As of April 2026: EPA +1.7% YoY | San Mateo County -7.2% YoY | EPA DOM cut from 66 → 32 days. The Peninsula fragmented into a dozen micro-markets and most people are watching the wrong one."""
@@ -362,7 +362,7 @@ Most people are watching the wrong market.
 
 📊 Drop 'EPA' and I'll send you the April 2026 neighborhood breakdown.
 
-#EastPaloAlto #BayAreaRealEstate #PeninsulaMarket #SiliconValleyRealEstate #SanMateoCounty #MarketUpdate #GraehamWattsRealtor #InteroRealEstate"""
+#EastPaloAlto #BayAreaRealEstate #PeninsulaMarket #SiliconValleyRealEstate #SanMateoCounty #MarketUpdate #GraehamWattsRealtor #Compass"""
 
 CONTENT["ig-carousel"] = """═══ INSTAGRAM CAROUSEL — 8 SLIDES, 4:5 ═══
 
@@ -416,14 +416,14 @@ SLIDE 8 (CTA) — Gold accent bg, dark text
 ↓
 COMMENT 'EPA' BELOW
 Zero fluff. Zero pressure.
-— Graeham | Intero Real Estate"
+— Graeham | Compass"
 
 ═══ CAPTION ═══
 The East Palo Alto you heard about on the news in 1992 is not the East Palo Alto selling homes in 2026. Here's the actual data, and why Peninsula shoppers who keep crossing EPA off their list are leaving money on the table.
 
 Comment 'EPA' for the full April 2026 MLS breakdown.
 
-#EastPaloAlto #EPA #BayAreaRealEstate #PeninsulaRealEstate #SiliconValleyRealEstate #SanMateoCounty #GraehamWattsRealtor #InteroRealEstate"""
+#EastPaloAlto #EPA #BayAreaRealEstate #PeninsulaRealEstate #SiliconValleyRealEstate #SanMateoCounty #GraehamWattsRealtor #Compass"""
 
 CONTENT["tiktok"] = """═══ TIKTOK (~30s) ═══
 
@@ -570,7 +570,7 @@ Buyers who already know the real story are moving fast.
 Want the current EPA MLS report broken down by neighborhood? Comment below or message us directly — we'll send the April 2026 data pulled straight from MLS.
 
 — Graeham Watts, REALTOR
-Intero Real Estate | DRE #01466876
+Compass | DRE #01466876
 
 CTA BUTTON: "Learn More" → https://graehamwatts.com/blog/epa-two-years-homicide-free-april-2026
 
@@ -596,7 +596,7 @@ Watch the full 4-minute video here: [YouTube link]
 
 Want the current EPA MLS report neighborhood-by-neighborhood? Comment "EPA" below and I'll send it over. No pressure.
 
-— Graeham Watts | Intero Real Estate | DRE #01466876
+— Graeham Watts | Compass | DRE #01466876
 
 ═══ FIRST COMMENT (pin this) ═══
 📊 Cite-ready stat for April 2026: EPA is +1.7% YoY while surrounding San Mateo County is -7.2% YoY. The Peninsula has fragmented into a dozen micro-markets and most people are watching the wrong one. Full video ↑"""
@@ -623,7 +623,7 @@ For Peninsula buyers who've been sitting on the sidelines, the April 2026 data s
 
 If you want the current EPA MLS report broken down neighborhood-by-neighborhood, message me or drop a note in the comments.
 
-— Graeham Watts, REALTOR® | Intero Real Estate | DRE #01466876
+— Graeham Watts, REALTOR® | Compass | DRE #01466876
 
 ═══ FIRST COMMENT ═══
 Full 4-minute video breakdown here: [YouTube link]
@@ -667,7 +667,7 @@ HEADLINES (30 char max each):
 3. Free MLS Report | EPA Homes
 DESCRIPTIONS (90 char max each):
 1. Homes in EPA up 1.7% YoY while San Mateo County is down 7.2%. Get the April 2026 MLS data.
-2. Free neighborhood-by-neighborhood report. Licensed REALTOR at Intero Real Estate. DRE 01466876.
+2. Free neighborhood-by-neighborhood report. Licensed REALTOR at Compass. DRE 01466876.
 TARGET KEYWORDS: east palo alto real estate, east palo alto homes for sale, epa market update
 
 AD 2 — COMPETITIVE / LONG-TAIL
@@ -752,7 +752,7 @@ URL: https://graehamwatts.com/home-value (or CMA intake form)
 — Graeham
 
 Graeham Watts | REALTOR
-Intero Real Estate | DRE #01466876
+Compass | DRE #01466876
 graehamwatts@gmail.com | graehamwatts.com
 @graeham.watts
 
@@ -846,14 +846,14 @@ PREVIEW TEXT (96 chars):
   <\!-- 7. FOOTER -->
   <tr><td style="padding:28px 40px;background:#1B2A4A;text-align:center">
     <div style="color:#C5A258;font-size:16px;font-weight:800;margin-bottom:6px">Graeham Watts</div>
-    <div style="color:rgba(255,255,255,0.7);font-size:12px;margin-bottom:14px">REALTOR | Intero Real Estate | DRE #01466876</div>
+    <div style="color:rgba(255,255,255,0.7);font-size:12px;margin-bottom:14px">REALTOR | Compass | DRE #01466876</div>
     <div style="color:rgba(255,255,255,0.8);font-size:13px;margin-bottom:14px"><a href="mailto:graehamwatts@gmail.com" style="color:rgba(255,255,255,0.8);text-decoration:none">graehamwatts@gmail.com</a> &middot; <a href="https://graehamwatts.com" style="color:rgba(255,255,255,0.8);text-decoration:none">graehamwatts.com</a></div>
     <div style="color:rgba(255,255,255,0.7);font-size:12px;margin-bottom:14px"><a href="https://instagram.com/graeham.watts" style="color:rgba(255,255,255,0.7);text-decoration:none">@graeham.watts</a> &middot; <a href="https://youtube.com/@graehamwatts" style="color:rgba(255,255,255,0.7);text-decoration:none">YouTube</a> &middot; <a href="https://facebook.com/GraehamWattsRealtor" style="color:rgba(255,255,255,0.7);text-decoration:none">Facebook</a></div>
     <div style="color:rgba(255,255,255,0.4);font-size:11px;line-height:1.6;margin-top:16px">You're receiving The EPA Report because you subscribed at graehamwatts.com.<br><a href="{{unsubscribe_url}}" style="color:rgba(255,255,255,0.5);text-decoration:underline">Unsubscribe</a> or <a href="{{preferences_url}}" style="color:rgba(255,255,255,0.5);text-decoration:underline">update preferences</a>.</div>
   </td></tr>
 
 </table>
-<div style="text-align:center;padding:20px;color:#999;font-size:11px">(c) 2026 Graeham Watts | Intero Real Estate | DRE #01466876<br>Fair Housing compliant. All property value statements date-stamped April 2026.</div>
+<div style="text-align:center;padding:20px;color:#999;font-size:11px">(c) 2026 Graeham Watts | Compass | DRE #01466876<br>Fair Housing compliant. All property value statements date-stamped April 2026.</div>
 </body></html>
 
 === PLAIN TEXT FALLBACK ===
@@ -908,7 +908,7 @@ Request your CMA: https://graehamwatts.com/home-value
 ---
 
 Graeham Watts
-REALTOR | Intero Real Estate | DRE #01466876
+REALTOR | Compass | DRE #01466876
 graehamwatts@gmail.com | graehamwatts.com
 
 === METADATA ===

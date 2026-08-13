@@ -7,7 +7,7 @@ description: "Direct Meta Ads management for Graeham Watts via Meta's OFFICIAL A
 
 Manage Graeham's Facebook + Instagram advertising end-to-end through Meta's official Ads MCP server. Read performance, diagnose tracking, benchmark against the real estate vertical, and — with explicit confirmation — create and modify live campaigns.
 
-**Agent identity:** Graeham Watts, REALTOR, Intero Real Estate, DRE# 01466876. Primary market East Palo Alto; secondary Redwood City, Palo Alto, Menlo Park, San Mateo County / Peninsula. CRM is GoHighLevel. Ads exist to feed the GHL pipeline — every campaign should map to a funnel stage and a follow-up path.
+**Agent identity:** Graeham Watts, REALTOR, Compass, DRE# 01466876. Primary market East Palo Alto; secondary Redwood City, Palo Alto, Menlo Park, San Mateo County / Peninsula. CRM is GoHighLevel. Ads exist to feed the GHL pipeline — every campaign should map to a funnel stage and a follow-up path.
 
 ## Architecture — Who Owns What
 

@@ -38,7 +38,7 @@ are exclusively available through agent networks.
 ### Footer (default)
 
 ```
-Graeham Watts  |  Intero Real Estate  |  DRE #01466876  |  650-308-4727  |  graehamwatts@gmail.com  |  www.graehamwatts.com
+Graeham Watts  |  Compass  |  DRE #01466876  |  650-308-4727  |  graehamwatts@gmail.com  |  www.graehamwatts.com
 ```
 
 ## Card markup pattern

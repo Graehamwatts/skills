@@ -13,7 +13,7 @@
 | YouTube | graehamwatts@gmail.com | `6631` | `Cj2FhJAe9nynZa372` |
 | Google My Business | Graeham Watts - Realtor | `locations/2259460849528074465` | N/A |
 | Google Search Console | graehamwatts.com | `sc-domain:graehamwatts.com` | N/A |
-| GoHighLevel CRM | Intero Real Estate | `6wuU3haUH7uNeT20E3UZ` | N/A |
+| GoHighLevel CRM | Compass | `6wuU3haUH7uNeT20E3UZ` | N/A |
 
 ### Report Recipients
 

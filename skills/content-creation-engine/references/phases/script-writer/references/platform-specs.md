@@ -53,7 +53,7 @@ Each platform has its own format requirements, length constraints, hashtag rules
 
 ### Instagram hashtag tiers (15–20 total)
 
-- **Tier 1 (brand — always include):** #BayAreaRealEstate #SiliconValleyHomes #BayAreaRealtor #InteroRealEstate #GraehamWatts
+- **Tier 1 (brand — always include):** #BayAreaRealEstate #SiliconValleyHomes #BayAreaRealtor #Compass #GraehamWatts
 - **Tier 2 (city — pick relevant):** #EastPaloAlto #RedwoodCity #PaloAlto #MenloPark #SanMateoCounty #SanFranciscoRealEstate
 - **Tier 3 (topic — pick relevant):** #MarketUpdate #HomeBuying #RealEstateInvesting #FirstTimeHomeBuyer #RealEstateInvestor
 - **Tier 4 (lifestyle — for TOFU):** #BayAreaLife #BayAreaFood #SiliconValley #BayAreaLiving

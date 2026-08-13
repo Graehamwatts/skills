@@ -41,7 +41,7 @@ Read the final draft aloud in your head. If any sentence sounds like a press rel
 ## Block Placement Order in the Prompt Preamble
 
 ```
-1. Agent Identity (Graeham Watts, REALTOR, Intero, DRE 01466876)
+1. Agent Identity (Graeham Watts, REALTOR, Compass, DRE 01466876)
 2. Fair Housing Guardrails
 3. DATE/YEAR QC
 4. Timing Self-Check (scripts only)

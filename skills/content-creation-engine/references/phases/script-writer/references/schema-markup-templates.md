@@ -28,7 +28,7 @@ Every blog post on graehamwatts.com gets Article schema. No exceptions.
     "jobTitle": "REALTOR",
     "affiliation": {
       "@type": "RealEstateAgent",
-      "name": "Intero Real Estate",
+      "name": "Compass",
       "url": "https://intero.com"
     },
     "identifier": {
