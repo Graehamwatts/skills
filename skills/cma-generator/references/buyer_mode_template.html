@@ -1,9 +1,24 @@
-<!DOCTYPE html><html lang="en"><head>
+<!DOCTYPE html><!--
+  TEMPLATE - STRUCTURAL REFERENCE ONLY.
+
+  Until 2026-08-13 this file was a FINISHED CLIENT CMA with zero placeholders, and it
+  was being served publicly at graehamwatts.github.io. Two harms, both real:
+    1. Every CMA built from it inherited the original client's name and property.
+    2. The client's private details were readable by anyone on the web.
+
+  Client-identifying fields are now {{PLACEHOLDERS}} and MUST all be substituted.
+  If you see a real person's name, a specific subject address, or a client's
+  negotiating position below, STOP - that is a regression, not template content.
+
+  Comparable-sale rows are retained as ILLUSTRATIVE STRUCTURE (sold comps are public
+  record). Replace them with the real cohort for each report; do not ship these.
+-->
+<html lang="en"><head>
 <!--
 CANONICAL BUYER CMA DASHBOARD TEMPLATE
 ========================================
-Source example: 1430 Chilco Street buyer CMA for Francisco Ocha (May 2026).
-Pairs with dashboard_template.html (Listing Mode reference: 1030 Bradley).
+Source example: {{SUBJECT_ADDRESS}} buyer CMA for {{CLIENT_NAME}} (May 2026).
+Pairs with dashboard_template.html (Listing Mode reference: {{SUBJECT_ADDRESS}}).
 
 VOICE: write ALL prose in second person ("you", "your") as if Graeham is speaking to the buyer directly. No "his/him/her/the client/the buyer" in client-facing prose.
 
@@ -40,7 +55,7 @@ Brand: black #1A1A1A, gold #C5A55A, cream #F5EFDC. DRE #01466876.
 -->
 
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Buyer CMA. 1430 Chilco Street, Menlo Park 94025 | Graeham Watts</title>
+<title>Buyer CMA. {{SUBJECT_ADDRESS}}, Menlo Park 94025 | Graeham Watts</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
 <style>
@@ -71,14 +86,14 @@ footer{background:var(--b);color:#ddd;padding:34px 0;text-align:center;margin-to
 <nav class="nav"><img src="https://images.leadconnectorhq.com/image/f_webp/q_80/r_1200/u_https://assets.cdn.filesafe.space/6wuU3haUH7uNeT20E3UZ/media/691256870b647e40e3c2e105.png" alt="Graeham Watts"></nav>
 <header class="hero"><div class="wrap"><div class="nm">GRAEHAM WATTS</div><div class="rl">R E A L T O R</div>
 <div class="ct">Buyer Comparative Market Analysis. Offer Strategy</div>
-<div class="ad">1430 Chilco Street, Menlo Park, CA 94025</div>
-<div class="dt">Prepared for Francisco Ocha, May 28, 2026</div>
+<div class="ad">{{SUBJECT_ADDRESS}}, Menlo Park, CA 94025</div>
+<div class="dt">Prepared for {{CLIENT_NAME}}, May 28, 2026</div>
 <div class="cn">Graeham Watts. Powered by The Boyenga Team at Compass. DRE #01466876. 650-308-4727</div></div></header>
 <div class="wrap">
 
 <section><div class="sh">The Property</div>
 <table><tbody>
-<tr><th>Address</th><td>1430 Chilco Street, Menlo Park, CA 94025</td></tr>
+<tr><th>Address</th><td>{{SUBJECT_ADDRESS}}, Menlo Park, CA 94025</td></tr>
 <tr><th>Neighborhood</th><td>Belle Haven (Area 310, East-of-101 Menlo Park)</td></tr>
 <tr><th>Configuration</th><td>4 bed / 1 bath, single-story SFR, single car garage on driveway</td></tr>
 <tr><th>Living Area</th><td>1,230 sq ft (above ground, per Realist)</td></tr>
@@ -87,7 +102,7 @@ footer{background:var(--b);color:#ddd;padding:34px 0;text-align:center;margin-to
 <tr><th>Zoning / APN</th><td>R10008 / 055-341-050</td></tr>
 <tr><th>List Price</th><td><strong>$1,100,000 ($894/sqft)</strong></td></tr>
 <tr><th>Listed</th><td>May 27, 2026 (1 DOM as of analysis date)</td></tr>
-<tr><th>Owner</th><td>Human Investment Project Inc (HIP Housing nonprofit, formerly used as shared housing)</td></tr>
+<tr><th>Owner</th><td>Human Investment Project Inc ({{SELLER_NAME}} nonprofit, formerly used as shared housing)</td></tr>
 <tr><th>Listing Agent</th><td>Jesse Gutierrez, jesse@brokerjesse.com, (650) 670-7059</td></tr>
 </tbody></table>
 <div class="stats"><div class="st"><div class="n">$1.10M</div><div class="l">List Price</div></div><div class="st"><div class="n">4 / 1</div><div class="l">Bed / Bath</div></div><div class="st"><div class="n">1,230</div><div class="l">SqFt</div></div><div class="st"><div class="n">5,000</div><div class="l">Lot SqFt</div></div></div>
@@ -96,7 +111,7 @@ footer{background:var(--b);color:#ddd;padding:34px 0;text-align:center;margin-to
 <div class="dv"></div>
 
 <section><div class="sh">Read the Listing Carefully. This Is a Structured Bid</div>
-<div class="alert"><strong>This is not a normal listing. The seller is a nonprofit (HIP Housing) running a controlled offer process. The list price is intentionally low to drive competitive bidding. You will be one of multiple offers.</strong></div>
+<div class="alert"><strong>This is not a normal listing. The seller is a nonprofit ({{SELLER_NAME}}) running a controlled offer process. The list price is intentionally low to drive competitive bidding. You will be one of multiple offers.</strong></div>
 <p>Critical process details from the listing agent's instructions:</p>
 <ul style="margin-left:22px;margin-bottom:14px;font-size:14.5px">
 <li><strong>No preemptive offers.</strong> The agent has explicit instructions not to present anything before the offer date. Do not try to jump the line, it will be ignored or returned.</li>
@@ -112,7 +127,7 @@ footer{background:var(--b);color:#ddd;padding:34px 0;text-align:center;margin-to
 <div class="dv"></div>
 
 <section><div class="sh">Where the Market Is. Belle Haven Right Now</div>
-<p>Belle Haven (the east-of-101 portion of Menlo Park) has been the fastest-clearing entry-level submarket on the Peninsula over the last 6 months. The 900 to 1,500 sqft SFR cohort cleared <strong>median $1,230,000 with median days-on-market of 7</strong>. The two most relevant recent sales (1208 Henderson at $1,244K, 0 DOM; 1117 Madera at $1,230K, 7 DOM) were both <em>smaller</em> than 1430 Chilco (1,070 and 1,040 sqft vs Chilco's 1,230 sqft).</p>
+<p>Belle Haven (the east-of-101 portion of Menlo Park) has been the fastest-clearing entry-level submarket on the Peninsula over the last 6 months. The 900 to 1,500 sqft SFR cohort cleared <strong>median $1,230,000 with median days-on-market of 7</strong>. The two most relevant recent sales (1208 Henderson at $1,244K, 0 DOM; 1117 Madera at $1,230K, 7 DOM) were both <em>smaller</em> than {{SUBJECT_ADDRESS}} (1,070 and 1,040 sqft vs Chilco's 1,230 sqft).</p>
 <p>That tells you two things. First, well-priced Belle Haven homes clear in days, not months, often pre-emptively or with multiple offers. Second, Chilco's $1,100,000 list is well below what comparable homes have actually traded at, which is consistent with a seller's strategy of underpricing to drive competition. Expect the winning bid to land in the <strong>$1,200,000 to $1,350,000 range</strong>, with the possibility of $1.35M+ if the bidding gets aggressive.</p>
 <p>One outlier in the cohort to be aware of: 1268 Carlton sold at $950,000, well below the rest. That sale was likely either a fixer or an off-market transaction at a discount. It is not a useful anchor for what Chilco will sell at.</p>
 </section>
@@ -130,7 +145,7 @@ footer{background:var(--b);color:#ddd;padding:34px 0;text-align:center;margin-to
 <tr><td>Pending</td><td>1125 Carlton Avenue</td><td>ML82046814</td><td style='text-align:right'>$1,198,000</td><td style='text-align:right'>$1,109</td><td style='text-align:center'>7</td><td style='text-align:center'>2/2/0</td><td style='text-align:right'>1,080</td><td style='text-align:right'>6,000</td></tr>
 <tr><td>Active</td><td>551 Newbridge Street</td><td>ML82043401</td><td style='text-align:right'>$1,450,000</td><td style='text-align:right'>$1,198</td><td style='text-align:center'>42</td><td style='text-align:center'>3/2/0</td><td style='text-align:right'>1,210</td><td style='text-align:right'>5,750</td></tr>
 <tr><td>Active</td><td>1140 Almanor Avenue</td><td>ML82044618</td><td style='text-align:right'>$1,398,000</td><td style='text-align:right'>$1,441</td><td style='text-align:center'>33</td><td style='text-align:center'>3/1/0</td><td style='text-align:right'>970</td><td style='text-align:right'>6,874</td></tr>
-<tr><td>Active</td><td>1430 Chilco Street</td><td>ML82048792</td><td style='text-align:right'>$1,100,000</td><td style='text-align:right'>$894</td><td style='text-align:center'>1</td><td style='text-align:center'>4/1/0</td><td style='text-align:right'>1,230</td><td style='text-align:right'>5,000</td></tr>
+<tr><td>Active</td><td>{{SUBJECT_ADDRESS}}</td><td>ML82048792</td><td style='text-align:right'>$1,100,000</td><td style='text-align:right'>$894</td><td style='text-align:center'>1</td><td style='text-align:center'>4/1/0</td><td style='text-align:right'>1,230</td><td style='text-align:right'>5,000</td></tr>
 <tr><td>Active</td><td>778 Hamilton Avenue</td><td>ML82037647</td><td style='text-align:right'>$1,099,000</td><td style='text-align:right'>$1,208</td><td style='text-align:center'>n/a</td><td style='text-align:center'>3/1/0</td><td style='text-align:right'>910</td><td style='text-align:right'>5,519</td></tr>
 <tr><td>Active</td><td>1348 Sevier Avenue</td><td>ML82047829</td><td style='text-align:right'>$1,098,000</td><td style='text-align:right'>$972</td><td style='text-align:center'>9</td><td style='text-align:center'>3/1/0</td><td style='text-align:right'>1,130</td><td style='text-align:right'>5,750</td></tr>
 </tbody></table>
@@ -158,7 +173,7 @@ footer{background:var(--b);color:#ddd;padding:34px 0;text-align:center;margin-to
 <section><div class="sh">Three Paths Forward. Offer Strategy</div>
 <p>You said your goal is to win this property with a strong offer. Three paths, ranked by aggressiveness:</p>
 
-<div class="card"><h4>Path A. Anchor offer with strong terms. Compete on terms more than price.</h4><p><strong>Offer range: $1,150,000 to $1,200,000.</strong> Above list, but only modestly. Win by being the cleanest, fastest, most certain offer in the stack. Levers: pre-underwritten financing or all cash, 21-day close, 3% earnest money deposit, short or waived inspection contingency (after reviewing the disclosure package May 30). Personal letter aligned with HIP Housing's mission.</p><p>Risk: in a multiple-offer scenario with a tease list price, $1.15M-$1.20M may not clear. The Henderson and Madera sales went $1.23M-$1.24M for smaller homes. This range bets the seller values terms over headline price, which a nonprofit might or might not.</p></div>
+<div class="card"><h4>Path A. Anchor offer with strong terms. Compete on terms more than price.</h4><p><strong>Offer range: $1,150,000 to $1,200,000.</strong> Above list, but only modestly. Win by being the cleanest, fastest, most certain offer in the stack. Levers: pre-underwritten financing or all cash, 21-day close, 3% earnest money deposit, short or waived inspection contingency (after reviewing the disclosure package May 30). Personal letter aligned with {{SELLER_NAME}}'s mission.</p><p>Risk: in a multiple-offer scenario with a tease list price, $1.15M-$1.20M may not clear. The Henderson and Madera sales went $1.23M-$1.24M for smaller homes. This range bets the seller values terms over headline price, which a nonprofit might or might not.</p></div>
 
 <div class="card"><h4>Path B. Competitive market-aligned offer. Most likely to win without overpaying. <em>(recommended)</em></h4><p><strong>Offer range: $1,225,000 to $1,300,000.</strong> Right in the cohort's actual clearing band. The Henderson sale at $1.244M for a smaller home is your anchor. At 1,230 sqft (15% bigger than Henderson) with 4 bedrooms (one more than Henderson), Chilco arguably warrants a modest premium. Add strong terms (21-day close, large EMD, waived or short inspection contingency post-disclosure-review) and you give yourself the best probability of winning at a defensible price.</p><p>This is the recommendation. It clears the comp set, beats the likely majority of competing offers, and does not require stretching beyond the data.</p></div>
 
@@ -186,7 +201,7 @@ footer{background:var(--b);color:#ddd;padding:34px 0;text-align:center;margin-to
 <tr><td>Appraisal Contingency</td><td>Waived OR gap coverage of $50K to $100K</td><td>Critical at this price point. Likely to appraise short vs the offer.</td></tr>
 <tr><td>Close of Escrow</td><td>21-day close, or 15-day if your lender can do it</td><td>Fast close is one of the most valued terms by sellers</td></tr>
 <tr><td>Possession</td><td>Close of Escrow, or seller rent-back if needed (zero cost)</td><td>Maximum flexibility for the seller</td></tr>
-<tr><td>Personal Letter</td><td>One-page letter to the HIP Housing board explaining your story and intended use</td><td>Mission-driven seller. This bonus angle matters more here than in a typical sale.</td></tr>
+<tr><td>Personal Letter</td><td>One-page letter to the {{SELLER_NAME}} board explaining your story and intended use</td><td>Mission-driven seller. This bonus angle matters more here than in a typical sale.</td></tr>
 </tbody></table>
 </section>
 
@@ -209,14 +224,14 @@ footer{background:var(--b);color:#ddd;padding:34px 0;text-align:center;margin-to
 <section><div class="sh">Notes &amp; Caveats</div>
 <div class="card"><h4>The 1268 Carlton outlier</h4><p>1268 Carlton Avenue closed at $950,000, well below the rest of the cohort. We do not have full price-history for that sale, and the $/sqft of $754 suggests either significant deferred maintenance, a structural issue, or an off-market discount. Do not use it as a comparable when shaping your offer. The relevant comps are Henderson at $1,244K and Madera at $1,230K.</p></div>
 <div class="card"><h4>Appraisal risk</h4><p>If you go above ~$1.25M, expect appraisal risk. Appraisers typically anchor on recent closed sales, and the $1.23M to $1.24M cluster in the cohort may pull the appraisal toward that band. Plan for an appraisal gap of $50K to $100K depending on your final offer price. Discuss the gap structure with your lender before submitting.</p></div>
-<div class="card"><h4>The HIP Housing angle</h4><p>The seller, Human Investment Project Inc, is a Bay Area nonprofit that operates shared housing and home-sharing programs. They listed this home after winding down the shared housing use at this address. They likely value: a mission-aligned buyer, a clean and certain transaction, and a price that reflects the home's market value (they cannot underprice a charitable asset). A short personal letter to the board (not to the agent) explaining your story and intended use may meaningfully strengthen your offer.</p></div>
+<div class="card"><h4>The {{SELLER_NAME}} angle</h4><p>The seller, Human Investment Project Inc, is a Bay Area nonprofit that operates shared housing and home-sharing programs. They listed this home after winding down the shared housing use at this address. They likely value: a mission-aligned buyer, a clean and certain transaction, and a price that reflects the home's market value (they cannot underprice a charitable asset). A short personal letter to the board (not to the agent) explaining your story and intended use may meaningfully strengthen your offer.</p></div>
 <div class="card"><h4>About this analysis</h4><p>Subject details from MLSListings Matrix and Realist. Cohort comps from MLSListings, Menlo Park Area 310 East-of-101, Single Family Home, 900 to 1,500 sqft, last 6 months. Rate environment cross-referenced 05/28/2026 from Mortgage News Daily, Bankrate CA, Realtor.com, and Zillow Home Loans. Net-cost-to-buyer table is approximate; final numbers depend on your lender, title, escrow, and any closing credits negotiated. Professional opinion of value, not a formal appraisal.</p></div>
 </section>
 
 </div>
 <footer><div class="wrap"><div class="fn">GRAEHAM WATTS</div><div class="fl">Powered by The Boyenga Team at Compass. DRE #01466876</div>
 <div class="fl">650-308-4727. graehamwatts@gmail.com. www.graehamwatts.com</div>
-<div class="ds">Buyer CMA prepared May 28, 2026 for Francisco Ocha, prospective buyer of 1430 Chilco Street, Menlo Park. Not a formal appraisal. Comp analysis based on closed and active listings in the Menlo Park east-of-101 SFR 900 to 1,500 sqft cohort over the last 6 months. Verify current mortgage rates with your lender, review the disclosure package carefully when posted May 30, and consult your tax and legal advisors as needed before submitting an offer.</div></div></footer>
+<div class="ds">Buyer CMA prepared May 28, 2026 for {{CLIENT_NAME}}, prospective buyer of {{SUBJECT_ADDRESS}}, Menlo Park. Not a formal appraisal. Comp analysis based on closed and active listings in the Menlo Park east-of-101 SFR 900 to 1,500 sqft cohort over the last 6 months. Verify current mortgage rates with your lender, review the disclosure package carefully when posted May 30, and consult your tax and legal advisors as needed before submitting an offer.</div></div></footer>
 <script>
 const g='#0a7d3a',b='#0a7d3a';
 const months=["Jan 19", "Feb 19", "Mar 19", "Apr 19", "May 19", "Jun 19", "Jul 19", "Aug 19", "Sep 19", "Oct 19", "Nov 19", "Dec 19", "Jan 20", "Feb 20", "Mar 20", "Apr 20", "May 20", "Jun 20", "Jul 20", "Aug 20", "Sep 20", "Oct 20", "Nov 20", "Dec 20", "Jan 21", "Feb 21", "Mar 21", "Apr 21", "May 21", "Jun 21", "Jul 21", "Aug 21", "Sep 21", "Oct 21", "Nov 21", "Dec 21", "Jan 22", "Feb 22", "Mar 22", "Apr 22", "May 22", "Jun 22", "Jul 22", "Aug 22", "Sep 22", "Oct 22", "Nov 22", "Dec 22", "Jan 23", "Feb 23", "Mar 23", "Apr 23", "May 23", "Jun 23", "Jul 23", "Aug 23", "Sep 23", "Oct 23", "Nov 23", "Dec 23", "Jan 24", "Feb 24", "Mar 24", "Apr 24", "May 24", "Jun 24", "Jul 24", "Aug 24", "Sep 24", "Oct 24", "Nov 24", "Dec 24", "Jan 25", "Feb 25", "Mar 25", "Apr 25", "May 25", "Jun 25", "Jul 25", "Aug 25", "Sep 25", "Oct 25", "Nov 25", "Dec 25", "Jan 26", "Feb 26", "Mar 26", "Apr 26", "May 26"];

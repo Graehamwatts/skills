@@ -173,6 +173,26 @@ def main() -> int:
                 findings.append({"file": rel, "line": i, "kind": "missing-skill",
                                  "ref": name, "why": "no such skill directory"})
 
+            # Real client data inside a TEMPLATE or REFERENCE file. Scoped to those
+            # directories deliberately: a client's name belongs in their own report,
+            # never in the thing every future report is built from. Two cma-generator
+            # "templates" were finished client CMAs with zero placeholders, published
+            # publicly, and seeding every new report with the original client's
+            # identity. weekly-listing-update had the same bug with a seller's data.
+            if re.search(r"/(references|templates)/", "/" + rel):
+                for pat, kind in (
+                    (r"Prepared for\s+[A-Z][a-z]+\s+[A-Z][a-z]+", "client name"),
+                    (r"\bAPN[:\s]*\d{3}-\d{3}-\d{3}\b",           "parcel number"),
+                    (r"\bML8\d{7}\b",                              "MLS number"),
+                ):
+                    m = re.search(pat, line)
+                    # A placeholder in the same position is the correct state.
+                    if m and "{{" not in m.group(0):
+                        findings.append({"file": rel, "line": i, "kind": "client-data",
+                                         "ref": m.group(0)[:48],
+                                         "why": f"real {kind} in a template/reference; "
+                                                f"use a {{{{PLACEHOLDER}}}} instead"})
+
             # Relative pointers to references/ and scripts/ inside the same skill.
             for m in re.finditer(r"`((?:references|scripts|templates|assets)/[A-Za-z0-9_./-]+\.(?:md|py|json|html))`", line):
                 target = m.group(1)
@@ -204,7 +224,8 @@ def main() -> int:
     labels = {"retired": "RETIRED TOOL / PATH (will fail at runtime)",
               "deprecated-skill": "DEPRECATED SKILL (has a replacement)",
               "missing-skill": "SKILL DOES NOT EXIST",
-              "missing-file": "FILE DOES NOT EXIST"}
+              "missing-file": "FILE DOES NOT EXIST",
+              "client-data": "REAL CLIENT DATA IN A TEMPLATE (privacy)"}
     for kind, items in sorted(by_kind.items()):
         print(f"  [{labels.get(kind, kind)}]  {len(items)}")
         seen = set()
