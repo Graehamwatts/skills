@@ -125,7 +125,7 @@
 >
 > #BayAreaRealEstate #MenloPark #TechLayoff #MetaLayoff #BayAreaRealtor
 
-**Tags:** tech layoff real estate, menlo park home sale, meta layoff home equity, bay area layoff, silicon valley layoff real estate, what to do with home after layoff, selling home after job loss california, menlo park real estate, bay area realtor, intero real estate, graeham watts, refinance after layoff, rent out bay area home, ab 1482, menlo park housing market
+**Tags:** tech layoff real estate, menlo park home sale, meta layoff home equity, bay area layoff, silicon valley layoff real estate, what to do with home after layoff, selling home after job loss california, menlo park real estate, bay area realtor, compass, graeham watts, refinance after layoff, rent out bay area home, ab 1482, menlo park housing market
 
 ---
 

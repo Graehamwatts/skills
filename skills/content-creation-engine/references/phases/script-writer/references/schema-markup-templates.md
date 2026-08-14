@@ -29,7 +29,7 @@ Every blog post on graehamwatts.com gets Article schema. No exceptions.
     "affiliation": {
       "@type": "RealEstateAgent",
       "name": "Compass",
-      "url": "https://intero.com"
+      "url": "https://compass.com"
     },
     "identifier": {
       "@type": "PropertyValue",

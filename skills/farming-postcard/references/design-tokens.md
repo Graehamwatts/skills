@@ -43,13 +43,13 @@ These tokens are NEVER negotiable per card. Continuity is the brand.
 This block appears identically on every card. Continuity is the brand signature.
 
 ```
-[INTERO LOGO]
-A Berkshire Hathaway Affiliate
+[COMPASS LOGO]
+The Boyenga Team
 [gold roof icon]
 GRAEHAM WATTS
 
 REALTOR®          650-308-4727
-The Martin Team   graehamwatts@gmail.com
+The Boyenga Team   graehamwatts@gmail.com
 DRE #01466876     www.graehamwatts.com
 ```
 
@@ -57,14 +57,14 @@ DRE #01466876     www.graehamwatts.com
 
 ```html
 <div class="gw-logo">
-  <div class="intero">INTERO</div>
-  <div class="intero-sub">A Berkshire Hathaway Affiliate</div>
+  <div class="brokerage">COMPASS</div>
+  <div class="brokerage-sub">The Boyenga Team</div>
   <div class="roof"></div>
   <div class="name">GRAEHAM<br>WATTS</div>
 </div>
 <div class="contact">
   <div class="role">REALTOR®</div>
-  <div>The Martin Team</div>
+  <div>The Boyenga Team</div>
   <div>DRE #01466876</div>
   <div class="phone">650-308-4727</div>
   <div>graehamwatts@gmail.com</div>

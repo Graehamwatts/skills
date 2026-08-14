@@ -161,7 +161,7 @@
 >
 > #AB1482 #CaliforniaRentControl #BayAreaLandlord #BayAreaRealEstate #Compass
 
-**Tags:** ab 1482, california rent control, ab 1482 exemptions, ab 1482 notice, rent increase cap california, ab 1482 2026, california landlord law, bay area landlord, ab 1482 single family home, tenant protection act california, just cause eviction california, ab 1482 explained, menlo park landlord, bay area rental property, intero real estate, graeham watts
+**Tags:** ab 1482, california rent control, ab 1482 exemptions, ab 1482 notice, rent increase cap california, ab 1482 2026, california landlord law, bay area landlord, ab 1482 single family home, tenant protection act california, just cause eviction california, ab 1482 explained, menlo park landlord, bay area rental property, compass, graeham watts
 
 ---
 

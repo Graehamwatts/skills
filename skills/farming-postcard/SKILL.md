@@ -172,7 +172,7 @@ python "C:\Users\Graeham Watts\Documents\Skills LLMS\Claude\Skills\skills\farmin
     "<path_to_plaintext_fallback>"
 ```
 
-**HTML body:** Build by substituting slots in `templates/options-email-template.html` and `templates/option-card.html`. Both templates use the locked brand system (white postcard look, gold left border, cream option panels, Anton headlines, INTERO + Graeham Watts lockup at bottom). DO NOT use the dark dashboard style — that's not on-brand.
+**HTML body:** Build by substituting slots in `templates/options-email-template.html` and `templates/option-card.html`. Both templates use the locked brand system (white postcard look, gold left border, cream option panels, Anton headlines, COMPASS + Graeham Watts lockup at bottom). DO NOT use the dark dashboard style — that's not on-brand.
 
 **Subject format:** `Postcard options for [Date] — pick one by [Deadline]`
 Example: `Postcard options for June 15 — pick one by June 12`
