@@ -308,7 +308,7 @@ This is the premium output — the one the seller sees when the agent sends them
 - Property address as h1: 38px, font-weight 700, white, line-height 1.15
 - City/State/Zip subhead: 18px, light gray (`#cccccc`)
 - Meta line: "X OFFERS RECEIVED · PREPARED [DATE] · LISTED AT $X,XXX,XXX" in 13px, gray with gold "X OFFERS RECEIVED" emphasis
-- Bottom contact strip (separated by gold-tinted border): "COMPASS | DRE #01466876 | 650-308-4727" in 11px gold
+- Bottom contact strip (separated by gold-tinted border): "Powered by The Boyenga Team at Compass | DRE #01466876 | 650-308-4727" in 11px gold
 
 **C. Full-Width Page Container**
 - The cover and the content container BOTH go full browser width — there is NO 600px or 720px email-style centering. The email is meant to be opened in a browser as a hosted GitHub Pages link, not pasted into Gmail.

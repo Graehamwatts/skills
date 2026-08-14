@@ -101,7 +101,7 @@ Content order inside `.cover`:
 5. Property address as h1 (38px, weight 700, white)
 6. City, State, Zip subhead (18px, light gray `#cccccc`)
 7. Meta line: "X OFFERS RECEIVED · PREPARED [DATE] · LISTED AT $X,XXX,XXX" (13px, gray, with gold "X OFFERS RECEIVED" emphasis)
-8. Bottom contact strip separated by gold-tinted top border: "COMPASS | DRE #01466876 | 650-308-4727" (11px gold, letter-spacing 0.08em)
+8. Bottom contact strip separated by gold-tinted top border: "Powered by The Boyenga Team at Compass | DRE #01466876 | 650-308-4727" (11px gold, letter-spacing 0.08em)
 
 ## Layout Width
 
