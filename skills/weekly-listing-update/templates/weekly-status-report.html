@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>{{PROPERTY_ADDRESS}} — Weekly Status — {{REPORT_DATE}}</title>
+<title>{{PROPERTY_ADDRESS}}, Weekly Status, {{REPORT_DATE}}</title>
 <!--
   TEMPLATE — Graeham Watts weekly seller status report.
 
@@ -15,8 +15,11 @@
   an unrelated navy/amber DM Sans system, so a seller who received a CMA and then
   weekly reports saw two different brands.
 
-  CONDITIONAL BLOCKS are marked <!-- OPTIONAL: ... -->. Delete the whole block when it
-  does not apply. Do not leave an empty shell.
+  CONDITIONAL BLOCKS are marked with an "OPTIONAL:" comment. Delete the whole block
+  when it does not apply. Do not leave an empty shell.
+  (Note: do not write a literal comment-close sequence inside this header comment.
+  HTML comments do not nest, so it would terminate this block early and leak the
+  remaining text onto the page as visible content. That bug shipped once already.)
 -->
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
 <style>
@@ -139,7 +142,7 @@ footer .conf{font-size:10px;color:#777;margin-top:12px;line-height:1.5}
 </div>
 
 <!-- STATUS_LEVEL = good | watch | alert -->
-<div class="status {{STATUS_LEVEL}}">{{STATUS_HEADLINE}} — {{STATUS_MESSAGE}}</div>
+<div class="status {{STATUS_LEVEL}}">{{STATUS_HEADLINE}}: {{STATUS_MESSAGE}}</div>
 
 <!-- OPTIONAL: offer banner. Include ONLY when there is at least one live offer.
      Class + badge must match the real state and are NOT interchangeable:
