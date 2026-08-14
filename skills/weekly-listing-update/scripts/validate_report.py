@@ -94,6 +94,19 @@ def main() -> int:
     if a.seller and a.seller.lower() not in visible.lower():
         failures.append(f"seller name {a.seller!r} does not appear in the report.")
 
+    # 2b — leaked template comment text (HTML comments do not nest; a literal
+    # comment-close inside the header comment terminates it early and dumps the
+    # remainder onto the page as visible text. This shipped once.)
+    for tell in ("Delete the whole block", "Do not leave an empty shell",
+                 "that is a regression, not template content", "STOP: that is a regression"):
+        if tell.lower() in visible.lower():
+            failures.append(
+                f"template instruction text is VISIBLE on the page ({tell!r}). "
+                "An HTML comment terminated early, most likely because a literal "
+                "comment-close sequence was written inside another comment."
+            )
+            break
+
     # 3 — AI tells and brand errors
     if "—" in visible or "&mdash;" in visible:
         n = visible.count("—") + visible.count("&mdash;")
