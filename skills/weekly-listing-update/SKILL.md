@@ -157,7 +157,48 @@ Default to amber when uncertain. Be honest — green should mean genuinely activ
 
 Use the template at `templates/weekly-status-report.html` as the base. It carries the design system established with the 1908 Cooley Ave issue (May 3, 2026); the layout is the reusable part, the content is not.
 
-Substitute these variables: `{{ISSUE_NUMBER}}`, `{{REPORT_DATE}}`, `{{GHL_CALENDAR_URL}}` (Graeham's GoHighLevel scheduling link — used in the Decision Required CTA), `{{PROPERTY_ADDRESS}}`, `{{CITY_STATE}}`, `{{BEDS_BATHS_SQFT}}`, `{{LIST_PRICE}}`, `{{MLS}}`, `{{REPORTING_PERIOD}}`, `{{STATUS_LEVEL}}`, `{{STATUS_HEADLINE}}`, `{{STATUS_MESSAGE}}`, `{{KPI_*_NUM}}`, `{{KPI_*_DELTA}}`, `{{SELLER_FIRST_NAME}}`, `{{EXEC_NARRATIVE}}`, `{{DECISION_TITLE}}`, `{{DECISION_BODY}}`, `{{DOM_DELTA}}`, `{{PPSF_DELTA}}`, `{{SUBJECT_DOM}}`, `{{MARKET_DOM}}`, `{{SUBJECT_PPSF}}`, `{{MARKET_PPSF}}`, `{{SHOWING_COUNT}}`, `{{DISCLOSURE_COUNT}}`, `{{TOTAL_INTERACTIONS}}`, `{{UNIQUE_AGENT_COUNT}}`, `{{SHOWING_TABLE_ROWS}}`, `{{DISCLOSURE_TABLE_ROWS}}`, `{{CONCERN_*}}`, `{{ACTIONS_THIS_WEEK}}`, `{{LISTED_DATE}}`, `{{LIST_PRICE_FULL}}`, `{{PROPERTY_DETAILS}}`.
+### The 63 placeholders (this list is generated FROM the template, keep it that way)
+
+The old version of this list named ~32 variables, most of which did not exist in the
+template, while the fields that DID need replacing were hardcoded. If you change the
+template, regenerate this list rather than editing it by hand:
+
+```bash
+grep -o "{{[A-Z_0-9]*}}" templates/weekly-status-report.html | sort -u
+```
+
+**Identity / header:** `{{ISSUE_NUMBER}}` `{{REPORT_DATE}}` `{{PROPERTY_ADDRESS}}` `{{CITY_STATE}}` `{{BEDS_BATHS_SQFT}}` `{{LIST_PRICE}}` `{{MLS}}` `{{REPORTING_PERIOD}}` `{{SELLER_FIRST_NAME}}`
+
+**Status strip:** `{{STATUS_LEVEL}}` (`good` / `watch` / `alert`, drives the color) `{{STATUS_HEADLINE}}` `{{STATUS_MESSAGE}}`
+
+**Offer banner — OPTIONAL, delete the whole block when there is no offer:** `{{OFFER_STATE}}` (`received` / `accepted` / `pending`) `{{OFFER_STATE_LABEL}}` `{{OFFER_PRICE}}` `{{OFFER_PCT_OF_LIST}}` `{{OFFER_AGENT}}` `{{OFFER_TERMS}}`
+> The three states are NOT interchangeable. `received` means a decision is due **from the seller** and is amber; do not label it "pending", which means already in escrow.
+
+**Where We Stand:** `{{EXEC_NARRATIVE}}` (wrap each paragraph in `<p>`)
+
+**KPI cards, 1 to 4:** `{{KPI_n_NUM}}` `{{KPI_n_LABEL}}` `{{KPI_n_DELTA}}` `{{KPI_n_DIR}}` (`up` / `dn` / `flat`, drives delta color). Fill deltas from the script's `this_week_deltas`, never by eye.
+
+**Trajectory:** `{{MOMENTUM_DIR}}` (`up` / `flat` / `down`) `{{MOMENTUM_LABEL}}` `{{TREND_CHART_SVG}}` (insert `chart_svg` **verbatim**, do not hand-build) `{{TREND_TABLE_ROWS}}`
+
+**Buyer feedback:** `{{FEEDBACK_THEMES}}` `{{FEEDBACK_QUOTES}}` (one `<div class="fb">` per standout quote) `{{SHOWING_TABLE_ROWS}}`
+
+**Market context:** `{{DOM_DELTA}}` `{{DOM_DELTA_LABEL}}` `{{SUBJECT_DOM}}` `{{MARKET_DOM}}` `{{PPSF_DELTA}}` `{{PPSF_DELTA_LABEL}}` `{{SUBJECT_PPSF}}` `{{MARKET_PPSF}}` `{{MARKET_LABEL}}`
+
+**Decision — OPTIONAL, delete unless a real decision is due this week:** `{{DECISION_TITLE}}` `{{DECISION_BODY}}` `{{GHL_CALENDAR_URL}}`
+
+**Actions / visibility:** `{{ACTIONS_THIS_WEEK}}` (`<li>` items) `{{SYNDICATION_CHIPS}}`
+
+**Appendix:** `{{LISTED_DATE}}` `{{LIST_PRICE_FULL}}` `{{PROPERTY_DETAILS}}` `{{SHOWING_COUNT}}` `{{DISCLOSURE_COUNT}}` `{{UNIQUE_AGENT_COUNT}}` `{{TOTAL_INTERACTIONS}}`
+
+### Step 4b: Run the validator before sending (MANDATORY)
+
+```bash
+python scripts/validate_report.py <report.html> --address "<this property>" --seller "<first name>"
+```
+
+Exit 0 = safe to send. Non-zero = do not send. It blocks on: leftover `{{VARS}}`, prior-seller
+data bleeding in from a copied report, em-dashes in client-visible text, and any blocked brand
+value. This replaces "remember to check by hand", which is what failed before.
 
 New data blocks (2026-06-22), all filled from the `generate_report.py` JSON: the offer banner (`offers` / `offers_count`), the week-over-week line chart (`chart_svg`, inserted verbatim) + trend table (`weeks` / `earlier_rollup` / `cumulative`), the momentum chip (`momentum`), and the "What Buyers Are Telling Us" bullets (`themes_overall` plus the standout quotes you pick).
 
