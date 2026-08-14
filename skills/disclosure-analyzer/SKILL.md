@@ -151,21 +151,27 @@ Both formats should contain the same level of detail. If the report needs to be 
 
 ---
 
-## Publishing (canonical pattern - direct git, Composio RETIRED)
+## Delivery — NEVER PUBLISH THIS REPORT PUBLICLY (hard rule, set 2026-08-13 by Graeham)
 
-> **Read first:** `shared-references/publishing-via-composio.md` - single source of truth for ALL skills. (Filename is historical; the doc now mandates **direct git push**. Composio was retired workspace-wide 2026-06-09. Do NOT use `run_composio_tool` or `GITHUB_COMMIT_MULTIPLE_FILES`.)
+> **Disclosure reports are confidential. Do NOT push them to the `online-content` repo, and do NOT generate a `graehamwatts.github.io` URL for them.**
 
-Write the output HTML into the Online Content clone at `C:/Users/Graeham Watts/Documents/Skills LLMS/Claude/Online Content/disclosures/Disclosure_[address].html`, then:
+This skill previously published to `online-content/disclosures/Disclosure_[address].html`. That is a **public** GitHub Pages site, and the filename is derived directly from the property address, so anyone who knew the address could guess the URL and read a buyer's full inspection findings. Graeham's instruction (2026-08-13): disclosure output stays private, accessible to him and his team only. Verified at the time of this change: no disclosure report had ever actually been published, and none appears in the repo's git history, so there was no exposure to clean up. Keep it that way.
 
-```bash
-cd "C:/Users/Graeham Watts/Documents/Skills LLMS/Claude/Online Content"
-git add "disclosures/Disclosure_[address].html"
-git -c user.name="Graeham Watts" -c user.email="graehamwatts@gmail.com" commit -m "Disclosure report: [address]"
-PAT=$(tr -d '[:space:]' < github-token.txt)
-git -c http.version=HTTP/1.1 push "https://${PAT}@github.com/Graehamwatts/online-content.git" HEAD:main
-```
+**Correct delivery, in order of preference:**
 
-Hosted URL: `https://graehamwatts.github.io/online-content/disclosures/Disclosure_[address].html` (Pages rebuilds in ~1-2 min - verify it loads before sending). Never print the PAT. Before pushing, run the brand validator: `python "C:/Users/Graeham Watts/Documents/Skills LLMS/Claude/Skills/skills/content-creation-engine/scripts/verify_output_brand.py" <file>` - exit 2 = blocked value, never ship. Full reliability notes (curl 55 retries, lock files) in the shared doc.
+1. **Write the HTML locally only**, to the skill's own gitignored staging area:
+   `C:/Users/Graeham Watts/Documents/Skills LLMS/Claude/Skills/skills/disclosure-analyzer/outputs/Disclosure_[address].html`
+   This folder is gitignored, so the file never reaches a repo.
+2. **Send it as an email ATTACHMENT** to Graeham and Adrian
+   (`graehamwatts@gmail.com`, `graehamwattsclientcare@gmail.com`), not as a link.
+   Use the SMTP sender at `skills/switchy-engine/scripts/send_email.py --attach <file>`.
+3. If the client needs it, **Graeham or Adrian forwards the attachment** after review.
+   The client-facing send is their call, not this skill's.
+
+**Do not** work around this by obfuscating the filename or adding a random suffix. A hard-to-guess public URL is still a public URL; it is not access control.
+
+Before sending, still run the brand validator on the file:
+`python "C:/Users/Graeham Watts/Documents/Skills LLMS/Claude/Skills/scripts/verify_brand_identity.py"` — never ship on a blocked value.
 
 ## Cost Estimates
 

@@ -404,25 +404,28 @@ This is the premium output — the one the seller sees when the agent sends them
 
 > **Read first:** [`shared-references/publishing-via-composio.md`](../shared-references/publishing-via-composio.md) — single source of truth for ALL skills. (The filename is historical; the doc now mandates **direct git push**. Composio was retired workspace-wide 2026-06-09.)
 
-After generating the offer-analysis HTML output, save it into the Online Content clone and push so the agent gets a permanent hosted URL.
+### NEVER PUBLISH OFFER ANALYSES PUBLICLY (hard rule, set 2026-08-13 by Graeham)
 
-**Local clone:** `C:\Users\Graeham Watts\Documents\Skills LLMS\Claude\Online Content`  
-**Repo:** `Graehamwatts/online-content` · **Branch:** `main`  
-**Path pattern:** `offers/Offer_[address].html`  
-**Hosted URL pattern:** `https://graehamwatts.github.io/online-content/offers/Offer_[address].html`
+> **Do NOT push offer analyses to the `online-content` repo, and do NOT generate a `graehamwatts.github.io` URL for them.**
 
-```bash
-cd "C:/Users/Graeham Watts/Documents/Skills LLMS/Claude/Online Content"
-# write the HTML to offers/Offer_[address].html, then:
-git add "offers/Offer_[address].html"
-git -c user.name="Graeham Watts" -c user.email="graehamwatts@gmail.com" commit -m "Offer analysis: [address]"
-PAT=$(tr -d '[:space:]' < github-token.txt)
-git -c http.version=HTTP/1.1 push "https://${PAT}@github.com/Graehamwatts/online-content.git" HEAD:main
-```
+This section previously instructed publishing to `online-content/offers/Offer_[address].html`. That is a **public** GitHub Pages site and the filename is derived straight from the property address, so anyone who knew the address could guess the URL and read **every competing buyer's price, terms, financing, and contingencies**. On a live multiple-offer negotiation that is the single most damaging document to leak. Graeham's instruction (2026-08-13): offer output stays private, him and his team only. Verified at the time of this change: no offer report had ever actually been published, and none appears in the repo's git history, so there was nothing to retract. Keep it that way.
 
-**HARD RULES:**
+**Correct delivery, in order of preference:**
+
+1. **Write the HTML locally only**, to the skill's own gitignored staging area:
+   `C:/Users/Graeham Watts/Documents/Skills LLMS/Claude/Skills/skills/offer-analyzer/outputs/Offer_[address].html`
+   Gitignored, so it never reaches a repo.
+2. **Send it as an email ATTACHMENT** to Graeham and Adrian
+   (`graehamwatts@gmail.com`, `graehamwattsclientcare@gmail.com`), never as a link:
+   `python skills/switchy-engine/scripts/send_email.py --attach <file> --to graehamwatts@gmail.com --cc graehamwattsclientcare@gmail.com --subject "..."`
+3. The seller-facing conversation happens from that attachment. Whether anything
+   goes to the seller in writing is Graeham's call, not this skill's.
+
+**Do not** work around this with an obfuscated or randomized filename. An unguessable public URL is still public; it is not access control.
+
+**HARD RULES (unchanged):**
 - Do NOT use Composio (`run_composio_tool` / `GITHUB_COMMIT_MULTIPLE_FILES`) — retired 2026-06-09. Do NOT use GitHub Desktop.
-- Never print the PAT; scrub push output with `sed "s/${PAT}/***/g"`.
+- Never print the PAT.
 - Run the brand-integrity check before push: `python "C:/Users/Graeham Watts/Documents/Skills LLMS/Claude/Skills/skills/content-creation-engine/scripts/verify_output_brand.py" <the html file>` — exit 2 means a blocked brand value, never ship.
 - After pushing, give the user BOTH the hosted URL and the local file link, and verify the hosted page loads (~1-2 min for Pages rebuild).
 

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>1908 Cooley Ave — Weekly Status — May 3, 2026</title>
+<title>{{PROPERTY_ADDRESS}} — Weekly Status — {{REPORT_DATE}}</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -238,7 +238,7 @@
 
     <!--
       ============================================================================
-      DESIGN REFERENCE — 1908 Cooley Ave, rendered with real data as the pattern.
+      TEMPLATE. Seller-identifying fields are placeholders in double-brace form and MUST all be substituted. Until 2026-08-13 this file held 1908 Cooley Ave's real data hardcoded, so following the instructions literally would have shipped one seller's numbers to another. If you see a literal address, price, or MLS number below, STOP: it is a regression.
       Clone this look; replace the content with the current listing's data.
 
       WHAT'S NEW (2026-06-22 — week-over-week + offer prominence + humanizer):
@@ -263,13 +263,13 @@
     <!-- TOP BAR -->
     <div class="top-bar">
       <span>Weekly Status Report</span>
-      <span class="right">No. 01 · May 3, 2026</span>
+      <span class="right">No. {{ISSUE_NUMBER}} · {{REPORT_DATE}}</span>
     </div>
 
     <!-- HEADER -->
     <div class="header">
-      <h1>1908 Cooley Avenue</h1>
-      <div class="meta">East Palo Alto, CA · 3 bd / 1 ba / 1,210 sqft · Listed at <strong>$1,095,000</strong> · MLS ML82027334 · Reporting period: <strong>April 26 – May 3, 2026</strong></div>
+      <h1>{{PROPERTY_ADDRESS}}</h1>
+      <div class="meta">{{CITY_STATE}} · {{BEDS_BATHS_SQFT}} · Listed at <strong>{{LIST_PRICE}}</strong> · MLS {{MLS}} · Reporting period: <strong>{{REPORTING_PERIOD}}</strong></div>
     </div>
 
     <!-- STATUS STRIP -->
@@ -295,8 +295,8 @@
         </div>
         <div class="oc-state">Escrow opening</div>
         <div class="oc-figures">
-          <div><span class="oc-num">$1,050,000</span><span class="oc-lbl">Offer price</span></div>
-          <div><span class="oc-num">96%</span><span class="oc-lbl">of $1,095,000 list</span></div>
+          <div><span class="oc-num">{{OFFER_PRICE}}</span><span class="oc-lbl">Offer price</span></div>
+          <div><span class="oc-num">{{OFFER_PCT_OF_LIST}}</span><span class="oc-lbl">of {{LIST_PRICE}} list</span></div>
         </div>
         <div class="oc-terms">Conventional financing, 21-day close, 10% down. Brought by Graeham's buyer. Submitted April 15, 2026.</div>
       </div>
@@ -374,21 +374,21 @@
 
     <!-- MARKET CONTEXT -->
     <section>
-      <h2>Market Context · 1908 Cooley vs. East Palo Alto</h2>
+      <h2>Market Context · {{PROPERTY_ADDRESS}} vs. {{CITY_STATE}}</h2>
       <p>How the listing currently stacks up against the surrounding market.</p>
       <div class="market-cards">
         <div class="market-card">
           <div class="mc-label">Days on Market</div>
           <div class="mc-delta">+75</div>
           <div class="mc-delta-label">days over EPA average</div>
-          <div class="mc-row"><span>1908 Cooley</span><span class="v">170 days</span></div>
+          <div class="mc-row"><span>{{PROPERTY_ADDRESS}}</span><span class="v">{{SUBJECT_DOM}}</span></div>
           <div class="mc-row"><span>EPA average (Apr 2026)</span><span class="v">95 days</span></div>
         </div>
         <div class="market-card">
           <div class="mc-label">Price per Square Foot</div>
           <div class="mc-delta">+33%</div>
           <div class="mc-delta-label">premium over EPA median</div>
-          <div class="mc-row"><span>1908 Cooley</span><span class="v">$904 / sqft</span></div>
+          <div class="mc-row"><span>{{PROPERTY_ADDRESS}}</span><span class="v">{{SUBJECT_PPSF}}</span></div>
           <div class="mc-row"><span>EPA median (Apr 2026)</span><span class="v">$677 / sqft</span></div>
         </div>
       </div>
@@ -568,7 +568,7 @@
       <h2>Appendix · Cumulative Numbers Since Launch</h2>
       <table class="appendix-table">
         <tr><td>Listed</td><td><strong>November 14, 2025</strong></td></tr>
-        <tr><td>List price</td><td><strong>$1,095,000</strong> ($904/sqft)</td></tr>
+        <tr><td>List price</td><td><strong>{{LIST_PRICE_FULL}}</strong> ({{SUBJECT_PPSF}})</td></tr>
         <tr><td>Property</td><td>3 bd / 1 ba / 1,210 sqft · Built 1947 · 6,321 sqft lot</td></tr>
         <tr><td>Cumulative showings</td><td><strong>13</strong> agents (Supra/lockbox)</td></tr>
         <tr><td>Cumulative disclosure pulls</td><td><strong>30</strong> unique agents (Glide), 31 total downloads</td></tr>
@@ -601,7 +601,7 @@
 
     <!-- FOOTER -->
     <div class="footer">
-      Confidential weekly status report prepared for SHPCO regarding 1908 Cooley Avenue, East Palo Alto.
+      Confidential weekly status report prepared for {{SELLER_FIRST_NAME}} regarding {{PROPERTY_ADDRESS}}, {{CITY_STATE}}.
     </div>
 
   </div>

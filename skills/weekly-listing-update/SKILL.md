@@ -137,7 +137,25 @@ Default to amber when uncertain. Be honest — green should mean genuinely activ
 
 ## Step 4: Build the HTML Report
 
-Use the template at `templates/weekly-status-report.html` as the base. It contains the full design system established with 1908 Cooley Ave (May 3, 2026 issue).
+> ### ⚠️ WRONG-SELLER-DATA CHECK — do this before you send anything
+>
+> Until 2026-08-13 this template was not a template. It was a **finished report for 1908
+> Cooley Ave** with that seller's address, price, MLS number, and offer hardcoded, while
+> this file told you to substitute ~32 variables that did not exist. Following the
+> instructions literally would have sent one seller's numbers to a different seller.
+>
+> The seller-identifying fields are now real placeholders. **The prose is not.** These
+> blocks are still example narrative from the Cooley report and must be rewritten from
+> this week's actual data every single time:
+> `{{EXEC_NARRATIVE}}` ("The Read"), `{{DECISION_TITLE}}` / `{{DECISION_BODY}}`,
+> the showing and disclosure tables, the "What Buyers Are Telling Us" bullets and quotes,
+> and the syndication chips.
+>
+> **Before sending, grep the finished file for the previous seller's details** (address,
+> price, MLS, agent names, quoted feedback). If any survive, you have mixed two sellers'
+> reports. This check is not optional: this report goes to a real seller weekly.
+
+Use the template at `templates/weekly-status-report.html` as the base. It carries the design system established with the 1908 Cooley Ave issue (May 3, 2026); the layout is the reusable part, the content is not.
 
 Substitute these variables: `{{ISSUE_NUMBER}}`, `{{REPORT_DATE}}`, `{{GHL_CALENDAR_URL}}` (Graeham's GoHighLevel scheduling link — used in the Decision Required CTA), `{{PROPERTY_ADDRESS}}`, `{{CITY_STATE}}`, `{{BEDS_BATHS_SQFT}}`, `{{LIST_PRICE}}`, `{{MLS}}`, `{{REPORTING_PERIOD}}`, `{{STATUS_LEVEL}}`, `{{STATUS_HEADLINE}}`, `{{STATUS_MESSAGE}}`, `{{KPI_*_NUM}}`, `{{KPI_*_DELTA}}`, `{{SELLER_FIRST_NAME}}`, `{{EXEC_NARRATIVE}}`, `{{DECISION_TITLE}}`, `{{DECISION_BODY}}`, `{{DOM_DELTA}}`, `{{PPSF_DELTA}}`, `{{SUBJECT_DOM}}`, `{{MARKET_DOM}}`, `{{SUBJECT_PPSF}}`, `{{MARKET_PPSF}}`, `{{SHOWING_COUNT}}`, `{{DISCLOSURE_COUNT}}`, `{{TOTAL_INTERACTIONS}}`, `{{UNIQUE_AGENT_COUNT}}`, `{{SHOWING_TABLE_ROWS}}`, `{{DISCLOSURE_TABLE_ROWS}}`, `{{CONCERN_*}}`, `{{ACTIONS_THIS_WEEK}}`, `{{LISTED_DATE}}`, `{{LIST_PRICE_FULL}}`, `{{PROPERTY_DETAILS}}`.
 
