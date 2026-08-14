@@ -33,7 +33,7 @@ These defaults apply to every output format (chat summary, PDF, Excel, HTML). Wh
 - `references/net-sheet-template.md` — California closing costs, transfer tax rates by city, and net sheet format
 - `references/offer-summary-format.md` — How offer comparison data should be structured
 - `references/email_branding.md` — Graeham Watts brand standards for the HTML output (CMA-style header, gold/black palette, full-width layout, site nav bar)
-- `references/github_publishing.md` — How to push the finished HTML to `Graehamwatts/online-content` so it gets a permanent hosted URL (same flow CMAs use)
+- `references/github_publishing.md` — **RETIRED tombstone.** Offer analyses are NOT published. They are confidential (they contain every competing buyer's price and terms) and are delivered as a private email attachment to Graeham and Adrian. See "NEVER PUBLISH OFFER ANALYSES PUBLICLY" in `references/mode-1-offer-analysis.md`.
 
 ---
 
