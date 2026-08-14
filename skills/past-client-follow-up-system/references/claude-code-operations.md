@@ -165,10 +165,9 @@ throwaway n8n workflow:
 - Schedule rebuilt and live through **Dec 31 2027**; OAuth app published to
   Production (stops the 7-day token death); watchdog active.
 - Zero-Guard self-checks live in Sharon/Call/CMA workflows.
-- Reference example completed end-to-end: contact **Zhen Wang**
-  (`J5DJPVv96CpBawxasDtF`) + co-seller **Qing Gan** — past sellers of 2617
-  Fordham St EPA (MLS ML81727278, Graeham listing agent, sold $938K, COE
-  12/10/2018), mailing address set to **228 Montevideo Cir, Fremont, CA
+- Reference example completed end-to-end: contact **{{CLIENT_NAME}}**
+  (`{{GHL_CONTACT_ID}}`) + co-seller **{{CO_CLIENT_NAME}}** — past sellers of 2617
+  {{SOLD_ADDRESS}} (MLS {{MLS_NUMBER}}, Graeham listing agent, sold {{SALE_PRICE}}, COE {{COE_DATE}}), mailing address set to **{{CLIENT_MAILING_ADDRESS}}
   94539-5352** across all three systems.
 
 When unsure, re-read SKILL.md and confirm any side-effectful step with Graeham
