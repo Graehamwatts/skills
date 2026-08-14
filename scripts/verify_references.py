@@ -48,6 +48,17 @@ RETIRED = {
     r"C:\\Users\\Admin":            "no such user on this machine; it is C:\\Users\\Graeham Watts",
 }
 
+# Skill names confirmed by audit to have NEVER existed in this repo. Listed explicitly
+# because the contextual heuristic below is deliberately conservative (to keep the
+# false-positive rate near zero), and that conservatism would otherwise let these slip
+# when they appear in a table cell or prose without the word "skill" nearby.
+PHANTOM_SKILLS = {
+    "ghl-crm-audit":          "never existed; meta-ads routes to it twice",
+    "pipeline-dashboard":     "never existed; named in shared-references/integrations.md",
+    "video-editor":           "never existed; use video-creator",
+    "cinematic-video-engine": "never existed; concept-forge ends every path here",
+}
+
 # Skills retired with a documented replacement.
 DEPRECATED_SKILLS = {
     "html-email":                   "publish HTML to online-content via direct git",
@@ -73,15 +84,30 @@ TOMBSTONE = re.compile(
     r"formerly|old approach|superseded", re.I)
 
 
+# Scheduled tasks live OUTSIDE this repo but are the highest-risk instructions in the
+# system: they run unattended, so a broken reference fails with nobody watching. The
+# Composio call that broke the Monday content build for two months lived here, not in
+# skills/. Scan it whenever it is present.
+SCHEDULED = REPO.parent / "Scheduled"
+
+
 def live_files():
-    for p in SKILLS.rglob("*"):
-        if not p.is_file() or p.suffix.lower() not in {".md", ".json", ".py"}:
-            continue
-        if SKIP_PARTS & {q.name for q in p.parents}:
-            continue
-        if p.name in EXEMPT_FILES:
-            continue
-        yield p
+    roots = [SKILLS] + ([SCHEDULED] if SCHEDULED.is_dir() else [])
+    for root in roots:
+        for p in root.rglob("*"):
+            if not p.is_file() or p.suffix.lower() not in {".md", ".json", ".py"}:
+                continue
+            if SKIP_PARTS & {q.name for q in p.parents}:
+                continue
+            if p.name in EXEMPT_FILES:
+                continue
+            # Correspondence and briefs are documents ABOUT the system, not
+            # instructions TO it. A support email describing the zombie-skill
+            # problem legitimately names dead skills; flagging it is noise.
+            if re.search(r"EMAIL|BRIEF|-for-|POST-?MORTEM|AUDIT|REPORT|NOTES?$",
+                         p.stem, re.I):
+                continue
+            yield p
 
 
 def main() -> int:
@@ -94,7 +120,10 @@ def main() -> int:
     findings: list[dict] = []
 
     for path in live_files():
-        rel = path.relative_to(REPO).as_posix()
+        try:
+            rel = path.relative_to(REPO).as_posix()
+        except ValueError:
+            rel = "Scheduled/" + path.relative_to(SCHEDULED).as_posix()
         if a.skill and f"skills/{a.skill}/" not in rel:
             continue
         try:
@@ -116,12 +145,28 @@ def main() -> int:
                     findings.append({"file": rel, "line": i, "kind": "deprecated-skill",
                                      "ref": dead, "why": f"retired; use {repl}"})
 
+            for phantom, why in PHANTOM_SKILLS.items():
+                if re.search(rf"`{re.escape(phantom)}`|skills/{re.escape(phantom)}\b", line):
+                    findings.append({"file": rel, "line": i, "kind": "missing-skill",
+                                     "ref": phantom, "why": why})
+
             # Backticked skill-like name used in a routing context.
             for m in re.finditer(r"`([a-z][a-z0-9]+(?:-[a-z0-9]+){1,3})`", line):
                 name = m.group(1)
                 if name in existing or name in DEPRECATED_SKILLS:
                     continue
-                if not re.search(r"\bskill\b|hand off|route|invoke|read the|use the|→", line, re.I):
+                # Require an EXPLICIT skill signal. A bare "use the `x-y`" was far too
+                # loose: it matched scheduled-task names, output modes, and worked
+                # examples, producing enough noise to make the whole check ignorable.
+                if not re.search(
+                    rf"`{re.escape(name)}`\s*skill|skill\s*`{re.escape(name)}`|"
+                    rf"skills/{re.escape(name)}\b|read the\s*`?{re.escape(name)}`?\s*skill|"
+                    rf"hands? off to\s*`{re.escape(name)}`|route to\s*`{re.escape(name)}`",
+                    line, re.I):
+                    continue
+                # Scheduled-task names, doc examples, and placeholders are not skills.
+                if re.search(r"\btask\b|cron|schedul|example|e\.g\.|placeholder|such as|"
+                             r"\bmode\b|variant", line, re.I):
                     continue
                 if (SKILLS / name).exists():
                     continue
@@ -134,7 +179,12 @@ def main() -> int:
                 skill_root = path
                 while skill_root.parent != SKILLS and skill_root.parent != skill_root:
                     skill_root = skill_root.parent
-                if not (skill_root / target).exists():
+                # Legitimate homes: this skill, the repo root, or any sibling skill
+                # (cross-skill pointers like `scripts/verify_brand_identity.py` are real).
+                found = ((skill_root / target).exists()
+                         or (REPO / target).exists()
+                         or any((d / target).exists() for d in SKILLS.iterdir() if d.is_dir()))
+                if not found:
                     findings.append({"file": rel, "line": i, "kind": "missing-file",
                                      "ref": target, "why": "path does not exist in this skill"})
 
