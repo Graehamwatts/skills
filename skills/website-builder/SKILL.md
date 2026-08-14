@@ -12,7 +12,7 @@ Graeham's reusable system for building websites, landing pages, and product UI (
 
 Trigger on any UI/web request. If the user says "build me a landing page", "redesign this dashboard", "code this Figma mockup", "push to Vercel", "give it a glassy hero" — this skill applies.
 
-If the task is a short email or Word doc, this skill is not the right tool — use `html-email` or `docx` instead.
+If the task is a short email or Word doc, this skill is not the right tool — publish the HTML directly to the `online-content` repo via git (the `html-email` skill was retired 2026-06) or `docx` instead.
 
 ## How to use the references
 

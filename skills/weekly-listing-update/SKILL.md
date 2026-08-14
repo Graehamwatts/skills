@@ -72,9 +72,9 @@ Pull EPA / city market context:
 
 WebSearch returns metadata but NOT the live engagement metrics (views, saves, hot-listing badges). For those, use the Claude in Chrome MCP. This is critical — it's what makes the report uniquely valuable each week.
 
-1. Get a tab via `mcp__Claude_in_Chrome__tabs_context_mcp` (createIfEmpty: true)
+1. Get a tab via `mcp__claude-in-chrome__tabs_context_mcp` (createIfEmpty: true)
 2. Navigate to each portal: Zillow, Redfin, Homes.com, Realtor.com
-3. For each, wait 3-4 seconds for load, then take a screenshot or use `mcp__Claude_in_Chrome__find` to extract metrics
+3. For each, wait 3-4 seconds for load, then take a screenshot or use `mcp__claude-in-chrome__find` to extract metrics
 4. Extract: views, saves, days on Zillow, "Hot Home" badges where available
 5. Close tabs when done
 

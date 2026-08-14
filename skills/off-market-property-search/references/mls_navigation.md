@@ -77,13 +77,13 @@ For each Members Only listing:
 
 Use Claude in Chrome's tool suite — the user's already logged in, so work with their existing session:
 
-- `mcp__Claude_in_Chrome__navigate` — go to a URL
-- `mcp__Claude_in_Chrome__read_page` — dump the rendered page text / structure
-- `mcp__Claude_in_Chrome__find` — locate interactive elements
-- `mcp__Claude_in_Chrome__form_input` — type into filter fields
-- `mcp__Claude_in_Chrome__computer` — click, scroll, navigate the UI
-- `mcp__Claude_in_Chrome__javascript_tool` — read DOM data directly if the structure is messy (useful for grabbing a whole card's data as JSON)
-- `mcp__Claude_in_Chrome__read_network_requests` — inspect XHR traffic if the UI loads results via API (often faster than scraping the DOM)
+- `mcp__claude-in-chrome__navigate` — go to a URL
+- `mcp__claude-in-chrome__read_page` — dump the rendered page text / structure
+- `mcp__claude-in-chrome__find` — locate interactive elements
+- `mcp__claude-in-chrome__form_input` — type into filter fields
+- `mcp__claude-in-chrome__computer` — click, scroll, navigate the UI
+- `mcp__claude-in-chrome__javascript_tool` — read DOM data directly if the structure is messy (useful for grabbing a whole card's data as JSON)
+- `mcp__claude-in-chrome__read_network_requests` — inspect XHR traffic if the UI loads results via API (often faster than scraping the DOM)
 
 The `read_network_requests` + `javascript_tool` combo is the most reliable approach: many MLS portals load results via JSON XHR calls you can inspect directly.
 

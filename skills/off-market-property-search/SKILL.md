@@ -61,11 +61,11 @@ If the user hasn't given a city, ask for it before doing anything else. If they 
 
 ## Running the MLSListings Search
 
-**Assume the user is already logged in.** Cowork has access to the user's authenticated Chrome session via the `mcp__Claude_in_Chrome__*` tools. Do not attempt to handle a username/password.
+**Assume the user is already logged in.** Cowork has access to the user's authenticated Chrome session via the `mcp__claude-in-chrome__*` tools. Do not attempt to handle a username/password.
 
 ### Step-by-step browser flow
 
-1. `mcp__Claude_in_Chrome__navigate` → `https://pro.mlslistings.com/` (or `https://mlslistings.com/` and follow the login link if needed)
+1. `mcp__claude-in-chrome__navigate` → `https://pro.mlslistings.com/` (or `https://mlslistings.com/` and follow the login link if needed)
 2. Confirm the user is logged in (dashboard visible). If a login page appears, stop and tell the user: *"Looks like you're not logged in to MLSListings.com. Please log in in your browser, then tell me to continue."*
 3. Go to the search / map search tool
 4. Enter the city name and apply any filters provided by the user

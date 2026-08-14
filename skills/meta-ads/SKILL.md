@@ -114,7 +114,7 @@ Every campaign that advertises listings, home valuations, buying, selling, or re
 
 | Pattern | Objective | Notes |
 |---|---|---|
-| Listing launch | Lead gen or traffic | Creative from `video-editor` / `higgsfield-video`; copy via `copywriter`; CTA → listing page or GHL form. HOUSING category |
+| Listing launch | Lead gen or traffic | Creative from `video-creator` / `higgsfield-video`; copy via `copywriter`; CTA → listing page or GHL form. HOUSING category |
 | Home valuation (BOFU) | Lead gen | "What's my home worth" → GHL form → `cma-generator` fulfills. Strongest CPL historically for agents. HOUSING category |
 | Open house | Reach/traffic, tight radius (≥15mi floor) | Short flight, 3-5 days. HOUSING category |
 | Content amplification | Engagement/traffic | Boosting a performing organic reel — check the organic winner via Windsor first, then amplify here |

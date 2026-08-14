@@ -49,7 +49,7 @@ path) come from `shared-references/switchy.json` (to be created — see asks).
 |---|---|---|
 | **newsletter-generator** (EPA Report) | "Watch the full video" → YouTube; "What's My Home Worth?" → graehamwatts.com/home-value; footer social | **Wrap all CTAs.** Highest-value surface (opted-in consumers). Add: "mint each CTA via switchy-engine, tags `newsletter`+`consumer`." |
 | **content-creation-engine** | YouTube CTAs, social post links, link-in-bio across 14 formats | **Wrap consumer CTAs + bio links.** Add mint step in the content-package output; tag by platform + `consumer`. |
-| **html-email** | CTA buttons in designed emails | **Wrap CTAs conditionally.** Many of these go to partners/coaches (B2B) — tag `b2b`, track-only, don't pixel. Consumer emails → wrap + pixel. |
+| **direct git publish to `online-content`** (was `html-email`, retired 2026-06) | CTA buttons in designed emails | **Wrap CTAs conditionally.** Many of these go to partners/coaches (B2B) — tag `b2b`, track-only, don't pixel. Consumer emails → wrap + pixel. |
 | **weekly-listing-update** | Seller-facing report; "view listing online" type links | **Track-only.** Audience is a single known seller (sphere) — don't pixel. Optional Switchy for click visibility. |
 | **listing-remarks-writer** | NONE — MLS public remarks legally cannot contain URLs/contact info | **No wrap in remarks.** Flag: the *marketing collateral* around the listing (single-property page, flyers, QR) is where tracked links go, not the MLS remarks themselves. |
 | **postcard workflow (Canva — no skill)** | QR codes designed manually in Canva | **GAP.** See below. |
