@@ -39,8 +39,12 @@
       "02015066"
     ],
     "brand_blocklist": [
-      "Intero Real Estate"
+      "Intero Real Estate",
+      "Berkshire Hathaway",
+      "Martin Team"
     ],
+    "_brand_blocklist_case_note": "Brand values are matched CASE-INSENSITIVELY. This is deliberate: the 2026-08-13 migration used a case-sensitive pattern and silently skipped every ALL-CAPS 'INTERO' in the farming-postcard print templates and the offer-analyzer contact strips, leaving one client report with Intero in the header and Compass in the footer. Half-migrated is worse than un-migrated because it reads as done.",
+    "_brand_blocklist_entries_note": "'Berkshire Hathaway' was Intero's affiliate tagline and appeared on both faces of the printed farming postcard; Compass is NOT a Berkshire Hathaway affiliate, so this is a false affiliation claim on an unrecallable mailer. 'Martin Team' was a stale team name in the same postcard templates; the correct team is The Boyenga Team.",
     "_brand_blocklist_note": "Added 2026-08-13. Graeham moved to Compass; the former brokerage must not reappear in output. This is enforced the same way the wrong DRE is, because the same failure mode applies: a stale brand string buried in one reference file silently propagates into every generated report. A real instance of this existed in content-creation-engine/references/market-config.md, which not only hardcoded Intero but instructed the agent to 'correct' any occurrence of Compass back to it.",
     "_exempt_path_fragments": [
       "/outputs/",
@@ -50,8 +54,10 @@
       "graphify-out/",
       "docs/",
       "emails/",
-      "online_content_files/"
+      "online_content_files/",
+      "online-content/"
     ],
+    "_misplaced_content_flag": "NOTE: `online-content/` inside the SKILLS repo holds 12 tracked files of published content (switchy dashboards, a dated farming postcard). Skills/CLAUDE.md forbids this: 'Never put emails/newsletters/dashboards in Skills/'. It is exempted here only so the tripwire is not blocked by a historical artifact. The real fix is relocating it to the Graehamwatts/online-content repo, which is a decision for Graeham, not a silent cleanup.",
     "_exempt_path_fragments_note": "Substring matches against the file path. Exempts HISTORICAL RECORDS and GENERATED CACHES, never live source. Rationale per class: outputs/ and online_content_files/ are already-published artifacts (rewriting them would falsify what was actually sent); emails/ likewise; docs/ holds dated audit reports whose findings must stay as-found; graphify-out/ and ai-library/library/ are generated and regenerate from source. Live source files get NO exemption, which is the point: that is where a stale brand string would propagate into new client output.",
     "_history": {
       "02015066": "Old/incorrect DRE that has been removed from outputs nine separate times. Most recently re-confirmed wrong by Graeham on 2026-04-29. The correct DRE is 01466876. Note: Cowork's cached skill descriptions may still show 02015066; those are stale, not source of truth."

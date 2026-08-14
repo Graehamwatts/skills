@@ -46,7 +46,12 @@ def main() -> int:
     # Two registers, same enforcement mechanism: a wrong DRE and a stale
     # brokerage fail identically (a buried stale string propagates into every
     # generated output), so both are grep-blocked at push time.
-    blocklist = blocked.get("dre_blocklist", []) + blocked.get("brand_blocklist", [])
+    dre_values = blocked.get("dre_blocklist", [])
+    brand_values = blocked.get("brand_blocklist", [])
+    # (value, case_insensitive). Brand strings are matched case-insensitively
+    # because a case-sensitive sweep once skipped every ALL-CAPS "INTERO".
+    blocklist_specs = [(v, False) for v in dre_values] + [(v, True) for v in brand_values]
+    blocklist = dre_values + brand_values
     correct_dre = identity["identity"]["dre"]
     correct_brokerage = identity["identity"].get("brokerage", "")
 
@@ -59,9 +64,10 @@ def main() -> int:
 
     failures = []
 
-    for blocked_value in blocklist:
+    for blocked_value, case_insensitive in blocklist_specs:
+        flags = "-rlni" if case_insensitive else "-rln"
         result = subprocess.run(
-            ["grep", "-rln", blocked_value, "--exclude-dir=.git", "."],
+            ["grep", flags, blocked_value, "--exclude-dir=.git", "."],
             cwd=repo_root,
             capture_output=True,
             text=True,
