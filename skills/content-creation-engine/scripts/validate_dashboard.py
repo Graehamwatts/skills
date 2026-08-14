@@ -39,6 +39,14 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("dashboard")
     ap.add_argument("--manifest", default=str(DEFAULT_MANIFEST))
+    ap.add_argument(
+        "--layout-only",
+        action="store_true",
+        help="Judge STRUCTURE only (tabs/sections/features/brand), skipping the "
+             "content-volume checks. For design previews built with placeholder copy. "
+             "NEVER use this on a real weekly build: the volume checks are what catch "
+             "silent truncation, which is the failure this tool exists for.",
+    )
     a = ap.parse_args()
 
     path = Path(a.dashboard)
@@ -73,7 +81,10 @@ def main() -> int:
 
     # --- content minimums ---
     mins = m.get("content_minimums", {})
+    skipped: list[str] = []
     for kind, label in (("video_topics", "Video Content"), ("blog_topics", "Blog Content")):
+        if a.layout_only:
+            skipped.append(kind); continue
         want = mins.get(kind)
         if not want:
             continue
@@ -84,7 +95,9 @@ def main() -> int:
                            f"found ~{found} topic blocks, manifest requires {want}"))
 
     min_kb = mins.get("min_file_kb")
-    if min_kb and size_kb < min_kb:
+    if a.layout_only:
+        skipped.append("min_file_kb")
+    elif min_kb and size_kb < min_kb:
         misses.append(("SIZE", f"{size_kb}KB",
                        f"below the {min_kb}KB floor. High-water mark was 216KB; the last "
                        f"decayed build was 60KB. Small size means silent truncation even "
@@ -103,8 +116,16 @@ def main() -> int:
     print(f"Dashboard validation: {path.name}  ({size_kb}KB)")
     print(f"  manifest: {Path(a.manifest).name}")
     print()
+    if a.layout_only:
+        print("  MODE: --layout-only  (structure judged; content-volume checks SKIPPED)")
+        print(f"  skipped: {', '.join(skipped)}")
+        print()
     if not misses:
-        print("PASS: every required element present.")
+        if a.layout_only:
+            print("LAYOUT PASS: structure is complete. This is NOT a passing weekly build.")
+            print("             Re-run without --layout-only once real content is in.")
+        else:
+            print("PASS: every required element present.")
         for n in notes:
             print(f"  {n}")
         return 0
