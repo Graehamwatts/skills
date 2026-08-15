@@ -95,7 +95,7 @@ The bolded columns are the ones most commonly skipped and the ones the May 25 ou
 
 - [ ] **Submarket boundary check** — if the cohort spans east-of-101 vs west-of-101 in EPA, school district lines, original-Eichler vs newer build, etc., identify which side the subject is on and flag any cross-boundary comp.
 - [ ] If MLS was unavailable during the run: the client report stays clean and confident (public-data comps presented plainly, MLS-only columns omitted, NO banner, NO flags, NO N/A cells). The "PUBLIC-FALLBACK / re-run when MLS is back" notice goes ONLY in the internal section of the companion email to Graeham. (This replaces the old "Public Data Notice banner" rule, which contradicted the ban above and caused the 2026-06-08 Basswood miss.)
-- [ ] All math recomputed in Python (`mcp__workspace__bash`) — never eyeballed.
+- [ ] All math recomputed in Python (write a script to a file and run it with the Bash tool; heredocs into `python3` can drop into an interactive REPL and hang) — never eyeballed.
 - [ ] Mandatory QC verification pass per `cma-generator/SKILL.md` §Quality Control Verification before publish.
 
 ---
@@ -112,7 +112,7 @@ A listing CMA answers "what should I list this for?" A past-client update answer
 |---|---|
 | Hero: "Listing Presentation" / "Buyer Offer Analysis" | **"Home Value Update"** |
 | "Pricing Strategy Analysis" (below / at / above market) | **DELETE.** Replace with "What Your Home Is Worth Today" |
-| "Recommended List Price" — Conservative / Competitive / Stretch | **"Your Home's Value Today"** — Likely range / Most-likely value today / Top of range in strong condition |
+| "Pricing Strategy" — Expected Sales Price + Aggressive / Recommended / Stretch list tiers | **"Your Home's Value Today"** — Likely range / Most-likely value today / Top of range in strong condition |
 | "The Market Story" written toward a pricing decision | Same data, written toward *where the owner stands* |
 | Subject summary | Keep — but add ownership context (years owned, equity gained) when known |
 | Comparable sales + $/sqft chart | Keep as-is |

@@ -119,6 +119,50 @@ A short interpretive wrap-up labeled plainly (e.g. **What this all means.**) tha
 
 Then the recommended list price must follow what the data says the market rewards, and the report must say so out loud.
 
+---
+
+## Expected sales price vs list price (added 2026-08-15, Graeham request)
+
+**These are two different numbers and the report must say both.** In a market where 79% of homes sell over their original ask, the list price is a marketing lever, not a prediction. Reporting only a "recommended price range" conflates them and loses the entire strategic point.
+
+### Required structure for the Pricing Strategy section
+
+**1. Lead with an Expected Sales Price callout.** A single prominent stat block, before any list-price discussion:
+
+> **EXPECTED SALES PRICE**
+> **$X to $Y**
+> Midpoint $Z, about $N per square foot
+
+**2. Show how it was derived**, in a readable block, not just a number. Name the condition-matched comps, state the size adjustment, and show the bracket check.
+
+**3. Then the three LIST-price strategies**, renamed. The old Conservative / Competitive / Stretch labels are RETIRED — "Conservative" wrongly implied a low expected outcome when it is actually the strategy most likely to produce a bidding war:
+
+| Tier | Label | What it means |
+|---|---|---|
+| 1 | **Aggressive list strategy** | List deliberately UNDER value to start a competition. This is what the over-ask majority actually did. Fastest, highest multiple-offer probability. |
+| 2 | **Recommended** | List at the value the comps support, still under the market's median winner premium. The default recommendation. |
+| 3 | **Stretch** | Tests the top of the range. Carries the overpriced group's risk profile: longer DOM, likely cut. |
+
+**Every tier card must state its own expected sale outcome and expected DOM**, e.g. *"Expected sale: $2,450,000 to $2,600,000, around 10 days."* A list price with no stated consequence is not a strategy.
+
+### Deriving the aggressive list price from market behavior
+Do not guess it. Compute it:
+
+```
+aggressive_list = expected_sale_midpoint / (median_winner_LSR / 100)
+```
+
+Then sanity-check against the priced-to-sell group's actual median original list. If those two numbers disagree badly, the expected sales price is probably wrong, not the formula.
+
+### Size adjustment — do it correctly
+When the condition-matched comps are a different size than the subject, adjust before comparing.
+
+**Measure the marginal $/sf WITHIN a single condition tier, never across all tiers.** Across tiers, condition swamps size and the regression is noise. On the 3444 Kenyon build the cross-tier slope was $210/sf at r²=0.007 (meaningless); within the full-remodel tier it was $1,305/sf at r²=0.804 (usable). Using the cross-tier number would have understated the subject by roughly $270,000.
+
+Report the r² alongside any slope you use. If r² is under about 0.4, say so and fall back to bracketing between tiers rather than adjusting.
+
+Always bracket-check the result: it should clear the top of the tier below and stay under the tier above at comparable size. If it does not, re-examine.
+
 ## Guardrails
 - Small sample (< 8 comps with original-list data): label the read as **directional**, not definitive.
 - Never present LSR vs final list as if it were vs original list — they tell different stories.
