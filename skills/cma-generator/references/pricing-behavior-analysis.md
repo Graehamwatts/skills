@@ -57,8 +57,27 @@ Scatter, one dot per sale: **x-axis = LSR % (sold vs original list), y-axis = da
 
 > Chart.js: use a `scatter` type with a second `line` dataset for the trendline (compute slope/intercept in Python via least squares and pass the two endpoints). Tooltip shows address, LSR%, DOM.
 
-### 4. Pricing-approach outcomes
-Keep the existing **"Pricing Strategy Performance"** grouped bars (avg DOM + median LSR per bucket, numbers ON each bar via datalabels) AND add a small table:
+### 4. Pricing-approach outcomes — use the SLOPE chart, not dual axes
+
+**Do NOT use a dual-axis bar chart here.** Median-DOM on a left axis and median-LSR% on a right axis was shipped once and Graeham's feedback was direct: he could not follow it. Two different units on two different scales in one chart is a reading puzzle, not a persuasion tool.
+
+**Use a two-point slope chart instead.** X-axis has exactly two categories: `Original list price` and `Final sold price`. Two line datasets, each with two points:
+
+- **Priced to sell** (green, solid): median original list → median sold. Slopes UP.
+- **Overpriced** (coral, dashed): median original list → median sold. Slopes DOWN.
+
+Both groups start at nearly the same list price and end far apart, so the chart reads instantly as a single sentence: *same starting point, opposite outcomes.* Put the DOM figures in the legend labels ("Priced to sell (15 homes, sold in 10 days)") rather than on a second axis, and put the dollar gap in the caption.
+
+```js
+new Chart(ctx,{type:'line',data:{labels:['Original list price','Final sold price'],datasets:[
+  {label:'Priced to sell (N homes, sold in D days)',data:[medOrigOver,medSoldOver],
+   borderColor:'#4f9d69',backgroundColor:'#4f9d69',borderWidth:4,pointRadius:8,tension:0},
+  {label:'Overpriced (N homes, sold in D days)',data:[medOrigUnder,medSoldUnder],
+   borderColor:'#C96A45',backgroundColor:'#C96A45',borderWidth:4,pointRadius:8,borderDash:[7,4],tension:0}
+]},options:{scales:{y:{ticks:{callback:v=>'$'+(v/1000000).toFixed(2)+'M'}}}}});
+```
+
+**Keep the approach table underneath it** — Graeham specifically called this table out as excellent, do not drop it:
 
 | Approach | # of sales | Median orig list | Median sold | LSR | Median DOM |
 |---|---|---|---|---|---|
@@ -73,6 +92,15 @@ Keep the existing **"Pricing Strategy Performance"** grouped bars (avg DOM + med
 The charts alone are not enough. Graeham's standing instruction (2026-06-23): every chart in this section must be followed by a **plain-language written summary on the sheet** so a reader gets the whole story without interpreting a graph. Three written pieces are MANDATORY:
 
 ### A. "Reading the numbers" block (a readable card directly beneath the charts/table)
+
+**This block gets HEAVIER visual treatment than a normal callout.** Graeham flagged it (2026-08-15) as the part of the report he wants emphasized: it is the section that does the persuading. Give it its own class, not the standard `.key` box:
+
+- Gold 2px border with a 10px gold left edge, soft gold box-shadow, light warm gradient background
+- An uppercase Montserrat heading ("READING THE NUMBERS") with a rule under it
+- Larger body type than surrounding prose (15px vs 13.5px), generous line-height
+- Custom bullets: colored dots keyed to outcome, green for the winners, coral for the losers, gray for the at-market group. No default disc bullets.
+- Close it with a bolded one-line kicker under a divider that states the dollar spread between the groups, e.g. *"The spread between those two groups is $325,500. Both started within $45,000 of each other on list price."*
+
 Walk through each group in plain sentences with the counts AND outcomes, as a short bullet list. Use this exact shape:
 
 > Of the [N] [market] homes that sold in the last 12 months:

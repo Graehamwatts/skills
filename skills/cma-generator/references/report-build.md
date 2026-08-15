@@ -13,14 +13,26 @@ The three baseline charts (Average Sale Price, List-to-Sale Ratio, Average Days 
 **Procedure, every time:**
 
 1. In MLS Matrix, go to **Search → Stats** (not Residential Search).
-2. **Customize** tab:
-   - **Time Frame** — widest defensible window. Default Past 3 Years; use 5 years when telling a cycle story.
-   - **Statistic** — Sale Price Average / Sale to List Price Ratio / Days on Market Average. (Also here: "New Listings, Number of" and Months of Inventory for the situational supply charts.)
-   - **Chart Type** — Smooth Line.
-   - **Group By** — Month.
-3. Set criteria to match the report's geography and property type as narrowly as stays statistically meaningful: Postal City, Zip Code, or MLS Area, plus the same Property Sub Type as the comp search.
-4. Open the **Chart** tab and **take an actual screenshot** of the rendered chart. This screenshot is the evidence the step happened, the same way an individual listing page is the evidence for a verified sold date.
-5. **Embed that screenshot as the chart** (`<img>` in interactive HTML, base64 PNG in email-safe). This is the default and preferred method: zero transcription risk, and the client sees exactly what MLS produced.
+2. Click the **Customize** tab. Do NOT use the Presets tab: presets silently reset Chart Type to Column and wipe the criteria form. Customize is the only reliable path.
+3. Set the four dropdowns. Their element IDs are stable, so set them directly rather than clicking:
+
+   | Field | Element ID | Value |
+   |---|---|---|
+   | Time Frame | `m_ucStatsCustomize_m_drPeriod_m_ddlTimePeriod` | `Past 3 Years` (5 for a cycle story) |
+   | Statistic | `m_ucStatsCustomize_m_mcPrimaryMeasure_m_ddlMeasures` | see below |
+   | Chart Type | `m_ucStatsCustomize_m_mcPrimaryMeasure_m_ddlChartTypes` | `Smooth Line` |
+   | Group By | `m_ucStatsCustomize_m_dcDimensions_m_ddlPrimaryDimensions` | `Month` |
+
+   The three baseline statistics are named exactly: `Sale Price, Average` / `Sale Price to List Price Ratio` / `Days to Sell, Average`.
+
+   **Chart Type gotcha, hit twice now:** the dropdown defaults to **Column** and, immediately after switching Statistic, briefly reports only `["Column"]` as its option list. Set Statistic FIRST, then re-read the options, THEN set Smooth Line. Verify `options[selectedIndex].text === 'Smooth Line'` before generating. A Column chart shipped to a client is a caught error, not a style preference.
+
+4. Set the geography on the criteria panel. Zip Code field is `Fm8_Ctrl1107_TextBox`. Set it with `.value` plus dispatched `input` AND `change` events; it does not stick with `.value` alone. **Re-check it right before Generate** — switching Statistic can blank it.
+5. Fire `__doPostBack('m_btnGenerate','')`, then `__doPostBack('m_btnChart','')`. Confirm the footer reads the expected time frame, zip, and listing count before capturing.
+6. **Capture the chart as a real image.** The chart is a server-rendered PNG at `img[src*="ChartImg"]`, not a canvas.
+   - **Preferred:** ask Graeham to snip it and drop it in a folder you can read, then embed the file bytes directly (read the file, base64 it in Node, write the data URI). Lossless.
+   - **Never** hand-transcribe base64 out of a `javascript_tool` result into a file. Long base64 strings do not survive being retyped: it silently corrupts, and the "fix" of shrinking the image to make transcription feasible produced blurry, pixelated charts that had to be redone. If you do move bytes through a tool result, **verify with a SHA-256 hash** computed on both sides before trusting it.
+   - Downscale-to-fit in CSS, never upscale. Embed at native resolution and constrain with `max-width:560px; display:block; margin:0 auto`. An 910px-wide chart shown in a ~1000px card looks soft; the same image capped at 560px looks crisp.
 6. Only rebuild as a styled Chart.js line when the design genuinely needs brand matching, and only after the screenshot exists to check the recreation against. Read the underlying values from the **Data** tab; do not eyeball them off the picture.
 7. **Caption every chart** with the criteria shown at the bottom of the MLS Stats page: `Source: MLSListings Matrix Stats, [filter description], [N] listings`. The caption is what makes the chart verifiable instead of decorative.
 8. **Do not smooth or invent.** If the real data is a sawtooth, the chart shows a sawtooth. A clean curve that does not match the real MLS chart destroys trust the moment the client looks it up.
