@@ -84,6 +84,32 @@
   feature film and aerial/drone footage as distinct additional items, it
   does not replace the HD tour with the feature film.
 
+  PRINT-TO-PDF (added 2026-08-17). This page is generated to PDF via local
+  headless Chrome, not weasyprint (broken native-lib install on this
+  machine) and not the CLI's naive default flags. The command that
+  actually works:
+
+    chrome.exe --headless=new --disable-gpu --no-sandbox
+      --print-to-pdf="<out.pdf>" --print-to-pdf-no-header
+      --no-pdf-header-footer --window-size=1400,2000
+      --run-all-compositor-stages-before-draw
+      --virtual-time-budget=10000 "file:///<path-to-html>"
+
+  Two gotchas this solves: (1) without --print-to-pdf-no-header AND
+  --no-pdf-header-footer together, Chrome stamps a date/title header and a
+  URL/page-number footer onto every page; one flag alone was not enough.
+  (2) Chrome's default print margins (~0.4in per side on Letter) shrink
+  the effective content width to under 760px, which silently triggers the
+  `max-width:760px` mobile breakpoint and collapses the 3-column Package
+  Includes grid into one stacked column, even though the page looks fine
+  on screen. That's why `.tpkgrow{grid-template-columns:1fr 1fr 1fr}` is
+  forced with !important inside @media print below, don't remove it or
+  the printed grid silently reverts to single-column with no error.
+  Verify any future PDF export by rendering pages to PNG with PyMuPDF
+  (`fitz`, already installed) and actually looking, poppler/pdftoppm is
+  not installed on this machine so Read can't preview a vector PDF's
+  pages directly.
+
   COMPASS CONCIERGE FIGURES (researched 2026-08-16, confirm before reusing
   in a future year, terms vary by state and change over time): NorCal cap
   $50,000, flat $750 fee, 0% interest, nothing due until closing or 12
@@ -187,6 +213,7 @@ footer{background:var(--b);color:#ddd;padding:28px 0;text-align:center;margin-to
   .tpkgrow{grid-template-columns:1fr 1fr 1fr!important}
   #marketing-plan-options{page-break-before:always}
   #how-this-compares{page-break-before:always}
+  footer{page-break-inside:avoid}
 }
 </style></head><body>
 <nav class="nav"><img src="https://images.leadconnectorhq.com/image/f_webp/q_80/r_1200/u_https://assets.cdn.filesafe.space/6wuU3haUH7uNeT20E3UZ/media/691256870b647e40e3c2e105.png" alt="Graeham Watts"></nav>
