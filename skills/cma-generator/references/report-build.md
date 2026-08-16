@@ -55,7 +55,7 @@ Never let a partial-month artifact set the direction of the market read. This is
 | Months of Inventory (line, dashed reference at 3 months = balanced) | Market-health or market-direction story. Under 2-3 months = seller's market; rising = softening. |
 | New Listings per month | Supply is part of the story; powers the market-direction read. |
 | Price Journey (original→final→sold per comp, green up / coral down) | Talking a seller down from an overpriced list. |
-| DOM vs Price Cut (dual-axis bar) | Same. Shows the cost of overpricing directly. |
+| ~~DOM vs Price Cut (dual-axis bar)~~ | **RETIRED 2026-08-15.** Two units on two axes read as a puzzle. Use the two-point slope chart in `pricing-behavior-analysis.md` section 4 instead, which carries the same argument in one glance. |
 | Price vs DOM scatter (bubble: x=price, y=DOM, size=sqft, color=status) | Forecasting what happens at each list price. One of the most persuasive charts in a listing CMA. |
 | List-to-Sale vs DOM correlation scatter (with trendline and Pearson r) | The pricing-behavior section. See `pricing-behavior-analysis.md`. |
 | Comp price comparison (horizontal bars, subject as reference line) | Almost always useful. |
@@ -68,7 +68,11 @@ Never let a partial-month artifact set the direction of the market read. This is
 
 ## Chart implementation notes
 
-- **Interactive HTML (master format):** Chart.js via CDN. Named canvases where the canonical templates expect them: `trendPrice`, `trendLS`, `newList`, `monthsInv`, `priceJourney`, `domVsCut`, `priceDom`.
+- **Interactive HTML (master format):** Chart.js via CDN.
+
+  **Listing mode, the canonical set** (matches `dashboard_template.html`): the three baseline trends are MLS Stats **images**, not canvases. The four Chart.js canvases all live in the pricing-behavior section: `overUnderChart`, `lsrHistChart`, `scatterChart`, `outcomesChart`.
+
+  **Buyer and past-client modes** still use the older named canvases where their templates expect them: `trendPrice`, `trendLS`, `newList`, `monthsInv`, `priceJourney`, `priceDom`.
 - **Email-safe HTML / PDF:** matplotlib → PNG → base64 data URI. Brand colors: `BLACK #1A1A1A`, `GOLD #C5A55A`, `DARK_GOLD #A88B3D`, `LIGHT_GOLD #F5EFDC`, `GRAY #666666`, `GREEN #4CAF50`, `RED #E57373`. Hide top/right spines, gray ticks at 8pt, bold 12pt title, `bbox_inches='tight'`, white facecolor.
 - **List-to-Sale visual:** use HTML/CSS rows with bars extending left (under asking) or right (over) from a center line at 100%, gold for over and coral for under. Clearer than a Chart.js bar chart. Set `height: auto; overflow: visible;` on the container so rows do not clip.
 - **Pricing Strategy Performance chart:** must print the actual numbers on each bar ("20 days", "+7.5%"). Enable datalabels with custom formatters.

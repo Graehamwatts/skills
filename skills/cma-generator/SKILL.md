@@ -16,7 +16,7 @@ Produce premium, branded, data-rich CMA reports with real MLS-sourced charts, ho
 **Read `skills/shared-references/identity.json` and copy values from there.** Never type brand details from memory or prior context; cached prompts carry stale values.
 
 - Graeham Watts is the **primary brand** and always leads.
-- Brokerage attribution is the supporting line: **"Powered by The Boyenga Team at Compass"** (spelling: Boyenga).
+- Brokerage attribution is the supporting line: **"Powered by The Boyenga Team at Compass Real Estate"** (spelling: Boyenga).
 - DRE **01466876** is the only valid DRE. One other value is blocklisted in identity.json and has leaked 10+ times; never write it.
 - "Intero Real Estate" is the **former** brokerage. It must not appear in new output.
 
@@ -87,11 +87,16 @@ Chart selection is **situational by design**. The old skill demanded a fixed 15-
 
 1. Collect subject property details (template in §5). Ask if missing.
 2. Pull comps per `references/comp-research.md` — Active + Pending + Sold by default.
-3. Pull the three baseline trend charts from MLS Stats (§3).
-4. Build the **Interactive HTML report** (master format, self-contained, Chart.js via CDN).
-5. Run the Pre-Flight Checklist (§2).
-6. Publish per `references/publishing.md` and verify the live URL loads.
-7. Email-safe HTML or PDF only if requested (see `references/report-build.md`).
+3. **Sort the sold comps into condition tiers and place the subject in one** (`references/pricing-behavior-analysis.md`). Condition drives price far more than size in a mature pocket; skipping this produces a meaningless blended $/sf.
+4. Pull the three baseline trend charts from MLS Stats (§3).
+5. Compute the pricing-behavior statistics in Python, never by eye.
+6. Derive the **expected sales price** off the condition-matched comps, size-adjusted with a within-tier rate. Then set the three list-price strategies from it.
+7. Build the **Interactive HTML report** (master format, self-contained, Chart.js via CDN).
+8. Run the Pre-Flight Checklist (§2).
+9. Publish per `references/publishing.md` and verify the live URL loads.
+10. Email-safe HTML or PDF only if requested (see `references/report-build.md`).
+
+> **Reference build.** The 3444 Kenyon Drive listing presentation (August 2026) is the approved standard for this mode. `references/dashboard_template.html` is generated directly from it. When something is ambiguous, match that build.
 
 ---
 

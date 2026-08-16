@@ -1,375 +1,317 @@
 <!DOCTYPE html><!--
+  CANONICAL LISTING-PRESENTATION CMA TEMPLATE
+  ===========================================
+  Generated FROM the shipped 3444 Kenyon Drive CMA (2026-08-15), which Graeham
+  signed off on as the standard for listing presentations. Regenerate this file
+  from a shipped report rather than hand-editing it, so it cannot drift from what
+  actually gets built.
+
   TEMPLATE - STRUCTURAL REFERENCE ONLY.
+  Until 2026-08-13 this file was a FINISHED CLIENT CMA with zero placeholders,
+  publicly served. Every CMA built from it inherited the original client's name and
+  property, and that client's details were readable by anyone on the web. If you see
+  a real client name or a live negotiating position below, STOP: that is a
+  regression, not template content.
 
-  Until 2026-08-13 this file was a FINISHED CLIENT CMA with zero placeholders, and it
-  was being served publicly at graehamwatts.github.io. Two harms, both real:
-    1. Every CMA built from it inherited the original client's name and property.
-    2. The client's private details were readable by anyone on the web.
+  ILLUSTRATIVE vs PLACEHOLDER
+  ---------------------------
+  {{PLACEHOLDERS}} MUST all be substituted. Everything else (comp rows, subject
+  stats, dollar figures, chart data arrays) is retained as ILLUSTRATIVE STRUCTURE
+  from the Kenyon build so the shape and prose pattern are visible. Sold comps are
+  public record, so they are safe to carry, but they are NOT this property's comps.
+  Replace every number with the real cohort. Shipping Kenyon's figures under another
+  address is the single most likely failure mode of this template.
 
-  Client-identifying fields are now {{PLACEHOLDERS}} and MUST all be substituted.
-  If you see a real person's name, a specific subject address, or a client's
-  negotiating position below, STOP - that is a regression, not template content.
+  SECTION ORDER (this is the order Graeham approved)
+  --------------------------------------------------
+   1. Hero: name, co-brand lockup, attribution line, address
+   2. Subject Property: stat tiles + detail table + condition read
+   3. The Market Story: narrative only, no charts
+   4. Verified Comparable Sales: full table + "what this actually says"
+   5. Current Competition: actives and pendings
+   6. Market Pricing Behavior and the DOM Correlation  <- the persuasion engine
+        big stat -> 4 charts -> approach table -> READING THE NUMBERS ->
+        why the market prices this way -> what this all means
+   7. Market Data and Trends: the three MLS Stats chart images
+   8. The Rate Environment
+   9. Pricing Strategy: EXPECTED SALES PRICE first, then the three list tiers
+  10. Special Considerations (omit entirely rather than padding)
+  11. Staying In Touch: warm CTA
+  12. Footer: lockup + single disclaimer line
 
-  Comparable-sale rows are retained as ILLUSTRATIVE STRUCTURE (sold comps are public
-  record). Replace them with the real cohort for each report; do not ship these.
+  BANNED (these kept reappearing when they were listed as sections here)
+    - Net-to-seller table: ONLY on an explicit request in that same message.
+    - "Notes & Caveats" / "About this analysis": never, in any form.
+    - The only permitted disclaimer: "Professional opinion of value, not a formal
+      appraisal."
+  See SKILL.md and references/report-build.md PART 3.
+
+  CHARTS
+  ------
+  Three MLS Stats images (NOT Chart.js): {{MLS_CHART_SALE_PRICE_AVG}},
+  {{MLS_CHART_SALE_TO_LIST}}, {{MLS_CHART_DAYS_TO_SELL}}. Capture procedure and the
+  Smooth Line gotcha are in report-build.md PART 1. Embed at native resolution and
+  let .mlsimg cap them at 560px; never upscale.
+
+  Four Chart.js canvases, all in the pricing-behavior section:
+    overUnderChart  stacked bar, over/at/under original ask
+    lsrHistChart    histogram of list-to-sale ratio
+    scatterChart    LSR vs DOM with least-squares trendline
+    outcomesChart   TWO-POINT SLOPE chart, list -> sold, per pricing group.
+                    Do NOT revert this to a dual-axis bar. See
+                    pricing-behavior-analysis.md section 4.
+
+  PLACEHOLDERS
+  ------------
+  {{SUBJECT_ADDRESS_FULL}} {{SUBJECT_ADDRESS}} {{SUBJECT_ADDRESS_SHORT}}
+  {{SUBJECT_APN}} {{REPORT_MONTH_YEAR}}
+  {{COBRAND_LOCKUP_WHITE_DATA_URI}}  base64 PNG, hero + footer. Build per
+      identity.json -> identity.cobrand_lockup. Boyenga and Compass must read at
+      EQUAL weight.
+  {{MLS_CHART_*}}  base64 PNGs of the real MLS Stats output.
+
+  VOICE: second person throughout ("you", "your"). No em dashes. Brand values come
+  from skills/shared-references/identity.json at build time, never from memory.
 -->
-<html lang="en"><head>
-<!--
-CANONICAL CMA DASHBOARD TEMPLATE
-================================
-Source example: {{SUBJECT_ADDRESS}} listing CMA for {{CLIENT_NAME}} (May 2026, v7).
-
-VOICE: write ALL prose in second person ("you", "your") as if Graeham is speaking to the seller directly. No "his/him/her/the client/the seller" in client-facing prose.
-
-Three Paths Forward defaults:
-  A. Sell now, take cash, redeploy elsewhere (price range only, no net math in card)
-  B. Optimize for top of range (prep + spring market timing — NOT commission lever)
-  C. Hold and rent for 5+ years (long-term real estate hold investors only)
-
-Section order (13):
-  1. Hero / Subject Property Summary
-  2. "Where the Market Is" — leads with market context, not commission math
-  3. The Market Story — closest comps + submarket boundary note
-  4. Comp Cohort table (Active + Pending + Sold)
-  5. Trend Context — Sale Price Avg + L/S Ratio monthly charts
-  6. Interest Rate Environment — 4-source cross-reference
-  7. Price-Reduction History table
-  8. Pricing Journey chart — Original->Final->Sold per comp
-  9. DOM vs Cut chart — dual-axis bar
-  10. Three Paths Forward (Sell+Redeploy / Prep+Timing / Hold+Rent)
-  11. Recommended Pricing — RANGES not single numbers
-  12. Closing — warm referral CTA, contact block, single disclaimer line
-
-  BANNED (updated 2026-08-13, these were formerly listed here as sections 12 and 13
-  and that is exactly how they kept reappearing in shipped reports):
-    - Net-to-Seller table: ONLY when Graeham explicitly asks for it in that request.
-    - Notes & Caveats / About this analysis: never, in any form. The only permitted
-      disclaimer is "Professional opinion of value, not a formal appraisal."
-  See SKILL.md §2 Pre-Flight Checklist items 9 and 10.
-
-Required Chart.js canvas IDs: trendPrice, trendLS, priceJourney, domVsCut, priceDom.
-Pre-List Prep section is OPTIONAL (only when requested).
-
-Brand: black #1A1A1A, gold #C5A55A, cream #F5EFDC. DRE #01466876.
--->
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Listing CMA. {{SUBJECT_ADDRESS}}, East Palo Alto 94303 | Graeham Watts</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{{SUBJECT_ADDRESS}} - Listing Presentation | Graeham Watts</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
 <style>
-:root{--b:#1A1A1A;--g:#C5A55A;--dg:#A88B3D;--cr:#F5EFDC;--gy:#666;--nv:#343955}
+:root{--b:#1A1A1A;--g:#C5A55A;--dg:#A88B3D;--cr:#F5EFDC;--gy:#666;--nv:#343955;--red:#c0392b;--grn:#4f9d69;--amb:#C96A45;--gray:#9aa0a6}
 *{margin:0;padding:0;box-sizing:border-box}body{font-family:Inter,sans-serif;color:#1A1A1A;line-height:1.6}
 .nav{position:fixed;top:0;left:0;right:0;height:60px;background:var(--nv);display:flex;align-items:center;padding:0 24px;z-index:9}.nav img{height:34px}
-.wrap{max-width:1020px;margin:0 auto;padding:0 22px}section{padding:42px 0}
-.sh{background:var(--b);color:var(--g);font-family:Montserrat;font-weight:800;letter-spacing:2px;text-transform:uppercase;font-size:18px;padding:12px 18px;margin-bottom:22px;border-left:6px solid var(--g)}
-.hero{background:var(--b);color:#fff;padding:120px 0 56px;text-align:center}
-.hero .nm{color:var(--g);font-family:Montserrat;font-weight:800;font-size:38px;letter-spacing:5px}
-.hero .rl{color:var(--g);letter-spacing:8px;font-size:12px}.hero .ct{color:var(--g);letter-spacing:3px;font-size:13px;margin-top:24px;text-transform:uppercase}
-.hero .ad{font-size:28px;font-weight:700;margin-top:12px}.hero .dt{color:#aaa;margin-top:12px;font-size:13px}.hero .cn{color:var(--g);font-size:12px;margin-top:20px}
-p{margin-bottom:13px;font-size:15px;color:#2a2a2a}
-.stats{display:flex;flex-wrap:wrap;gap:12px;margin:18px 0}.st{background:var(--b);color:#fff;border-radius:8px;padding:18px;flex:1;min-width:130px;text-align:center}
-.st .n{color:var(--g);font-family:Montserrat;font-weight:800;font-size:24px}.st .l{color:#ccc;font-size:11px;text-transform:uppercase;letter-spacing:1px;margin-top:4px}
+.wrap{max-width:1040px;margin:0 auto;padding:0 22px}section{padding:34px 0}
+.sh{background:var(--b);color:var(--g);font-family:Montserrat;font-weight:800;letter-spacing:2px;text-transform:uppercase;font-size:17px;padding:12px 18px;margin-bottom:18px;border-left:6px solid var(--g)}
+.hero{background:var(--b);color:#fff;padding:104px 0 46px;text-align:center}
+.hero .nm{color:var(--g);font-family:Montserrat;font-weight:800;font-size:44px;letter-spacing:6px;line-height:1.12}
+.hero .rl{color:var(--g);letter-spacing:8px;font-size:12px}
+.brandblk{margin:22px auto 0;max-width:520px}
+.brandblk .rule{height:1px;background:linear-gradient(90deg,transparent,rgba(197,165,90,.55),transparent);margin-bottom:18px}
+.brandblk .lock{width:100%;max-width:330px;display:block;margin:0 auto}
+.brandblk .pb{color:#e8e8e8;font-size:16px;font-weight:600;letter-spacing:.3px;margin-top:14px}
+.fbrand{max-width:300px;width:100%;display:block;margin:0 auto 12px}
+@media(max-width:760px){.hero .nm{font-size:32px;letter-spacing:3px}.brandblk .pb{font-size:14.5px}}.hero .lbl{background:var(--g);color:var(--b);display:inline-block;font-family:Montserrat;font-weight:800;letter-spacing:3px;font-size:12px;padding:6px 16px;border-radius:4px;margin-top:18px}
+.hero .ad{font-size:25px;font-weight:700;margin-top:14px}.hero .dt{color:#aaa;margin-top:10px;font-size:13px;max-width:680px;margin-left:auto;margin-right:auto}.hero .cn{color:var(--g);font-size:12px;margin-top:14px}
+p{margin-bottom:13px;font-size:15px;color:#2a2a2a}.lead{font-size:16px}
+.stats{display:flex;flex-wrap:wrap;gap:12px;margin:18px 0}.st{background:var(--b);color:#fff;border-radius:8px;padding:16px;flex:1;min-width:150px;text-align:center}
+.st .n{color:var(--g);font-family:Montserrat;font-weight:800;font-size:21px}.st .l{color:#ccc;font-size:10px;text-transform:uppercase;letter-spacing:.5px;margin-top:4px}
+.st.red .n{color:#ff8a80}.st.grn .n{color:#8fd6a8}
 table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13px;box-shadow:0 1px 5px rgba(0,0,0,.06)}
-th{background:var(--g);color:var(--b);text-align:left;padding:9px;font-size:11.5px;text-transform:uppercase}td{padding:8px 9px;border-bottom:1px solid #eee}tbody tr:nth-child(even){background:var(--cr)}
-.rng{display:flex;flex-wrap:wrap;gap:14px;margin:16px 0}.rc{flex:1;min-width:210px;background:#fff;border:1px solid #e6e6e6;border-radius:8px;padding:18px;box-shadow:0 2px 8px rgba(0,0,0,.05)}
-.rc.a{border-left:7px solid #4f9d69}.rc.b{border-left:7px solid var(--g)}.rc.c{border-left:7px solid #d98c6a}
-.rc .rl{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--gy);font-weight:700}.rc .rp{font-family:Montserrat;font-weight:800;font-size:19px;margin:5px 0}.rc .rd{font-size:12.5px;color:#444}
-.cb{background:#fff;border:1px solid #eee;border-radius:8px;padding:16px;margin:14px 0}.cw{position:relative;height:300px}.cap{font-size:12px;color:var(--gy);margin-top:6px;text-align:center}
-.dv{height:2px;background:linear-gradient(90deg,var(--g),transparent);margin:28px 0}
-.card{border-radius:8px;padding:16px 18px;margin:12px 0;background:var(--cr);border-left:6px solid var(--g)}.card h4{font-family:Montserrat;font-size:14px;margin-bottom:5px}
-.alert{background:#fff8e6;border-left:6px solid #d98c6a;padding:14px 18px;border-radius:8px;margin:12px 0;font-size:13.5px}
-footer{background:var(--b);color:#ddd;padding:34px 0;text-align:center;margin-top:30px}.fn{color:var(--g);font-family:Montserrat;font-weight:800;letter-spacing:3px;font-size:19px}.fl{font-size:12px;margin-top:6px;color:#bbb}.ds{font-size:10.5px;color:#888;max-width:700px;margin:16px auto 0}
-.note{font-size:12px;color:var(--gy);font-style:italic;margin-top:6px}
+th{background:var(--g);color:var(--b);text-align:left;padding:8px 9px;font-size:11px;text-transform:uppercase}td{padding:7px 9px;border-bottom:1px solid #eee;vertical-align:top}tbody tr:nth-child(even){background:var(--cr)}
+.nt{color:var(--gy);font-size:12.5px}.grn{color:var(--grn);font-weight:700}.red{color:var(--red);font-weight:700}
+.tscroll{overflow-x:auto}
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0}
+.cards3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin:16px 0}
+.card{background:#fff;border:1px solid #eee;border-radius:8px;padding:18px;border-left:5px solid var(--g)}
+.card.grn{border-left-color:var(--grn)}.card.red{border-left-color:var(--red)}.card.nv{border-left-color:var(--nv)}
+.card .lbl{font-size:11px;text-transform:uppercase;color:var(--gy);letter-spacing:.5px;font-weight:700}
+.card .val{font-family:Montserrat;font-size:22px;font-weight:800;margin:6px 0}
+.card .ds{font-size:13px;color:#444}
+.cb{background:#fff;border:1px solid #eee;border-radius:8px;padding:16px;margin:14px 0}.cw{position:relative;height:280px}.cap{font-size:12px;color:var(--gy);margin-top:6px;text-align:center}
+.verdict{background:var(--b);color:#fff;border-radius:8px;padding:20px 22px;margin:14px 0}.verdict b{color:var(--g)}
+.key{background:#eef2f8;border-left:6px solid var(--nv);padding:14px 18px;border-radius:8px;margin:12px 0;font-size:13.5px}
+.readnum{background:linear-gradient(180deg,#fffdf6,#fff);border:2px solid var(--g);border-left:10px solid var(--g);padding:22px 26px;border-radius:10px;margin:20px 0;box-shadow:0 3px 14px rgba(197,165,90,.18)}
+.readnum h4{font-family:Montserrat;font-weight:800;font-size:16px;letter-spacing:1.5px;text-transform:uppercase;color:var(--b);margin-bottom:12px;border-bottom:2px solid var(--cr);padding-bottom:8px}
+.readnum ul{margin:12px 0 0 4px;list-style:none}
+.readnum li{position:relative;padding-left:26px;margin-bottom:13px;font-size:15px;line-height:1.62}
+.readnum li:before{content:"";position:absolute;left:0;top:8px;width:10px;height:10px;border-radius:50%;background:var(--g)}
+.readnum li.win:before{background:var(--grn)}.readnum li.lose:before{background:var(--amb)}.readnum li.flat:before{background:var(--gray)}
+.mlsimg{width:100%;max-width:560px;display:block;margin:0 auto;border-radius:6px}
+.alert{background:#fff8e6;border-left:6px solid var(--amb);padding:14px 18px;border-radius:8px;margin:12px 0;font-size:13.5px}
+.dv{height:2px;background:linear-gradient(90deg,var(--g),transparent);margin:24px 0}
+.bigstat{background:var(--b);color:#fff;border-radius:8px;padding:20px 24px;margin:14px 0;text-align:center}
+.bigstat .n{color:var(--g);font-family:Montserrat;font-weight:800;font-size:30px}
+.bigstat .l{color:#ddd;font-size:14px;margin-top:6px}
+footer{background:var(--b);color:#ddd;padding:28px 0;text-align:center;margin-top:26px}.fn{color:var(--g);font-family:Montserrat;font-weight:800;letter-spacing:3px;font-size:19px}.fl{font-size:12px;margin-top:6px;color:#bbb}.ds2{font-size:10.5px;color:#888;max-width:820px;margin:14px auto 0}
+@media(max-width:760px){.cards,.cards3{grid-template-columns:1fr}}
 </style></head><body>
 <nav class="nav"><img src="https://images.leadconnectorhq.com/image/f_webp/q_80/r_1200/u_https://assets.cdn.filesafe.space/6wuU3haUH7uNeT20E3UZ/media/691256870b647e40e3c2e105.png" alt="Graeham Watts"></nav>
 <header class="hero"><div class="wrap"><div class="nm">GRAEHAM WATTS</div><div class="rl">R E A L T O R</div>
-<div class="ct">Comparative Market Analysis. Listing Presentation</div>
-<div class="ad">{{SUBJECT_ADDRESS}}, East Palo Alto, CA 94303</div>
-<div class="dt">Prepared for {{CLIENT_NAME}}, May 2026</div>
-<div class="cn">Graeham Watts. Powered by The Boyenga Team at Compass. DRE #01466876. 650-308-4727</div></div></header>
+<div class="brandblk"><div class="rule"></div>
+<img src="{{COBRAND_LOCKUP_WHITE_DATA_URI}}" alt="Boyenga Property Nerds and Compass" class="lock">
+<div class="pb">Powered by The Boyenga Team at Compass Real Estate</div></div>
+<div class="lbl">LISTING PRESENTATION</div>
+<div class="ad">{{SUBJECT_ADDRESS_FULL}}</div>
+<div class="dt">Prepared {{REPORT_MONTH_YEAR}}. A comparative market analysis built on individually-verified current sales, real MLS trend data, and an honest read on where this home sits in today's market.</div>
+<div class="cn">DRE #01466876. 650-308-4727. graehamwatts.com</div></div></header>
 <div class="wrap">
 
-<section><div class="sh">The Property</div>
-<table><tbody>
-<tr><th>Address</th><td>{{SUBJECT_ADDRESS}}, East Palo Alto, CA 94303</td></tr>
-<tr><th>Configuration</th><td>2 bed / 1 bath, single-story SFR, attached 1-car garage</td></tr>
-<tr><th>Living Area</th><td>810 sq ft (MLS) / 1,080 sq ft (tax record, may include unpermitted addition)</td></tr>
-<tr><th>Lot Size</th><td>6,500 sq ft (0.149 acre)</td></tr>
-<tr><th>Year Built</th><td>1947 (renovated 2013 per prior MLS remarks)</td></tr>
-<tr><th>Zoning / APN</th><td>R10006 / 062-243-310</td></tr>
-<tr><th>Features</th><td>Wood floors, granite counters, stainless appliances, wood-burning fireplace, attached garage, deep backyard with mature fruit trees (per 2022 listing remarks)</td></tr>
-<tr><th>Occupancy</th><td>Currently vacant (tenant-occupied when last seen, reportedly in good shape)</td></tr>
-<tr><th>Owner</th><td>{{OWNER_NAME}}</td></tr>
-<tr><th>Acquired</th><td>April 4, 2022 at <strong>$925,000</strong> (Grant Deed, recorded 04/07/2022, doc #29887)</td></tr>
-<tr><th>Years Owned</th><td>~4.1 years (May 2026)</td></tr>
-<tr><th>CoreLogic AVM</th><td>$993,000 mid (range $782K to $1,204K, confidence 54/100 , low; AVM should be tested against actual comps, which is what this CMA does)</td></tr>
-</tbody></table>
-<div class="stats"><div class="st"><div class="n">810</div><div class="l">SqFt (MLS)</div></div><div class="st"><div class="n">2 / 1</div><div class="l">Bed / Bath</div></div><div class="st"><div class="n">6,500</div><div class="l">Lot SqFt</div></div><div class="st"><div class="n">1947</div><div class="l">Year Built</div></div></div>
-</section>
-
-<div class="dv"></div>
-
-<section><div class="sh">Where the Market Is. And What That Means for You</div>
-<p>You bought {{SUBJECT_ADDRESS}} on April 4, 2022 for $925,000. That was effectively the top of the recent EPA cycle. The market peaked in mid-2022 at around $1.18M median for the broader SFR cohort, then cooled materially into 2023 as the Fed pushed rates from near-zero to over 5%. The 30-year fixed mortgage went from sub-3% in early 2022 to over 7% by late 2023, and the EPA market reset accordingly. Over the four years you have owned this home, prices for similar homes have traded roughly sideways.</p>
-<p>Where rates sit today: 30-year fixed clusters between 6.5% and 6.7% across four sources today (Mortgage News Daily, Bankrate California, Realtor.com EPA, Zillow Home Loans). Down from the 2023 peaks above 7%, but still well above the 2020-21 lows that drove the EPA peak when you bought. The retail buyer pool that pays $1M+ for an 810 sqft cottage in EPA is much thinner at 6.6% than at 3.0%. There is no clear catalyst on the horizon to bring rates back to that range. The Fed has paused, inflation is sticky around 2.5 to 3%, and most forecasts suggest rates stay in the 5.5 to 6.5% range through 2027.</p>
-<p>What that means for your home: <strong>the EPA small-home market is likely to trade in a similar sideways-to-modestly-up pattern for the next 2 to 4 years.</strong> Modest annual appreciation (2 to 4 percent) is the base case. A real rebound that pushes you well past your $925K basis probably needs rates back below 5%, and that is not the base case.</p>
-<p>The 800 to 1,100 sqft EPA cohort over the last six months shows a sold median of <strong>$977,500</strong> and a sold range of $790K to $1,325K. The cohort skews larger and 3-bed compared to your home, and includes one west-of-101 outlier that should not anchor your expectations. When you filter to the right comps (2-bed, 1-bath, under 1,050 sqft, east of 101), the realistic clearing band is <strong>$850K to $925K</strong>.</p>
-<p>What that translates to in cash:</p>
-<ul style="margin-left:22px;margin-bottom:14px;font-size:14.5px">
-<li>At a sale of $895K (the middle of the realistic band) with standard closing costs of roughly 5.5%, your net to you is approximately <strong>$846,000</strong>, about <strong>$79K below your $925K basis</strong> on paper.</li>
-<li>At the top of the realistic band, $925K sale, same friction: net is roughly <strong>$874,000</strong>, about <strong>$51K below basis</strong> on paper.</li>
-</ul>
-<p>That looks like a loss in isolation. It is not the full picture. <strong>Principal paydown over 4 years on a 2022 mortgage is probably $30K to $55K in your favor</strong>, depending on your loan structure. That principal lives in your equity, not on the closing statement, but it is real money in your pocket at sale. And <strong>if you have lived at {{SUBJECT_ADDRESS}} as your primary residence for at least 2 of the last 5 years</strong>, the IRS Section 121 exclusion makes the first $250K of gain tax-free if single, $500K if married. For a property in your range, that means any gain is fully tax-free.</p>
-<p>The cleanest read: <strong>at a likely sale of $895K to $925K, your real cash-out position is somewhere between $24K below break-even and $4K above break-even, depending on your loan structure and exact residency status.</strong> Effectively a wash. Not a win, not a loss. The decision is then: what do you want that ~$845K of cash to do for you over the next several years?</p>
+<section style="padding-top:28px"><div class="sh">Subject Property</div>
+<div class="stats">
+<div class="st"><div class="n">1,592 sq ft</div><div class="l">3 bed / 2 bath, built 1961</div></div>
+<div class="st"><div class="n">$1,225,100</div><div class="l">Last sold, 7/17/2015 (COE 8/21/2015)</div></div>
+<div class="st grn"><div class="n">$2,450,000-$2,600,000</div><div class="l">Expected sales price</div></div>
+<div class="st"><div class="n">$2,412,600</div><div class="l">CoreLogic RealAVM (confidence 65)</div></div>
+</div>
+<div class="tscroll"><table><tbody>
+<tr><th>Address / APN</th><td>{{SUBJECT_ADDRESS_FULL}}. APN {{SUBJECT_APN}}. Corner lot at Briarcliff Ct.</td></tr>
+<tr><th>Configuration</th><td>3 bedrooms, 2 full baths, 1,592 sq ft, 1 story, L-shape, built 1961. 1 fireplace.</td></tr>
+<tr><th>Condition</th><td>Updated kitchen (counters and cabinets) and both bathrooms updated. Original hardwood floors throughout, in good condition. Minor touch-up paint and new interior doors outstanding. Presents on the nicer remodeled side, short of a top-end gut renovation.</td></tr>
+<tr><th>Lot</th><td>7,900 sq ft (79' x 100'), 0.181 acres, corner lot. Pool has been filled in and the jacuzzi removed; that area needs rescaping to present as usable yard.</td></tr>
+<tr><th>Zoning / Schools</th><td>R1. Santa Clara Unified School District.</td></tr>
+<tr><th>Last Sale</th><td>Listed $1,175,000 (7/6/2015), sold $1,225,100 (7/17/2015, 104.3% of list), COE 8/21/2015. Current owner since that purchase.</td></tr>
+</tbody></table></div>
+<div class="key"><strong>Where this home sits.</strong> Condition is the single biggest price driver in this pocket, and yours lands in a specific spot: genuinely updated, not gut-remodeled. Kitchen counters and cabinets are done, both baths are done, and the original hardwood is in good enough shape to be an asset rather than a to-do. What is left is cosmetic, touch-up paint and interior doors. That places you above the fixer and partial-update sales in this report and below the full-remodel tier, and the pricing below is built off the two comps that match that exact level rather than off the extremes.</div>
 </section>
 
 <div class="dv"></div>
 
 <section><div class="sh">The Market Story</div>
-<p>EPA's small-home cohort (under 1,050 sqft) is the right reference for {{SUBJECT_ADDRESS}}. Larger 3-bed homes regularly clear $1.0M+ in the area, but they are not your comp set. Within the 2-bed / 1-bath cohort over the last six months, the sold prices cluster tightly:</p>
-<table><thead><tr><th>Closest comp</th><th>Sqft</th><th>Sold Price</th><th>DOM</th><th>Read</th></tr></thead><tbody>
-<tr><td>1133 Jervis Avenue (2/1)</td><td>760</td><td>$860,000</td><td>152</td><td>Closest by sqft. East of 101. Five months on market, suggesting the buyer pool for tiny east-side SFRs is thin and pricing has to be right.</td></tr>
-<tr><td>2352 Menalto Avenue (2/1)</td><td>1,010</td><td>$900,000</td><td>30</td><td>Same bed/bath, slightly larger. East side. Clean 30-day sale at an honest price.</td></tr>
-<tr><td>128 Grace Avenue (2/1.5)</td><td>1,020</td><td>$925,000</td><td>138</td><td>East side. Same price as your basis. Note the 138 DOM. That is what your basis bought 4 years ago, but it took 4.5 months to find a buyer at that level today.</td></tr>
-<tr><td>2754 Gorgetown (3/1)</td><td>1,010</td><td>$790,000</td><td>0</td><td>East side. Floor case. 0 DOM means likely pocket-listed or under-priced, not market-tested.</td></tr>
-</tbody></table>
-<p class="note"><strong>A note on the west-of-101 outlier:</strong> 2055 Oakwood Drive (sold $1,035K, 8 DOM) appears in the broader cohort table below but should not anchor your expectations. Oakwood is on the Menlo Park/Palo Alto side of Highway 101, a different submarket that commands a substantial premium. {{SUBJECT_ADDRESS}} is east of 101, where pricing follows the 2/1 cohort above, not the west-side outliers.</p>
-<p>Active listings in the cohort (homes currently asking but unsold) sit higher: $898K to $1,115K. Some are priced ambitiously and have been sitting (470 Bell at 62 DOM, 219 Verbena at 71 DOM, 2656 Gonzaga at 83 DOM). Pending listings ($799K to $899K) are a better read on where the market is actually clearing today.</p>
-<p>For {{SUBJECT_ADDRESS}} specifically, the most realistic range is <strong>$850K to $925K</strong>. The wide DOM spread (8 days to 152 days) in the cohort says <strong>pricing right matters more than ever</strong>. Overpricing this property by even $50K could mean 90 to 150 days on market, and at the end of that you still close in the realistic band, just with more carry cost.</p>
+<p class="lead">Santa Clara's 95051 zip has moved a long way since you bought in 2015. This exact micro-pocket, the numbered-street and Kellogg/Kenyon/Cronin grid east of Lawrence Expressway, has been trading in the high-$1 millions to low-$3 millions for homes your size and era over the past six months, a market that would have felt unrecognizable a decade ago.</p>
+<p>What's driving the spread: condition, almost entirely. I individually verified nineteen recent sales in this size and price band, from a fixer-upper trust sale that sold at $1,283 a square foot, up to a fully gut-remodeled home two blocks from you that closed at nearly $1,800 a square foot. The gap between those isn't location, this whole pocket is walking distance to the same schools and the same Apple campus proximity that drove the frenzy in your own 2015 listing remarks. The gap is finish level, and the data below shows exactly how much that's worth.</p>
+<p>That works in your favor here. With the kitchen and both baths already updated and the original hardwood in good shape, you are not competing against the fixers at the bottom of that range, you are competing in the tier just below the full gut remodels. You also have the largest square footage of any of the close comps, which is the piece most of this pricing turns on.</p>
+<p>The good news: 79% of comparable homes sold over their original asking price in the last six months. The market has cooled slightly from a February 2026 peak (109.5% of list, zip-wide) to a more recent 104-105%, but it hasn't softened in any way that should worry you. What matters more for your specific pricing decision is which comp set you're being measured against, and the pricing-behavior data on this page is the evidence behind that call.</p>
 </section>
 
 <div class="dv"></div>
 
-<section><div class="sh">EPA Comp Cohort. Active, Pending, Sold (Last 6 Months)</div>
-<p>Full cohort filtered to East Palo Alto SFR, 600 to 1,200 sqft, last 6 months. 23 results.</p>
-<table>
-<thead><tr><th>Status</th><th>Address</th><th>MLS #</th><th style="text-align:right">Price</th><th style="text-align:right">$/sqft</th><th>DOM</th><th>Bed/Bth</th><th style="text-align:right">SqFt</th><th style="text-align:right">Lot</th></tr></thead>
-<tbody>
-<tr><td>Sold</td><td>2512 Farrington Way</td><td>ML82033977</td><td style='text-align:right'>$1,325,000</td><td style='text-align:right'>$1,205</td><td style='text-align:center'>10</td><td style='text-align:center'>3/2/0</td><td style='text-align:right'>1,100</td><td style='text-align:right'>5,000</td></tr>
-<tr><td>Sold</td><td>1371 Camellia Drive</td><td>ML82036402</td><td style='text-align:right'>$1,240,000</td><td style='text-align:right'>$1,216</td><td style='text-align:center'>19</td><td style='text-align:center'>3/2/0</td><td style='text-align:right'>1,020</td><td style='text-align:right'>7,679</td></tr>
-<tr><td>Sold</td><td>151 Verbena Drive</td><td>ML82040440</td><td style='text-align:right'>$1,090,000</td><td style='text-align:right'>$982</td><td style='text-align:center'>7</td><td style='text-align:center'>3/2/0</td><td style='text-align:right'>1,110</td><td style='text-align:right'>5,737</td></tr>
-<tr><td>Sold</td><td>2055 Oakwood Drive</td><td>ML82031748</td><td style='text-align:right'>$1,035,000</td><td style='text-align:right'>$1,045</td><td style='text-align:center'>8</td><td style='text-align:center'>2/1/0</td><td style='text-align:right'>990</td><td style='text-align:right'>6,211</td></tr>
-<tr><td>Sold</td><td>2670 Illinois Street</td><td>SF426122167</td><td style='text-align:right'>$1,000,000</td><td style='text-align:right'>$1,031</td><td style='text-align:center'>34</td><td style='text-align:center'>3/1/0</td><td style='text-align:right'>970</td><td style='text-align:right'>6,523</td></tr>
-<tr><td>Sold</td><td>2509 Illinois Street</td><td>ML82027699</td><td style='text-align:right'>$955,000</td><td style='text-align:right'>$927</td><td style='text-align:center'>19</td><td style='text-align:center'>3/0/0</td><td style='text-align:right'>1,030</td><td style='text-align:right'>6,000</td></tr>
-<tr><td>Sold</td><td>128 Grace Avenue</td><td>ML82029651</td><td style='text-align:right'>$925,000</td><td style='text-align:right'>$907</td><td style='text-align:center'>138</td><td style='text-align:center'>2/1/1</td><td style='text-align:right'>1,020</td><td style='text-align:right'>5,208</td></tr>
-<tr><td>Sold</td><td>2352 Menalto Avenue</td><td>ML82030345</td><td style='text-align:right'>$900,000</td><td style='text-align:right'>$891</td><td style='text-align:center'>30</td><td style='text-align:center'>2/1/0</td><td style='text-align:right'>1,010</td><td style='text-align:right'>6,480</td></tr>
-<tr><td>Sold</td><td>1133 Jervis Avenue</td><td>ML82020633</td><td style='text-align:right'>$860,000</td><td style='text-align:right'>$1,132</td><td style='text-align:center'>152</td><td style='text-align:center'>2/1/0</td><td style='text-align:right'>760</td><td style='text-align:right'>2,900</td></tr>
-<tr><td>Sold</td><td>2754 Gorgetown Street</td><td>SF425090127</td><td style='text-align:right'>$790,000</td><td style='text-align:right'>$782</td><td style='text-align:center'>0</td><td style='text-align:center'>3/1/0</td><td style='text-align:right'>1,010</td><td style='text-align:right'>5,000</td></tr>
-<tr><td>Active</td><td>104 Lotus Way</td><td>ML82028397</td><td style='text-align:right'>$1,115,000</td><td style='text-align:right'>$1,005</td><td style='text-align:center'>36</td><td style='text-align:center'>3/2/0</td><td style='text-align:right'>1,110</td><td style='text-align:right'>7,556</td></tr>
-<tr><td>Active</td><td>470 Bell Street</td><td>ML82045589</td><td style='text-align:right'>$1,099,000</td><td style='text-align:right'>$1,037</td><td style='text-align:center'>62</td><td style='text-align:center'>3/2/0</td><td style='text-align:right'>1,060</td><td style='text-align:right'>7,023</td></tr>
-<tr><td>Active</td><td>2170 Ralmar Ave</td><td>BE41132307</td><td style='text-align:right'>$1,099,000</td><td style='text-align:right'>$981</td><td style='text-align:center'>27</td><td style='text-align:center'>3/2/0</td><td style='text-align:right'>1,120</td><td style='text-align:right'>5,000</td></tr>
-<tr><td>Active</td><td>2383 Dumbarton Avenue</td><td>ML82038624</td><td style='text-align:right'>$1,050,000</td><td style='text-align:right'>$1,438</td><td style='text-align:center'>n/a</td><td style='text-align:center'>2/1/0</td><td style='text-align:right'>730</td><td style='text-align:right'>5,400</td></tr>
-<tr><td>Active</td><td>2670 Illinois Street</td><td>SF426122167</td><td style='text-align:right'>$999,999</td><td style='text-align:right'>$877</td><td style='text-align:center'>22</td><td style='text-align:center'>3/1/0</td><td style='text-align:right'>1,140</td><td style='text-align:right'>5,000</td></tr>
-<tr><td>Active</td><td>219 Verbena Drive</td><td>SF426113371</td><td style='text-align:right'>$999,000</td><td style='text-align:right'>$900</td><td style='text-align:center'>71</td><td style='text-align:center'>3/1/0</td><td style='text-align:right'>1,110</td><td style='text-align:right'>5,000</td></tr>
-<tr><td>Active</td><td>2656 Gonzaga Street</td><td>ML82037381</td><td style='text-align:right'>$989,000</td><td style='text-align:right'>$979</td><td style='text-align:center'>83</td><td style='text-align:center'>3/1/0</td><td style='text-align:right'>1,010</td><td style='text-align:right'>5,427</td></tr>
-<tr><td>Active</td><td>1403 Kavanaugh Drive</td><td>ML82043462</td><td style='text-align:right'>$988,000</td><td style='text-align:right'>$859</td><td style='text-align:center'>13</td><td style='text-align:center'>3/2/0</td><td style='text-align:right'>1,150</td><td style='text-align:right'>5,397</td></tr>
-<tr><td>Active</td><td>215 Wisteria Drive</td><td>ML82041878</td><td style='text-align:right'>$975,000</td><td style='text-align:right'>$878</td><td style='text-align:center'>50</td><td style='text-align:center'>3/1/0</td><td style='text-align:right'>1,110</td><td style='text-align:right'>5,090</td></tr>
-<tr><td>Active</td><td>2246 Ralmar</td><td>ML82041131</td><td style='text-align:right'>$898,000</td><td style='text-align:right'>$898</td><td style='text-align:center'>15</td><td style='text-align:center'>3/1/0</td><td style='text-align:right'>1,000</td><td style='text-align:right'>5,000</td></tr>
-<tr><td>Pending</td><td>2377 Poplar Avenue</td><td>SF426117046</td><td style='text-align:right'>$899,000</td><td style='text-align:right'>$1,168</td><td style='text-align:center'>46</td><td style='text-align:center'>2/1/0</td><td style='text-align:right'>770</td><td style='text-align:right'>6,480</td></tr>
-<tr><td>Pending</td><td>2315 Ralmar Ave</td><td>BE41128086</td><td style='text-align:right'>$870,000</td><td style='text-align:right'>$853</td><td style='text-align:center'>38</td><td style='text-align:center'>2/1/1</td><td style='text-align:right'>1,020</td><td style='text-align:right'>6,250</td></tr>
-<tr><td>Pending</td><td>1232 Laurel Avenue</td><td>SF426128590</td><td style='text-align:right'>$799,000</td><td style='text-align:right'>$832</td><td style='text-align:center'>4</td><td style='text-align:center'>3/1/0</td><td style='text-align:right'>960</td><td style='text-align:right'>6,000</td></tr>
-</tbody></table>
-<p class="note">List-to-Sale Ratio not pulled per-comp this pass , cohort-level L/S from MLSListings Matrix Stats runs ~100% in EPA over the last 6 months (over-asking has cooled to at-asking since 2023). This is the relevant context for pricing strategy: list at the expected sale, not above it.</p>
+<section><div class="sh">Verified Comparable Sales</div>
+<p class="lead">All six sold within the last five months. I opened each individual MLS record and confirmed the actual sale and closing dates myself rather than trusting a filtered date range, consistent with how I run every comp pull. I also cross-referenced against Redfin, which surfaced 748 Cornell and 771 Pomeroy independently, both verified directly in MLS afterward.</p>
+<div class="tscroll"><table><thead><tr><th>Address</th><th>Sold Price</th><th>$/SqFt</th><th>SqFt</th><th>Beds/Baths</th><th>Built</th><th>Sold / COE</th><th>List-to-Sale</th><th>Notes</th></tr></thead><tbody>
+<tr style="background:var(--cr);border-left:4px solid var(--g)"><td><strong>{{SUBJECT_ADDRESS_SHORT}} (subject)</strong></td><td>n/a</td><td>n/a</td><td>1,592</td><td>3 / 2</td><td>1961</td><td>n/a</td><td>n/a</td><td><strong>Largest of the close comps.</strong> Updated kitchen and both baths, original hardwood in good condition. Pool filled in, that area needs rescaping. 7,900 sq ft corner lot</td></tr>
+<tr><td>748 Cornell Dr</td><td>$1,850,000</td><td>$1,282.94</td><td>1,442</td><td>3 / 2</td><td>1961</td><td>7/23/2026 / 8/3/2026</td><td>102.8%</td><td><strong>Same build year as subject.</strong> Trust sale, explicitly marketed as a fixer ("perfect canvas... renovate, expand"). Santa Clara Unified. Shows the floor for an un-updated home, well below your condition</td></tr>
+<tr><td>771 Pomeroy Avenue</td><td>$1,825,000</td><td>$1,218.29</td><td>1,498</td><td>4 / 2</td><td>1961</td><td>7/8/2026 / 8/4/2026</td><td>94.8%</td><td>Same build year. Partial kitchen update (newer appliances), central AC added. One price cut ($1,925,000 to $1,850,000) before selling under even the reduced list, 43 days on market</td></tr>
+<tr><td>3445 Kenyon Drive</td><td>$2,099,000</td><td>$1,572.28</td><td>1,335</td><td>3 / 2</td><td>1960</td><td>7/8/2026 / 7/22/2026</td><td>95.5%</td><td><strong>Directly across the street.</strong> Hardwood floors, updated kitchen (granite/Corian), updated baths (new vanities, Kohler fixtures). Same school attendance area</td></tr>
+<tr><td>385 Cronin Drive</td><td>$2,320,000</td><td>$1,705.88</td><td>1,360</td><td>3 / 2</td><td>1956</td><td>4/15/2026 / 5/6/2026</td><td>105.5%</td><td>Maywood Park neighborhood. Updated kitchen (quartz counters), new LVT flooring, refreshed baths. Listed by The Boyenga Team</td></tr>
+<tr><td>1759 Higgins Avenue</td><td>$2,000,000</td><td>$1,254.71</td><td>1,594</td><td>3 / 2</td><td>1953</td><td>6/17/2026 / 7/10/2026</td><td>111.2%</td><td>Full top-to-bottom remodel with a permitted 556 sq ft addition. Sat 78 days total (relisted once) before selling well over its relist price</td></tr>
+<tr><td>334 Kellogg Way</td><td>$2,875,000</td><td>$1,799.12</td><td>1,598</td><td>3 / 2</td><td>1955</td><td>2/4/2026 / 2/25/2026</td><td>115.2%</td><td>Full remodel with permits. <strong>Flagged: listed with Cupertino school attendance</strong>, a different and higher-demand school boundary than your Santa Clara Unified assignment. Use as an upper-bound reference only</td></tr>
+</tbody></table></div>
+<div class="key"><strong>What this actually says:</strong> excluding the Cupertino-schools outlier, these comps sort cleanly into condition tiers, and that is what sets price here. 748 Cornell (fixer, $1,283/sf) and 771 Pomeroy (partial update, $1,218/sf) are the floor, and neither describes your home. The tier you actually sit in is 3445 Kenyon at $1,572/sf, directly across the street, and 385 Cronin at $1,706/sf, both updated kitchen and baths without a gut remodel. Both sold in 11 days or less. The important detail is that <strong>both are smaller than you</strong>, 1,335 and 1,360 sq ft against your 1,592, so their per-foot rates cannot simply be multiplied across your square footage. The Pricing Strategy section below does that adjustment properly and lands at an expected sale of $2,450,000 to $2,600,000.</div>
 </section>
 
 <div class="dv"></div>
 
-<section><div class="sh">EPA SFR Trend Context</div>
-<p>EPA SFR pricing and sale-to-list behavior, monthly, Jan 2019 through May 2026. Source: MLSListings Matrix Stats (Postal City East Palo Alto, Residential Single Family Home, broad cohort). Monthly volatility is real and shown unsmoothed.</p>
-<div class="cb"><div class="cw"><canvas id="trendPrice"></canvas></div><div class="cap">EPA SFR Sale Price Average, monthly. The 2022 peak (when you bought) is visible, followed by sideways action through 2023-2026.</div></div>
-<div class="cb"><div class="cw"><canvas id="trendLS"></canvas></div><div class="cap">EPA SFR Sale-to-List Price Ratio, monthly. Mostly clustered around 100% since 2023 (at-asking market). The 2020-21 over-asking premium is long gone.</div></div>
+<section><div class="sh">Current Competition</div>
+<p>Active and pending listings right now tell a consistent story: the market is still moving efficiently in the $2.0-2.3M band, but there's real stale inventory sitting at the top. 2121 Francis Avenue has been active 221 days at $2,699,999. 1150 Kiely Boulevard, 71 days at $2,150,000. 3786 Dunford Way, 58 days at $2,700,000. That's a real signal: pricing into the $2.7M+ tier without the finish level to justify it risks sitting.</p>
+<p>On the other side, three pendings just went under contract at healthy pace: 3718 Benton Street (9 days), 981 Curtis Avenue (11 days), 2242 Pyle Court (12 days), all in the $2.0-2.5M band. That's where the market is actually clearing right now.</p>
 </section>
 
 <div class="dv"></div>
 
-<section><div class="sh">Interest Rate Environment</div>
-<p>Mortgage rates drive the EPA retail buyer pool. Current 30-yr fixed (cross-referenced four sources):</p>
-<div class="stats"><div class="st"><div class="n">6.61%</div><div class="l">MND National 30yr</div></div><div class="st"><div class="n">6.71%</div><div class="l">Bankrate CA Avg</div></div><div class="st"><div class="n">6.61%</div><div class="l">Realtor.com EPA</div></div><div class="st"><div class="n">6.49%</div><div class="l">Zillow Home Loans</div></div></div>
-<p>Sources cluster <strong>6.5% to 6.7%</strong>. Down slightly from 2023-24 peaks above 7%, but still well above the 2020-21 lows around 3% that drove the EPA peak when you bought in 2022. Retail buyer demand is muted. The flip side: rates are no longer rising, and a softer-rate environment (back toward 6%) over the next 12 to 18 months would lift retail demand and prices. That is the case for the rent-and-wait option below. Verify day-of via Mortgage News Daily before pricing finalization.</p>
+<section><div class="sh">Market Pricing Behavior and the Days-on-Market Correlation</div>
+<p class="lead">This is the section that answers the question every seller actually has: is this market rewarding sellers who price sharp, or sellers who price high and wait? I pulled the original list price, sold price, and days on market for 19 individually-verified sold homes in this size and price band over the last six months, computed every number below in Python, and did not eyeball any of it.</p>
+
+<div class="bigstat"><div class="n">79% of homes sold over their original asking price</div><div class="l">The median home in this cohort closed at 107.9% of its original list price</div></div>
+
+<div class="cb"><div class="cw"><canvas id="overUnderChart"></canvas></div>
+<div class="cap">How this market prices: share of the 19 verified sales that closed over, at, or under their original list price.</div></div>
+
+<div class="cb"><div class="cw"><canvas id="lsrHistChart"></canvas></div>
+<div class="cap">List-to-sale ratio distribution across the same 19 sales. Dashed line marks the median (107.9%).</div></div>
+
+<div class="cb"><div class="cw"><canvas id="scatterChart"></canvas></div>
+<div class="cap">Longer on market = smaller premium. Each dot is one verified sale (sale price as a percent of its ORIGINAL list price, vs. days on market). Correlation r = -0.23, a real but weak pattern, not a guarantee for any single home. The trendline shows the general direction: homes that took longer generally closed closer to (or under) their original ask.</div></div>
+
+<div class="cb"><div class="cw"><canvas id="outcomesChart"></canvas></div>
+<div class="cap">What each group actually walked away with. Both groups listed within $45,000 of each other. The homes that priced to sell gained $251,112 from list to close in a median of 10 days; the homes that overpriced lost $119,444 and took 19 days to get there. Final gap: $325,500.</div></div>
+<div class="tscroll"><table><thead><tr><th>Approach</th><th># of sales</th><th>Median orig list</th><th>Median sold</th><th>Median LSR</th><th>Median DOM</th></tr></thead><tbody>
+<tr><td>Priced to sell (sold over original ask)</td><td>15</td><td>$2,198,888</td><td>$2,450,000</td><td>109.4%</td><td>10 days</td></tr>
+<tr><td>Priced at market (within 1%)</td><td>0</td><td>n/a</td><td>n/a</td><td>n/a</td><td>n/a</td></tr>
+<tr><td>Overpriced (sold under original ask)</td><td>4</td><td>$2,243,944</td><td>$2,124,500</td><td>95.1%</td><td>19 days</td></tr>
+</tbody></table></div>
+
+<div class="readnum"><h4>Reading the numbers</h4>
+<p style="font-size:15px;margin-bottom:4px">Of the 19 comparable Santa Clara homes that sold in the last six months:</p>
+<ul>
+<li class="win"><strong>15 homes (79%) priced it to sell</strong> and sold over their original ask, a median of <strong>$2,450,000</strong> (about 9% over asking), in a median of just <strong>10 days</strong>.</li>
+<li class="flat"><strong>Zero homes sold right at asking</strong> in this window, the market simply doesn't sit still at exactly 100%.</li>
+<li class="lose"><strong>4 homes (21%) overpriced</strong> and sold below their original ask. They started with a median list of $2,243,944 but sold for a median of <strong>$2,124,500</strong>, about 5% under, and took a median of <strong>19 days</strong>, nearly double the priced-to-sell group.</li>
+<li class="lose">Of the sales where I could confirm both the original and final list price, 1 of 7 (about 14%) needed at least one price cut before selling, 771 Pomeroy Avenue, which cut $75,000 and still closed under its reduced price.</li>
+</ul>
+<div style="margin-top:16px;padding-top:14px;border-top:2px solid var(--cr);font-size:15.5px"><strong>The spread between those two groups is $325,500.</strong> Both started within $45,000 of each other on list price. Where they ended up was decided by how they were priced on day one.</div></div>
+
+<div class="key"><strong>Why is the market pricing this way?</strong> This looks like a straightforward anchoring gap. Most of the sellers in the "overpriced" bucket anchored to an optimistic number, a neighbor's headline sale, a Zestimate, the number they wanted to net, rather than what the actual comp set supported. The market corrected them over two to three weeks of soft activity, and they ultimately sold below where they started. The 79% majority who priced at or slightly under a defensible number got bid up fast instead. The correlation between price positioning and speed is real but modest (r = -0.23), the bigger reward for pricing right here isn't necessarily a faster sale, it's a better sale, the priced-to-sell group's median outcome is over $325,000 higher than the overpriced group's.</div>
+
+<div class="key"><strong>What this all means.</strong> The market punishes optimistic anchoring and rewards realistic, comp-backed pricing, not through speed alone but through final price. That is the whole case for the Recommended tier below, and it is why the list price I suggest sits under the expected sales price rather than on top of it. Listing in a range the closest verified comps actually support puts you in the 79% majority that gets bid up. Listing above it puts you in the 21% that cuts and settles under their own ask.</div>
+<p class="nt">Sample: 19 individually-verified sold homes, Santa Clara 95051, 2-4 beds, 1,300-1,900 sq ft, closed in the last 6 months. Directional read given the sample size; not a guarantee for any single home. Original list price sourced from each listing's MLS History tab.</p>
 </section>
 
 <div class="dv"></div>
 
-<section><div class="sh">Price-Reduction History. What the Comps Tell Us About Pricing Strategy</div>
-<p>The single most important question for a listing strategy is: at what price did honest sellers actually clear, and what happened to sellers who started too high? Here is the actual price history of the closest sold comps over the last 6 months:</p>
-<table>
-<thead><tr><th>Address</th><th style="text-align:right">Original List</th><th style="text-align:right">Final List</th><th style="text-align:right">Sold</th><th style="text-align:center">Reductions</th><th style="text-align:center">DOM</th><th>Result</th></tr></thead>
-<tbody>
-<tr><td>2509 Illinois Street (3/1, 1,030 sf)</td><td style="text-align:right">$899,000</td><td style="text-align:right">$899,000</td><td style="text-align:right"><strong>$955,000</strong></td><td style="text-align:center">0</td><td style="text-align:center">19</td><td><strong>+$56K over asking</strong></td></tr>
-<tr><td>2352 Menalto Avenue (2/1, 1,010 sf)</td><td style="text-align:right">$888,000</td><td style="text-align:right">$888,000</td><td style="text-align:right"><strong>$900,000</strong></td><td style="text-align:center">0</td><td style="text-align:center">30</td><td><strong>+$12K over asking</strong></td></tr>
-<tr><td>1133 Jervis Avenue (2/1, 760 sf)</td><td style="text-align:right">$888,000</td><td style="text-align:right">$866,666</td><td style="text-align:right">$860,000</td><td style="text-align:center">1+</td><td style="text-align:center">152</td><td>$28K cut total over 5 months</td></tr>
-<tr><td>128 Grace Avenue (2/1.5, 1,020 sf)</td><td style="text-align:right">$1,090,000</td><td style="text-align:right">$949,000</td><td style="text-align:right">$925,000</td><td style="text-align:center">2-3</td><td style="text-align:center">138</td><td><strong>$165K cut from original, 4.5 months</strong></td></tr>
-<tr><td>2754 Gorgetown Street (3/1, 1,010 sf)</td><td style="text-align:right">$790,000</td><td style="text-align:right">$790,000</td><td style="text-align:right">$790,000</td><td style="text-align:center">0</td><td style="text-align:center">0</td><td>Likely pocket sale at asking</td></tr>
-</tbody></table>
-<p><strong>The pattern is unambiguous.</strong> The two comps that priced honestly in the $880K to $899K band (2509 Illinois at $899K, 2352 Menalto at $888K) <strong>sold OVER asking in under 30 days</strong>. The comp that priced ambitiously ($1,090K for 128 Grace) took <strong>four and a half months and 2 to 3 price reductions</strong> to clear at $925K. The home that priced slightly too high ($888K for 1133 Jervis, a tiny 760 sqft cottage) took <strong>five months and one reduction</strong> to clear at $860K.</p>
-<p>For {{SUBJECT_ADDRESS}}, the data is telling you exactly where to list. The $885K to $930K band drives competition. The $950K+ band drives months on market and reductions, ending in roughly the same place.</p>
-
-<div class="cb"><div class="cw" style="height:380px"><canvas id="priceJourney"></canvas></div><div class="cap"><strong>Pricing Journey:</strong> each comp's path from Original List to Final List to Sold. Green lines go UP (priced honestly, sold over asking). Coral lines go DOWN (priced too high, required reductions). The two flat-then-up lines (Illinois, Menalto) are the model for how to price {{SUBJECT_ADDRESS}}.</div></div>
-
-<div class="cb"><div class="cw" style="height:340px"><canvas id="domVsCut"></canvas></div><div class="cap"><strong>The DOM Penalty:</strong> homes that priced honestly sold in 19 to 30 days with zero or negative cuts (sold over asking). Homes that priced high required 138 to 152 days AND $28K to $165K in cuts to clear. The choice is right pricing or long DOM. There is no in-between.</div></div>
+<section><div class="sh">Market Data and Trends</div>
+<p class="lead">These three charts are direct screenshots of MLSListings Matrix's own Stats module, not a recreation, so what you're seeing is exactly what the MLS itself reports for this zip code.</p>
+<div class="cb"><div class="cw" style="height:auto"><img src="{{MLS_CHART_SALE_PRICE_AVG}}" alt="Sale Price, Average by month, zip 95051, Jan 2023-Jul 2026" class="mlsimg"></div>
+<div class="cap">Source: MLSListings Matrix Stats, Zip Code 95051, Sale Price (Average) by month, Smooth Line, Jan 2023-Jul 2026, 1,460 listings.</div></div>
+<div class="cb"><div class="cw" style="height:auto"><img src="{{MLS_CHART_SALE_TO_LIST}}" alt="Sale Price to List Price Ratio by month, zip 95051, Jan 2023-Jul 2026" class="mlsimg"></div>
+<div class="cap">Source: MLSListings Matrix Stats, Zip Code 95051, Sale Price to List Price Ratio by month, Smooth Line, Jan 2023-Jul 2026, 1,465 listings.</div></div>
+<p>Every month since 2023 has closed above 100% of list in this zip. 2026 has cooled slightly from February's 109.5% peak to 104-105% most recently, still a firmly seller-favorable market, just not the frenzy of early this year.</p>
+<div class="cb"><div class="cw" style="height:auto"><img src="{{MLS_CHART_DAYS_TO_SELL}}" alt="Days to Sell, Average by month, zip 95051, Jan 2023-Jul 2026" class="mlsimg"></div>
+<div class="cap">Source: MLSListings Matrix Stats, Zip Code 95051, Days to Sell (Average) by month, Smooth Line, Jan 2023-Jul 2026, 1,465 listings.</div></div>
 </section>
 
 <div class="dv"></div>
 
-<section><div class="sh">Price vs Days-on-Market. Visual Heat Map</div>
-<p>Every active, pending, and sold comp in the cohort plotted by price and days on market. The pattern: priced-right homes cluster at the bottom (low DOM); over-priced homes drift up and to the right (high DOM, often with multiple reductions). Subject's expected zone is shaded.</p>
-<div class="cb"><div class="cw" style="height:380px"><canvas id="priceDom"></canvas></div><div class="cap">EPA SFR cohort, 600 to 1,200 sqft, last 6 months. Bubble size proportional to sqft. Green = Sold; Gold = Active; Coral = Pending. Source: MLSListings Matrix.</div></div>
-</section>
-
-<div class="dv"></div>
-
-<section><div class="sh">Three Paths Forward. The Real Trade-Off</div>
-<p>The question is not just "what does it sell for." It is "what do you want your capital doing for the next several years." Three honest paths:</p>
-<div class="card"><h4>Path A. Sell now, take the cash, redeploy elsewhere <em>(recommended if your goal is to move on)</em></h4><p><strong>Realistic sale price range: $870,000 to $910,000.</strong> Standard listing, standard timeline, no special prep or staging. Aim for a 30 to 45 day sale and move on cleanly.</p><p>Why this path makes sense if you want out: the EPA small-home market is likely to trade sideways to modestly up for the next 2 to 4 years at minimum. There is no rate-cut catalyst on the horizon strong enough to materially lift your home value inside 24 months. A diversified portfolio (stocks, dividend ETFs, high-yield treasuries) earning 5 to 7 percent over 2 to 3 years likely outpaces what {{SUBJECT_ADDRESS}} does over the same window. If your goal is to put your capital somewhere it works harder than this property, this is the cleanest outcome.</p></div>
-<div class="card"><h4>Path B. Optimize for the top of the range. Targeted prep and market timing.</h4><p><strong>Realistic sale price range: $910,000 to $940,000.</strong> Same eventual exit as Path A, but aimed at the top of what this market will pay for an 810 sqft 2/1 east-of-101 cottage. Two levers:</p><p><strong>1. Targeted pre-list prep ($5,000 to $10,000):</strong> fresh neutral paint throughout, professional deep clean, light staging in living room and main bedroom, landscaping refresh on the front yard. Small dollar amount, meaningful impact on photos and showings for a vacant home.</p><p><strong>2. Time the list to the spring market (February to April 2027):</strong> retail buyer demand peaks in spring on the Peninsula, especially for first-time-buyer-friendly cottages in EPA. Listing into a strong-demand window typically adds 2 to 4 percent over the same listing in an off-season month.</p><p>Trade-off: a 60 to 120 day delay from where you are today, plus the prep budget. Upside is roughly $20K to $40K more on the sale price, which is the difference between "small paper loss" and "real break-even or slight gain" on your basis.</p></div>
-<div class="card"><h4>Path C. Hold and rent. For a long-term real estate investor only.</h4><p>This path makes sense for one specific profile: someone who explicitly wants EPA real estate as a long-term hold piece of their portfolio. <strong>Not as a wait-and-see play.</strong></p><p>Numbers if pursued: market rent for an 810 sqft 2/1 in this neighborhood runs roughly <strong>$2,400 to $2,800 per month</strong>. If your original loan locked early 2022 at sub-4%, your principal+interest is probably $3,000 to $3,800 per month, so rent covers most of debt service. Over a 5+ year hold, modest 2 to 4 percent annual appreciation plus continued principal paydown plus mortgage interest deductibility makes this a defensible long-term piece of a real estate portfolio.</p><p><strong>Where this path falls short:</strong> if your goal is to deploy capital where it earns the most over 2 to 4 years, this is unlikely to be it. Sideways EPA pricing plus the cost of being a landlord (vacancy risk, repairs, property management, tenant turnover) eats into the return. Path C only wins if you specifically want real estate exposure and a multi-year hold.</p></div>
+<section><div class="sh">The Rate Environment</div>
+<div class="stats">
+<div class="st red"><div class="n">6.58-6.85%</div><div class="l">30-yr fixed rate today</div></div>
+<div class="st"><div class="n">6.15-6.22%</div><div class="l">December 2025's low, since risen back up</div></div>
+<div class="st red"><div class="n">55-76%</div><div class="l">Odds of a September Fed rate hike, up sharply from a month ago</div></div>
+<div class="st"><div class="n">3.5-3.75%</div><div class="l">Fed funds target, held July 29, no cut signaled</div></div>
+</div>
+<p>Rates touched their 2025 low in December and have climbed back to 6.58-6.85% following the Fed's July 29 hold, a 9-3 vote with three members actually favoring a hike. Despite that, the sale-to-list data above shows buyers in this zip still paying over ask most months this year. Silicon Valley's tech-driven buyer pool here is less rate-sensitive than the broader market, which is part of why this pocket has held up.</p>
 </section>
 
 <div class="dv"></div>
 
 <section><div class="sh">Pricing Strategy</div>
 
-<div class="bigstat"><div class="l" style="margin:0 0 8px;letter-spacing:2px;text-transform:uppercase;font-size:12px">Expected Sales Price</div><div class="n" style="font-size:36px">$900,000 to $945,000</div><div class="l">Midpoint $922,500, about $XXX per square foot</div></div>
+<div class="bigstat"><div class="l" style="margin:0 0 8px;letter-spacing:2px;text-transform:uppercase;font-size:12px">Expected Sales Price</div><div class="n" style="font-size:36px">$2,450,000 to $2,600,000</div><div class="l">Midpoint $2,525,000, about $1,586 per square foot</div></div>
 
-<p class="lead">That is what I expect this home to actually close at, not what I would put on the sign. Those are two different numbers in this market, and the gap between them is the whole strategy.</p>
+<p class="lead">That is what I expect this home to actually close at, not what I would put on the sign. Those are two different numbers in this market, and the gap between them is the whole strategy. Below is how I got there, then the three ways to price into it.</p>
 
-<div class="key"><strong>How the expected sales price was built.</strong> Name the condition tier the subject sits in, the two condition-matched comps, the within-tier marginal $/sf used to size-adjust them (with r squared), each comp's indicated value after adjustment, and the bracket check against the tier above and below. See references/pricing-behavior-analysis.md.</div>
+<div class="key"><strong>How the expected sales price was built.</strong> Your home sits in what I'd call the updated tier: real kitchen work (counters and cabinets), both bathrooms done, original hardwood in good condition. It is not a gut remodel, and the market prices those two things very differently. The two cleanest condition matches in the whole cohort are <strong>3445 Kenyon Drive</strong>, directly across the street from you, and <strong>385 Cronin Drive</strong>. Both sold in single-digit-to-11 days. Both are also meaningfully smaller than you, so I measured what a square foot is actually worth here (within a single condition tier, where it can be measured cleanly: about $1,305 per additional square foot) and adjusted each one up to your 1,592 sq ft. Kenyon indicates $2,434,000. Cronin indicates $2,623,000. That brackets a midpoint just over $2.5M, which then survives a sanity check from both directions: it clears the top of the updated tier ($2,450,000, and every one of those homes is smaller than yours), and it stays under the full-remodel homes at your size, which ran $2,692,000 to $2,800,000 and are finished to a level you have not reached.</div>
+
+<p>One real deduction is baked into that range: the filled-in pool area does not currently present as usable yard, and on a corner lot the backyard already reads closer to standard than the 7,900 sq ft total suggests. Budget roughly $35,000 to $55,000 of landscaping to make that space show properly. It is the single highest-return thing you could do before listing, because every buyer sees it at every showing.</p>
 
 <p class="lead" style="margin-top:22px">Three ways to price into that expected sale:</p>
-<div class="rng">
-<div class="rc a"><div class="rl">Aggressive list strategy</div><div class="rp">$849,000 to $879,000</div><div class="rd">Prices deliberately under value to start a competition. This is what the over-ask majority in this market actually did. At the market's median winner premium this list lands inside the expected range.<br><br><strong>Expected sale: $900,000 to $945,000, around XX days.</strong></div></div>
-<div class="rc b"><div class="rl">Recommended</div><div class="rp">$889,000 to $930,000</div><div class="rd"><strong>This is where I'd list.</strong> Sits at the value the comps support while staying under the premium buyers have been paying, so you still get competition without giving away the floor if only one buyer shows up.<br><br><strong>Expected sale: $905,000 to $950,000, roughly XX to XX days.</strong></div></div>
-<div class="rc c"><div class="rl">Stretch</div><div class="rp">$929,000 to $959,000</div><div class="rd">Tests the top of the range. This is the tier where the overpriced minority lives: 128 Grace started here and took 138 days and three price drops to clear at $925K.<br><br><strong>Expected sale: $900,000 to $930,000, 60+ days likely with at least one reduction.</strong></div></div>
+<div class="cards3">
+<div class="card grn"><div class="lbl">Aggressive list strategy</div><div class="val">$2,295,000-$2,350,000</div><div class="ds">Prices deliberately under value to start a competition. This is exactly what the 79% majority did: their median list was $2,198,888 and they closed at $2,450,000. At the market's median winner premium of 109.4%, this list lands you right in the expected range.<br><br><strong>Expected sale: $2,450,000 to $2,600,000, around 10 days.</strong></div></div>
+<div class="card nv"><div class="lbl">Recommended</div><div class="val">$2,395,000-$2,450,000</div><div class="ds"><strong>This is where I'd list.</strong> Sits at the value the comps actually support while staying under the premium buyers have been paying, so you still get competition without giving away the floor if only one buyer shows up.<br><br><strong>Expected sale: $2,475,000 to $2,625,000, roughly 10 to 14 days.</strong></div></div>
+<div class="card red"><div class="lbl">Stretch</div><div class="val">$2,595,000-$2,695,000</div><div class="ds">Tests the top of the range. Defensible only if the kitchen and baths photograph as well as Cronin's and the yard is handled first. This is the tier where the 21% minority lives, and they took 19 days and settled about 5% under their own ask.<br><br><strong>Expected sale: $2,450,000 to $2,650,000, 20+ days likely.</strong></div></div>
 </div>
 <p class="nt">Professional opinion of value, not a formal appraisal.</p>
 </section>
 
 <div class="dv"></div>
 
-<section><div class="sh">Net-to-Seller Table</div>
-<p>Estimated net after closing costs, by sale price and commission structure. Excludes loan payoff, principal already paid down, and any tax exclusion (which would push real net up).</p>
-<table><thead><tr><th style="text-align:right">Sale Price</th><th style="text-align:right">Net @ 5.5% friction (standard)</th><th style="text-align:right">Net @ 4.5% friction (2.5% listing)</th><th style="text-align:right">Net @ 4.0% friction (2.0% listing)</th></tr></thead><tbody>
-<tr><td style="text-align:right">$849,000</td><td style="text-align:right">$802,305</td><td style="text-align:right">$810,795</td><td style="text-align:right">$815,040</td></tr>
-<tr><td style="text-align:right">$899,000</td><td style="text-align:right">$849,555</td><td style="text-align:right">$858,545</td><td style="text-align:right">$863,040</td></tr>
-<tr><td style="text-align:right">$925,000</td><td style="text-align:right">$874,125</td><td style="text-align:right">$883,375</td><td style="text-align:right">$888,000</td></tr>
-<tr><td style="text-align:right">$949,000</td><td style="text-align:right">$896,805</td><td style="text-align:right">$906,295</td><td style="text-align:right">$911,040</td></tr>
-<tr><td style="text-align:right">$980,000</td><td style="text-align:right">$926,100</td><td style="text-align:right">$935,900</td><td style="text-align:right">$940,800</td></tr>
-</tbody></table>
-<p class="note">Break-even vs $925K basis: $980K sale at full friction, $968K at 2% lever, $963K at 2% lever with no other costs. Anything below those numbers is a paper loss before counting principal paydown and tax exclusion.</p>
+<section><div class="sh">Special Considerations</div>
+<p><strong>The backyard is the one real project.</strong> The pool has been filled in and the jacuzzi removed, and that area does not currently read as usable yard. On a corner lot, where the private backyard is already closer to standard size than the 7,900 sq ft total implies, that space is doing real work in a buyer's mind. Rescaping it is the highest-return pre-list dollar you can spend, roughly $35,000 to $55,000, and it converts a question mark into a selling point: flat, low-maintenance yard with no pool upkeep, which actually widens your buyer pool to families who would have skipped a pool house entirely.</p>
+<p><strong>Lot size is an underused advantage.</strong> At 7,900 sq ft you are larger than most of the comps in this report, several of which sold in the $2.3M to $2.5M range on 5,500 to 6,400 sq ft lots. Corner position costs you some backyard privacy, but the total footprint is a genuine differentiator worth calling out directly in the marketing rather than leaving buyers to work out from the plat map.</p>
+<p><strong>Original hardwood, in good condition, is worth protecting.</strong> Buyers in this pocket pay for original oak that has not been carpeted over or replaced with LVT. Touch-up paint and new interior doors are small spends that let the floors carry the showing.</p>
 </section>
-
-
 
 <div class="dv"></div>
 
-<section><div class="sh">Notes &amp; Caveats</div>
-<div class="card"><h4>About the AVM versus the comps</h4><p>The CoreLogic AVM mid of $993,000 came up materially higher than what the actual sold comps support ($850K-$925K realistic range). The AVM confidence score was 54/100, low. AVMs lean on broader cohort averages and don't always weight the relevant comp set correctly. The comps are the ground truth here. If we go to market based on the AVM, we overprice and chase the market down. The CMA range is the right anchor.</p></div>
-<div class="card"><h4>Capital gains exclusion. Worth verifying.</h4><p>If you lived at {{SUBJECT_ADDRESS}} as your primary residence for at least 2 of the last 5 years, IRS Section 121 lets you exclude up to $250,000 of gain (single) or $500,000 (married filing jointly) from federal capital gains tax. Your tax record currently shows owner-occupied, which is a positive signal. If you qualify, any cash-out gain from this sale is tax-free. Confirm with your CPA before deciding, since this can meaningfully change your real cash position at closing.</p></div>
-<div class="card"><h4>Loan structure matters for the rent-and-hold math</h4><p>The exact monthly carrying cost depends on your original loan amount, rate, and term, which I do not have. Before committing to Path C (hold and rent), pull your loan statement and run a real cash-flow scenario against the expected rent range of $2,400 to $2,800 per month. If your 2022 rate was sub-4%, the math likely supports the hold. If you refinanced or took a higher-rate product, it may not.</p></div>
-<div class="card"><h4>About this analysis</h4><p>Subject details from MLSListings and Realist (Grant Deed recording 04/07/2022, doc #29887, sale $925,000 from Chang Chin T to {{OWNER_NAME}}). Cohort comps from MLSListings Matrix, EPA SFR 600-1,200 sqft, last 6 months. Rate environment cross-referenced 05/27/2026 from Mortgage News Daily, Bankrate CA, Realtor.com EPA, and Zillow Home Loans. Net-to-seller table is approximate; final numbers depend on title, escrow, transfer tax, and credits negotiated. Professional opinion of value, not a formal appraisal.</p></div>
+<section><div class="sh">Staying In Touch</div>
+<p>I'd love to walk the home with you and refine this range against what's actually inside. And if you know anyone else thinking about buying or selling, I'd be grateful for the introduction.</p>
 </section>
 
 </div>
-<footer><div class="wrap"><div class="fn">GRAEHAM WATTS</div><div class="fl">Powered by The Boyenga Team at Compass. DRE #01466876</div>
-<div class="fl">650-308-4727. graehamwatts@gmail.com. www.graehamwatts.com</div>
-<div class="ds">Prepared May 27, 2026 for the owner of {{SUBJECT_ADDRESS}}, East Palo Alto. Not a formal appraisal. Comp analysis based on closed sales in the EPA SFR 600-1,200 sqft cohort over the last 6 months from MLSListings. Verify current mortgage rates and any week-of comp shifts before finalizing pricing. The rent-and-wait scenario is sensitive to interest rate trajectory and rental demand, both of which can shift.</div></div></footer>
+<footer><div class="fn">GRAEHAM WATTS</div><div class="fl" style="font-size:15px;color:#ddd;margin:8px 0 18px">REALTOR. Powered by The Boyenga Team at Compass Real Estate.</div>
+<img src="{{COBRAND_LOCKUP_WHITE_DATA_URI}}" alt="Boyenga Property Nerds and Compass" class="fbrand">
+<div class="fl">DRE #01466876 | 650-308-4727 | graehamwatts.com</div>
+<div class="ds2">Prepared regarding {{SUBJECT_ADDRESS_FULL}}. Comparable sales and trend data from MLSListings Matrix, each comp individually verified for actual sale and closing dates. Pricing-behavior statistics computed from 19 individually-verified sold comps' original list price, sale price, and days on market. Assessor and tax data from Santa Clara County (Realist/CoreLogic). Professional opinion of value, not a formal appraisal.</div></footer>
+
 <script>
-const g='#0a7d3a',b='#0a7d3a';
-const months=["Jan 19", "Feb 19", "Mar 19", "Apr 19", "May 19", "Jun 19", "Jul 19", "Aug 19", "Sep 19", "Oct 19", "Nov 19", "Dec 19", "Jan 20", "Feb 20", "Mar 20", "Apr 20", "May 20", "Jun 20", "Jul 20", "Aug 20", "Sep 20", "Oct 20", "Nov 20", "Dec 20", "Jan 21", "Feb 21", "Mar 21", "Apr 21", "May 21", "Jun 21", "Jul 21", "Aug 21", "Sep 21", "Oct 21", "Nov 21", "Dec 21", "Jan 22", "Feb 22", "Mar 22", "Apr 22", "May 22", "Jun 22", "Jul 22", "Aug 22", "Sep 22", "Oct 22", "Nov 22", "Dec 22", "Jan 23", "Feb 23", "Mar 23", "Apr 23", "May 23", "Jun 23", "Jul 23", "Aug 23", "Sep 23", "Oct 23", "Nov 23", "Dec 23", "Jan 24", "Feb 24", "Mar 24", "Apr 24", "May 24", "Jun 24", "Jul 24", "Aug 24", "Sep 24", "Oct 24", "Nov 24", "Dec 24", "Jan 25", "Feb 25", "Mar 25", "Apr 25", "May 25", "Jun 25", "Jul 25", "Aug 25", "Sep 25", "Oct 25", "Nov 25", "Dec 25", "Jan 26", "Feb 26", "Mar 26", "Apr 26", "May 26"];
-const medP=[1060000, 950000, 1010000, 1050000, 1080000, 950000, 1020000, 1110000, 990000, 1040000, 1030000, 1100000, 1000000, 950000, 1080000, 890000, 920000, 950000, 1080000, 910000, 950000, 890000, 820000, 830000, 1050000, 860000, 950000, 1100000, 1020000, 920000, 1150000, 1080000, 990000, 950000, 1170000, 1290000, 1180000, 1290000, 1140000, 1200000, 1090000, 1180000, 1110000, 1080000, 1250000, 1080000, 990000, 940000, 1040000, 800000, 920000, 1010000, 830000, 1080000, 1380000, 1080000, 950000, 1010000, 920000, 1050000, 900000, 1020000, 1080000, 1280000, 1300000, 1080000, 1110000, 840000, 1090000, 910000, 1170000, 1080000, 1230000, 1080000, 1130000, 1090000, 1240000, 1080000, 1010000, 950000, 1090000, 1240000, 1080000, 1170000, 1200000, 1080000, 1250000, 1180000, 1110000];
-new Chart(document.getElementById('trendPrice'),{type:'line',data:{labels:months,datasets:[{label:'EPA Sale Price Avg',data:medP,borderColor:g,backgroundColor:'rgba(10,125,58,0.08)',fill:true,tension:0.25,pointRadius:0,borderWidth:1.8}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>'$'+(c.parsed.y/1000).toFixed(0)+'K'}}},scales:{x:{ticks:{maxTicksLimit:8,autoSkip:true},grid:{display:false}},y:{ticks:{callback:v=>'$'+(v/1000).toFixed(0)+'K'},grid:{color:'#eee'},suggestedMin:600000,suggestedMax:1600000}}}});
-const lsR=[99, 103, 108, 105, 102, 100, 99, 101, 103, 100, 98, 102, 104, 100, 98, 99, 103, 113, 106, 99, 94, 98, 100, 102, 103, 108, 108, 105, 107, 108, 103, 102, 101, 108, 107, 104, 105, 107, 106, 108, 103, 99, 104, 101, 96, 99, 98, 100, 99, 100, 98, 102, 108, 110, 108, 104, 99, 100, 98, 102, 99, 98, 95, 96, 97, 99, 100, 106, 109, 107, 108, 103, 101, 100, 99, 102, 108, 99, 100, 103, 105, 98, 100, 101, 100, 101, 100, 102, 101];
-new Chart(document.getElementById('trendLS'),{type:'line',data:{labels:months,datasets:[{label:'Sale/List %',data:lsR,borderColor:b,backgroundColor:'rgba(10,125,58,0.08)',fill:true,tension:0.25,pointRadius:0,borderWidth:1.8}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.parsed.y+'%'}}},scales:{x:{ticks:{maxTicksLimit:8,autoSkip:true},grid:{display:false}},y:{ticks:{callback:v=>v+'%'},grid:{color:'#eee'},suggestedMin:90,suggestedMax:115}}}});
+new Chart(document.getElementById('overUnderChart'),{type:'bar',data:{labels:['Original list vs. sold price'],datasets:[
+  {label:'Sold OVER original ask (79%)',data:[78.9],backgroundColor:'#4f9d69'},
+  {label:'Sold AT original ask (0%)',data:[0],backgroundColor:'#9aa0a6'},
+  {label:'Sold UNDER original ask (21%)',data:[21.1],backgroundColor:'#C96A45'}
+]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,animation:false,plugins:{legend:{position:'bottom'},tooltip:{callbacks:{label:c=>c.dataset.label+': '+c.parsed.x.toFixed(1)+'%'}}},scales:{x:{stacked:true,max:100,ticks:{callback:v=>v+'%'}},y:{stacked:true}}}});
 
-// Price vs DOM scatter (heat map equivalent)
-const sub = {
-  sold: [
-    {x:1325000,y:10,r:11},{x:1240000,y:19,r:10},{x:1090000,y:7,r:11},
-    {x:1035000,y:8,r:10},{x:1000000,y:34,r:10},{x:955000,y:19,r:10},
-    {x:925000,y:138,r:10},{x:900000,y:30,r:10},{x:860000,y:152,r:8},
-    {x:790000,y:0,r:10}
-  ],
-  active: [
-    {x:1115000,y:36,r:11},{x:1099000,y:62,r:11},{x:1099000,y:27,r:11},
-    {x:1050000,y:90,r:7},{x:999999,y:22,r:11},{x:999000,y:71,r:11},
-    {x:989000,y:83,r:10},{x:988000,y:13,r:11},{x:975000,y:50,r:11},
-    {x:898000,y:15,r:10}
-  ],
-  pending: [
-    {x:899000,y:46,r:8},{x:870000,y:38,r:10},{x:799000,y:4,r:10}
-  ]
-};
-// Pricing Journey chart , each comp as a line from Original → Final List → Sold
-const journeyData = {
-  labels: ['Original List','Final List','Sold'],
-  datasets: [
-    {label:'2509 Illinois (sold +$56K)',data:[899000,899000,955000],borderColor:'#0a7d3a',backgroundColor:'rgba(10,125,58,0.1)',pointRadius:6,pointBackgroundColor:'#0a7d3a',borderWidth:2.5,tension:0},
-    {label:'2352 Menalto (sold +$12K)',data:[888000,888000,900000],borderColor:'#4f9d69',backgroundColor:'rgba(79,157,105,0.1)',pointRadius:6,pointBackgroundColor:'#4f9d69',borderWidth:2.5,tension:0},
-    {label:'2754 Gorgetown (at asking)',data:[790000,790000,790000],borderColor:'#C5A55A',backgroundColor:'rgba(197,165,90,0.1)',pointRadius:6,pointBackgroundColor:'#C5A55A',borderWidth:2.5,tension:0,borderDash:[5,5]},
-    {label:'1133 Jervis (cut $28K, 152 DOM)',data:[888000,866666,860000],borderColor:'#d98c6a',backgroundColor:'rgba(217,140,106,0.1)',pointRadius:6,pointBackgroundColor:'#d98c6a',borderWidth:2.5,tension:0},
-    {label:'128 Grace (cut $165K, 138 DOM)',data:[1090000,949000,925000],borderColor:'#c0392b',backgroundColor:'rgba(192,57,43,0.1)',pointRadius:6,pointBackgroundColor:'#c0392b',borderWidth:3,tension:0}
-  ]
-};
-new Chart(document.getElementById('priceJourney'),{
-  type:'line',data:journeyData,
-  options:{
-    responsive:true,maintainAspectRatio:false,
-    plugins:{
-      legend:{position:'bottom',labels:{font:{size:11},boxWidth:30}},
-      tooltip:{callbacks:{label:c=>c.dataset.label+': $'+(c.parsed.y/1000).toFixed(0)+'K'}}
-    },
-    scales:{
-      x:{title:{display:true,text:'Listing Stage'},grid:{display:false}},
-      y:{title:{display:true,text:'Price'},ticks:{callback:v=>'$'+(v/1000).toFixed(0)+'K'},grid:{color:'#eee'},min:750000,max:1150000}
-    }
-  }
-});
+new Chart(document.getElementById('lsrHistChart'),{type:'bar',data:{labels:['<=95%','95-99%','99-101%','101-105%','105%+'],datasets:[{label:'# of sales',data:[2,2,0,3,12],backgroundColor:['#C96A45','#C96A45','#9aa0a6','#4f9d69','#4f9d69']}]},options:{responsive:true,maintainAspectRatio:false,animation:false,plugins:{legend:{display:false},annotation:{},tooltip:{callbacks:{label:c=>c.parsed.y+' sale(s)'}}},scales:{y:{ticks:{stepSize:1}}}}});
 
-// DOM vs Price Cut comparison bar chart
-const cutData = {
-  labels: ['2509 Illinois','2352 Menalto','2754 Gorgetown','1133 Jervis','128 Grace'],
-  datasets: [
-    {label:'Days on Market',data:[19,30,0,152,138],backgroundColor:'rgba(26,26,26,0.75)',yAxisID:'y',order:2},
-    {label:'$ Cut from Original (thousands)',data:[-56,-12,0,28,165],backgroundColor:['#0a7d3a','#4f9d69','#C5A55A','#d98c6a','#c0392b'],yAxisID:'y1',order:1,type:'bar'}
-  ]
-};
-new Chart(document.getElementById('domVsCut'),{
-  type:'bar',data:cutData,
-  options:{
-    responsive:true,maintainAspectRatio:false,
-    plugins:{
-      legend:{position:'bottom',labels:{font:{size:11},boxWidth:30}},
-      tooltip:{callbacks:{label:c=>{
-        if(c.dataset.label==='Days on Market')return c.parsed.y+' days';
-        const v=c.parsed.y;return (v<0?'Sold $':'Cut $')+Math.abs(v)+'K '+(v<0?'OVER asking':'from original');
-      }}}
-    },
-    scales:{
-      x:{grid:{display:false},ticks:{font:{size:10}}},
-      y:{title:{display:true,text:'Days on Market',font:{size:11}},position:'left',grid:{color:'#eee'}},
-      y1:{title:{display:true,text:'$ Cut (thousands, negative = over asking)',font:{size:11}},position:'right',grid:{display:false},ticks:{callback:v=>v<0?'+$'+Math.abs(v)+'K':'$'+v+'K'}}
-    }
-  }
-});
+new Chart(document.getElementById('scatterChart'),{type:'scatter',data:{datasets:[
+ {label:'Verified sale',data:[{x:108.55,y:7},{x:112.45,y:7},{x:111.11,y:7},{x:109.43,y:10},{x:104.46,y:28},{x:126.88,y:10},{x:107.04,y:0},{x:121.55,y:10},{x:105.51,y:7},{x:95.81,y:16},{x:93.93,y:22},{x:115.23,y:7},{x:95.45,y:11},{x:107.92,y:51},{x:111.23,y:78},{x:102.78,y:29},{x:94.81,y:43},{x:109.51,y:15},{x:102.38,y:78}],
+  backgroundColor:(ctx)=>{const v=ctx.raw?ctx.raw.x:100; return v>=101?'#4f9d69':(v>=99?'#9aa0a6':'#C96A45');},pointRadius:6},
+ {label:'Trendline',data:[{x:93.93,y:30.94},{x:126.88,y:11.04}],type:'line',borderColor:'#343955',borderWidth:2,pointRadius:0,fill:false}
+]},options:{responsive:true,maintainAspectRatio:false,animation:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.raw.x+'% of original list, '+c.raw.y+' days on market'}}},scales:{x:{title:{display:true,text:'Sale price as % of ORIGINAL list price'}},y:{title:{display:true,text:'Days on market'}}}}});
 
-new Chart(document.getElementById('priceDom'),{
-  type:'bubble',
-  data:{datasets:[
-    {label:'Sold',data:sub.sold,backgroundColor:'rgba(10,125,58,0.55)',borderColor:'#0a7d3a'},
-    {label:'Active',data:sub.active,backgroundColor:'rgba(197,165,90,0.55)',borderColor:'#A88B3D'},
-    {label:'Pending',data:sub.pending,backgroundColor:'rgba(217,140,106,0.55)',borderColor:'#d98c6a'}
-  ]},
-  options:{
-    responsive:true,maintainAspectRatio:false,
-    plugins:{
-      legend:{position:'top'},
-      tooltip:{callbacks:{label:c=>'$'+(c.parsed.x/1000).toFixed(0)+'K, '+c.parsed.y+' DOM, ~'+(c.parsed._custom?c.parsed._custom*80:c.raw.r*80)+' sqft'}},
-      annotation:{annotations:{}}
-    },
-    scales:{
-      x:{title:{display:true,text:'Sold / List Price'},ticks:{callback:v=>'$'+(v/1000).toFixed(0)+'K'},min:700000,max:1400000,grid:{color:'#eee'}},
-      y:{title:{display:true,text:'Days on Market'},min:0,max:170,grid:{color:'#eee'}}
-    }
-  }
-});
-</script></body></html>
+new Chart(document.getElementById('outcomesChart'),{type:'line',data:{labels:['Original list price','Final sold price'],datasets:[
+  {label:'Priced to sell (15 homes, sold in 10 days)',data:[2198888,2450000],borderColor:'#4f9d69',backgroundColor:'#4f9d69',borderWidth:4,pointRadius:8,pointHoverRadius:10,tension:0},
+  {label:'Overpriced (4 homes, sold in 19 days)',data:[2243944,2124500],borderColor:'#C96A45',backgroundColor:'#C96A45',borderWidth:4,pointRadius:8,pointHoverRadius:10,borderDash:[7,4],tension:0}
+]},options:{responsive:true,maintainAspectRatio:false,animation:false,layout:{padding:{top:14,right:20,left:6}},plugins:{legend:{position:'bottom',labels:{boxWidth:14,padding:14,font:{size:12}}},tooltip:{callbacks:{label:c=>c.dataset.label.split(' (')[0]+': $'+c.parsed.y.toLocaleString()}}},scales:{y:{ticks:{callback:v=>'$'+(v/1000000).toFixed(2)+'M'},grid:{color:'#eee'},title:{display:true,text:'Median price'}},x:{grid:{display:false},ticks:{font:{size:13}}}}}});
+</script>
+</body></html>

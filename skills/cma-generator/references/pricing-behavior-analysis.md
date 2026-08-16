@@ -135,6 +135,26 @@ Then the recommended list price must follow what the data says the market reward
 
 **2. Show how it was derived**, in a readable block, not just a number. Name the condition-matched comps, state the size adjustment, and show the bracket check.
 
+#### Condition tiering — do this before any pricing math
+
+In a mature single-family pocket, **condition sets price far more than size does.** On the Kenyon build, size alone explained less than 1% of the price variation across the cohort; condition explained most of it. Pricing off a blended $/sf across mixed-condition comps is therefore close to meaningless.
+
+Sort every sold comp into a tier from the listing remarks, photos, and permit history:
+
+| Tier | What it means |
+|---|---|
+| **fixer** | Explicitly marketed as a project, trust/estate sale, "perfect canvas" |
+| **partial** | One system or room touched (appliances, AC added), rest original |
+| **dated** | Clean and livable, nothing updated |
+| **updated** | Kitchen AND baths genuinely done, no structural work. |
+| **remodel** | Gut-level finish throughout, often with a permitted addition |
+
+Then report the median $/sf **per tier** and place the subject in one. Price off the comps in the subject's own tier. The other tiers are the bracket check, not the comparison.
+
+Flag any comp that carries a different school-district assignment and exclude it from the rate math. On the Kenyon build, one full-remodel comp with Cupertino schools sold about $875,000 above an equivalent-size Santa Clara Unified home. Left in, it would have poisoned every number downstream.
+
+Watch for a tier outlier with high DOM: a full remodel that took 78 days and a relist sold at a $/sf well below its tier. That is a marketing or location story, not a condition ceiling. Drop it from the rate regression and say why.
+
 **3. Then the three LIST-price strategies**, renamed. The old Conservative / Competitive / Stretch labels are RETIRED — "Conservative" wrongly implied a low expected outcome when it is actually the strategy most likely to produce a bidding war:
 
 | Tier | Label | What it means |

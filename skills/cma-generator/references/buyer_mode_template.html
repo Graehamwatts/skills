@@ -41,7 +41,9 @@ Section order (BUYER mode):
   11. Notes & Caveats
 
 Required Chart.js canvas IDs: trendPrice, trendLS (minimum).
-Optional but recommended: priceJourney + domVsCut for cohort behavior.
+Optional but recommended: priceJourney for cohort behavior. (domVsCut, the dual-axis
+bar, was retired 2026-08-15 as unreadable; if you want that argument use the
+two-point slope chart from pricing-behavior-analysis.md section 4.)
 Pre-List Prep section is N/A for buyer mode.
 
 BUYER MODE SPECIFIC FRAMING:
@@ -88,7 +90,7 @@ footer{background:var(--b);color:#ddd;padding:34px 0;text-align:center;margin-to
 <div class="ct">Buyer Comparative Market Analysis. Offer Strategy</div>
 <div class="ad">{{SUBJECT_ADDRESS}}, Menlo Park, CA 94025</div>
 <div class="dt">Prepared for {{CLIENT_NAME}}, May 28, 2026</div>
-<div class="cn">Graeham Watts. Powered by The Boyenga Team at Compass. DRE #01466876. 650-308-4727</div></div></header>
+<div class="cn">Graeham Watts. Powered by The Boyenga Team at Compass Real Estate. DRE #01466876. 650-308-4727</div></div></header>
 <div class="wrap">
 
 <section><div class="sh">The Property</div>
@@ -229,7 +231,7 @@ footer{background:var(--b);color:#ddd;padding:34px 0;text-align:center;margin-to
 </section>
 
 </div>
-<footer><div class="wrap"><div class="fn">GRAEHAM WATTS</div><div class="fl">Powered by The Boyenga Team at Compass. DRE #01466876</div>
+<footer><div class="wrap"><div class="fn">GRAEHAM WATTS</div><div class="fl">Powered by The Boyenga Team at Compass Real Estate. DRE #01466876</div>
 <div class="fl">650-308-4727. graehamwatts@gmail.com. www.graehamwatts.com</div>
 <div class="ds">Buyer CMA prepared May 28, 2026 for {{CLIENT_NAME}}, prospective buyer of {{SUBJECT_ADDRESS}}, Menlo Park. Not a formal appraisal. Comp analysis based on closed and active listings in the Menlo Park east-of-101 SFR 900 to 1,500 sqft cohort over the last 6 months. Verify current mortgage rates with your lender, review the disclosure package carefully when posted May 30, and consult your tax and legal advisors as needed before submitting an offer.</div></div></footer>
 <script>
