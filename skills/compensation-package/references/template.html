@@ -60,6 +60,30 @@
   staging row is just "Staging included: No/No/Yes", plainly, with no
   financing language and no Concierge attribution. Don't re-merge them.
 
+  LIST ORDER IN THE THREE "PACKAGE INCLUDES" COLUMNS (Graeham, 2026-08-17).
+  Rows 1-6 are identical across all three tiers, same text, same order
+  (Photography, Syndication, Email, Handyman, Inspection, Open House), so
+  they land on the same visual row in all three columns. Rows 7-8 are the
+  "upgrade pairs" (brochure, sign), present in every tier but with
+  different text per tier (Silver/Gold share the same double-sided
+  brochure text, Platinum upgrades it; the sign upgrades at every tier).
+  From row 9 on, Gold and Platinum share the identical item list in the
+  identical order (Platinum just marks them inherited, not new), then
+  Platinum's list continues with 5 Platinum-exclusive rows. Preserve this
+  order on any future edit, don't append new items to the end without
+  slotting them into the right position, or the columns drift out of
+  alignment again.
+
+  TWO BUGS FIXED HERE 2026-08-17, don't reintroduce either:
+  (1) Gold's brochure was wrongly marked "new" as the 4-Page upgrade. Per
+  the source PDF, Gold's brochure is IDENTICAL to Silver's (double-sided),
+  Platinum is the only tier that upgrades to 4-page. Gold's brochure row
+  must be a plain inherited item, not class="new".
+  (2) Platinum's list was missing "Custom HD Video Tour" entirely. Per the
+  source PDF, Platinum keeps the HD video tour AND separately adds the
+  feature film and aerial/drone footage as distinct additional items, it
+  does not replace the HD tour with the feature film.
+
   COMPASS CONCIERGE FIGURES (researched 2026-08-16, confirm before reusing
   in a future year, terms vary by state and change over time): NorCal cap
   $50,000, flat $750 fee, 0% interest, nothing due until closing or 12
@@ -179,7 +203,6 @@ footer{background:var(--b);color:#ddd;padding:28px 0;text-align:center;margin-to
 
 <section style="padding-top:28px"><div class="sh">What You're Actually Comparing</div>
 <p class="lead">Every plan below is built around one idea: the fee you pay should map to a specific, visible body of work, not a percentage set out of habit. Line it up against a discount brokerage listing or a traditional agent's flat MLS entry and you can see exactly where the extra investment goes: a full production day on your home, paid advertising that follows real buyers instead of sitting in a feed, and a launch event engineered to create competition in the first weekend.</p>
-<p>Commission is not set by law and is fully negotiable in every case. The tiers below exist so that conversation starts from a clear menu instead of a guess.</p>
 </section>
 
 <div class="dv"></div>
@@ -192,11 +215,11 @@ footer{background:var(--b);color:#ddd;padding:28px 0;text-align:center;margin-to
 <li>Professional Photography</li>
 <li>MLS + Syndicated Online (Zillow, Realtor.com, Trulia, and more)</li>
 <li>Targeted Email to Local Buyer's-Agent Network (MLSListings)</li>
-<li>Double-Sided Custom 8x11 Brochure, Matte Cover + Floor Plan</li>
 <li>Up to 8 Hours of Handyman Service</li>
 <li>Inspection Coordination (Home, Termite, Roof)</li>
-<li>Single Post Luxury Home Sign &amp; Flyer Box</li>
 <li>Open House</li>
+<li>Double-Sided Custom 8x11 Brochure, Matte Cover + Floor Plan</li>
+<li>Single Post Luxury Home Sign &amp; Flyer Box</li>
 </ul></div></div>
 
 <div class="tpkg"><div class="tpkg-h"><div class="tpkg-tn">GOLD PACKAGE</div><div class="tpkg-tp">COMPENSATION: {{GOLD_PCT}}</div></div>
@@ -207,8 +230,8 @@ footer{background:var(--b);color:#ddd;padding:28px 0;text-align:center;margin-to
 <li>Up to 8 Hours of Handyman Service</li>
 <li>Inspection Coordination (Home, Termite, Roof)</li>
 <li>Open House</li>
+<li>Double-Sided Custom 8x11 Brochure, Matte Cover + Floor Plan</li>
 <li class="new">Double Post Luxury Home Sign &amp; Flyer Box</li>
-<li class="new">4-Page Custom 8x11 Brochure, Matte Cover + Floor Plan</li>
 <li class="new">Optional Professional Cleaning</li>
 <li class="new">Compass Concierge Access (up to $50,000, $0 due until closing)</li>
 <li class="new">Staging Consultation / Decluttering or Free Staging</li>
@@ -233,21 +256,22 @@ footer{background:var(--b);color:#ddd;padding:28px 0;text-align:center;margin-to
 <li>Up to 8 Hours of Handyman Service</li>
 <li>Inspection Coordination (Home, Termite, Roof)</li>
 <li>Open House</li>
+<li class="new">4-Page Custom 8x11 Brochure, Matte Cover + Floor Plan</li>
+<li class="new">Double Post Luxury Home Sign with Solar Light &amp; Flyer Box</li>
 <li>Optional Professional Cleaning</li>
 <li>Compass Concierge Access (up to $50,000, $0 due until closing)</li>
 <li>Staging Consultation / Decluttering or Free Staging</li>
+<li class="new">Grand Opening Weekend with Refreshments &amp; Taco Grill</li>
 <li>Voicemail Drop / Call Invitations to Buyer Pool</li>
 <li>Direct Mail Invitation Cards to Local Companies + Neighborhood</li>
 <li>3D Matterport Walking Tour with Floor Plan &amp; Hot Spots</li>
 <li>2D Floor Plan with Hotspots for Marketing Collateral</li>
+<li>Custom HD Video Tour</li>
 <li>Social Media Ads (TikTok, Facebook, Instagram)</li>
 <li>Google Display Network Ads</li>
 <li>Geofencing Retargeting Ads</li>
 <li>YouTube Skippable In-Stream Ads</li>
 <li>Targeted Ads Featuring Your Custom Film</li>
-<li class="new">Double Post Luxury Home Sign with Solar Light &amp; Flyer Box</li>
-<li class="new">4-Page Custom 8x11 Brochure, Matte Cover + Floor Plan</li>
-<li class="new">Grand Opening Weekend with Refreshments &amp; Taco Grill</li>
 <li class="new">Custom Feature Film, Scored and Edited</li>
 <li class="new">Aerial / Drone Footage, Voiceover, Music</li>
 <li class="new">Realtor.com Sponsored Placement</li>
@@ -256,7 +280,7 @@ footer{background:var(--b);color:#ddd;padding:28px 0;text-align:center;margin-to
 </ul></div></div>
 
 </div>
-<p class="lead" style="margin-top:14px"><strong>Silver</strong> is built to go head-to-head with Redfin's 1% listing model on price. Line them up directly and both include professional photography, portal syndication, a printed brochure, and a hosted open house, so nothing gets cut on the basics. Silver adds what that model doesn't: a dedicated agent from list to close instead of a rotating team, inspection coordination for home, termite, and roof, up to 8 hours of handyman service, and direct exposure to the local MLSListings buyer's-agent network. <span style="color:var(--dg);font-weight:700">+</span> marks what a tier adds beyond the one before it.</p>
+<p class="lead" style="margin-top:14px"><span style="color:var(--dg);font-weight:700">+</span> marks what a tier adds beyond the one before it.</p>
 </section>
 
 <div class="dv"></div>
@@ -305,7 +329,7 @@ footer{background:var(--b);color:#ddd;padding:28px 0;text-align:center;margin-to
 <tr><td>Open house</td><td>Yes</td><td>Yes</td><td>Yes, every tier; Grand Opening Weekend event on Gold &amp; Platinum</td></tr>
 <tr><td>Geofencing retargeting ads</td><td>No</td><td>No</td><td>Yes, Gold &amp; Platinum</td></tr>
 <tr><td>YouTube in-stream video ads</td><td>No</td><td>No</td><td>Yes, Gold &amp; Platinum</td></tr>
-<tr><td>Social + Google Display ads</td><td>Sometimes</td><td>No</td><td>Yes, Gold &amp; Platinum</td></tr>
+<tr><td>Social + Google Display ads</td><td>Sometimes</td><td>Sometimes</td><td>Yes, Gold &amp; Platinum</td></tr>
 <tr><td>Direct mail / local agent network email</td><td>No</td><td>Sometimes</td><td>Yes, every tier</td></tr>
 </tbody></table></div>
 <p class="nt" style="font-size:12px;color:var(--gy);margin-top:6px">*Redfin's reduced listing fee typically requires bundling a home purchase through Redfin in the same window and excludes buyer's-agent commission, which is negotiated separately. Figures are general industry ranges as of 2026, not quotes from any specific brokerage.</p>
@@ -331,5 +355,5 @@ footer{background:var(--b);color:#ddd;padding:28px 0;text-align:center;margin-to
 <footer><div class="fn">GRAEHAM WATTS</div><div class="fl" style="font-size:15px;color:#ddd;margin:8px 0 18px">REALTOR. Powered by The Boyenga Team at Compass Real Estate.</div>
 <img src="data:image/png;base64,{{COBRAND_LOCKUP_B64}}" alt="The Boyenga Team and Compass" class="fbrand">
 <div class="fl">DRE #01466876 | 650-308-4727 | graehamwatts.com</div>
-<div class="ds2">Commission is not set by law, is fully negotiable, and varies with scope of services, market conditions, and the specific listing agreement. Services listed reflect the current marketing program offered by Graeham Watts through The Boyenga Team at Compass and are subject to change.</div></footer>
+<div class="ds2">Commission is not set by law and is fully negotiable in every case. This menu exists so that conversation starts from a clear list instead of a guess. It varies with scope of services, market conditions, and the specific listing agreement. Services listed reflect the current marketing program offered by Graeham Watts through The Boyenga Team at Compass and are subject to change.</div></footer>
 </body></html>
