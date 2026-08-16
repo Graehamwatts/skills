@@ -183,8 +183,10 @@ footer{background:var(--b);color:#ddd;padding:28px 0;text-align:center;margin-to
   th{-webkit-print-color-adjust:exact;print-color-adjust:exact}
   .tpkg-h{-webkit-print-color-adjust:exact;print-color-adjust:exact}
   section{padding:14px 0}
-  .tpkg{page-break-inside:avoid}
   table{page-break-inside:avoid}
+  .tpkgrow{grid-template-columns:1fr 1fr 1fr!important}
+  #marketing-plan-options{page-break-before:always}
+  #how-this-compares{page-break-before:always}
 }
 </style></head><body>
 <nav class="nav"><img src="https://images.leadconnectorhq.com/image/f_webp/q_80/r_1200/u_https://assets.cdn.filesafe.space/6wuU3haUH7uNeT20E3UZ/media/691256870b647e40e3c2e105.png" alt="Graeham Watts"></nav>
@@ -207,7 +209,7 @@ footer{background:var(--b);color:#ddd;padding:28px 0;text-align:center;margin-to
 
 <div class="dv"></div>
 
-<section><div class="sh">Marketing Plan Options</div>
+<section id="marketing-plan-options"><div class="sh">Marketing Plan Options</div>
 <div class="cards3 tpkgrow">
 
 <div class="tpkg"><div class="tpkg-h"><div class="tpkg-tn">SILVER PACKAGE</div><div class="tpkg-tp">COMPENSATION: {{SILVER_PCT}}</div></div>
@@ -315,7 +317,7 @@ footer{background:var(--b);color:#ddd;padding:28px 0;text-align:center;margin-to
 
 <div class="dv"></div>
 
-<section><div class="sh">How This Compares</div>
+<section id="how-this-compares"><div class="sh">How This Compares</div>
 <p class="lead">Where the extra investment actually goes, lined up against a discount-brokerage listing and a typical traditional full-service agent.</p>
 <div class="tscroll"><table><thead><tr><th>What's Included</th><th>Discount / Redfin-Style</th><th>Traditional Full-Service Agent</th><th>Graeham Watts · The Boyenga Team</th></tr></thead>
 <tbody>
