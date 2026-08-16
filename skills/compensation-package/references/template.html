@@ -82,13 +82,20 @@ th{background:var(--g);color:var(--b);text-align:left;padding:8px 9px;font-size:
 td{padding:7px 9px;border-bottom:1px solid #eee;vertical-align:top}
 tbody tr:nth-child(even){background:var(--cr)}
 .tscroll{overflow-x:auto}
-.cat td{background:var(--b);color:var(--g);font-family:Montserrat;font-weight:800;font-size:11px;letter-spacing:1px;text-transform:uppercase;padding:9px}
-.chk{text-align:center;font-size:15px;color:var(--grn);font-weight:800}
-.dash{text-align:center;color:#ccc}
-.tierhead{text-align:center}
-.tierhead .tn{font-family:Montserrat;font-weight:800;font-size:13px;letter-spacing:1px;display:block}
-.tierhead .tp{font-family:Montserrat;font-weight:800;font-size:16px;color:var(--b);margin-top:2px;display:block}
-.tierhead .tc{font-size:10px;font-weight:400;text-transform:none;color:var(--b);margin-top:2px;display:block}
+.tpkgrow{align-items:stretch}
+.tpkg{background:#fff;border:1px solid #eee;border-radius:8px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 1px 5px rgba(0,0,0,.06)}
+.tpkg.plat{border:2px solid var(--g);box-shadow:0 3px 14px rgba(197,165,90,.22)}
+.tpkg-h{background:var(--b);text-align:center;padding:16px 12px}
+.tpkg-h .tpkg-tn{font-family:Montserrat;font-weight:800;font-size:14px;letter-spacing:1px;color:var(--g)}
+.tpkg-h .tpkg-tp{font-family:Montserrat;font-weight:800;font-size:24px;color:#fff;margin-top:4px}
+.tpkg-h .tpkg-tc{font-size:10px;color:#bbb;margin-top:2px;text-transform:uppercase;letter-spacing:.5px}
+.tpkg-b{padding:16px 18px;flex:1}
+.tpkg-lbl{font-family:Montserrat;font-weight:800;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--gy);border-bottom:2px solid var(--cr);padding-bottom:8px;margin-bottom:10px}
+.tpkg-b ul{list-style:none}
+.tpkg-b li{position:relative;padding-left:22px;margin-bottom:9px;font-size:13px;line-height:1.4;color:#2a2a2a}
+.tpkg-b li:before{content:"\2713";position:absolute;left:0;top:0;color:var(--grn);font-weight:800}
+.tpkg-b li.new{font-weight:700;color:var(--b)}
+.tpkg-b li.new:before{content:"+";color:var(--dg);font-weight:800;font-size:15px;top:-2px}
 .cards{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0}
 .cards3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin:16px 0}
 .card{background:#fff;border:1px solid #eee;border-radius:8px;padding:18px;border-left:5px solid var(--g)}
@@ -114,7 +121,9 @@ footer{background:var(--b);color:#ddd;padding:28px 0;text-align:center;margin-to
   .hero{padding:24px 0}
   .sh{-webkit-print-color-adjust:exact;print-color-adjust:exact}
   th{-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  section{padding:14px 0;page-break-inside:avoid}
+  .tpkg-h{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  section{padding:14px 0}
+  .tpkg{page-break-inside:avoid}
   table{page-break-inside:avoid}
 }
 </style></head><body>
@@ -140,51 +149,77 @@ footer{background:var(--b);color:#ddd;padding:28px 0;text-align:center;margin-to
 <div class="dv"></div>
 
 <section><div class="sh">Marketing Plan Options</div>
-<div class="tscroll"><table><thead><tr>
-<th style="background:var(--b)"></th>
-<th class="tierhead"><span class="tn" style="color:var(--b)">SILVER</span><span class="tp">{{SILVER_PCT}}</span><span class="tc">Discount Tier</span></th>
-<th class="tierhead"><span class="tn" style="color:var(--b)">GOLD</span><span class="tp">{{GOLD_PCT}}</span><span class="tc">Full-Service Tier</span></th>
-<th class="tierhead"><span class="tn" style="color:var(--b)">PLATINUM LUXURY</span><span class="tp">{{PLATINUM_PCT}}</span><span class="tc">Complete Launch</span></th>
-</tr></thead>
-<tbody>
-<tr class="cat"><td colspan="4">Photography &amp; Film</td></tr>
-<tr><td>Professional Photography</td><td class="chk">✓</td><td class="chk">✓</td><td class="chk">✓</td></tr>
-<tr><td>Custom HD Video Tour</td><td class="dash">–</td><td class="chk">✓</td><td class="chk">✓</td></tr>
-<tr><td>Custom Feature Film, scored and edited</td><td class="dash">–</td><td class="dash">–</td><td class="chk">✓</td></tr>
-<tr><td>Aerial / Drone Footage, Voiceover, Music</td><td class="dash">–</td><td class="dash">–</td><td class="chk">✓</td></tr>
-<tr><td>3D Matterport Walking Tour with Floor Plan &amp; Hot Spots</td><td class="dash">–</td><td class="chk">✓</td><td class="chk">✓</td></tr>
-<tr><td>2D Floor Plan with Hotspots for Marketing Collateral</td><td class="dash">–</td><td class="chk">✓</td><td class="chk">✓</td></tr>
+<div class="cards3 tpkgrow">
 
-<tr class="cat"><td colspan="4">Home Prep &amp; Staging</td></tr>
-<tr><td>Inspection Coordination (Home, Termite)</td><td class="chk">✓</td><td class="chk">✓</td><td class="chk">✓</td></tr>
-<tr><td>Up to 8 Hours of Handyman Service</td><td class="chk">✓</td><td class="chk">✓</td><td class="chk">✓</td></tr>
-<tr><td>Staging Consultation / Decluttering or Free Staging</td><td class="dash">–</td><td class="chk">✓</td><td class="chk">✓</td></tr>
-<tr><td>Optional Professional Cleaning</td><td class="dash">–</td><td class="chk">✓</td><td class="chk">✓</td></tr>
-<tr><td>Compass Concierge Access (up to $50,000, $0 due until closing)</td><td class="dash">–</td><td class="chk">✓</td><td class="chk">✓</td></tr>
+<div class="tpkg"><div class="tpkg-h"><div class="tpkg-tn">SILVER</div><div class="tpkg-tp">{{SILVER_PCT}}</div><div class="tpkg-tc">Discount Tier</div></div>
+<div class="tpkg-b"><div class="tpkg-lbl">Package Includes</div><ul>
+<li>Professional Photography</li>
+<li>MLS + Syndicated Online (Zillow, Realtor.com, Trulia, and more)</li>
+<li>Targeted Email to Local Buyer's-Agent Network (MLSListings)</li>
+<li>Double-Sided Custom 8x11 Brochure, Matte Cover + Floor Plan</li>
+<li>Up to 8 Hours of Handyman Service</li>
+<li>Inspection Coordination (Home, Termite)</li>
+<li>Single Post Luxury Home Sign &amp; Flyer Box</li>
+<li>Open House</li>
+</ul></div></div>
 
-<tr class="cat"><td colspan="4">Brochure &amp; Signage</td></tr>
-<tr><td>Custom 8x11 Brochure, Matte Cover + Floor Plan</td><td>Double-sided</td><td>Double-sided</td><td>4-Page</td></tr>
-<tr><td>Luxury Home Sign &amp; Flyer Box</td><td>Single Post</td><td>Double Post</td><td>Double Post + Solar Light</td></tr>
+<div class="tpkg"><div class="tpkg-h"><div class="tpkg-tn">GOLD</div><div class="tpkg-tp">{{GOLD_PCT}}</div><div class="tpkg-tc">Full-Service Tier</div></div>
+<div class="tpkg-b"><div class="tpkg-lbl">Package Includes</div><ul>
+<li>Professional Photography</li>
+<li>MLS + Syndicated Online (Zillow, Realtor.com, Trulia, and more)</li>
+<li>Targeted Email to Local Buyer's-Agent Network (MLSListings)</li>
+<li>Up to 8 Hours of Handyman Service</li>
+<li>Inspection Coordination (Home, Termite)</li>
+<li>Open House</li>
+<li class="new">Double Post Luxury Home Sign &amp; Flyer Box</li>
+<li class="new">4-Page Custom 8x11 Brochure, Matte Cover + Floor Plan</li>
+<li class="new">Optional Professional Cleaning</li>
+<li class="new">Compass Concierge Access (up to $50,000, $0 due until closing)</li>
+<li class="new">Staging Consultation / Decluttering or Free Staging</li>
+<li class="new">Grand Opening Weekend (50+ signs, direct mail + online coordinated)</li>
+<li class="new">Voicemail Drop / Call Invitations to Buyer Pool</li>
+<li class="new">Direct Mail Invitation Cards to Local Companies + Neighborhood</li>
+<li class="new">3D Matterport Walking Tour with Floor Plan &amp; Hot Spots</li>
+<li class="new">2D Floor Plan with Hotspots for Marketing Collateral</li>
+<li class="new">Custom HD Video Tour</li>
+<li class="new">Social Media Ads (TikTok, Facebook, Instagram)</li>
+<li class="new">Google Display Network Ads</li>
+<li class="new">Geofencing Retargeting Ads</li>
+<li class="new">YouTube Skippable In-Stream Ads</li>
+<li class="new">Targeted Ads Featuring Your Custom Film</li>
+</ul></div></div>
 
-<tr class="cat"><td colspan="4">Launch Event</td></tr>
-<tr><td>Open House</td><td class="chk">✓</td><td class="chk">✓</td><td class="chk">✓</td></tr>
-<tr><td>Grand Opening Weekend (50+ signs, direct mail + online coordinated)</td><td class="dash">–</td><td class="chk">✓</td><td class="chk">✓</td></tr>
-<tr><td>Voicemail Drop / Call Invitations to Buyer Pool</td><td class="dash">–</td><td class="chk">✓</td><td class="chk">✓</td></tr>
-<tr><td>14,000+/- Invitation Cards &amp; Flyers to Local Companies + Neighborhood</td><td class="dash">–</td><td class="chk">✓</td><td class="chk">✓</td></tr>
-<tr><td>Grand Opening with Refreshments &amp; Taco Grill</td><td class="dash">–</td><td class="dash">–</td><td class="chk">✓</td></tr>
+<div class="tpkg plat"><div class="tpkg-h"><div class="tpkg-tn">PLATINUM LUXURY</div><div class="tpkg-tp">{{PLATINUM_PCT}}</div><div class="tpkg-tc">Complete Launch</div></div>
+<div class="tpkg-b"><div class="tpkg-lbl">Package Includes</div><ul>
+<li>Professional Photography</li>
+<li>MLS + Syndicated Online (Zillow, Realtor.com, Trulia, and more)</li>
+<li>Targeted Email to Local Buyer's-Agent Network (MLSListings)</li>
+<li>Up to 8 Hours of Handyman Service</li>
+<li>Inspection Coordination (Home, Termite)</li>
+<li>Open House</li>
+<li>Optional Professional Cleaning</li>
+<li>Compass Concierge Access (up to $50,000, $0 due until closing)</li>
+<li>Staging Consultation / Decluttering or Free Staging</li>
+<li>Voicemail Drop / Call Invitations to Buyer Pool</li>
+<li>Direct Mail Invitation Cards to Local Companies + Neighborhood</li>
+<li>3D Matterport Walking Tour with Floor Plan &amp; Hot Spots</li>
+<li>2D Floor Plan with Hotspots for Marketing Collateral</li>
+<li>Social Media Ads (TikTok, Facebook, Instagram)</li>
+<li>Google Display Network Ads</li>
+<li>Geofencing Retargeting Ads</li>
+<li>YouTube Skippable In-Stream Ads</li>
+<li>Targeted Ads Featuring Your Custom Film</li>
+<li class="new">Double Post Luxury Home Sign with Solar Light &amp; Flyer Box</li>
+<li class="new">4-Page Custom 8x11 Brochure, Matte Cover + Floor Plan</li>
+<li class="new">Grand Opening Weekend with Refreshments &amp; Taco Grill</li>
+<li class="new">Custom Feature Film, Scored and Edited</li>
+<li class="new">Aerial / Drone Footage, Voiceover, Music</li>
+<li class="new">Realtor.com Sponsored Placement</li>
+<li class="new">Targeted Direct Mail Postcards</li>
+</ul></div></div>
 
-<tr class="cat"><td colspan="4">Targeted Advertising</td></tr>
-<tr><td>MLS + Syndicated Online (Zillow, Realtor.com, Trulia, and more)</td><td class="chk">✓</td><td class="chk">✓</td><td class="chk">✓</td></tr>
-<tr><td>Targeted Email to Local Buyer's-Agent Network (MLSListings)</td><td class="chk">✓</td><td class="chk">✓</td><td class="chk">✓</td></tr>
-<tr><td>Social Media Ads (TikTok, Facebook, Instagram)</td><td class="dash">–</td><td class="chk">✓</td><td class="chk">✓</td></tr>
-<tr><td>Google Display Network Ads</td><td class="dash">–</td><td class="chk">✓</td><td class="chk">✓</td></tr>
-<tr><td>Geofencing Retargeting Ads</td><td class="dash">–</td><td class="chk">✓</td><td class="chk">✓</td></tr>
-<tr><td>YouTube Skippable In-Stream Ads</td><td class="dash">–</td><td class="chk">✓</td><td class="chk">✓</td></tr>
-<tr><td>Targeted Ads Featuring Your Custom Film</td><td class="dash">–</td><td class="chk">✓</td><td class="chk">✓</td></tr>
-<tr><td>Realtor.com Sponsored Placement</td><td class="dash">–</td><td class="dash">–</td><td class="chk">✓</td></tr>
-<tr><td>Targeted Direct Mail Postcards</td><td class="dash">–</td><td class="dash">–</td><td class="chk">✓</td></tr>
-</tbody></table></div>
-<p class="lead" style="margin-top:14px"><strong>Silver</strong> is built to go head-to-head with a discount-brokerage listing on price, a dedicated full-service agent, MLS syndication, and Compass's brand exposure are already included at that rate, comparable in scope to what a service like Redfin offers.</p>
+</div>
+<p class="lead" style="margin-top:14px"><strong>Silver</strong> is built to go head-to-head with a discount-brokerage listing on price, a dedicated full-service agent, MLS syndication, and Compass's brand exposure are already included at that rate, comparable in scope to what a service like Redfin offers. <span style="color:var(--dg);font-weight:700">+</span> marks what a tier adds beyond the one before it.</p>
 </section>
 
 <div class="dv"></div>
