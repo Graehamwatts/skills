@@ -1,0 +1,246 @@
+<!DOCTYPE html><!--
+  COMPENSATION PACKAGE TEMPLATE - STRUCTURAL REFERENCE ONLY.
+  Regenerate the two live pages from this file rather than hand-editing the
+  published output, so they cannot drift apart from each other.
+
+  PLACEHOLDERS (all must be substituted, see SKILL.md "Workflow")
+  ------------------------------------------------------------------
+  {{COBRAND_LOCKUP_B64}}   base64 of "Boyenga Team + Compass white.png"
+                           (Documents\Compass\Compass branding\How to use
+                           branding\Boyenga And Compass\). Re-encode with
+                           `base64 -w 0 "<path>"`, never hand-type it.
+  {{PAGE_TITLE_SUFFIX}}    "Standard Rates" / "Premium Rates"
+  {{VARIANT_LABEL}}        "Standard" / "Premium"
+  {{OTHER_VARIANT_LABEL}}  the opposite of VARIANT_LABEL, for the toggle link
+  {{OTHER_VARIANT_FILE}}   filename of the other variant, for the toggle link
+  {{SILVER_PCT}} {{GOLD_PCT}} {{PLATINUM_PCT}}   per-tier commission for
+                           this variant, see SKILL.md section 1 for the two
+                           approved sets of values. Do not invent a third set
+                           without Graeham's explicit request.
+  {{TIER_SUMMARY}}         all three percentages as one string, e.g.
+                           "2.0% / 2.5% / 3.0%-3.5%", used in the competitor
+                           comparison table only.
+  {{VARIANT_LABEL_UPPER}}  VARIANT_LABEL + " RATES", all caps, e.g.
+                           "STANDARD RATES" / "PREMIUM RATES", for the hero
+                           badge only (the badge text is already uppercase).
+
+  After substitution, run scripts/verify_brand_identity.py and grep the file
+  for U+2014 (em dash) before publishing; both must be zero. Title/label
+  separators use a plain hyphen " - ", matching graehamwatts.com's existing
+  page-title convention, not an em dash.
+
+  VOICE: brand values come from skills/shared-references/identity.json at
+  build time, never from memory. Commission is negotiable by law; the
+  footer disclaimer line is required on every variant, do not remove it.
+-->
+<html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Marketing & Compensation Package - {{PAGE_TITLE_SUFFIX}} | Graeham Watts</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+<style>
+:root{--b:#1A1A1A;--g:#C5A55A;--dg:#A88B3D;--cr:#F5EFDC;--gy:#666;--nv:#343955;--red:#c0392b;--grn:#4f9d69;--amb:#C96A45;--gray:#9aa0a6}
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:Inter,sans-serif;color:#1A1A1A;line-height:1.6}
+.nav{position:fixed;top:0;left:0;right:0;height:60px;background:var(--nv);display:flex;align-items:center;padding:0 24px;z-index:9}.nav img{height:34px}
+.wrap{max-width:1040px;margin:0 auto;padding:0 22px}section{padding:34px 0}
+.sh{background:var(--b);color:var(--g);font-family:Montserrat;font-weight:800;letter-spacing:2px;text-transform:uppercase;font-size:17px;padding:12px 18px;margin-bottom:18px;border-left:6px solid var(--g)}
+.hero{background:var(--b);color:#fff;padding:104px 0 46px;text-align:center}
+.hero .nm{color:var(--g);font-family:Montserrat;font-weight:800;font-size:44px;letter-spacing:6px;line-height:1.12}
+.hero .rl{color:var(--g);letter-spacing:8px;font-size:12px}
+.brandblk{margin:22px auto 0;max-width:560px}
+.brandblk .rule{height:1px;background:linear-gradient(90deg,transparent,rgba(197,165,90,.55),transparent);margin-bottom:18px}
+.brandblk .lock{width:100%;max-width:380px;display:block;margin:0 auto}
+.brandblk .pb{color:#e8e8e8;font-size:16px;font-weight:600;letter-spacing:.3px;margin-top:14px}
+.fbrand{max-width:300px;width:100%;display:block;margin:0 auto 12px}
+@media(max-width:760px){.hero .nm{font-size:32px;letter-spacing:3px}.brandblk .pb{font-size:14.5px}}
+.hero .lbl{background:var(--g);color:var(--b);display:inline-block;font-family:Montserrat;font-weight:800;letter-spacing:3px;font-size:12px;padding:6px 16px;border-radius:4px;margin-top:18px}
+.hero .ad{font-size:22px;font-weight:700;margin-top:14px;max-width:640px;margin-left:auto;margin-right:auto}
+.hero .dt{color:#aaa;margin-top:10px;font-size:13px;max-width:680px;margin-left:auto;margin-right:auto}
+.hero .cn{color:var(--g);font-size:12px;margin-top:14px}
+.hero .toggle{margin-top:16px;font-size:12px}
+.hero .toggle a{color:#e8e8e8;text-decoration:underline}
+.hero .toggle a:hover{color:var(--g)}
+p{margin-bottom:13px;font-size:15px;color:#2a2a2a}.lead{font-size:16px}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13px;box-shadow:0 1px 5px rgba(0,0,0,.06)}
+th{background:var(--g);color:var(--b);text-align:left;padding:8px 9px;font-size:11px;text-transform:uppercase}
+td{padding:7px 9px;border-bottom:1px solid #eee;vertical-align:top}
+tbody tr:nth-child(even){background:var(--cr)}
+.tscroll{overflow-x:auto}
+.cat td{background:var(--b);color:var(--g);font-family:Montserrat;font-weight:800;font-size:11px;letter-spacing:1px;text-transform:uppercase;padding:9px}
+.chk{text-align:center;font-size:15px;color:var(--grn);font-weight:800}
+.dash{text-align:center;color:#ccc}
+.tierhead{text-align:center}
+.tierhead .tn{font-family:Montserrat;font-weight:800;font-size:13px;letter-spacing:1px;display:block}
+.tierhead .tp{font-family:Montserrat;font-weight:800;font-size:16px;color:var(--b);margin-top:2px;display:block}
+.tierhead .tc{font-size:10px;font-weight:400;text-transform:none;color:var(--b);margin-top:2px;display:block}
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0}
+.cards3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin:16px 0}
+.card{background:#fff;border:1px solid #eee;border-radius:8px;padding:18px;border-left:5px solid var(--g)}
+.card .lbl{font-size:11px;text-transform:uppercase;color:var(--gy);letter-spacing:.5px;font-weight:700}
+.card .val{font-family:Montserrat;font-size:20px;font-weight:800;margin:6px 0}
+.card .ds{font-size:13px;color:#444}
+.step{background:#fff;border:1px solid #eee;border-radius:8px;padding:20px;border-top:5px solid var(--g);position:relative}
+.step .n{font-family:Montserrat;font-weight:800;font-size:34px;color:var(--cr);-webkit-text-stroke:1.5px var(--g);position:absolute;top:10px;right:16px}
+.step h4{font-family:Montserrat;font-weight:800;font-size:14px;letter-spacing:.5px;margin-bottom:8px;padding-right:34px}
+.step p{font-size:13.5px;margin-bottom:0}
+.key{background:#eef2f8;border-left:6px solid var(--nv);padding:16px 20px;border-radius:8px;margin:14px 0;font-size:13.5px}
+.gold-cb{background:linear-gradient(180deg,#fffdf6,#fff);border:2px solid var(--g);border-left:10px solid var(--g);padding:20px 24px;border-radius:10px;margin:16px 0;box-shadow:0 3px 14px rgba(197,165,90,.18)}
+.gold-cb h4{font-family:Montserrat;font-weight:800;font-size:15px;letter-spacing:1px;text-transform:uppercase;color:var(--b);margin-bottom:8px}
+.dv{height:2px;background:linear-gradient(90deg,var(--g),transparent);margin:24px 0}
+footer{background:var(--b);color:#ddd;padding:28px 0;text-align:center;margin-top:26px}
+.fn{color:var(--g);font-family:Montserrat;font-weight:800;letter-spacing:3px;font-size:19px}
+.fl{font-size:12px;margin-top:6px;color:#bbb}
+.ds2{font-size:10.5px;color:#888;max-width:820px;margin:14px auto 0}
+@media(max-width:760px){.cards,.cards3{grid-template-columns:1fr}}
+@media print{
+  .nav,.hero .toggle{display:none!important}
+  body{font-size:12px}
+  .hero{padding:24px 0}
+  .sh{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  th{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  section{padding:14px 0;page-break-inside:avoid}
+  table{page-break-inside:avoid}
+}
+</style></head><body>
+<nav class="nav"><img src="https://images.leadconnectorhq.com/image/f_webp/q_80/r_1200/u_https://assets.cdn.filesafe.space/6wuU3haUH7uNeT20E3UZ/media/691256870b647e40e3c2e105.png" alt="Graeham Watts"></nav>
+
+<header class="hero"><div class="wrap"><div class="nm">GRAEHAM WATTS</div><div class="rl">R E A L T O R</div>
+<div class="brandblk"><div class="rule"></div>
+<img src="data:image/png;base64,{{COBRAND_LOCKUP_B64}}" alt="The Boyenga Team and Compass" class="lock">
+<div class="pb">Powered by The Boyenga Team at Compass Real Estate</div></div>
+<div class="lbl">MARKETING &amp; COMPENSATION PACKAGE - {{VARIANT_LABEL_UPPER}}</div>
+<div class="ad">A transparent look at what your commission actually buys, tier by tier.</div>
+<div class="dt">The same production, paid-advertising, and launch-event strategy behind the #1 real estate team in Silicon Valley, broken down by package so you can see exactly where every point of commission goes.</div>
+<div class="cn">DRE #01466876. 650-308-4727. graehamwatts.com</div>
+<div class="toggle">Viewing {{VARIANT_LABEL}} Rates &nbsp;·&nbsp; <a href="{{OTHER_VARIANT_FILE}}">See {{OTHER_VARIANT_LABEL}} Rates →</a></div>
+</div></header>
+
+<div class="wrap">
+
+<section style="padding-top:28px"><div class="sh">What You're Actually Comparing</div>
+<p class="lead">Every plan below is built around one idea: the fee you pay should map to a specific, visible body of work, not a percentage set out of habit. Line it up against a discount brokerage listing or a traditional agent's flat MLS entry and you can see exactly where the extra investment goes: a full production day on your home, paid advertising that follows real buyers instead of sitting in a feed, and a launch event engineered to create competition in the first weekend.</p>
+<p>Commission is not set by law and is fully negotiable in every case. The tiers below exist so that conversation starts from a clear menu instead of a guess.</p>
+</section>
+
+<div class="dv"></div>
+
+<section><div class="sh">Marketing Plan Options</div>
+<div class="tscroll"><table><thead><tr>
+<th style="background:var(--b)"></th>
+<th class="tierhead"><span class="tn" style="color:var(--b)">SILVER</span><span class="tp">{{SILVER_PCT}}</span><span class="tc">Discount Tier</span></th>
+<th class="tierhead"><span class="tn" style="color:var(--b)">GOLD</span><span class="tp">{{GOLD_PCT}}</span><span class="tc">Full-Service Tier</span></th>
+<th class="tierhead"><span class="tn" style="color:var(--b)">PLATINUM LUXURY</span><span class="tp">{{PLATINUM_PCT}}</span><span class="tc">Complete Launch</span></th>
+</tr></thead>
+<tbody>
+<tr class="cat"><td colspan="4">Photography &amp; Film</td></tr>
+<tr><td>Professional Photography</td><td class="chk">✓</td><td class="chk">✓</td><td class="chk">✓</td></tr>
+<tr><td>Custom HD Video Tour</td><td class="dash">–</td><td class="chk">✓</td><td class="chk">✓</td></tr>
+<tr><td>Custom Feature Film, scored and edited</td><td class="dash">–</td><td class="dash">–</td><td class="chk">✓</td></tr>
+<tr><td>Aerial / Drone Footage, Voiceover, Music</td><td class="dash">–</td><td class="dash">–</td><td class="chk">✓</td></tr>
+<tr><td>3D Matterport Walking Tour with Floor Plan &amp; Hot Spots</td><td class="dash">–</td><td class="chk">✓</td><td class="chk">✓</td></tr>
+<tr><td>2D Floor Plan with Hotspots for Marketing Collateral</td><td class="dash">–</td><td class="chk">✓</td><td class="chk">✓</td></tr>
+
+<tr class="cat"><td colspan="4">Home Prep &amp; Staging</td></tr>
+<tr><td>Inspection Coordination (Home, Termite)</td><td class="chk">✓</td><td class="chk">✓</td><td class="chk">✓</td></tr>
+<tr><td>Up to 8 Hours of Handyman Service</td><td class="chk">✓</td><td class="chk">✓</td><td class="chk">✓</td></tr>
+<tr><td>Staging Consultation / Decluttering or Free Staging</td><td class="dash">–</td><td class="chk">✓</td><td class="chk">✓</td></tr>
+<tr><td>Optional Professional Cleaning</td><td class="dash">–</td><td class="chk">✓</td><td class="chk">✓</td></tr>
+<tr><td>Compass Concierge Access ($0 due until closing on prep, repairs &amp; staging)</td><td class="dash">–</td><td class="chk">✓</td><td class="chk">✓</td></tr>
+
+<tr class="cat"><td colspan="4">Brochure &amp; Signage</td></tr>
+<tr><td>Custom 8x11 Brochure, Matte Cover + Floor Plan</td><td>Double-sided</td><td>Double-sided</td><td>4-Page</td></tr>
+<tr><td>Luxury Home Sign &amp; Flyer Box</td><td>Single Post</td><td>Double Post</td><td>Double Post + Solar Light</td></tr>
+
+<tr class="cat"><td colspan="4">Launch Event</td></tr>
+<tr><td>Open House</td><td class="chk">✓</td><td class="chk">✓</td><td class="chk">✓</td></tr>
+<tr><td>Grand Opening Weekend (50+ signs, direct mail + online coordinated)</td><td class="dash">–</td><td class="chk">✓</td><td class="chk">✓</td></tr>
+<tr><td>Voicemail Drop / Call Invitations to Buyer Pool</td><td class="dash">–</td><td class="chk">✓</td><td class="chk">✓</td></tr>
+<tr><td>14,000+/- Invitation Cards &amp; Flyers to Local Companies + Neighborhood</td><td class="dash">–</td><td class="chk">✓</td><td class="chk">✓</td></tr>
+<tr><td>Grand Opening with Refreshments &amp; Taco Grill</td><td class="dash">–</td><td class="dash">–</td><td class="chk">✓</td></tr>
+
+<tr class="cat"><td colspan="4">Targeted Advertising</td></tr>
+<tr><td>MLS + Syndicated Online (Zillow, Realtor.com, Trulia, and more)</td><td class="chk">✓</td><td class="chk">✓</td><td class="chk">✓</td></tr>
+<tr><td>Targeted Email to Local Buyer's-Agent Network (MLSListings)</td><td class="chk">✓</td><td class="chk">✓</td><td class="chk">✓</td></tr>
+<tr><td>Social Media Ads (TikTok, Facebook, Instagram)</td><td class="dash">–</td><td class="chk">✓</td><td class="chk">✓</td></tr>
+<tr><td>Google Display Network Ads</td><td class="dash">–</td><td class="chk">✓</td><td class="chk">✓</td></tr>
+<tr><td>Geofencing Retargeting Ads</td><td class="dash">–</td><td class="chk">✓</td><td class="chk">✓</td></tr>
+<tr><td>YouTube Skippable In-Stream Ads</td><td class="dash">–</td><td class="chk">✓</td><td class="chk">✓</td></tr>
+<tr><td>Targeted Ads Featuring Your Custom Film</td><td class="dash">–</td><td class="chk">✓</td><td class="chk">✓</td></tr>
+<tr><td>Realtor.com Sponsored Placement</td><td class="dash">–</td><td class="dash">–</td><td class="chk">✓</td></tr>
+<tr><td>Targeted Direct Mail Postcards</td><td class="dash">–</td><td class="dash">–</td><td class="chk">✓</td></tr>
+</tbody></table></div>
+<p class="lead" style="margin-top:14px"><strong>Silver</strong> is built to go head-to-head with a discount-brokerage listing on price, a dedicated full-service agent, MLS syndication, and Compass's brand exposure are already included at that rate, comparable in scope to what a service like Redfin offers.</p>
+</section>
+
+<div class="dv"></div>
+
+<section><div class="sh">Compass Concierge</div>
+<div class="gold-cb"><h4>$0 Due Until Closing</h4>
+<p>Compass Concierge fronts the cost of the prep work that actually moves price: painting, flooring, staging, decluttering, even light renovation and repairs, with zero interest and nothing due until your home closes. Approval typically takes about 48 hours, so work can start fast. It is a Compass-exclusive program; discount brokerages and most traditional agents don't have an equivalent, and it is included on the Gold and Platinum plans above.</p></div>
+</section>
+
+<div class="dv"></div>
+
+<section><div class="sh">How We're Different</div>
+<div class="cards">
+<div class="card"><div class="lbl">Content Capture → Geofenced Retargeting</div>
+<div class="ds" style="margin-top:8px">We don't send a photographer for twenty minutes and call it marketing. Gold and Platinum listings get a full production day on-site, photography, HD video, drone footage, and at Platinum, a scored feature film. That footage becomes the creative for a geofencing campaign, a location-based ad technology that draws a digital boundary around comparable homes actively for sale nearby. When a buyer, or their agent, physically walks into one of those competing listings, their phone starts showing ads for your home within minutes. It's still a very active, effective tactic in today's market, and it puts your listing in front of the exact buyer pool touring your direct competition.</div></div>
+<div class="card"><div class="lbl">YouTube Skippable In-Stream Ads</div>
+<div class="ds" style="margin-top:8px">Your custom film doesn't just sit on the listing page. We run it as a paid YouTube skippable in-stream campaign, the ad format that plays before or during YouTube videos with a Skip Ad option after five seconds, using YouTube's radius and geographic targeting to serve it specifically to viewers in your target buyer area. A real video tour of your home shows up while a buyer is watching something else nearby, not a static photo they scroll past.</div></div>
+</div>
+<div class="key" style="margin-top:6px"><strong>Buyer targeting, compared.</strong> Most agents stop at MLS syndication and a Facebook boost. Our targeting stack layers six channels around the same production: syndicated portals (Zillow, Realtor.com, Trulia), the local MLSListings buyer's-agent network, social platform ads, Google Display Network, geofencing, and YouTube in-stream, all pointed at the buyers actually active in your specific market rather than a generic zip-code blast.</div>
+</section>
+
+<div class="dv"></div>
+
+<section><div class="sh">Our 3-Step Grand Opening Launch Process</div>
+<p class="lead">How one production day turns into a competitive first weekend instead of a slow trickle of showings:</p>
+<div class="cards3">
+<div class="step"><div class="n">1</div><h4>CAPTURE DAY</h4><p>A full on-site production day: photography, HD video, aerial/drone footage, the 3D Matterport tour, and at Platinum, the feature film. Everything downstream is built from this one visit.</p></div>
+<div class="step"><div class="n">2</div><h4>PRE-LAUNCH AMPLIFICATION</h4><p>Geofencing, YouTube in-stream, social ads, Google Display, and the local buyer's-agent email campaign all go live together in the days before your event, so buyer awareness peaks right before your door opens.</p></div>
+<div class="step"><div class="n">3</div><h4>GRAND OPENING WEEKEND</h4><p>50+ open house signs, direct-mail and voicemail-drop invitations, and 14,000+/- invitation cards to local companies and the neighborhood turn that built-up awareness into foot traffic in one weekend. Platinum adds refreshments and a taco grill.</p></div>
+</div>
+</section>
+
+<div class="dv"></div>
+
+<section><div class="sh">How This Compares</div>
+<p class="lead">Where the extra investment actually goes, lined up against a discount-brokerage listing and a typical traditional full-service agent.</p>
+<div class="tscroll"><table><thead><tr><th>What's Included</th><th>Discount / Redfin-Style</th><th>Traditional Full-Service Agent</th><th>Graeham Watts · The Boyenga Team</th></tr></thead>
+<tbody>
+<tr><td>Typical listing commission</td><td>1-2%*</td><td>2.5-3%</td><td>{{TIER_SUMMARY}}, tiered to the plan</td></tr>
+<tr><td>Dedicated agent, start to close</td><td>Often rotates / team-assigned</td><td>Usually</td><td>Yes, Graeham personally, backed by the #1 Silicon Valley team</td></tr>
+<tr><td>Professional photography</td><td>Yes</td><td>Usually</td><td>Yes, every tier</td></tr>
+<tr><td>HD video / drone / feature film</td><td>Limited</td><td>Rare</td><td>Yes, Gold &amp; Platinum</td></tr>
+<tr><td>3D Matterport tour</td><td>Sometimes</td><td>Rare</td><td>Yes, Gold &amp; Platinum</td></tr>
+<tr><td>$0-interest prep/staging financing</td><td>Paid add-on if offered</td><td>Rare</td><td>Yes, via Compass Concierge (Gold &amp; Platinum)</td></tr>
+<tr><td>Open house</td><td>Yes</td><td>Yes</td><td>Yes, every tier; Grand Opening Weekend event on Gold &amp; Platinum</td></tr>
+<tr><td>Geofencing retargeting ads</td><td>Rare</td><td>Rare</td><td>Yes, Gold &amp; Platinum</td></tr>
+<tr><td>YouTube in-stream video ads</td><td>Rare</td><td>Rare</td><td>Yes, Gold &amp; Platinum</td></tr>
+<tr><td>Social + Google Display ads</td><td>Limited</td><td>Rare</td><td>Yes, Gold &amp; Platinum</td></tr>
+<tr><td>Direct mail / local agent network email</td><td>Rare</td><td>Sometimes</td><td>Yes, every tier (14,000+/- pieces on Gold &amp; Platinum)</td></tr>
+</tbody></table></div>
+<p class="nt" style="font-size:12px;color:var(--gy);margin-top:6px">*Redfin's reduced listing fee typically requires bundling a home purchase through Redfin in the same window and excludes buyer's-agent commission, which is negotiated separately. Figures are general industry ranges as of 2026, not quotes from any specific brokerage.</p>
+</section>
+
+<div class="dv"></div>
+
+<section><div class="sh">Which Tier Fits</div>
+<div class="cards3">
+<div class="card"><div class="lbl">Silver · {{SILVER_PCT}}</div><div class="ds" style="margin-top:8px">For sellers prioritizing the lowest commission and comfortable with a lighter marketing footprint, still with a dedicated agent and full MLS exposure.</div></div>
+<div class="card"><div class="lbl">Gold · {{GOLD_PCT}}</div><div class="ds" style="margin-top:8px">The standard full-service plan: video production, paid advertising across six channels, Compass Concierge, and a hosted Grand Opening Weekend.</div></div>
+<div class="card"><div class="lbl">Platinum Luxury · {{PLATINUM_PCT}}</div><div class="ds" style="margin-top:8px">The complete launch. Adds the feature film, 4-page brochure, solar-lit signage, and a hosted Grand Opening with refreshments, built for listings where a stronger first impression pays for itself.</div></div>
+</div>
+</section>
+
+<div class="dv"></div>
+
+<section><div class="sh">Staying In Touch</div>
+<p>Happy to walk through any of these plans in more detail, or build a version tailored to your specific property. And if you know anyone else thinking about buying or selling, I'd be grateful for the introduction.</p>
+</section>
+
+</div>
+<footer><div class="fn">GRAEHAM WATTS</div><div class="fl" style="font-size:15px;color:#ddd;margin:8px 0 18px">REALTOR. Powered by The Boyenga Team at Compass Real Estate.</div>
+<img src="data:image/png;base64,{{COBRAND_LOCKUP_B64}}" alt="The Boyenga Team and Compass" class="fbrand">
+<div class="fl">DRE #01466876 | 650-308-4727 | graehamwatts.com</div>
+<div class="ds2">Commission is not set by law, is fully negotiable, and varies with scope of services, market conditions, and the specific listing agreement. Services listed reflect the current marketing program offered by Graeham Watts through The Boyenga Team at Compass and are subject to change.</div></footer>
+</body></html>
