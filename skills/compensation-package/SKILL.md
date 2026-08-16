@@ -68,17 +68,18 @@ These replaced the old Intero-branded "Regular" and "Luxury" flyers on 2026-08-1
 
 1. Read `skills/shared-references/identity.json` for current brand values.
 2. Start from `references/template.html` (never hand-edit the published output directly, or the two variants will drift apart).
-3. Re-encode the cobrand lockup if it has changed:
+3. **Strip the template's leading `<!-- ... -->` documentation comment before substituting placeholders**, then re-add `<!DOCTYPE html>` to the front. The comment's own prose names each `{{PLACEHOLDER}}` as documentation text, and a naive find-and-replace across the whole file matches those mentions too, e.g. it tripled the ~92KB cobrand-lockup image into the page once (caught 2026-08-16 before a second publish). The comment is for editors of the template; it must never reach the published page.
+4. Re-encode the cobrand lockup if it has changed:
    ```bash
    base64 -w 0 "C:\Users\Graeham Watts\Documents\Compass\Compass branding\How to use branding\Boyenga And Compass\Boyenga Team + Compass white.png"
    ```
-4. Substitute every `{{PLACEHOLDER}}` listed in the template's header comment for both variants (Standard and Premium use the same template, different tier percentages).
-5. Grep the output for `\u2014` (em dash) — must be zero. Title/label separators use a plain hyphen `" - "`, matching the convention already used on graehamwatts.com CMA pages.
-6. Grep for leftover `{{` — must be zero.
-7. Open both pages in a browser and scroll through before publishing; check the tier-header table and the competitor comparison table specifically, they're the two places placeholder substitution most often leaves an awkward string.
-8. Run the brand validator (see `references/publishing.md`).
-9. Publish per `references/publishing.md`.
-10. Verify both live URLs return 200.
+5. Substitute every remaining `{{PLACEHOLDER}}` for both variants (Standard and Premium use the same template, different tier percentages).
+6. Grep the output for `\u2014` (em dash) — must be zero. Title/label separators use a plain hyphen `" - "`, matching the convention already used on graehamwatts.com CMA pages.
+7. Grep for leftover `{{` — must be zero.
+8. Open both pages in a browser and scroll through before publishing; check the tier-header table and the competitor comparison table specifically, they're the two places placeholder substitution most often leaves an awkward string.
+9. Run the brand validator (see `references/publishing.md`).
+10. Publish per `references/publishing.md`.
+11. Verify both live URLs return 200.
 
 ---
 
