@@ -11,8 +11,6 @@
                            `base64 -w 0 "<path>"`, never hand-type it.
   {{PAGE_TITLE_SUFFIX}}    "Standard Rates" / "Premium Rates"
   {{VARIANT_LABEL}}        "Standard" / "Premium"
-  {{OTHER_VARIANT_LABEL}}  the opposite of VARIANT_LABEL, for the toggle link
-  {{OTHER_VARIANT_FILE}}   filename of the other variant, for the toggle link
   {{SILVER_PCT}} {{GOLD_PCT}} {{PLATINUM_PCT}}   per-tier commission for
                            this variant, see SKILL.md section 1 for the two
                            approved sets of values. Do not invent a third set
@@ -32,6 +30,28 @@
   VOICE: brand values come from skills/shared-references/identity.json at
   build time, never from memory. Commission is negotiable by law; the
   footer disclaimer line is required on every variant, do not remove it.
+
+  STANDARD AND PREMIUM ARE INTENTIONALLY DISCONNECTED (Graeham, 2026-08-16).
+  Do not add a link, toggle, or any other cross-reference between the two
+  variants. He shows Premium selectively, to sellers he believes will bear
+  a stronger fee, and a visible link to the cheaper Standard page from that
+  page would undercut the pitch. Each page must stand alone as if the other
+  did not exist.
+
+  NO HARD NUMBERS IN THE "HOW THIS COMPARES" TABLE. Figures like the
+  14,000+/- mailer count belong in the Marketing Plan Options table above
+  (where they describe this specific program), not in the competitor
+  comparison table, where a number implies a promise that could vary by
+  listing. Keep that table's Graeham Watts column to plain "Yes" statements.
+
+  COMPASS CONCIERGE FIGURES (researched 2026-08-16, confirm before reusing
+  in a future year, terms vary by state and change over time): NorCal cap
+  $50,000, flat $750 fee, 0% interest, nothing due until closing or 12
+  months, whichever comes first. Above $50,000, Compass's separate
+  "Concierge Capital" financing extends up to $100,000 (listings under $6M)
+  at roughly 9.99% interest plus a 2.99% origination fee. Source: multiple
+  Compass agent sites summarizing the program; not Compass's own published
+  rate sheet, so treat as directionally accurate rather than contractual.
 -->
 <html lang="en"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -56,9 +76,6 @@
 .hero .ad{font-size:22px;font-weight:700;margin-top:14px;max-width:640px;margin-left:auto;margin-right:auto}
 .hero .dt{color:#aaa;margin-top:10px;font-size:13px;max-width:680px;margin-left:auto;margin-right:auto}
 .hero .cn{color:var(--g);font-size:12px;margin-top:14px}
-.hero .toggle{margin-top:16px;font-size:12px}
-.hero .toggle a{color:#e8e8e8;text-decoration:underline}
-.hero .toggle a:hover{color:var(--g)}
 p{margin-bottom:13px;font-size:15px;color:#2a2a2a}.lead{font-size:16px}
 table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13px;box-shadow:0 1px 5px rgba(0,0,0,.06)}
 th{background:var(--g);color:var(--b);text-align:left;padding:8px 9px;font-size:11px;text-transform:uppercase}
@@ -92,7 +109,7 @@ footer{background:var(--b);color:#ddd;padding:28px 0;text-align:center;margin-to
 .ds2{font-size:10.5px;color:#888;max-width:820px;margin:14px auto 0}
 @media(max-width:760px){.cards,.cards3{grid-template-columns:1fr}}
 @media print{
-  .nav,.hero .toggle{display:none!important}
+  .nav{display:none!important}
   body{font-size:12px}
   .hero{padding:24px 0}
   .sh{-webkit-print-color-adjust:exact;print-color-adjust:exact}
@@ -111,7 +128,6 @@ footer{background:var(--b);color:#ddd;padding:28px 0;text-align:center;margin-to
 <div class="ad">A transparent look at what your commission actually buys, tier by tier.</div>
 <div class="dt">The same production, paid-advertising, and launch-event strategy behind the #1 real estate team in Silicon Valley, broken down by package so you can see exactly where every point of commission goes.</div>
 <div class="cn">DRE #01466876. 650-308-4727. graehamwatts.com</div>
-<div class="toggle">Viewing {{VARIANT_LABEL}} Rates &nbsp;·&nbsp; <a href="{{OTHER_VARIANT_FILE}}">See {{OTHER_VARIANT_LABEL}} Rates →</a></div>
 </div></header>
 
 <div class="wrap">
@@ -144,7 +160,7 @@ footer{background:var(--b);color:#ddd;padding:28px 0;text-align:center;margin-to
 <tr><td>Up to 8 Hours of Handyman Service</td><td class="chk">✓</td><td class="chk">✓</td><td class="chk">✓</td></tr>
 <tr><td>Staging Consultation / Decluttering or Free Staging</td><td class="dash">–</td><td class="chk">✓</td><td class="chk">✓</td></tr>
 <tr><td>Optional Professional Cleaning</td><td class="dash">–</td><td class="chk">✓</td><td class="chk">✓</td></tr>
-<tr><td>Compass Concierge Access ($0 due until closing on prep, repairs &amp; staging)</td><td class="dash">–</td><td class="chk">✓</td><td class="chk">✓</td></tr>
+<tr><td>Compass Concierge Access (up to $50,000, $0 due until closing)</td><td class="dash">–</td><td class="chk">✓</td><td class="chk">✓</td></tr>
 
 <tr class="cat"><td colspan="4">Brochure &amp; Signage</td></tr>
 <tr><td>Custom 8x11 Brochure, Matte Cover + Floor Plan</td><td>Double-sided</td><td>Double-sided</td><td>4-Page</td></tr>
@@ -174,8 +190,8 @@ footer{background:var(--b);color:#ddd;padding:28px 0;text-align:center;margin-to
 <div class="dv"></div>
 
 <section><div class="sh">Compass Concierge</div>
-<div class="gold-cb"><h4>$0 Due Until Closing</h4>
-<p>Compass Concierge fronts the cost of the prep work that actually moves price: painting, flooring, staging, decluttering, even light renovation and repairs, with zero interest and nothing due until your home closes. Approval typically takes about 48 hours, so work can start fast. It is a Compass-exclusive program; discount brokerages and most traditional agents don't have an equivalent, and it is included on the Gold and Platinum plans above.</p></div>
+<div class="gold-cb"><h4>Up to $50,000, $0 Due Until Closing</h4>
+<p>Compass Concierge fronts the cost of the prep work that actually moves price: painting, flooring, staging, decluttering, even light renovation and repairs. In Northern California that's up to $50,000, for a flat $750 fee, zero interest, nothing due until your home closes (or 12 months out, whichever comes first). Need more than $50,000 for a larger renovation? Compass's Concierge Capital financing extends up to $100,000, at market interest plus an origination fee. Approval typically takes about 48 hours, so work can start fast. It is a Compass-exclusive program; discount brokerages and most traditional agents don't have an equivalent, and it is included on the Gold and Platinum plans above.</p></div>
 </section>
 
 <div class="dv"></div>
@@ -212,12 +228,12 @@ footer{background:var(--b);color:#ddd;padding:28px 0;text-align:center;margin-to
 <tr><td>Professional photography</td><td>Yes</td><td>Usually</td><td>Yes, every tier</td></tr>
 <tr><td>HD video / drone / feature film</td><td>Limited</td><td>Rare</td><td>Yes, Gold &amp; Platinum</td></tr>
 <tr><td>3D Matterport tour</td><td>Sometimes</td><td>Rare</td><td>Yes, Gold &amp; Platinum</td></tr>
-<tr><td>$0-interest prep/staging financing</td><td>Paid add-on if offered</td><td>Rare</td><td>Yes, via Compass Concierge (Gold &amp; Platinum)</td></tr>
+<tr><td>$0-interest prep/staging financing</td><td>Paid add-on if offered</td><td>Rare</td><td>Yes, included via Compass Concierge</td></tr>
 <tr><td>Open house</td><td>Yes</td><td>Yes</td><td>Yes, every tier; Grand Opening Weekend event on Gold &amp; Platinum</td></tr>
-<tr><td>Geofencing retargeting ads</td><td>Rare</td><td>Rare</td><td>Yes, Gold &amp; Platinum</td></tr>
+<tr><td>Geofencing retargeting ads</td><td>No</td><td>No</td><td>Yes, Gold &amp; Platinum</td></tr>
 <tr><td>YouTube in-stream video ads</td><td>Rare</td><td>Rare</td><td>Yes, Gold &amp; Platinum</td></tr>
 <tr><td>Social + Google Display ads</td><td>Limited</td><td>Rare</td><td>Yes, Gold &amp; Platinum</td></tr>
-<tr><td>Direct mail / local agent network email</td><td>Rare</td><td>Sometimes</td><td>Yes, every tier (14,000+/- pieces on Gold &amp; Platinum)</td></tr>
+<tr><td>Direct mail / local agent network email</td><td>Rare</td><td>Sometimes</td><td>Yes, every tier</td></tr>
 </tbody></table></div>
 <p class="nt" style="font-size:12px;color:var(--gy);margin-top:6px">*Redfin's reduced listing fee typically requires bundling a home purchase through Redfin in the same window and excludes buyer's-agent commission, which is negotiated separately. Figures are general industry ranges as of 2026, not quotes from any specific brokerage.</p>
 </section>

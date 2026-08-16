@@ -43,13 +43,13 @@ These replaced the old Intero-branded "Regular" and "Luxury" flyers on 2026-08-1
 | Standard | `https://graehamwatts.github.io/online-content/compensation/Compensation-Package-Standard.html` |
 | Premium | `https://graehamwatts.github.io/online-content/compensation/Compensation-Package-Premium.html` |
 
-Each page has a toggle link in the hero to the other variant, so whichever one Graeham shares, the recipient can see the other rate set too.
+**The two pages are intentionally disconnected.** No toggle, link, or cross-reference between them. Graeham shows Premium selectively, to sellers he believes will bear a stronger fee, and a visible link to the cheaper Standard page would undercut that pitch. Each page must read as if the other doesn't exist. This was explicit direction from Graeham on 2026-08-16 after an earlier draft linked them; do not re-add a toggle.
 
 ---
 
 ## 3. Section structure (do not reorder without reason)
 
-1. **Hero** — name, cobrand lockup (Boyenga + Compass, equal weight), variant badge, DRE/contact, toggle link to the other variant.
+1. **Hero** — name, cobrand lockup (Boyenga + Compass, equal weight), variant badge, DRE/contact. No link to the other variant (see disconnection note above).
 2. **What You're Actually Comparing** — framing paragraph, states commission is negotiable.
 3. **Marketing Plan Options** — the full checkmark grid, grouped by category (Photography & Film, Home Prep & Staging, Brochure & Signage, Launch Event, Targeted Advertising), Silver/Gold/Platinum columns.
 4. **Compass Concierge** — the $0-due-until-closing prep/staging financing callout. This is a real, current Compass-exclusive program (not available at a discount brokerage or most traditional agents); confirm it's still active before reusing this copy in a future year.
