@@ -130,6 +130,10 @@ Section order matters: the client reads the story first, the comps second, the d
 8. **Special Considerations** — only if applicable: tenant occupancy, unpermitted work, ADU income, lot premium, school district, zoning, environmental, deferred maintenance, market timing. Two to three sentences of price impact each. Omit the section entirely rather than padding it.
 9. **Closing** — warm close, referral CTA, contact block, single disclaimer line.
 
+> **Out of scope: tax and legal advice (added 2026-08-17, Shree Khare / step-up-basis question).** A client will sometimes ask a tax or legal question alongside a CMA request, most commonly step-up-in-basis after an inheritance, community-property vs joint-tenancy title questions, or 1031 exchange mechanics. **Never calculate a tax basis or give a legal conclusion.** What is in scope: pulling supporting market data (e.g., comparable sales around a specific date, such as a date of death, to help establish fair market value at that date) and looking up how a property was deeded via Realist/county records (joint tenancy, community property, trust, etc. — a factual lookup, not a legal opinion on its consequences). Always close with a plain recommendation that the client confirm the actual basis and its tax treatment with a CPA or estate attorney. If Graeham has a specific referral, that is his call to offer, not something to invent.
+>
+> **Revised/objection-handling proposals stay tight.** When responding to a client's specific pushback on an earlier CMA or proposal (pricing, commission, scope), the reply should directly answer each point raised, in plain numbers, and fit in roughly two pages. Do not restate the full original CMA. A sophisticated client (Shree Khare, 2026-08-17: "I work in the industry and I can certainly tell" a proposal is AI-generated fluff) will notice padding and generic restatement faster than most, and it costs trust rather than building it.
+
 ---
 
 ## 7. Reference map — read by task

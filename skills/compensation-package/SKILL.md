@@ -34,6 +34,15 @@ These replaced the old Intero-branded "Regular" and "Luxury" flyers on 2026-08-1
 
 **Standard** is the default page to send. **Premium** is what Graeham shows when he believes he can command a stronger fee, e.g. a hot listing, a seller less price-sensitive, a market favoring sellers. Never send Premium as the default without Graeham's direction.
 
+### 1a. Optional sliding-scale commission (added 2026-08-17, Shree Khare negotiation)
+
+When a seller pushes on rate and Graeham wants to offer a lower base without giving up the Gold-tier services, an available alternative to a flat percentage is a **sliding scale tied to the CMA's own Expected Sales Price**:
+
+- Sale price below the Expected Sales Price threshold → the lower rate (e.g. 2.25%, matching Silver-tier economics)
+- Sale price at or above that threshold → the higher rate (e.g. 2.5%, Gold-tier rate)
+
+This is not a new permanent tier and does not replace Silver/Gold/Platinum — it is a per-client offer Graeham makes explicitly, in writing, when a client specifically negotiates on rate. State the exact dollar threshold (pulled straight from the CMA's Expected Sales Price), not a vague "if it sells well." This structure aligns Graeham's incentive with the client's outcome: he only earns the higher rate by actually beating the number he told the client to expect, which is the direct answer to "can you do better on rate without losing the service level."
+
 ---
 
 ## 2. Live pages
@@ -51,7 +60,7 @@ These replaced the old Intero-branded "Regular" and "Luxury" flyers on 2026-08-1
 
 1. **Hero** — name, cobrand lockup (Boyenga + Compass, equal weight), variant badge, DRE/contact. No link to the other variant (see disconnection note above).
 2. **What You're Actually Comparing** — framing paragraph, states commission is negotiable.
-3. **Marketing Plan Options** — the full checkmark grid, grouped by category (Photography & Film, Home Prep & Staging, Brochure & Signage, Launch Event, Targeted Advertising), Silver/Gold/Platinum columns.
+3. **Marketing Plan Options** — the full checkmark grid, grouped by category (Photography & Film, Home Prep & Staging, Brochure & Signage, Launch Event, Targeted Advertising), Silver/Gold/Platinum columns. Gold and Platinum include "Coordination & Vendor Recommendations for Furniture/Junk Removal and Pre-Listing Repairs or Updates" (added 2026-08-17, Shree Khare negotiation). **Keep this wording exactly.** It must read as coordination and vendor recommendations, never as Graeham personally performing, financing, or guaranteeing the removal/repair/remodel work himself — that overcommitment risk is why "coordinate and recommend" was chosen over phrasing like "we handle" or "we'll remodel it for you."
 4. **Compass Concierge** — the $0-due-until-closing prep/staging financing callout. This is a real, current Compass-exclusive program (not available at a discount brokerage or most traditional agents); confirm it's still active before reusing this copy in a future year.
 5. **How We're Different** — content-capture-to-geofencing explanation, YouTube skippable in-stream ads explanation, buyer-targeting-compared callout.
 6. **Our 3-Step Grand Opening Launch Process** — Capture Day → Pre-Launch Amplification → Grand Opening Weekend.

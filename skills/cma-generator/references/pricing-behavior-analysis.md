@@ -165,6 +165,16 @@ Watch for a tier outlier with high DOM: a full remodel that took 78 days and a r
 
 **Every tier card must state its own expected sale outcome and expected DOM**, e.g. *"Expected sale: $2,450,000 to $2,600,000, around 10 days."* A list price with no stated consequence is not a strategy.
 
+**Every tier card must also state its own pros and cons**, not just the expected outcome (added 2026-08-17, Shree Khare pushback). A list price with no stated tradeoff reads as a number pulled from nowhere. Use this shape for each of the three:
+
+| Tier | List price shown as | Pros | Cons |
+|---|---|---|---|
+| **Aggressive** | Suggested list price (below Expected Sales Price) | Draws the widest buyer pool, highest odds of multiple offers, typically the fastest sale | If it does not draw competition, the sale can land at or near the low list price, which reads publicly as underperforming |
+| **Recommended** | Suggested list price (at the comps-supported value, still under the market's median winner premium) | Balances speed and upside, matches what most of the current market is actually doing | Less dramatic than an aggressive list, so somewhat lower odds of a bidding-war ceiling |
+| **Stretch** | Suggested list price (near or above the top of the Expected Sales Price range) | Keeps upside optionality if a premium buyer appears without a bidding war | Longer time on market, weaker negotiating leverage, usually requires one or more price cuts to reach the Expected Sales Price anyway |
+
+**Always show the Suggested List Price and the Expected Sales Price as two distinct numbers on every tier card, never conflated into one.** The list price is the marketing lever; the Expected Sales Price is the outcome estimate. A tier card that only shows one number is incomplete. This is also the block to reuse verbatim when responding to a client's pricing pushback in an email or revised proposal, not just in the CMA report itself.
+
 ### Deriving the aggressive list price from market behavior
 Do not guess it. Compute it:
 
@@ -188,6 +198,7 @@ Always bracket-check the result: it should clear the top of the tier below and s
 - Never present LSR vs final list as if it were vs original list — they tell different stories.
 - No em dashes in output prose. Compute every percentage and median in Python.
 - This section sits in the report AFTER the comps and market data, and FEEDS the Pricing Strategy / Recommended List Price sections (it is the evidence behind them).
+- **The stated Suggested List Price must actually match the market-behavior narrative it sits next to.** Caught 2026-08-17 (Shree Khare pushback): a report said most competition prices just under a round-number threshold to draw bidders, then recommended a list price ABOVE that threshold in the same breath. If the narrative says "price under $X to draw competition," the Aggressive tier's list price must actually be under $X. Re-read your own narrative paragraph against your own tier numbers before sending anything out; a contradiction here is exactly the kind of thing a sophisticated client will catch and lose trust over.
 
 ## Plain-language labeling and honesty rules (added 2026-06-26, Fugu review)
 
