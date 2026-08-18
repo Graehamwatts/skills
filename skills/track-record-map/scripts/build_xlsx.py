@@ -42,7 +42,7 @@ records.sort(key=lambda r: parse_date(r['date']))
 
 wb = Workbook()
 ws = wb.active
-ws.title = 'Boyenga Team Sold Track Record'
+ws.title = os.environ.get('TRM_SHEET_TITLE', 'Sold Track Record')[:31]
 
 headers = ['MLS #', 'Address', 'City', 'Sale Price', 'Close Date', 'Property Type',
            'Beds', 'Baths (Full|Half)', 'SqFt', 'Lot Size', 'Matched DRE / Side(s)',
