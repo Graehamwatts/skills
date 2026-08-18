@@ -109,6 +109,16 @@ Acceptable exceptions: the factual subject-details table ("Owner: Li Hu"), the f
 
 Before publishing, scan for `\bhis\b`, `\bhim\b`, `\bher\b`, `\bshe\b`, `\bthe client\b`, `\bthe seller\b` in prose context. If advice would feel awkward in second person, the prose is in the wrong voice.
 
+## Whose "you"? Never address Graeham inside the report
+
+"You" and "your" in a CMA always mean the seller reading it. They never mean Graeham, even when the content originated from something Graeham said to Claude while building the report.
+
+**Real incident, 2026-08-17 (16 Clarence Court):** Graeham described a comp to Claude by phone/voice ("Realmar," ~$2M original list, ~$1.275M reduced, sold/pending ~$1.3M). The shipped report included an exception-comp section that read "You asked me to include the recent Ralmar Avenue property... I pulled the exact MLS record. Here is what it actually says, including where your recollection and the verified numbers differ," followed by a two-column table literally titled "What you described" vs. "Verified in MLS." That is a transcript of the Graeham-Claude research conversation, published directly into a document going to the seller. The seller has no idea that conversation happened and must never see it.
+
+**The fix, every time:** treat anything Graeham tells Claude verbally about a comp (a phone call to a listing agent, a recollection of a price, "I think it's around X") purely as a lead to verify, never as report content. Once verified, write the comp into the report using only the confirmed facts, in the same neutral third-person-comp voice as every other comp in the table. Do not narrate the correction. Do not build a "what you said vs. what's true" comparison anywhere in client output; that dialogue happens in chat with Graeham, never in the deliverable.
+
+Scan before publishing for first-person Claude voice and any address to Graeham-as-requester: `\bI \b` outside of quoted remarks, `you (asked|described|told|said|mentioned|recalled)`, `your recollection`, `what you (described|said)`, `I pulled`, `I verified`, `I called`. Any hit is a stop-ship defect, not a style note.
+
 ## Banned openers — never brace the reader
 
 BANNED verbatim and paraphrased: "First of all," "I want to be straight with you," "Two things I want to be straight with you about up front," "Let me be honest," "To be blunt," "I'll be direct," "Real talk," or any variant that braces the reader for bad news. They read as aggressive and put the client on the defensive.
