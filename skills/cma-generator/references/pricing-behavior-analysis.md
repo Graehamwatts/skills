@@ -127,11 +127,13 @@ Then the recommended list price must follow what the data says the market reward
 
 ### Required structure for the Pricing Strategy section
 
-**1. Lead with an Expected Sales Price callout.** A single prominent stat block, before any list-price discussion:
+**1. Lead with an Expected Sales Price callout.** A single stat block, before any list-price discussion:
 
 > **EXPECTED SALES PRICE**
 > **$X to $Y**
 > Midpoint $Z, about $N per square foot
+
+**Size it like a stat, not a hero headline.** Real correction, 16 Clarence Court, 2026-08-17: this callout was shipped at 36px in a bold black block and read as oversized and heavy next to the rest of the page. The number in this callout must be the same size and weight as the `.val` price shown on each tier card below it (22px, Montserrat 800), not a large display headline. It is one data point among several on the page, not the page's visual climax.
 
 **2. Show how it was derived**, in a readable block, not just a number. Name the condition-matched comps, state the size adjustment, and show the bracket check.
 
@@ -163,9 +165,9 @@ Watch for a tier outlier with high DOM: a full remodel that took 78 days and a r
 | 2 | **Recommended** | List at the value the comps support, still under the market's median winner premium. The default recommendation. |
 | 3 | **Stretch** | Tests the top of the range. Carries the overpriced group's risk profile: longer DOM, likely cut. |
 
-**Every tier card must state its own expected sale outcome and expected DOM**, e.g. *"Expected sale: $2,450,000 to $2,600,000, around 10 days."* A list price with no stated consequence is not a strategy.
+**Tier cards show ONLY the suggested list price, not a restated expected-sale figure or DOM.** Retired 2026-08-17 after direct correction on 16 Clarence Court: cards previously each carried their own "Expected sale: $X to $Y, N days" line, which produced a second, different sale-price figure sitting below the single Expected Sales Price callout already shown at the top of the section. Graeham's words: "we already say what the expected sale is above, and now it's different and you're putting it below. Makes no sense." One Expected Sales Price, stated once, at the top. The tier cards exist to answer "what do I put on the sign," not to re-derive the outcome a second time with slightly different numbers. Leave DOM off the cards entirely by default; it is optional and only goes in when Graeham asks for it on that specific report.
 
-**Every tier card must also state its own pros and cons**, not just the expected outcome (added 2026-08-17, Shree Khare pushback). A list price with no stated tradeoff reads as a number pulled from nowhere. Use this shape for each of the three:
+**Every tier card must still state its own pros and cons** (added 2026-08-17, Shree Khare pushback). A list price with no stated tradeoff reads as a number pulled from nowhere. Use this shape for each of the three:
 
 | Tier | List price shown as | Pros | Cons |
 |---|---|---|---|
@@ -173,7 +175,7 @@ Watch for a tier outlier with high DOM: a full remodel that took 78 days and a r
 | **Recommended** | Suggested list price (at the comps-supported value, still under the market's median winner premium) | Balances speed and upside, matches what most of the current market is actually doing | Less dramatic than an aggressive list, so somewhat lower odds of a bidding-war ceiling |
 | **Stretch** | Suggested list price (near or above the top of the Expected Sales Price range) | Keeps upside optionality if a premium buyer appears without a bidding war | Longer time on market, weaker negotiating leverage, usually requires one or more price cuts to reach the Expected Sales Price anyway |
 
-**Always show the Suggested List Price and the Expected Sales Price as two distinct numbers on every tier card, never conflated into one.** The list price is the marketing lever; the Expected Sales Price is the outcome estimate. A tier card that only shows one number is incomplete. This is also the block to reuse verbatim when responding to a client's pricing pushback in an email or revised proposal, not just in the CMA report itself.
+**The Suggested List Price is the only number on the tier card.** The Expected Sales Price lives once, in the callout at the top of the section, never repeated or re-derived per card. This is also the block to reuse verbatim when responding to a client's pricing pushback in an email or revised proposal, not just in the CMA report itself.
 
 ### Deriving the aggressive list price from market behavior
 Do not guess it. Compute it:
