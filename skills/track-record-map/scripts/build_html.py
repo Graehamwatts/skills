@@ -271,7 +271,7 @@ TEMPLATE = r"""<!DOCTYPE html>
     <div class="stat"><div class="num">__EARLIEST_DATE__</div><div class="label">Earliest Close Date</div></div>
     <div class="stat"><div class="num">__LATEST_DATE__</div><div class="label">Most Recent Close Date</div></div>
   </div>
-  <p class="stats-note">Includes homes listed and sold by the team, and homes purchased by team-represented buyers. De-duplicated by MLS number across List Agent and Buyer's Agent searches for Eric Boyenga (DRE 01254725), Janelle Boyenga (DRE 01254724), and Graeham Watts (DRE 01466876).</p>
+  <p class="stats-note">Includes homes listed and sold by the team, and homes purchased by team-represented buyers. De-duplicated by MLS number across List Agent and Buyer's Agent searches for Eric Boyenga (DRE 01254725), Janelle Boyenga (DRE 01254724), Graeham Watts (DRE 01466876), and The Boyenga Team's team license (DRE 70010882).</p>
 </div>
 
 <main>
@@ -306,7 +306,7 @@ TEMPLATE = r"""<!DOCTYPE html>
 <footer>
   <div class="brandline">__BRAND_LINE__</div>
   <div class="dre">Graeham Watts, REALTOR &middot; DRE #__DRE__</div>
-  <div style="margin-top:10px; color:#8b93a8;">Source: MLSListings Matrix, Sold status. Searched by List Agent Lic # and Buyer's Agent Lic # for DRE 01466876 (Graeham Watts), DRE 01254724 (Janelle Boyenga), and DRE 01254725 (Eric Boyenga), plus a Listing Agent Last Name "Boyenga" catch-all, merged and de-duplicated by MLS #. Data compiled and geocoded for informational purposes; deemed reliable but not guaranteed.</div>
+  <div style="margin-top:10px; color:#8b93a8;">Source: MLSListings Matrix, Sold status. Searched by List Agent Lic # and Buyer's Agent Lic # for DRE 01466876 (Graeham Watts), DRE 01254724 (Janelle Boyenga), DRE 01254725 (Eric Boyenga), and DRE 70010882 (The Boyenga Team license), plus a Listing Agent Last Name "Boyenga" catch-all, merged and de-duplicated by MLS #. Data compiled and geocoded for informational purposes; deemed reliable but not guaranteed.</div>
 </footer>
 
 <script>

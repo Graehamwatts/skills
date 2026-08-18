@@ -12,11 +12,13 @@ FILES = [
     'search4_buyer_01254724.txt',
     'search5_list_01254725.txt',
     'search6_buyer_01254725.txt',
+    'search7_list_70010882.txt',
+    'search8_buyer_70010882.txt',
 ]
 
 # row pattern: N S MLS# ADDRESS $PRICE $SALEPRICE MM/DD/YYYY DOM BEDS BATHS|PARTBATHS SQFT [LOTSIZE] CITY Res. CLASS ...rest
 ROW_RE = re.compile(
-    r'^\d+\s+S\s+(?P<mls>\S+)\s+(?P<addr>.+?)\s+\$(?P<price>[\d,]+)\s+\$[\d,]+\s+(?P<date>\d{2}/\d{2}/\d{4})\s+.*?\s(?P<city>[A-Za-z][A-Za-z\.\' ]*?)\s+Res\.\s+(?P<cls>Single Family|Condominium|Townhouse)',
+    r'^\d+\s+S\s+(?P<mls>\S+)\s+(?P<addr>.+?)\s+\$(?P<price>[\d,]+)\s+\$[\d,]+\s+(?P<date>\d{2}/\d{2}/\d{4})\s+.*?\s(?P<city>[A-Za-z][A-Za-z\.\' ]*?)\s+Res\.\s+(?P<cls>Single Family|Condominium|Townhouse|Farm/Ranch|Other)',
 )
 
 records = {}  # mls -> record

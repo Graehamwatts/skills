@@ -37,8 +37,15 @@ Confirmed live, working MLS license numbers as of 2026-08-17 (validated by non-e
 | Graeham Watts | 01466876 |
 | Janelle Boyenga | 01254724 |
 | Eric Boyenga | 01254725 |
+| The Boyenga Team (team license) | 70010882 |
 
 > **Naming correction:** `shared-references/identity.json` previously said "Eric and Janet Boyenga." MLS records confirm the first name is **Janelle**, not Janet. If you find "Janet" anywhere in this repo going forward, it's the same historical typo — fix it, same as any other blocklisted-value cleanup.
+
+> **Team license validated 2026-08-18.** `70010882` is a real, active MLS license — List Agent Lic# search returned 673 rows, Buyer's Agent Lic# returned 339 (1012 raw, 971 unique after de-dup). Nearly all of it (962 of 971) was NOT already covered by the three individual DREs — this single number is where most of the team's real volume actually lives, since many team agents beyond Eric/Janelle/Graeham list under the shared "Boyenga Team" license. This is very likely the true source behind the team's own external "Property Nerds Stats" figures ($2.6B+/2,450+), which the individual-DRE-only 625 count never got close to matching. **Standing rule going forward: always include 70010882 as a 4th roster entry, both list and buyer side, in every future run** — it is not optional or supplemental, it's now the largest single contributor.
+>
+> **Parser gotcha found the same day:** the original ROW_RE only matched class values `Single Family|Condominium|Townhouse` and silently dropped any row with a different class (`Farm/Ranch`, `Other`, etc.) with no warning. Fixed in `parse_merge.py` by adding those to the alternation — but if a future MLS pull introduces yet another class string (e.g. `Multi-Family`, `Manufactured`), the same silent-drop will recur. **Always spot-check the parsed-row-count vs. raw-line-count per file after running parse_merge.py** (the raw line count is `wc -l` on the search dump) — if they don't match, find out why before trusting the total.
+>
+> **Known data gap from the 2026-08-18 run:** `ROW_RE` in `parse_merge.py` never captured Beds/Baths/SqFt/Lot Size — those columns exist in the xlsx export schema (`build_xlsx.py`) but the regex only extracts mls/address/price/date/city/class. The 2026-08-18 xlsx export therefore has all 1587 rows correct on MLS#/address/price/date/city/class, but Beds/Baths/SqFt/Lot Size are blank for every row (the script was patched to degrade gracefully with `.get()` instead of crashing). If those columns matter for a future request, extend `ROW_RE` to capture them from the raw dump (the raw text has them: `... DOM BEDS BATHS|HALFBATHS SQFT LOTSIZE CITY ...` between the date and city fields) rather than re-deriving them some other way.
 
 If Graeham adds another team member later, get their DRE from him directly (don't guess) and add it to this table and to `FILES` in `scripts/parse_merge.py`.
 
@@ -111,11 +118,12 @@ Copy the built HTML to `C:\Users\Graeham Watts\Documents\Skills LLMS\Claude\Onli
 
 Because the count includes both listing-side and buyer-side transactions, the page must carry a visible caption disclosing this (e.g. *"Includes homes listed and sold by the team, and homes purchased by team-represented buyers"*) near the total-count stat. Don't blend both without disclosure — a client who later asks "how many have you personally listed" deserves an honest, distinguishable answer, and the underlying data (the "Matched DRE/Side(s)" column in the Excel export) supports answering that if asked.
 
-## 5. Numbers as of the 2026-08-17 build (for reference — re-run to get current numbers, don't reuse these as if they're live)
+## 5. Numbers as of the 2026-08-18 build (for reference — re-run to get current numbers, don't reuse these as if they're live)
 
-- Total unique, de-duplicated: 625
-- Graeham Watts (listing + buyer): 363
-- Janelle Boyenga (listing + buyer): 209
-- Eric Boyenga (listing + buyer): 53
+- Total unique, de-duplicated, all four roster entries combined: **1,587**
+- Individual DREs only (2026-08-17 baseline, superseded but kept for context): 625 — Graeham 363, Janelle 209, Eric 53
+- Team license (DRE 70010882) alone: 971 unique (673 list-side + 339 buyer-side, 41 overlap)
+- Of the team-license 971, only 9 were already covered by an individual DRE — 962 were genuinely new
+- Earliest close date: 2000-02-03 · Latest: 2026-07-03 (per the 2026-08-18 pull)
 
-Note Graeham's own 363 did not fully reconcile with an outside "429" figure he'd been told previously — most likely explanation is that MLS Matrix's earliest record in this system is Feb 2000, so pre-2000 deals, a different MLS board, or unrecorded referral business could account for the gap. Report real, MLS-verified numbers each time rather than forcing a match to a previously-cited figure.
+The 625→1,587 jump on 2026-08-18 happened because Graeham supplied the team license number — most of the team's actual volume runs through it, not through the three individual salesperson DREs. This number is far closer to the team's own external "Property Nerds Stats" marketing figures ($2.6B+/2,450+) than the individual-DRE-only count ever was, though it still isn't a guaranteed match (marketing figures may span a longer career window, different MLS boards, or round differently). Report real, MLS-verified numbers each time rather than forcing a match to a previously-cited figure — the same rule that applied to Graeham's 363 vs. an outside "429" figure on the first build still applies here.
