@@ -111,7 +111,8 @@ padding-bottom: 2px;
 - CTA line text
 - QR target URL
 - Headshot pose (pointing for front, smiling for back is the default but can flex)
-- **Whether the front carries its own QR** (added 2026-07-27, per Graeham). Default is back-only, but a front QR + its own short CTA line is now an approved pattern — e.g. the front poses a curiosity hook with its own QR/offer, the back converts to a second, related offer. When used, mint a SEPARATE Switchy link for the front QR (see cta-router.md's Switchy section) — never reuse the back's link for the front.
+- **Whether the front carries its own QR** (added 2026-07-27, per Graeham). Default is back-only, but a front QR + its own short CTA line is an approved pattern — e.g. the front poses a curiosity hook with its own QR/offer. When used, mint a SEPARATE Switchy link for the front QR (see cta-router.md's Switchy section) — never reuse the back's link for the front.
+- **Whether the back carries a QR at all, or a direct call-to-action instead** (settled 2026-07-27, per Graeham, same day as the above — this is now the DEFAULT, not the exception). A back with no QR — just "WANT A [OFFER]? CALL ME TODAY!" + a large phone number + gold arrow — is Graeham's proven real house style (see the Sept 2025 "Is Now The Right Time To Sell?" card). **Default to ONE QR total (front) + a call CTA on the back**, unless the specific offer genuinely needs its own landing page. Only mint a Switchy link for a QR that actually appears on the card.
 
 ## What's NEVER negotiable
 
