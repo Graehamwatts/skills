@@ -84,7 +84,7 @@ def main():
     print("DEST      :", dest)
     print("FOLDER    : Post card qr (92811)")
     print("PIXELS    : facebook, ga, adwords")
-    print("\nNEXT: in Switchy (Chrome) → find this link → Download QR Code → Download as PNG → embed in the postcard.")
+    print("\nNEXT: in Switchy (Chrome) -> find this link -> Download QR Code -> Download as PNG -> embed in the postcard.")
 
 
 if __name__ == "__main__":
