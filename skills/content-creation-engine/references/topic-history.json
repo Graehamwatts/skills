@@ -11,89 +11,25 @@
   },
   "history": [
     {
-      "week_of": "2026-04-27",
-      "generated_date": "2026-04-23",
+      "week_of": "2026-08-17",
+      "generated_date": "2026-08-19",
       "topics": [
         {
-          "title": "First-Time Buyer Math \u2014 Why Renting in 2026 Costs More Than Owning Under $1.1M on the Peninsula",
-          "angle": "rent-vs-buy-decision-math",
-          "pillar": 2,
-          "pillar_name": "Affordability",
-          "funnel": "BOFU",
-          "market": "EPA",
-          "neighborhood": null,
-          "ghl_keyword": "BUY",
-          "slug": "peninsula-rent-vs-own-math-2026",
-          "scheduled_date": "2026-04-27",
-          "time_decay_band": "seasonal_4wk"
-        },
-        {
-          "title": "Peninsula Bidding Wars Are Back \u2014 Here's What's Actually Different This Time",
-          "angle": "market-dynamics-buyer-strategy",
-          "pillar": 3,
-          "pillar_name": "Market Dynamics",
-          "funnel": "BOFU",
-          "market": "Peninsula",
-          "neighborhood": null,
-          "ghl_keyword": "OFFERS",
-          "slug": "peninsula-bidding-wars-are-back",
-          "scheduled_date": "2026-04-28",
-          "time_decay_band": "weekly_window"
-        },
-        {
-          "title": "Your Peninsula Home's Hidden Equity \u2014 Refinance vs Sell Math for 2026",
-          "angle": "homeowner-equity-decision",
+          "title": "Should You Sell a Tenant-Occupied Home? Real MLS Data",
+          "angle": "tenant-occupied-sale-price-vs-time",
           "pillar": 4,
           "pillar_name": "Buyer/Seller Education",
           "funnel": "BOFU",
-          "market": "Peninsula",
-          "neighborhood": null,
-          "ghl_keyword": "EQUITY",
-          "slug": "peninsula-homeowner-equity-refi-vs-sell-2026",
-          "scheduled_date": "2026-04-29",
-          "time_decay_band": "weekly_window"
-        },
-        {
-          "title": "Woodland Park Just Got Approved for 772 New Units \u2014 What It Does to EPA Prices",
-          "angle": "development-impact-analysis",
-          "pillar": 5,
-          "pillar_name": "Community & Local News",
-          "funnel": "MOFU",
           "market": "EPA",
           "neighborhood": null,
-          "ghl_keyword": "EPA",
-          "slug": "woodland-park-development-epa",
-          "scheduled_date": "2026-04-30",
-          "time_decay_band": "weekly_window"
-        },
-        {
-          "title": "AB 1482 2026 Amendment \u2014 Is Your Rental Exempt? Quick Checklist",
-          "angle": "landlord-legal-compliance",
-          "pillar": 4,
-          "pillar_name": "Buyer/Seller Education",
-          "funnel": "BOFU",
-          "market": "California",
-          "neighborhood": null,
-          "ghl_keyword": "1482",
-          "slug": "ab1482-2026-amendment-landlords",
-          "scheduled_date": "2026-05-01",
+          "ghl_keyword": "SELL",
+          "slug": "tenant-occupied-selling-data",
+          "scheduled_date": "2026-08-19",
           "time_decay_band": "seasonal_4wk"
         }
       ]
     }
   ],
-  "in_production": [
-    {
-      "slug": "epa-homes-around-1m-shot-2026-04",
-      "title": "East Palo Alto Homes Around $1M",
-      "shot_date": "2026-04-23",
-      "status": "shot",
-      "scheduled_post_date": null,
-      "primary_market": "EPA",
-      "primary_angle": "entry-level-buyer-inventory",
-      "ghl_keyword": "BUY",
-      "exclusion_radius": "Any topic touching EPA sub-$1M inventory or entry-level Peninsula buyer inventory should be excluded from the next 2 weeks of ideation while this video is in production.",
-      "noted_by": "Graeham \u2014 added April 24, 2026 after gatekeeper missed conflict with planned Mon Apr 27 topic"
-    }
-  ]
+  "in_production": [],
+  "_prune_note_2026-08-19": "The prior history entry (week_of 2026-04-27, 5 topics) and the prior in_production entry (epa-homes-around-1m-shot-2026-04) were both 16+ weeks stale relative to this run's date and were pruned per the max_weeks:4 auto_prune rule before this append."
 }
