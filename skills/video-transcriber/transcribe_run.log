@@ -1,0 +1,1265 @@
+[transcribe] URL: https://www.youtube.com/watch?v=W8OHKFqTyDU
+[transcribe] Platform detected: youtube
+[tier1] caption pull failed: no element found: line 1, column 0
+[tier2] Loading Whisper 'base' model (first run downloads ~140 MB)...
+[tier2] Transcribing... this can take 30 sec – 3 min depending on length
+C:\Users\Graeham Watts\AppData\Roaming\Python\Python314\site-packages\whisper\transcribe.py:132: UserWarning: FP16 is not supported on CPU; using FP32 instead
+  warnings.warn("FP16 is not supported on CPU; using FP32 instead")
+Detected language: English
+  0%|          | 0/368795 [00:00<?, ?frames/s]  1%|          | 2908/368795 [00:27<56:59, 107.01frames/s]  2%|1         | 5820/368795 [00:33<30:50, 196.10frames/s]  2%|2         | 8560/368795 [00:36<20:20, 295.12frames/s]  3%|3         | 11280/368795 [00:41<16:41, 357.04frames/s]  4%|3         | 13912/368795 [00:45<13:44, 430.57frames/s]  5%|4         | 16732/368795 [00:49<11:30, 510.02frames/s]  5%|5         | 19292/368795 [00:53<10:54, 533.84frames/s]  6%|5         | 22052/368795 [00:56<09:06, 634.58frames/s]  7%|6         | 24912/368795 [00:58<07:33, 757.45frames/s]  8%|7         | 27828/368795 [01:01<06:47, 836.56frames/s]  8%|8         | 30648/368795 [01:02<05:48, 969.03frames/s]  9%|9         | 33572/368795 [01:05<05:37, 992.13frames/s] 10%|9         | 36280/368795 [01:08<05:32, 999.40frames/s] 11%|#         | 39168/368795 [01:10<05:11, 1057.57frames/s] 11%|#1        | 42036/368795 [01:13<05:11, 1050.07frames/s] 12%|#2        | 44956/368795 [01:16<05:08, 1050.93frames/s] 13%|#2        | 47876/368795 [01:18<04:32, 1177.96frames/s] 14%|#3        | 50732/368795 [01:19<04:10, 1271.69frames/s] 15%|#4        | 53700/368795 [01:22<04:24, 1193.52frames/s] 15%|#5        | 56680/368795 [01:26<04:57, 1047.97frames/s] 16%|#6        | 59248/368795 [01:29<05:06, 1011.45frames/s] 17%|#6        | 62216/368795 [01:31<04:54, 1042.13frames/s] 18%|#7        | 65048/368795 [01:34<04:42, 1076.52frames/s] 18%|#8        | 68004/368795 [01:36<04:15, 1179.45frames/s] 19%|#9        | 70920/368795 [01:38<04:21, 1138.93frames/s] 20%|##        | 73860/368795 [01:42<04:44, 1038.15frames/s] 21%|##        | 76820/368795 [01:44<04:25, 1101.40frames/s] 22%|##1       | 79692/368795 [01:47<04:24, 1094.45frames/s] 22%|##2       | 82036/368795 [01:49<04:21, 1097.55frames/s] 23%|##3       | 84844/368795 [01:52<04:21, 1085.17frames/s] 24%|##3       | 87708/368795 [01:55<04:27, 1049.90frames/s] 24%|##4       | 90304/368795 [01:57<04:23, 1057.36frames/s] 25%|##5       | 93088/368795 [02:01<04:53, 939.82frames/s]  26%|##5       | 95612/368795 [02:03<04:43, 963.31frames/s] 27%|##6       | 98592/368795 [02:05<04:18, 1043.45frames/s] 27%|##7       | 101368/368795 [02:08<04:14, 1051.48frames/s] 28%|##8       | 104056/368795 [02:10<04:05, 1078.44frames/s] 29%|##8       | 106632/368795 [02:13<04:04, 1071.99frames/s] 30%|##9       | 109284/368795 [02:15<03:51, 1121.90frames/s] 30%|###       | 111988/368795 [02:18<03:55, 1088.78frames/s] 31%|###1      | 114752/368795 [02:20<03:51, 1099.65frames/s] 32%|###1      | 117616/368795 [02:23<03:43, 1124.10frames/s] 33%|###2      | 120300/368795 [02:25<03:33, 1165.65frames/s] 33%|###3      | 123228/368795 [02:27<03:18, 1235.43frames/s] 34%|###4      | 126160/368795 [02:29<03:23, 1192.42frames/s] 35%|###4      | 128984/368795 [02:32<03:18, 1208.74frames/s] 36%|###5      | 131268/368795 [02:34<03:24, 1162.44frames/s] 36%|###6      | 134116/368795 [02:35<03:01, 1291.39frames/s] 37%|###7      | 136920/368795 [02:38<03:10, 1220.32frames/s] 38%|###7      | 139416/368795 [02:40<03:06, 1230.97frames/s] 39%|###8      | 142412/368795 [02:43<03:09, 1192.88frames/s] 39%|###9      | 145408/368795 [02:45<03:09, 1178.91frames/s] 40%|####      | 147976/368795 [02:48<03:09, 1167.13frames/s] 41%|####      | 150612/368795 [02:50<03:10, 1145.45frames/s] 42%|####1     | 153280/368795 [02:52<03:09, 1139.75frames/s] 42%|####2     | 156172/368795 [02:55<03:17, 1076.25frames/s] 43%|####3     | 158996/368795 [02:58<03:18, 1055.03frames/s] 44%|####3     | 161988/368795 [03:01<03:14, 1063.11frames/s] 45%|####4     | 164964/368795 [03:04<03:21, 1010.99frames/s] 45%|####5     | 167720/368795 [03:06<03:06, 1077.91frames/s] 46%|####6     | 170492/368795 [03:09<03:01, 1092.10frames/s] 47%|####6     | 173264/368795 [03:10<02:39, 1229.14frames/s] 48%|####7     | 176216/368795 [03:14<02:56, 1088.16frames/s] 49%|####8     | 179028/368795 [03:17<02:59, 1054.50frames/s] 49%|####9     | 181968/368795 [03:19<02:57, 1052.33frames/s] 50%|#####     | 184964/368795 [03:22<02:47, 1095.78frames/s] 51%|#####     | 187964/368795 [03:24<02:26, 1232.50frames/s] 52%|#####1    | 190720/368795 [03:26<02:23, 1236.65frames/s] 52%|#####2    | 193428/368795 [03:28<02:18, 1261.88frames/s] 53%|#####3    | 196268/368795 [03:30<02:16, 1267.58frames/s] 54%|#####3    | 198760/368795 [03:33<02:23, 1186.66frames/s] 55%|#####4    | 201600/368795 [03:35<02:22, 1173.78frames/s] 55%|#####5    | 204152/368795 [03:37<02:12, 1242.86frames/s] 56%|#####6    | 207060/368795 [03:39<02:13, 1214.68frames/s] 57%|#####6    | 209516/368795 [03:42<02:15, 1175.65frames/s] 58%|#####7    | 212508/368795 [03:44<02:16, 1142.21frames/s] 58%|#####8    | 215276/368795 [03:47<02:24, 1064.55frames/s] 59%|#####9    | 218124/368795 [03:50<02:24, 1045.26frames/s] 60%|#####9    | 221104/368795 [03:53<02:23, 1026.72frames/s] 61%|######    | 223788/368795 [03:56<02:24, 1003.45frames/s] 61%|######1   | 226660/368795 [04:00<02:41, 882.36frames/s]  62%|######2   | 229616/368795 [04:03<02:33, 909.55frames/s] 63%|######3   | 232508/368795 [04:09<03:05, 736.59frames/s] 64%|######3   | 235484/368795 [04:16<03:37, 613.19frames/s] 64%|######3   | 235484/368795 [04:30<03:37, 613.19frames/s] 65%|######4   | 238424/368795 [04:31<05:58, 363.73frames/s] 65%|######5   | 241384/368795 [04:43<06:42, 316.70frames/s] 66%|######6   | 243912/368795 [04:48<05:47, 359.85frames/s] 67%|######6   | 246536/368795 [04:51<04:47, 424.54frames/s] 68%|######7   | 249416/368795 [04:56<04:11, 475.24frames/s] 68%|######8   | 251992/368795 [05:01<04:05, 476.15frames/s] 69%|######9   | 254640/368795 [05:04<03:31, 538.52frames/s] 70%|######9   | 257480/368795 [05:08<03:10, 584.91frames/s] 71%|#######   | 260372/368795 [05:12<02:53, 623.56frames/s] 71%|#######1  | 262728/368795 [05:15<02:37, 673.47frames/s] 72%|#######1  | 265532/368795 [05:17<02:12, 777.49frames/s] 73%|#######2  | 268312/368795 [05:21<02:08, 780.72frames/s] 74%|#######3  | 271120/368795 [05:24<02:02, 796.59frames/s] 74%|#######4  | 274012/368795 [05:28<01:55, 821.23frames/s] 75%|#######5  | 276904/368795 [05:30<01:41, 901.51frames/s] 76%|#######5  | 279856/368795 [05:34<01:43, 857.06frames/s] 77%|#######6  | 282672/368795 [05:38<01:50, 779.82frames/s] 77%|#######7  | 285548/368795 [05:43<01:57, 707.32frames/s] 78%|#######8  | 288496/368795 [05:47<01:50, 729.58frames/s] 79%|#######8  | 290876/368795 [05:51<01:56, 667.48frames/s] 80%|#######9  | 293588/368795 [06:03<02:54, 430.44frames/s] 80%|########  | 296244/368795 [06:17<03:54, 308.83frames/s] 81%|########1 | 299148/368795 [06:21<03:03, 379.73frames/s] 82%|########1 | 302000/368795 [06:26<02:37, 424.26frames/s] 83%|########2 | 304916/368795 [06:29<02:02, 521.23frames/s] 83%|########3 | 307828/368795 [06:32<01:40, 606.52frames/s] 84%|########4 | 310384/368795 [06:35<01:28, 658.76frames/s] 85%|########4 | 313200/368795 [06:38<01:14, 742.73frames/s] 86%|########5 | 316052/368795 [06:41<01:10, 750.92frames/s] 86%|########6 | 318604/368795 [06:44<01:03, 785.35frames/s] 87%|########7 | 321384/368795 [06:46<00:54, 873.41frames/s] 88%|########7 | 324316/368795 [06:50<00:50, 886.79frames/s] 89%|########8 | 327152/368795 [06:54<00:53, 780.38frames/s] 90%|########9 | 330092/368795 [06:57<00:47, 821.60frames/s] 90%|######### | 333008/368795 [07:00<00:41, 869.32frames/s] 91%|#########1| 335972/368795 [07:04<00:37, 871.46frames/s] 92%|#########1| 338776/368795 [07:07<00:33, 901.65frames/s] 93%|#########2| 341744/368795 [07:10<00:28, 934.47frames/s] 93%|#########3| 344724/368795 [07:13<00:26, 923.43frames/s] 94%|#########4| 347496/368795 [07:15<00:21, 979.11frames/s] 95%|#########4| 350128/368795 [07:20<00:22, 830.74frames/s] 96%|#########5| 353104/368795 [07:23<00:19, 812.35frames/s] 96%|#########6| 355792/368795 [07:27<00:16, 800.01frames/s] 97%|#########7| 358624/368795 [07:32<00:14, 700.07frames/s] 98%|#########8| 361540/368795 [07:36<00:09, 740.11frames/s] 99%|#########8| 364364/368795 [07:38<00:05, 822.65frames/s]100%|#########9| 367180/368795 [07:42<00:02, 762.22frames/s]100%|##########| 368795/368795 [07:48<00:00, 591.19frames/s]100%|##########| 368795/368795 [07:48<00:00, 787.65frames/s]
+[transcribe] Saved to: outputs\transcripts\transcript-youtube-stop-organizing-your-b-roll-use-this-gemini-ai-hac-20260822-065048.txt
+Title: Stop Organizing Your B-Roll (Use This Gemini AI Hack Instead)
+Platform: youtube
+Duration: 01:01:28
+Uploader: REVB - Real Estate Video Blueprint
+Language: en
+Method: local_whisper
+
+[00:00] This week's bonus podcast is a replay of the rev B marketing mastermind that happens
+[00:04] every single Monday at 1 p.m. Eastern time.
+[00:07] This week we were joined by Juan Alcala from Tampa, Florida, and we talk all about Gemini
+[00:13] and how he's using it to streamline his video production process.
+[00:17] Tune in and let me know what you think.
+[00:19] Hello, hello, and happy Monday.
+[00:21] Hope everyone had a wonderful weekend.
+[00:23] Welcome back to the rev B marketing masterminds.
+[00:26] This happens every single Monday at 1 p.m. Eastern time.
+[00:29] If you're here for the first time, welcome.
+[00:31] I see many familiar faces that are not here for the first time.
+[00:33] So welcome back to everyone else as well.
+[00:37] So I know we've been talking a lot about AI over the past few months, years, whatever it
+[00:44] may be.
+[00:45] And a lot of what we've been talking about is like chat versus quad.
+[00:48] And I feel like a lot of those are kind of leapfrogging each other.
+[00:52] And so I do have an announcement later for some some chat stuff that might be of interest
+[00:58] y'all, but something we don't talk a lot about is Gemini.
+[01:03] Drop a four in the chat if you use Gemini at all, four in the chat if you use Gemini.
+[01:08] One thing that I think is cool about Gemini is like when you when I get stuff on Google
+[01:12] Drive, it has like the little Gemini bar.
+[01:15] And so sometimes these Gemini had to summarize videos or summarize stuff that I get back
+[01:19] from a videographer and different things like that.
+[01:22] But I haven't really dove that deep.
+[01:25] But apparently a lot of people in this call have, but I can almost guarantee you that one
+[01:29] today is going to blow your mind.
+[01:30] So I was on a phone call with him.
+[01:32] One, what was that probably a month ago, two months ago?
+[01:34] It's like that.
+[01:36] Just kind of shooting the shit.
+[01:39] And he started going, I don't know how or why, but we started going down this rabbit hole
+[01:42] of what they were using Gemini for on the video side.
+[01:46] And I was like, dude, we need to get you on a mastermind to kind of break it down and
+[01:50] talk a little bit about what you are doing.
+[01:52] Neil Brown's put the Gemini's great for creating new scripts from other YouTube videos that
+[01:56] have done well.
+[01:57] Right.
+[01:58] So there's lots of stuff that people are using Gemini for.
+[02:01] But one, let's chat a little bit about what you are using it for on the content side.
+[02:06] Yeah.
+[02:07] Well, first of all, thank you for sucking up the next five weeks of my life because that
+[02:12] conversation ultimately sent me down a rabbit hole that I was unprepared for.
+[02:19] However, my team is grateful for the outcomes.
+[02:24] But yeah, the thing, you know, ultimately, I think I hope to share with you guys.
+[02:29] First and foremost, I'm not going to bust open Gemini today, running you through prompt.
+[02:34] We're not doing that.
+[02:36] Right.
+[02:37] What I will discuss is how we're leveraging it from a production perspective at a high
+[02:41] level.
+[02:42] And then I'll give to Katie the prompts.
+[02:45] You guys go do whatever you want with it.
+[02:47] I'll hand the skills that you guys feel free to do whatever you want.
+[02:50] Right.
+[02:51] Like definitely want to get that over.
+[02:52] But she asked a great question, which I think is much deeper than the one she just set
+[02:55] up, which is how are you using this to help your team?
+[02:59] And you know, great question.
+[03:02] And what it really started with is, you know, I think a lot of people are always trying
+[03:06] to solve for their problems first.
+[03:08] And for those of you that don't know me, I'm in Tampa Bay, Florida, live right off the
+[03:12] Gulf, been here for eight years.
+[03:15] Love it.
+[03:16] We run a small team here.
+[03:17] I'm actually set up in two states.
+[03:19] I have a partner back home in the Ann Arbor Michigan area where I moved from eight years
+[03:23] ago.
+[03:24] Love it there as well.
+[03:25] But I love sunshine.
+[03:27] I don't want winter ever again in my life.
+[03:29] I think everybody's nuts who thinks other than that love you.
+[03:33] But that's not my thing.
+[03:34] Right.
+[03:35] And for those of you who know me already and maybe you don't, I'm very, I'm long.
+[03:40] I'm short-term ambitious so I can be long-term lazy.
+[03:43] So anytime I can get an opportunity to get leverage, I'm going to look for it.
+[03:47] And these tools obviously are fantastic in helping us leverage.
+[03:51] But the other thing that they do is create a lot of chaos.
+[03:53] So how do we translate that into actual things that move the needle in our lives?
+[04:00] And we've been making content my primary way of acquiring business over the last five
+[04:06] years has been through YouTube.
+[04:09] And over that time period, we've made, I don't know, over 400 videos.
+[04:12] I can't even tell you, one a week, sometimes two a week.
+[04:16] We do a live stream every week and doing that for two years.
+[04:18] We've done a lot of different things between property tours and community tours and tested
+[04:22] a lot of different forms of content.
+[04:25] And they all work by the way.
+[04:26] They all work if you work it.
+[04:28] And I know that's not the intent of today.
+[04:31] But they will.
+[04:32] Now, for anybody who's made content, one of the challenges that we, I think we all face
+[04:38] is once you go out and shoot a whole bunch of content, whether that be a property tour,
+[04:43] a community tour or whatever, you end up left with this pile of unlabeled, unlabeled content
+[04:53] either in your cell phone or on your DJI Osmo now or whatever device you're using and
+[04:58] you record these things.
+[05:00] And magically, somehow you got to dig into those piles of content, figure out what is
+[05:06] on that specific piece of content, label it accordingly and then start your editing process.
+[05:13] That's most people's process.
+[05:14] Craig, can you come around?
+[05:16] So drop a one in the chat.
+[05:18] If you have either a phone full of B-roll that you've never uploaded to drive or drop
+[05:23] box and you're just like, maybe I'll use it or perhaps you're like me and you just go
+[05:26] back to that same spot or have a teammate go back to that same spot and shoot the B-roll
+[05:30] over again, right?
+[05:31] Or you download it all on your computer and then it just sits in your downloads folder
+[05:35] because you like air drop did or pushed it over there somehow and then it's like just
+[05:38] all there, right?
+[05:39] Okay.
+[05:40] So I think we're all there one.
+[05:42] I don't want to get anyone.
+[05:44] Is anyone else, does anyone else like all of their stuff is organized?
+[05:47] Kelly, you can hop off the call.
+[05:48] Everyone else should stay on.
+[05:51] Right.
+[05:54] We need this one.
+[05:55] Yep.
+[05:56] We all have it, right?
+[05:57] So like, and as someone who has created lots of content and come back to that challenge,
+[06:02] let me tell you, the bane of my existence as a human being was looking at the 30, 40,
+[06:09] 50 clips that I made during several property tours with one of my agents or out in the
+[06:14] field, having to open each one of those files individually and go, what is in here?
+[06:21] It literally, I would rather go to the dentist.
+[06:25] I might prospect again before I do that anymore.
+[06:29] And that's saying a lot because I don't like strangers at all.
+[06:31] That's aggressive.
+[06:32] That's an aggressive, yeah.
+[06:34] Right.
+[06:35] As someone who's built into the attraction, maybe his business, my mind doesn't work
+[06:38] up with.
+[06:39] All right.
+[06:40] Now, I set that up because it sucks, right?
+[06:42] It really sucks.
+[06:43] But the cool thing, and this is also, I've got something else to share with you guys that
+[06:48] literally, I just came across this week, but workflow wise.
+[06:53] Here's what's cool.
+[06:54] GDM and I has the ability to take over that for you.
+[07:01] Okay.
+[07:02] It actually has the ability to view your videos.
+[07:05] And I want to stop here for one second.
+[07:09] If you upload a piece of content to chat GGPT or chatGL, I like to call it, Claude or
+[07:18] whatever, they all can take screenshots of your content.
+[07:21] That's how they decide what is on your content.
+[07:24] Okay.
+[07:25] If anybody's ever done that before and, hey, what's on this?
+[07:28] Has anybody done that experience?
+[07:29] Can you guys put a one in the chat?
+[07:32] They have the ability to do that.
+[07:34] But, but Gemini is the only one who can do it frame for frame.
+[07:40] Gemini is the only one who also is connected to the internet known as Google and has geographic
+[07:49] information about every single location in the United States.
+[07:55] I want to pause there for a second.
+[07:58] I want you guys to think about that.
+[08:01] When you upload your piece of content from Boise, Auto is an example.
+[08:05] If there is a landmark, right, if there is a landmark that is detected while that piece
+[08:13] of content is being ran through Gemini, Gemini flags that using its Google Maps features.
+[08:21] Right.
+[08:22] It says this actually has authority.
+[08:27] This is something Katie that I just really kind of put together over the weekend here.
+[08:31] But I want you guys to really think that through how powerful that actually is.
+[08:38] Yeah.
+[08:39] So, cool.
+[08:40] So, you come back with the problem.
+[08:41] You upload, let's just give an example.
+[08:43] If I do a property tour with one of my agents, the way I do property tours on YouTube is
+[08:47] I'll go out and I'll technically interview my agent.
+[08:51] All right.
+[08:52] Just so you guys know, it's the two-person version of the one-person content where you
+[08:57] should be taking, which is show people the house, but give them something interesting.
+[09:01] Right.
+[09:02] Hey, we're going to check out this home.
+[09:03] It's got an amazing pool.
+[09:04] I'll show you that later.
+[09:05] That's my hook, whatever it's going to be.
+[09:06] But get into the property and show them how they're going to live there.
+[09:08] Just like you were showing it to them if they were there in person.
+[09:11] That's what makes the property tour actually valuable to somebody who's consuming it online
+[09:14] period.
+[09:15] Right.
+[09:16] They can see the photos on Zelo.
+[09:18] They can get a 3D preview on Zelo, whatever it is.
+[09:21] That's not the magic.
+[09:22] They're a thing that's going to bring them to you potentially.
+[09:23] If we're talking about property tours specifically, is that?
+[09:27] When I go in and cut those, I'll cut A-roll, meaning the content with the agent.
+[09:31] I'm interviewing them.
+[09:32] And basically, that's a, we basically don't stop.
+[09:35] If we transition from room to room or if I got different agents with me, I'll make
+[09:38] that adjustment.
+[09:39] But if I'm with one agent, we basically roll the way through.
+[09:41] I have a 20-minute piece of content.
+[09:43] Google is not capable of reviewing that FYI.
+[09:46] But I don't need it to.
+[09:47] That's the A-roll.
+[09:49] Right.
+[09:50] That is the commentary.
+[09:51] That's everything we need.
+[09:52] Now, when I go back in and take my detailed shots or the specific shots of the things that
+[09:59] I call out, because that's a really good practice for anybody doing home tours.
+[10:03] If you don't know already, do the tour first.
+[10:06] And then when you call the things out, then you go back afterwards and record the things
+[10:09] you called out.
+[10:10] Does that make sense?
+[10:12] That will trim your workflow tremendously.
+[10:14] You want to get through property tours quickly.
+[10:16] That's the easiest way to do it.
+[10:18] Don't shoot the features and stuff because you won't end up using that.
+[10:22] You'll end up with a bunch of content that you don't use.
+[10:24] But when you come back, you're going to have all this content.
+[10:27] If you take a specific folder and put it on your computer and dump all of that B-roll
+[10:33] in there, and then you send that to Gemini.
+[10:38] Gemini can look through each one of those pieces of content and it will label it appropriately,
+[10:42] based upon either how you tell it to label, which is a smart thing to do FYI, or how it
+[10:48] thinks it should label.
+[10:51] I want to go back to Katie's specific thing she said earlier.
+[10:55] How many people have a drywall content which they don't know what it is?
+[11:00] All of us.
+[11:05] If you have a specific naming convention with the content you make, you won't ever have
+[11:09] that problem anymore.
+[11:13] Let me give you an example.
+[11:15] Our naming convention is typically the city first.
+[11:18] We start with the city.
+[11:20] I serve more than one city.
+[11:22] Some of you are five mile famous.
+[11:23] This gets really easy for you.
+[11:24] You don't have to worry about that.
+[11:26] But for anybody else shooting content in multiple areas in their suburban area, the first
+[11:32] thing you want to label your content with always is city.
+[11:35] Why?
+[11:36] Because when you go into Google Drive and you type in St. Petersburg, guess what I'm not
+[11:39] doing?
+[11:40] I'm not going through 50 terabytes of content.
+[11:42] I'm down to 50 gigs or whatever it is in your drive.
+[11:49] The next thing we put in there, so if we're looking at titles again, so we go city, location.
+[11:55] Now, what do I mean by location?
+[11:57] Usually it's a thing.
+[11:59] It could be a house.
+[12:00] It could be a restaurant.
+[12:01] It could be a park.
+[12:02] It could be an exor.
+[12:03] It could be a Y.
+[12:04] Does that make sense, y'all?
+[12:05] Y'all track on me?
+[12:06] Head's bouncing.
+[12:07] Right?
+[12:08] So city, location.
+[12:10] Okay.
+[12:12] Behind that, what you want to do is start narrowing it down to what is it?
+[12:19] Okay.
+[12:20] Is it a pool?
+[12:21] Is it a play-to-food?
+[12:24] Is it an X or a Y?
+[12:25] Don't care what it is, but what is the noun?
+[12:29] That's the best way.
+[12:30] So city, location, noun.
+[12:33] That's the way that we label everything.
+[12:35] Okay.
+[12:36] And then behind that, for you really nerdy nerds who love to make really good content, what's
+[12:43] the camera movement?
+[12:47] What's the camera movement?
+[12:48] Now, I'm not going to get into the technical terms.
+[12:50] You can call it peekaboo.
+[12:53] You can call it walking into the house.
+[12:56] I don't care what you call it, but what is the movement that the camera is doing?
+[13:02] Okay.
+[13:03] If you're looking for more of Evbe knowledge than hop into our school community, it's where
+[13:06] we plug show notes from these episodes and where you can find a supportive community
+[13:09] of real estate professionals that want to grow their personal brand and business with
+[13:13] video.
+[13:14] So whether you're just getting started or you're scaling your content machine, you're
+[13:16] going to find the support and accountability you need head over to school.com slash R-E-V-B.
+[13:21] Or if you're watching skin the QR code to join our community.
+[13:25] All right.
+[13:26] Let's get back to the show.
+[13:27] Now, if you look at this, just that framework on all the pieces of content that you make,
+[13:35] do you think that your future self and or your future editor, whether that be a human
+[13:40] or an AI will thank you for the quality of the labeling that you've done in the future?
+[13:46] Yeah.
+[13:47] But editors never watch this video to realize that I'm probably still not going to do this.
+[13:52] Well, you don't have to do it.
+[13:53] I built you this skill.
+[13:55] Right.
+[13:56] I built you this skill.
+[13:58] I'm not doing it either because it sucks.
+[14:00] Right.
+[14:01] I literally, yeah, I used to spend somewhere between 45 minutes in an hour and a half doing
+[14:05] this.
+[14:06] When we go out and do multiple property tours, oh my God.
+[14:08] You would sit on the hard drive for three days as I looked at it going, I have to do this
+[14:12] at some point.
+[14:13] Right.
+[14:14] And then the content doesn't get me.
+[14:17] So two questions is one is this is the name of the video file.
+[14:20] So that's yeah, instead of it being like image or video 1234.
+[14:26] This is the name of the file.
+[14:28] And then camera movement, it could be a pan from left to right.
+[14:31] It could be like a zoom walk in.
+[14:32] It could be as wanted peekaboo like coming around the corner.
+[14:37] Sometimes, yeah, sometimes you have names for things that aren't the technical name for
+[14:44] things.
+[14:45] Yep.
+[14:46] Right.
+[14:47] And so that's just what one is saying is having it be a specific thing.
+[14:53] Okay.
+[14:54] So getting some technical questions on this like so by I was asking like, Hey, is Gemini
+[15:00] interpreting the camera movement?
+[15:02] Yep.
+[15:03] So let's talk a little bit about the tools that you're using and we don't need to work
+[15:07] for work for prompt because you're going to give the prompt and I'll put that into school.
+[15:11] But like let's talk a little bit about that.
+[15:13] Just because it's like, Okay, I have all of these files on my phone.
+[15:16] I'm going to drop them into a Google drive folder now they're in a Google drive folder.
+[15:20] Then what am I doing?
+[15:21] Yep.
+[15:22] Well, you're not doing anything other than telling the AI that you prefer to work with
+[15:26] to go do the damn work.
+[15:27] All right.
+[15:28] But like behind the scenes, what is happening?
+[15:30] My encouragement is that you put it on a folder on your computer.
+[15:34] Don't do this in one of your web folders.
+[15:37] Here's why if it makes a mistake, you got problems.
+[15:40] Does that make sense?
+[15:42] If it ever makes a mistake and that's the only place where it's saved, how do you know
+[15:46] what it is?
+[15:47] Now it's just it's as useless as it was when it walked in the door.
+[15:51] Okay.
+[15:52] So the way that the skill is built and the way that I recommend everybody do this is put
+[15:56] these folders, these files, the actual clips in a folder, you create a folder on your computer.
+[16:03] Everybody's capable of doing that, right?
+[16:05] Absolutely.
+[16:06] We can do that one non-problem.
+[16:08] Create a new folder.
+[16:10] You name the folder, whatever.
+[16:11] Today's clips.
+[16:13] Ideally, you name it whatever it was that you went and shot the content for.
+[16:16] Just as a general theme.
+[16:18] You copy the clips from your phone or from the device onto that folder.
+[16:25] Why?
+[16:26] You still have one source of truth in case any file ever gets corrupted.
+[16:31] Okay.
+[16:32] When it comes to data, remember this is valuable.
+[16:34] You guys don't want to have to go back out and shoot the thing ever again, correct?
+[16:38] You just want to be done with it.
+[16:40] So this way it protects it, all right?
+[16:42] What happens then is you're going to put the prompt that I'm going to give you guys into
+[16:46] claw Gemini, GPT, whatever it is.
+[16:49] But it is going to send this information to Gemini.
+[16:53] Gemini is going to watch the video frame for frame.
+[16:56] It will be able to do the thing based upon what I just described to you guys.
+[17:00] The prompt you're going to get is using our labeling.
+[17:04] Okay.
+[17:05] So it's going to return Katie.
+[17:06] It's going to say, you know, St. Petersburg, new construction house, perhaps, whatever it
+[17:13] is.
+[17:14] And then it's going to spit out, y'all, it's going to use parallax, panning, things like
+[17:19] that.
+[17:20] And then you're going to have a shot selection.
+[17:21] Don't even worry about it.
+[17:25] That's not important.
+[17:26] The other thing it's going to do for you automatically, Katie, I have it set up to give them a storyboard.
+[17:30] Okay.
+[17:31] So for those of you who struggle with content ideas, it's going to spit one back to you.
+[17:37] Based upon the content that it watched.
+[17:41] So it'll say, hey, use these 10 clips.
+[17:44] Here's your storyboard.
+[17:46] And then it's even going to break it down per second time stamp inside of that video
+[17:50] of what part it suggests for you to use.
+[17:54] That means if you get a 10 second clip and seven seconds of it sucks, don't use it.
+[18:02] Right.
+[18:03] It's going to say, hey, use this three set the, and then you can use cap cut, whatever.
+[18:10] Hand it to your editor.
+[18:11] Does your, that doesn't matter.
+[18:12] I wanted to try to make it as simple as possible.
+[18:15] The, the, the value of what, what it is that we're teaching you is there is a tool that
+[18:21] can do the hard work for you.
+[18:23] I didn't create anything.
+[18:24] I'm, I'm just using the tool the way it is.
+[18:27] Okay.
+[18:28] You need Gemini for this though.
+[18:30] So those of you who don't have a Gemini account, go get yourself one.
+[18:34] Okay.
+[18:35] The, the, the information that I'm going to give Katie, it breaks it down to the, to the
+[18:38] basics.
+[18:39] It can only take like a two gigabit piece of content in total at a time, up to 10 pieces
+[18:44] of content at one time.
+[18:47] And then it's going to spit out how to label them.
+[18:50] You take that back to your GPT code or, or quad co work, put it in there and then your
+[18:55] co work or your, your, your chat, GBT will rename it for you on your file.
+[19:02] And then, and then if you want it to, it will upload it into your Google Drive, your
+[19:05] drop box or wherever you want.
+[19:07] And I've got a copy in the, in the storage place that is labeled properly that you will
+[19:12] be able to search or anyone can search in the future.
+[19:18] And you can change like if, if I already had a naming convention for my files, I'd be
+[19:22] able to change the prompt to say, I want this to be labeled.
+[19:27] Uh, I mean, and I don't know why you would change it significantly from what you have,
+[19:31] but maybe it's like neighborhood, something, something.
+[19:34] And it's like a different naming convention.
+[19:36] So it's not like it has to be the way that you do it.
+[19:38] Follow your workflow guys.
+[19:39] If you guys are working with editors or something, I would strongly encourage you to work with
+[19:43] what is their best practice.
+[19:45] I don't tell anybody they should change that.
+[19:47] But what we found is if we hand a raw piece of consent that is labeled like this, every
+[19:54] editor can handle the asset very quickly.
+[19:57] That makes sense.
+[20:03] I think this is something that everyone can benefit from as far as properly labeling their,
+[20:11] their media on their computer.
+[20:14] Yeah.
+[20:15] Because I know everyone has that either phone full or drive full on their computer somewhere.
+[20:24] Yeah.
+[20:25] And, and, and again, you don't know, you don't recognize how much time you're wasting until
+[20:28] you sit down and go through the stuff in Katie Lafka, she's not doing any of that.
+[20:32] Right.
+[20:33] And most of us don't want to.
+[20:35] And, and, and the other thing I think was extremely powerful with this Katie is the
+[20:39] example that I just gave.
+[20:40] Like, I can go shoot an entire beach sequence with, with no direction.
+[20:45] Literally like, just go shoot 20 different shots from the beach or going to get coffee in
+[20:50] the morning.
+[20:51] Come back, put it in a folder, upload it into, into it, run the skill.
+[20:56] And then it will send it or Gemini and Gemini will say, put it together.
+[20:59] Here's the caption.
+[21:00] Here's the narration.
+[21:01] Here's your thing.
+[21:02] All right.
+[21:04] So, Glenn's asking in the chat, the workflow is putting your content into a folder that's
+[21:11] on your desktop.
+[21:12] Then you run the prompt.
+[21:15] It's renaming the files, creating a storyboard and then you copy them to Google Drive.
+[21:18] Correct.
+[21:19] So what he's, what he's saying, or asking is, can you explain how it protects the raw
+[21:23] content?
+[21:24] Because the raw content is still on the device that you, you copied it from.
+[21:29] Whether it's the SD file from your device, your OP3, your camera, whatever, or your phone.
+[21:37] For those of you who have an iPhone, most of you move it to your computer house via
+[21:41] AirDrop.
+[21:42] That makes sense?
+[21:44] Yeah.
+[21:45] So it'll do MOV file as well.
+[21:49] And it's all sitting on your phone.
+[21:51] Still.
+[21:53] Mel's already telling her VA to do these things because Juan said so.
+[21:59] Juan says go do this.
+[22:03] Juan says be careful with what.
+[22:05] Damn it.
+[22:06] But hey, Mel, you'll be able to give the VA a prompt that then, you know, will help move
+[22:15] it along.
+[22:16] So maybe pause on the instruction.
+[22:20] Yes.
+[22:21] Well, yo, I can, what I want to do, Katie, is give you guys to, listen, I know what we
+[22:26] just said is the compressive version of it, right?
+[22:28] And I want to go deeper behind this.
+[22:30] But ultimately, I'm going to make two different versions of what we're talking about now.
+[22:34] I have an entire production workflow for the long, long form side of this as well, which
+[22:39] is different than the short form content that we're, that we're also talking about here.
+[22:43] We have an entire video intake system where we essentially, think of it as a, a Google
+[22:48] form.
+[22:49] It's one of those before correct.
+[22:52] So like, if that Google form initiates a whole bunch of people to do their jobs for, for
+[22:58] those of you don't know, we have a production team.
+[23:01] I have six long form editors.
+[23:04] I have two short form editors, a copyrighter on staff and what we call flight control.
+[23:09] She's the one that manages all that mess.
+[23:11] Juan is not capable of doing that.
+[23:14] Right.
+[23:15] She's the one that connects all those because we edit for some other agents.
+[23:20] And what it does is when they, when they upload their content, they fill out a form that
+[23:25] form labels it appropriately and notifies the people on the back end to say, hey, it's
+[23:29] your turn to do the job.
+[23:31] So I don't know how you're working with your editors for those of you that have it, but
+[23:34] they'll probably have some kind of form for content that you put in.
+[23:37] Right.
+[23:38] And this automatically, you can change this to put it exactly where it's at.
+[23:44] Okay.
+[23:45] Does that, that makes sense?
+[23:46] You can take the skill that will give you and you can just point it wherever you want.
+[23:51] Or you can set it up internally.
+[23:53] All right.
+[23:54] Anything else on that front that we didn't touch on that you, I don't think so.
+[24:03] You just need to see it in practice, right?
+[24:05] But like we do that.
+[24:06] It'll just, it'll take all day to say it or run.
+[24:08] It happens pretty quickly.
+[24:09] It can run 30 or 40 files and about last time I did it.
+[24:14] That big was about 20 minutes in total before everything was back, relabeled in the file
+[24:19] and uploaded into my Google Drive.
+[24:21] And the uploading is usually the longest part of that process.
+[24:24] But sometimes Gemini takes a little while to read the content.
+[24:29] I've also trained it to if there's a bad piece of content, it has anybody ever put a piece
+[24:33] of junk in their folder that they were, they didn't recognize they put in there.
+[24:36] Just like a short clip of the floor or something.
+[24:38] It'll call it out.
+[24:40] I've trained it to say, hey, are you sure you want to use this?
+[24:44] It's a shot of your toe, right?
+[24:46] Like that kind of thing.
+[24:48] So it's got that in there for you too.
+[24:52] Melody, were you physically raising your hand to respond to what he was saying, not to
+[24:56] ask a question?
+[24:57] Okay.
+[24:58] All good.
+[24:59] Totally cool.
+[25:00] Okay.
+[25:01] And then, Glam is saying like if you could share forums for like short, long, long,
+[25:07] or like screenshots of the forums.
+[25:09] Yeah.
+[25:10] Here, I'll show you guys.
+[25:12] You sure?
+[25:13] Yeah.
+[25:14] You want to.
+[25:15] You have to request open sharing.
+[25:16] Yeah, this is a whole rabbit hole.
+[25:17] Be careful, y'all.
+[25:18] Like, what?
+[25:19] I'm always cautious with this and I know, okay, you used to.
+[25:26] How we have our work flow set up is not necessarily as important to you guys, but I'll
+[25:30] show you.
+[25:31] Happy to do it.
+[25:33] We're going to go down the rabbit hole, y'all.
+[25:35] Buckle up.
+[25:36] Get ready.
+[25:37] The rabbit hole is occurring.
+[25:38] This is on you.
+[25:39] And I just want to say for anybody wondering, no, one was not smart enough to set up any
+[25:43] of this.
+[25:44] This was all my partner, Eric Meldrum.
+[25:45] I want everybody to know that.
+[25:48] I'm just the dancing monkey who uses said equipment because he got tired of dealing with
+[25:53] my crap.
+[25:54] All right.
+[25:55] So our work flow is very simple.
+[25:56] Regardless of whether it's a talking head YouTube style video or a short form piece of
+[26:00] content, it doesn't matter.
+[26:01] It all goes in the same way because we have a team that runs this.
+[26:05] Now, I think that this is a valuable thing to put in play for anyone, even if you don't
+[26:10] have a team behind you because it puts your content in a sequence.
+[26:15] It has a storage space for it.
+[26:17] It's amazing.
+[26:18] Okay.
+[26:19] Specifically, it opens up.
+[26:20] It's new.
+[26:21] Google Drive, all the other things too.
+[26:22] Okay.
+[26:23] But how our process works, we use a job form.
+[26:25] You can use Google Docs, whatever your doc is your I don't care.
+[26:28] Right.
+[26:29] If you're not doing this at a high level, you should have some form of intake.
+[26:33] And the reason being is you will always have an event to point back towards.
+[26:39] Okay.
+[26:40] And it has its own home.
+[26:43] So in here, we use our content name, whatever you're going to call this.
+[26:46] If it's a short form, call it whatever your title.
+[26:49] Don't care.
+[26:50] Long form, we put our long form content on there.
+[26:52] And our creator side, we have all of our creators, both in our team and people that we service.
+[26:57] They just hit the drop down.
+[26:58] Right.
+[26:59] Okay.
+[27:00] What brand are we running for?
+[27:01] So, okay.
+[27:02] We have personal brands and our YouTube channel.
+[27:05] So I'll use my YouTube channel as an example.
+[27:07] I put my email in here.
+[27:09] And the reason being is because it's going to notify me via Slack when it's my turn to
+[27:13] do something with the content.
+[27:15] Okay.
+[27:16] And I'll show you where this goes in a second here too.
+[27:19] Okay.
+[27:20] The content type, is it going to be long form, short form?
+[27:22] Is this some form of graphic?
+[27:23] Remember, we've got a graphic design on our team as well.
+[27:26] That's thumbnails usually, but they do Instagram stuff and whatever else on the other side.
+[27:29] When we submit, when it's scheduled to be published and then the outline of our video.
+[27:37] So this is very helpful for us internally and for anybody, any agents that we actually
+[27:43] make content for because they have an editor that is not local to them usually.
+[27:49] So helping the editor understand what it is they're looking at, that's a valuable insight,
+[27:54] right?
+[27:55] Y'all just like labeling.
+[27:57] So typically they will upload their script if they have one or their outline Katie.
+[28:02] That's basically how that process goes.
+[28:04] For us, we use notion.
+[28:07] Let me see if I can open the.
+[28:12] Well, let's just stay here.
+[28:13] We use notion.
+[28:14] We have a very specific calendar that's laid out for the month.
+[28:17] Has everything in it.
+[28:18] What our content is going to be.
+[28:22] Where it's going to be stored.
+[28:22] Let me show you the content.
+[28:23] I know I can do that.
+[28:24] And before we get too far down the red hole, Katie, why is this meant like, why is this
+[28:38] important to people?
+[28:39] Why do y'all feel like you need to know deep down the well as opposed to you just got
+[28:46] 30 or 40 minutes of your life back just by uploading to Gemini?
+[28:51] I'm intrigued.
+[28:52] So Glens said he's using trying to do this right now with two different editors.
+[28:57] So it's helpful.
+[28:58] Yeah.
+[28:59] Because like, I know for me, if I basically I just take all of my content and I say, hey,
+[29:03] this is the video.
+[29:04] So here's the me talking.
+[29:06] Here's some random B roll.
+[29:08] Here's a screen recording.
+[29:09] You figure all of that out.
+[29:10] Here's also my script.
+[29:11] So you can figure out like the words I said.
+[29:13] And here you go and just make me a video.
+[29:15] And then I'm going to tell you everything that's wrong with it when you edit it.
+[29:19] So it's a little bit of a shot.
+[29:20] The dark.
+[29:21] And then I tell you you're wrong.
+[29:22] So I know that's not the best practice.
+[29:24] So I love the, hey, these are all the things, right?
+[29:28] Amy just said this is helpful because not having a clue on where to start with some of
+[29:33] the details.
+[29:34] Okay.
+[29:35] That's perfect.
+[29:36] Yeah.
+[29:37] And y'all were this community has changed my life.
+[29:38] There's a reason I'm at this brokerage.
+[29:40] I know we're brokerage now.
+[29:41] So yeah, I just wondered if I know this community has been a big part of that.
+[29:45] These contributions that people have made over time have got us to this point.
+[29:48] So like, just know that we're we're open.
+[29:50] I can't give individual classes via Instagram.
+[29:52] Love you guys can't do it that way.
+[29:54] No.
+[29:55] Happy to share everything we can with anybody.
+[29:58] All right.
+[29:59] This content calendar, it was a template from some other creator just so you guys know.
+[30:04] Right.
+[30:05] And we use it.
+[30:06] It's great.
+[30:07] So in here, this is where these things go.
+[30:08] So showing earlier Katie on that form, what the outline is when you go into our actual
+[30:13] content like this week's content.
+[30:15] If I click on Florida, we have Florida, Michigan, right?
+[30:19] So if I go into Florida this week, it's full time versus part time in Florida, specifically
+[30:24] as the content, it gets into thumbnails.
+[30:28] All this is generated by my AI that I've built.
+[30:31] It generates the thumbnails based upon my brand, what I'm trying to accomplish, puts all
+[30:35] that information in here for our graphic designer.
+[30:38] Our copywriter has everything that they need, including all the resources that we use for
+[30:42] our scripting.
+[30:44] And then at the bottom of this, you'll get down.
+[30:46] I know this is really the weeds, but we have our script in here as well.
+[30:50] So I copy this page.
+[30:52] This is actually a shareable page.
+[30:54] I copy this and I put it back in that link.
+[30:57] And that's it.
+[30:57] I cut the content.
+[30:59] I fill out the form.
+[31:00] I link it to this page.
+[31:02] And then I don't see it again until it comes back looking like this.
+[31:08] And I'll share that with you now.
+[31:19] All right.
+[31:24] So we use a tool called frame.io.
+[31:27] I think it's an Adobe product, y'all.
+[31:29] Don't care.
+[31:30] There's weed transfer and some other ones that can do this.
+[31:33] But if you look at brands here, specifically, all right, this is my living in Tampa channel.
+[31:38] As you guys can see, here's why this is so powerful on the back end.
+[31:42] Every one of these pieces of content has its own event name associated with it, right?
+[31:47] That event has its own folder in Google Drive with original assets and completed assets.
+[31:53] So we never lose our content.
+[31:56] It is always discoverable and searchable inside of Google Drive number one.
+[32:00] All right.
+[32:01] That's why it's super powerful.
+[32:02] So if I'm looking for B roll on St. Petersburg or Tampa or Largo or Seminole or whatever it
+[32:09] is, wherever you guys live in your backyard, it is searchable always.
+[32:14] You don't have to go search, hey, if I'm looking for the sundial and that's the piece of
+[32:19] B roll I want, it's there.
+[32:20] My editors have access to it.
+[32:22] Okay.
+[32:23] Here's the moving from DC to Tampa video that we just made last week.
+[32:29] What happens is they put these pieces of content in it.
+[32:31] I approve it, decline it or it needs to be worked on.
+[32:35] Here's the feature I love about this tool inside of frame here.
+[32:42] I can put notes and what's cool is as you're watching the piece of content, so if you're
+[32:46] moving from the DC area down in the day, first of all, you can speed up.
+[32:49] I don't want to listen to my own voice for a half hour.
+[32:51] So it gets 1.5 or 2x.
+[32:53] I still review all of my content because mistakes get made, right?
+[32:59] Or I want to add context to my videos.
+[33:02] So as we're going through here where you see this little mark here says J a all I did
+[33:07] was hit pause and type into this little note right here, fix this item.
+[33:16] And what happens is when I hit publish and when I go into the field and put it in progress,
+[33:21] it notifies my editor.
+[33:23] My editor says, oh, I've got to fix this spot in this piece of content.
+[33:27] I'm going to go right to and take care of it.
+[33:29] When they're done, they either send it back to me for second approval.
+[33:32] Our editors are way good right now.
+[33:34] I don't remember where about that anymore.
+[33:36] They just automatically upload to wherever it needs to go.
+[33:39] Now if you guys are really into nerdy tools, you can use things like Metra Cool, right?
+[33:46] Other distribution platforms that can take this content from whatever folder you got it
+[33:50] and automatically publish it on your behalf.
+[33:55] Or away in the weeds.
+[33:57] Promise you that's where we are going.
+[34:01] So basically once your editor is done editing the finished product goes in here and then
+[34:08] you get notified.
+[34:09] And this is where you come to watch it and make comments.
+[34:11] Yep.
+[34:12] The draft gets uploaded here.
+[34:13] I review the draft.
+[34:14] I will either make comments for a prove just a little basic.
+[34:19] Yeah.
+[34:20] Yep.
+[34:21] If it needs revisions, we just market in process.
+[34:23] That's the system that got on the back end.
+[34:24] It just notifies them via Slack.
+[34:27] Hey.
+[34:28] This needs to be addressed.
+[34:30] And then they log in and it says exactly where it needs to be taken care of.
+[34:34] And they make the adjustment.
+[34:36] They put the final version back up in here.
+[34:38] And then they upload the rest into YouTube or whatever your distribution platform is of
+[34:43] the day.
+[34:44] And it goes about it.
+[34:45] It just does this thing.
+[34:46] Yeah.
+[34:47] And some people, some people want to upload it themselves.
+[34:49] Obviously you've worked with these editors for a very long time and you give such, you'll
+[34:55] all give such detailed instructions as to what you expect in the title and description
+[35:01] and all the things that it's like it's a pretty good process, right?
+[35:05] But like if you, I mean up until I don't know when I mean he may still do it.
+[35:09] Ken Poseck was basically uploading his videos because he was like, I just, this is my thing
+[35:13] and it's not specifically on to be.
+[35:15] And I need to press submit and look, you know, all of the things, right?
+[35:19] All right.
+[35:20] Going back five minutes.
+[35:22] I don't, Jennifer, I don't know what your question is.
+[35:25] We can do a lot of Q and A.
+[35:27] You want to, you guys want to get deeper in the strategy side of what's working where I'm
+[35:30] happy to go there.
+[35:32] We're talking technicals today, right?
+[35:34] Strategic is where I live.
+[35:35] I just use the systems that were built for it.
+[35:38] They're amazing.
+[35:39] My partner is incredible.
+[35:40] Former logistics guy, like amazing.
+[35:43] And yes, I know about this stuff too.
+[35:44] But once it's done, I'm done.
+[35:46] All right.
+[35:48] That again, short term and dishes, long term lazy.
+[35:52] The system has been in place for three years.
+[35:55] We've made small incremental adjustments, but y'all, I haven't uploaded squat.
+[36:00] I don't worry about that stuff.
+[36:02] I cut the content and serve the people.
+[36:05] I still haven't seen you get lazy.
+[36:06] That's what it's like.
+[36:07] I've heard you say this phrase for a while now and I've known you for a while.
+[36:11] So I can't wait to see like lazy one because, you know, Eric may disagree with me, but
+[36:17] I think you're pretty ambitious.
+[36:19] Well, thank you.
+[36:20] I'm curious.
+[36:21] My superpower as a human being is curiosity.
+[36:24] Y'all, there's a difference.
+[36:25] Right.
+[36:26] But the, yeah, again, the system works.
+[36:32] The thing I want everybody to know, anything over two gigs can't go into Gemini right now.
+[36:36] So if you go cut a 10 minute piece of 4K video, long form and try to upload it into Gemini,
+[36:42] it's going to tell you to go kick rocks.
+[36:44] Think of it as a small content or B-roll friend.
+[36:48] Okay.
+[36:49] Does that make sense?
+[36:52] Short content or B-roll friend.
+[36:54] That's really what it's for right now.
+[36:55] Again, you can give it 50 pieces of content.
+[36:58] It literally will allow you to do that.
+[37:00] It's 10 at a time.
+[37:01] That's why I put that skill together.
+[37:03] I don't want to sit there and upload 10 pieces, watch it go to the folder, go back, put
+[37:07] up another, that's nonsense.
+[37:09] Have your AI of choice run the play for you?
+[37:14] Yes.
+[37:16] You guys will get everything.
+[37:17] In terms of the skill, the thing you're going to need is a co-work account.
+[37:24] I don't know how chat GPs, system works.
+[37:29] I would assume that most of us are using co-work at this point or something along those lines.
+[37:34] Your AI friend of choice.
+[37:37] Okay.
+[37:38] Gemini can't build folders on your desktop yet.
+[37:44] But it can use everything.
+[37:46] Now, that is the short end of that.
+[37:50] I know we get weird in the weeds.
+[37:52] Having a system, here's the thing.
+[37:54] For anybody who feels like content is heavy, it's because you don't have systems.
+[37:59] That's the reality of it, right?
+[38:01] Every person that's been on RevB this year, y'all, they've all displayed competence somewhere
+[38:08] and crack me if I'm wrong.
+[38:10] They've all had a system in a process for how they do it.
+[38:16] That's the thing I think we should all take away.
+[38:17] Forget about my specific tool choice.
+[38:22] It is the system in the process, the leverage that they're using in order to gain more share
+[38:27] in the marketplace, right?
+[38:32] I'm not yelling at you, but I can.
+[38:37] You can call me and I'll take care of that.
+[38:38] I would love to hear Juan Yellett-Mell.
+[38:40] That sounds like a fun time.
+[38:42] I do speak strongly of people.
+[38:45] Okay.
+[38:46] Katie, can we get into the important stuff?
+[38:50] Y'all, content is cool, but what is it?
+[38:52] Listen, I'm probably, I'm the person who literally argues the most for subscribers, no
+[39:01] matter, followers, no matter.
+[39:03] You're being fed lines of shit, pardon my language.
+[39:08] Now I want to take a step back and recognize the hard work that went into getting those
+[39:14] things.
+[39:15] I don't devalue them.
+[39:17] I just want everybody to understand that our marketplace and the way that the machines
+[39:22] work is evolving.
+[39:25] Everybody can see that follower counts and subscribers don't matter as much as they did.
+[39:32] Okay.
+[39:33] To the machine, they still matter to the human.
+[39:35] Let y'all.
+[39:36] Some of you go stock people and you discount them if they don't have a whole bunch of
+[39:40] followers.
+[39:41] Some of you don't care, but it's still part of the status.
+[39:44] And humans have status.
+[39:46] Even the ones who think you don't have status, that is a status on it.
+[39:49] You're the anti status, right?
+[39:53] Which is like, I would never drive it for R.E. because my family would think X, Y and
+[39:56] Z about me.
+[39:57] I'm very, I drive a minivan because again, there's your status and it's okay.
+[40:02] Can we just talk for a second?
+[40:04] Can we just pause that thought for a second?
+[40:06] I was out of town this weekend and we rented a minivan because that was the first rental
+[40:11] car, like large rental car that we saw.
+[40:13] I'm an SUV person and I'm going to continue to be an SUV person, but the hit a button
+[40:19] on the door to slide open and you throw your kid in.
+[40:22] Nice.
+[40:23] Rather than having to lift them up and push the door open with your butt, like, man, guys,
+[40:26] I see why people drive minivans.
+[40:28] Anyways, continue on.
+[40:29] Sorry.
+[40:30] Yes.
+[40:31] Also, non-team minivan, FYI, we won't own one either, but yes, when those, but I can,
+[40:35] if I show you the amount of door dings on the vehicles that I care about because my
+[40:39] hitens love to kick them open or push them open.
+[40:42] Katie's spot on with this, right?
+[40:44] There's a section of your life when that is very valuable.
+[40:47] But I want to get into this thing, y'all, like, because I, here's this, so many people
+[40:54] hold themselves back in terms of putting their face or their voice out in the world because
+[41:00] they feel like the market share is gone and it's not accurate.
+[41:04] Right?
+[41:06] We just, for, didn't anybody go to Tom Ferry last week?
+[41:09] All right.
+[41:11] How many times the, where do AI come out of people's mouth?
+[41:13] I hate it.
+[41:14] Right?
+[41:15] It's just a tool.
+[41:16] It's a tool.
+[41:17] It's cool.
+[41:18] It doesn't really need things.
+[41:19] It doesn't really crafty things, too.
+[41:20] Right?
+[41:21] Is AI a slap-ass?
+[41:23] I wonder, whoever uses it, is it a slap-ass?
+[41:26] Yes or no?
+[41:27] Are your ideas always amazing?
+[41:30] Hey, now.
+[41:34] It is like, that is the greatest idea ever.
+[41:36] You're like, cool, go out and execute.
+[41:37] And then it makes an absolute mess.
+[41:39] You're like, why can't you execute this idea?
+[41:40] You're like, well, it turns out this problem, this problem.
+[41:43] So again, we're not always right.
+[41:45] And that's okay.
+[41:46] Right?
+[41:47] However, it's a tool.
+[41:48] It's a thing to leverage.
+[41:50] It is not a thing to replace our relationships with human beings, period.
+[41:55] Now there is a way in and out of the internet.
+[41:59] I really got deep on this when I left Summit last week, because there were people standing
+[42:05] on stage touting lots of numbers about subscribers who also pay for said subscribers.
+[42:11] What world are we in right now?
+[42:13] First of all, that's not how content necessarily gets discovered.
+[42:16] And as a matter of fact, when you go ask the machine, it says, we're actually recommending
+[42:20] people with less than 1,000 subscribers because we only care about the content.
+[42:24] Oh, that's weird.
+[42:26] All right.
+[42:27] So I want everybody to guard themselves against that type of thinking.
+[42:30] Again, I'm not here to diminish anybody's things that they've done.
+[42:35] However, it is changing.
+[42:37] Okay.
+[42:38] When I was going through this really, really deep with Gemini, because Gemini at some
+[42:41] point, y'all, is going to solve the other problem we have right now, which is the editing
+[42:44] problem.
+[42:45] All right.
+[42:46] When Katie, now we're having that discussion.
+[42:49] Katie, what did you send me?
+[42:50] There was a potential partnership announcement between them and who.
+[42:55] Oh, this was like a month ago, dude.
+[42:57] Yeah, Gemini and CapCut.
+[43:02] Yeah, Katie sent me the link.
+[43:04] She's like, I know.
+[43:05] I know.
+[43:06] I know.
+[43:07] I could go back in my, I could have like tried to buy some time and rolled back on my
+[43:12] text or you could just answer.
+[43:14] But you that and that's well played.
+[43:16] Well played.
+[43:17] That's your life, which I congratulations.
+[43:19] I'm sharing that with everybody because at some point, y'all, that problem's going to
+[43:22] go away for us.
+[43:24] You're going to literally tell it to storyboard.
+[43:26] Here's my framework.
+[43:27] It's going to do the thing for you.
+[43:28] Just know that that leverage is coming, but that leverage is not going to mean that you
+[43:31] are going to be the most discovered or the most recommended or the person that the internet
+[43:37] relies on to recommend.
+[43:40] So the big thing where I'm driving towards here is the research and the proof.
+[43:47] Right now, 60% according to Google, not according to one, 60% of all, all searches on
+[43:56] Google do not end in a click.
+[44:02] I want everybody to chew on that for a second.
+[44:05] 60% of all all searches on Google do not end in a click.
+[44:12] Hold, cow.
+[44:15] So your website, your blog, is that accelerating or decelerating the stat that I just gave you?
+[44:24] Okay.
+[44:25] If we're thinking that, put a one in the chat, if you think that's going to continue
+[44:28] to accelerate.
+[44:32] And I want to ask everybody to this, is Google the internet?
+[44:35] Yes, it is.
+[44:37] That is a rhetorical question.
+[44:39] Okay.
+[44:40] Now, here's what Google is saying.
+[44:43] I did a ton of research on this on the way home.
+[44:46] Okay.
+[44:47] It's sourcing the largest source that it sites when it gives recommendation is, is guess
+[44:53] what platform?
+[44:57] It owns it.
+[44:59] I want everybody to know.
+[45:01] Yep.
+[45:03] The largest single source is YouTube at over 40% of every recommendation that AI overviews
+[45:11] provides right now is from YouTube.
+[45:16] That is the single largest source hands down.
+[45:19] Everything else was barely double digits.
+[45:21] So your blogs, whatever it is.
+[45:22] And I'm not saying abandoned those.
+[45:24] That's not what I'm saying, but I want everybody to think about this.
+[45:26] What's the 80 20 rule?
+[45:28] Do I focus on 80% where it matters the most, right?
+[45:32] The largest source of sighted content on the internet today is YouTube.
+[45:40] 97% according to the sources that I'll share with you guys too, we're from long form
+[45:48] content.
+[45:52] Holy cow.
+[45:57] Okay.
+[45:59] Long form.
+[46:00] Now, there was one thing, Katie, that came out of this that we immediately are making
+[46:04] a shift on content wise, both long form, short form, every form of content.
+[46:09] Okay.
+[46:10] Because Google is saying this is exactly what we're going to use to recommend you.
+[46:15] Exactly.
+[46:16] All right.
+[46:17] And I want more of a Q&A.
+[46:18] I hate this talking people's life.
+[46:20] This makes me crazy.
+[46:21] Love you guys.
+[46:22] I love the interaction and knowing like the stuff's working and clicking around.
+[46:26] But I want to share this with you guys specific.
+[46:28] I shared this with community that I run this morning.
+[46:32] But this one is the thing that broke my brain.
+[46:34] And I realized right away where the biggest mistakes in our personal content are in the
+[46:38] immediate fixes we need to make.
+[46:40] So it called on this thing, Katie, here's how it sites it.
+[46:43] I'm not going to go through all the research.
+[46:44] But here's the big aha moment I had and the one that that broke my brain.
+[46:49] As I was sharing this content, y'all.
+[46:51] So I built a small version for you guys for anybody that doesn't use all the tools
+[46:56] we use, right?
+[46:58] And during that test, I had Indian Rocks Beach.
+[47:00] It was just a beach day.
+[47:01] Katie, I took old content.
+[47:03] It wasn't even new.
+[47:04] I put pieces of content in there.
+[47:06] And I thought that Gemini was reading my metadata on my phone.
+[47:11] Okay.
+[47:12] And for anybody wondering what the hell I mean by that is like when you scroll up on a photo,
+[47:15] is anybody looked at a photo and scrolled up?
+[47:18] I'll show you the location and yeah, that's called metadata.
+[47:22] That's the nerdy term for this is the information about this photo.
+[47:25] It literally tells the longitudinal and landed.
+[47:28] It tells exactly where you are, right?
+[47:30] And I was like, you're lying.
+[47:32] How do you know where this, because it told me, oh, this isn't Indian Rocks Beach and you
+[47:35] and that that you were doing this, right?
+[47:36] It told me the whole thing.
+[47:37] And I was like, you're lying.
+[47:39] How did you know that?
+[47:41] And I didn't go review all the content.
+[47:42] I just went to the beachy stuff and threw it in there.
+[47:45] It's like, oh, on clip six, six seconds in, there is a shot of Indian Rocks Beach fifth
+[47:51] avenue entrance.
+[47:56] And I have my moment when I'm like, I knew you were watching, but I didn't know you actually
+[48:02] knew what it meant.
+[48:05] Now I want to go back to my earlier comment this morning, you know, Google knows based
+[48:11] upon geography.
+[48:12] It's spent 10 years documenting the United States via cameras, correct?
+[48:18] And then if you own a business, do we have to verify, like, by video now, if we have
+[48:23] a physical location of where things are, do we have, were there people that became like
+[48:28] local famous on Google for going out and giving photos and reviews of stuff?
+[48:35] This is where my, I had my moment.
+[48:37] I was like, wait a minute, you're not reading the metadata.
+[48:39] Like you can, you actually contextualize what is on that screen.
+[48:44] And it was like, oh, yeah, that's how we give recommendations.
+[48:47] And y'all, my, my brain broke.
+[48:52] And I want to tie this together.
+[48:53] Right?
+[48:54] All right.
+[48:55] All this thing is a very specific thing on recommendation.
+[49:00] It calls it search triads.
+[49:03] Okay, I want you guys to research this on your own search triad.
+[49:08] Okay, let me get into this.
+[49:10] Oh my god, this was like broke my brain.
+[49:13] Search indexing back at it.
+[49:17] While you're pulling that up, Bill said that when he swipes up on his photos, he doesn't
+[49:21] see metadata.
+[49:22] You can turn off location on your phone for when you're taking photos.
+[49:26] And so if you have that turned off, that's probably why you don't see the location on a
+[49:31] photo.
+[49:32] But basically, like you click on a random picture.
+[49:35] And then if you push it up, it will normally have date and time.
+[49:39] It'll have like what it was taken on.
+[49:41] And then the settings that you had on your camera.
+[49:47] And then if you have location on, it'll have the map on the bottom.
+[49:51] So you probably should have location turned off.
+[49:53] You got to pull it up one.
+[49:55] Yeah.
+[49:56] So here's the thing I want everybody to remember.
+[49:58] And you're kind of hearing this stuff from a lot of the people who are in this world.
+[50:02] I think I've heard Jason kind of alluded to some of these things and other people.
+[50:06] But here is how do we apply all that nerdy crap?
+[50:10] Right?
+[50:11] This is the thing.
+[50:12] I wanted to still down to the most basic thing.
+[50:14] For all content, especially video, think of it as these three markers that you need to
+[50:20] hit.
+[50:21] See it.
+[50:23] Say it.
+[50:24] Write it.
+[50:25] Okay.
+[50:26] Walk with me.
+[50:29] See it.
+[50:31] Say it.
+[50:33] Write it.
+[50:36] This is so important.
+[50:37] Because again, it recognized the monument in the video.
+[50:43] And that's how it knew was like, oh, I'm going, it told me I am going to give you authority
+[50:48] for this.
+[50:49] Local authority is going to be given to you from me, Soran of the internet.
+[50:54] That will not pass to thou shalt pass because you are actually giving me the thing that
+[51:01] I want and the consumers also want.
+[51:05] All right.
+[51:06] And this is how it breaks down.
+[51:07] So this specific segment, because I got into this man and it just blew my mind.
+[51:13] Here's what it is.
+[51:16] Your first three seconds year video.
+[51:18] This is really where it gets into it.
+[51:21] Whether it shorts or long form, it said for both, okay, for video content.
+[51:27] And that first three seconds, this is where everything matters because Google is about speed.
+[51:32] AI is about speed, right?
+[51:34] Everybody knows this.
+[51:35] Whoever is the fastest to give it the most accurate answer, that's where it wants to go
+[51:39] first.
+[51:40] Okay.
+[51:41] I want everybody to think about this.
+[51:44] TikTok and Instagram gated from the internet.
+[51:51] Meaning do they kind of block other AIs?
+[51:56] They do, right?
+[51:59] This is why I think shorts is the biggest opportunity in the internet right now.
+[52:03] Long form for sure.
+[52:06] But what it's saying here is it gave an example, Katie.
+[52:09] And this is what it really busted down.
+[52:10] It went in one of my property tours.
+[52:12] It was like, hey, if you just take these shots and move them to the front and move this
+[52:17] part of your script to the front, we would have recommended this video on the AI side.
+[52:24] But we're not because those things aren't in place.
+[52:26] And what it was saying, I did a property tour for one of our listings.
+[52:30] And in that video, I had an image of the street sign, which I never put in there.
+[52:35] But for some reason, it was outside.
+[52:36] It was beautiful.
+[52:37] I was just like, oh, the lighting was perfect.
+[52:39] I was catching the sun.
+[52:40] I was going to go through the mountain, right?
+[52:42] But what I didn't recognize was how valuable that was.
+[52:47] And what it was saying is on your content, y'all, these monuments, these local monuments,
+[52:51] so the neighborhood sign.
+[52:54] I know we've been taught this before.
+[52:55] But what it's saying is put it up front.
+[53:00] The street sign, the street number, it said, if you move these three things to the front,
+[53:06] and then I see the three car garage up front, I know for anyone looking for a three car
+[53:11] garage in this community, this is the authoritative video that I want to send with them.
+[53:18] Y'all, y'all, I was like, oh, this is the moment.
+[53:27] We inherently kind of know this, but we're all skipping over these things.
+[53:34] So are you prompting AI for what, like, what should we have in the beginning of this video?
+[53:44] Or now after this, are you just telling your editors that it should be different?
+[53:48] Or what?
+[53:49] Like, how are you guys changing the process?
+[53:51] Yep.
+[53:52] So screenplay, we always tie in context in general.
+[53:55] So think of it this way.
+[53:57] Context is King visually.
+[53:59] Okay.
+[54:00] Does everybody understand that?
+[54:03] That's why map videos on the internet tend to do really well.
+[54:07] You're giving context.
+[54:08] Is anybody ever done a commute video and showed the map?
+[54:10] People love that crap.
+[54:12] Right?
+[54:13] Remember when people were doing the, hey, I've got a listing coming up at Katie's done
+[54:18] this.
+[54:19] I've got a listing coming up in X, Y, or Z, and it's the map.
+[54:21] And you're like, it's this area.
+[54:22] I can't say exactly where it is.
+[54:24] Right?
+[54:25] You know why those videos performed?
+[54:27] Not because there was a real estate agent on there, not because there was a house for
+[54:30] sale.
+[54:31] Those humans are curious about context.
+[54:35] Right?
+[54:36] So context is King.
+[54:38] When you're saying something, you're calling that out in a B role.
+[54:42] So again, if you're going to go do, here's 10 things to do in my local market.
+[54:46] Whatever the video is, I don't care guys.
+[54:49] When you start that video, make sure you're adding that visual context that has actual
+[54:54] location markers in it so it can say this person is actually in this location.
+[55:01] Google is trying to give you the, it's telling us if you just do these things, it's going
+[55:09] to prioritize your content.
+[55:11] Now it also said very clearly that it will use shorts and long form before it will use
+[55:16] anybody else's platforms.
+[55:18] I know these are two specific different, or two very different context, context today.
+[55:28] But what's the videos for?
+[55:30] They all doing the videos is fine, but if we're not bringing people through our doors,
+[55:33] that who cares?
+[55:34] Right?
+[55:35] I don't want to see my face.
+[55:38] No, that's all nonsense.
+[55:40] This is the short term ambition for long term laziness.
+[55:43] If I'm building content, I want it to actually acquire clients, not just make me feel
+[55:48] good because I got lots of views.
+[55:51] I rest my peace.
+[55:55] I know.
+[55:56] This is so like, she warned you.
+[55:59] She did say, we're getting nerdy.
+[56:06] I'll put a post in, in rev B, talking about the C, it say it, write it in detail, independent
+[56:16] of everything else.
+[56:17] I just think it's a wonderful practice that we should all lean on because it's telling
+[56:21] us, please do these things and I'll help you.
+[56:27] I was just pulling off your YouTube because you're like, oh, I don't care about subscriber
+[56:33] account reviews and whatever.
+[56:36] He does say that with 23.3,000 subscribers and hundreds and thousands of views on his
+[56:43] videos, but I was just laughing and I want to share this with everyone of this little
+[56:49] video of you looking back at the camera.
+[56:52] That's totally AI.
+[56:53] I can tell that it is, but it still makes me laugh.
+[56:57] But for anybody who does go there, I want you to recognize something.
+[57:02] Two years ago when I stood on the rev B stage, I had almost 21,000 subscribers.
+[57:09] That's went off a cliff, but you know what hasn't?
+[57:11] Our closings.
+[57:12] Yeah.
+[57:13] I could care less.
+[57:16] The views have went off a cliff.
+[57:17] Don't care.
+[57:18] We're going to close as many pieces of real estate.
+[57:21] We're averaging five and a half closings from YouTube a month in our business.
+[57:27] Don't care.
+[57:28] It hurts my ego, but the agents don't care when they close.
+[57:37] Well, and Bernie just put in the chat and I think there are some other people in the
+[57:42] call that are currently doing YouTube and having leads coming in.
+[57:46] She has 223 subscribers and 300 contract.
+[57:52] So like subscriber account does not really matter.
+[57:54] And honestly, views don't really matter if the views are people that are watching your
+[57:59] videos then contacting you.
+[58:00] Like who cares if they subscribe or don't subscribe.
+[58:03] Like if the money's in the bank, you know, and she's making 20, 30, 40 grand off of those
+[58:07] three under contract, like let's go.
+[58:10] That's right.
+[58:11] And if I remember correctly, I'm pretty sure they're buyers and it's a buyer's market
+[58:15] right now.
+[58:16] So I'm sure she's getting paid.
+[58:17] But anyways, side at the point.
+[58:20] Yeah.
+[58:22] Let's go.
+[58:23] Jessica says 356 subscribers, 8 million close just this is.
+[58:26] Let's go.
+[58:27] That's awesome.
+[58:28] That's awesome.
+[58:29] Is that one house?
+[58:31] I do.
+[58:32] We do have to preface that.
+[58:33] We do have to preface that.
+[58:36] We had we we edit for a guy in Key West and God bless him.
+[58:41] His first sale is 14 and a half million.
+[58:43] I was like, congratulations, dude.
+[58:45] Congrats.
+[58:46] Congrats.
+[58:47] You know, like that is wonderful for you.
+[58:51] We are not in that bucket.
+[58:52] But yeah, good job.
+[58:53] Good job, y'all.
+[58:54] That's so funny.
+[58:55] Well, that's not a question.
+[58:57] And so do you ever we've got like a minute left, not even, you know, you were creating
+[59:02] a lot of the same videos or very similar videos.
+[59:05] Do you ever feel burnt out with these?
+[59:08] What is that?
+[59:10] You know, what does that look like?
+[59:12] Yep.
+[59:13] Here's the sentence that Saul that keeps me in line.
+[59:17] And in every business, you got to get really good at teaching new people old things, especially
+[59:22] in real estate.
+[59:25] I don't have to reinvent the wheel.
+[59:26] I just have to make sure that we stay in front of buyers and sellers and we and we walk
+[59:30] them through the process.
+[59:31] So yes, I get tired of hearing my own voice.
+[59:34] I've made the same video so many times.
+[59:36] I can't see straight.
+[59:38] We have five essential buckets that we run through and we just run the play over and
+[59:41] over and over again.
+[59:42] And I mean, I've seen some of the videos that you've made.
+[59:46] It's like, you know, this is the 2026 update.
+[59:48] This is the 2025 update and it's like the same video.
+[59:50] But like now it's we've lived here for two years, three years, four years, five years.
+[59:55] So you know, it's kind of reiterating the same thing, but then kind of talking a little
+[59:59] bit more about, you know, how that may have changed.
+[01:00:02] All right.
+[01:00:03] One, you're the best.
+[01:00:05] We will have all this posted in school as far as the replay and then the skills and prompts
+[01:00:13] and all of those things.
+[01:00:15] If you also search in the replays in school, there's more YouTube stuff from one.
+[01:00:21] He has shared on the mastermind before and has also, you know, just been an attendee sharing
+[01:00:30] as well.
+[01:00:31] So he is a wealth of knowledge on Thursday.
+[01:00:34] I am doing a webinar with Jason Pantana.
+[01:00:37] We are talking all about chat GPT work.
+[01:00:43] Not clawed co-work, but chat GPT work.
+[01:00:47] So when you log in to chat GPT, if you're in a new chat, you may see in your screen, it
+[01:00:51] says chat and then a little toggle over to work.
+[01:00:54] And that's chat's agenteic AI as an answer to clawed co-work.
+[01:00:58] So we're going to talk about a couple easy things you can do as far as once you get some
+[01:01:02] stuff hooked up in there and and skills and stuff that you can you can run in there.
+[01:01:08] So that is the link for the Thursday webinar.
+[01:01:11] And then we've got this will be up in school.
+[01:01:15] But one, you are the best.
+[01:01:17] Thank you so much for your time today.
+[01:01:21] And I will see you guys next week.
+[01:01:24] Later y'all.
+[01:01:25] Thanks for letting me nerd out.
+
+DONE_EXIT_0
