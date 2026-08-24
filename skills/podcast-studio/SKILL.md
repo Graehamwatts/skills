@@ -34,6 +34,25 @@ like a living organism — when something new comes up, alter the relevant show 
    retired 2026-07-29, unused for years — WebFetch already does URL-to-clean-text directly).
    NEVER script a research show from training memory or a prior run's
    findings. Cite sources; mark anything unverifiable as UNVERIFIED; never fabricate a number.
+4b. **Deliver resolved knowledge, not research narration — HARD RULE, corrected 2026-08-09 after
+   the Rechat episode failed this.** Finish the research FIRST — chase down open questions until
+   they're actually closed (try alternate sources, alternate search angles, don't stop at the
+   first blocked page) — THEN write the script as confident, direct teaching: "here's how it
+   works," not "here's what we found / here's what we couldn't verify / here's our confidence
+   level." Graeham's own words: "I need to know how that system works... you basically said what
+   we think is and what we know is and what we don't know is, and all that stuff is just not
+   stuff I need to know." The investigation is invisible in the final script — only the resolved
+   answer is on air. A single crisp caveat line is fine for a genuinely unresolved fact (e.g.
+   "pricing isn't published anywhere"); a whole segment narrating the research process is not.
+   Corollary: when a new competitor or fact needs to go into an EXISTING episode, rewrite that
+   episode as one coherent pass — never bolt the new material on as a "correction" or "update"
+   beat stapled onto the end of an already-written script.
+4c. **Verify company identity before researching — HARD RULE, corrected 2026-08-09.** Company
+   names collide (Sierra AI, the Bret Taylor enterprise-agent company, vs. Sierra Interactive,
+   the real-estate agent website/IDX/CRM platform — Graeham meant the latter and got the former).
+   When a competitor name is remotely ambiguous, confirm which company before spending research
+   budget on it, or research enough to positively identify it (domain, product category, founder)
+   before treating the research as settled.
 5. **Check the ElevenLabs quota before generating** and tell Graeham the number. Cost ≈ 1
    character per character of spoken text; a ~40-min episode ≈ 35-40k chars. If the batch exceeds
    the remaining quota, report it and either batch across the reset date or wait for his go.
@@ -93,14 +112,18 @@ Competitor deep-dive series so Graeham can mine competitors (the Bill Gates move
 the founder-in-love-with-the-idea blind spot, and know the landscape cold. Two-host, LONG
 (30-45 min/episode — he's at the gym 90 min/day, longer is better). Album `Know Your Enemy`.
 Planned episodes: (1) The Map — the whole landscape + the one thing none of them have (the
-outcome graph); (2) Rechat — the closest positioning collision ("AI Operating System for Real
-Estate," Ryan Serhant customer); Lucy vs Chevy, the draft-vs-execute question (answered: Lucy
-drafts, human approves), and the fast-but-generic listing-fan-out finding — added 2026-08-09,
-source `Competitor Research\rechat-analysis.md` §9; (3) The Legacy All-in-Ones (Lofty,
-BoldTrail/kvCORE, BoomTown); (4) Follow Up Boss + Zillow; (5) Sierra & Viktor and the
-enterprise-agent frontier — what to steal for Wattson/Chevy [rendered]; (6) GoHighLevel — the
-engine he rents; (7) The AI Theater (Serhant, Luxury Presence, "AI for AI's sake"); (8) The
-Scorecard — honest win/lose per player + build-first list.
+outcome graph) [rendered]; (2) Rechat — the closest positioning collision ("AI Operating System
+for Real Estate," Ryan Serhant customer); Lucy vs Chevy, the draft-vs-execute answer, the
+verbatim-tagline-reuse finding, Testimonials, the MCP server — REWRITTEN FROM SCRATCH 2026-08-24
+in the resolved-knowledge format (see rule 4b/4c origin), independent reviews and pricing closed
+out same day, source `Competitor Research\rechat-analysis.md` §10; (2b) Sierra
+Interactive — the real-estate agent website/IDX/CRM platform (NOT Sierra AI, the Bret Taylor
+enterprise-agent company — that mixup happened once, corrected 2026-08-09, see rule 4c) —
+NEW, planned; (3) The Legacy All-in-Ones (Lofty, BoldTrail/kvCORE, BoomTown); (4) Follow Up Boss +
+Zillow; (5) Sierra AI & Viktor and the enterprise-agent frontier — what to steal for
+Wattson/Chevy [rendered]; (6) GoHighLevel — the engine he rents; (7) The AI Theater (Serhant,
+Luxury Presence, "AI for AI's sake"); (8) The Scorecard — honest win/lose per player + build-first
+list.
 Source of truth: `Documents\PropIQ\PropIQ\Competitor Research\` (research agents write here).
 RULE: re-crawl before scripting; every claim sourced.
 
