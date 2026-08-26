@@ -1,52 +1,125 @@
 ---
 name: listing-remarks-writer
-description: "MLS listing remarks writer optimized for AI-powered home search (ChatGPT with Zillow, Perplexity, Google AI Overviews) and Bay Area buyers. Walks the buyer through the property as if touring it, adapts framing to property condition (fixer / mid / move-in ready), and produces noun-dense AI-searchable copy. Use this skill ANY time the user asks to: write listing remarks, write MLS description, draft listing copy, write property remarks, rewrite a stale listing, optimize listing for AI search, write the public remarks for a new listing, draft remarks for a fixer or renovated home, or improve an existing listing description. Also use for property flyer, brochure, postcard, and single-property-site body copy. Trigger when the user uploads listing photos and asks for the description, mentions a new listing, or pastes property details and wants the listing copy. Never repeats the address or the bed/bath/sqft/lot/year stat line, which the MLS data card and print templates already carry. Localized for Graeham's Bay Area markets (East Palo Alto, Redwood City, Palo Alto, Menlo Park, San Mateo County) with California-specific framing."
+description: "MLS listing remarks writer optimized for AI-powered home search (ChatGPT with Zillow, Perplexity, Google AI Overviews) and Bay Area buyers. Writes to a hard character budget (MLSListings public remarks = 1300 characters), never repeats the address or the bed/bath/sqft/lot/year stat line the MLS data card already carries, walks the buyer through the property as if touring it, and adapts framing to condition tier (fixer / mid / move-in / renovated / new). Use this skill ANY time the user asks to: write listing remarks, write MLS description, draft listing copy, write property remarks, rewrite a stale listing, optimize a listing for AI search, write public remarks for a new listing, draft remarks for a fixer or renovated home, or improve an existing listing description. Also use for property flyer, brochure, postcard, and single-property-site body copy. Trigger when the user uploads listing photos and asks for the description, mentions a new listing, or pastes property details and wants the listing copy. Localized for Graeham's Bay Area markets (East Palo Alto, Redwood City, Palo Alto, Menlo Park, San Mateo County) with California-specific framing."
 ---
 
 # Listing Remarks Writer
 
-Write MLS listing descriptions that surface in AI-powered home search. Buyers increasingly search through ChatGPT (with Zillow integration), Perplexity, Google AI Overviews, and similar. Those platforms read the structured listing fields and the public remarks text. They cannot interpret photos, 3D tours, video tours, or captions. Any feature that lives only in a photo is invisible to AI search unless the remarks name it.
+Write MLS listing descriptions that fit the field, surface in AI-powered home search, and never repeat what the data card already says.
 
-This skill produces noun-dense, AI-searchable MLS copy. Walks the buyer through the property as if touring it, adapts framing to property condition, and stays inside Fair Housing / RESPA guardrails by design.
+Buyers increasingly search through ChatGPT (with Zillow integration), Perplexity, and Google AI Overviews. Those platforms read the structured listing fields and the public remarks text. They cannot interpret photos, 3D tours, video tours, or captions. Any feature that lives only in a photo is invisible unless the remarks name it — and the remarks only hold about 1,300 characters, so every one of them has to earn its place.
+
+Two rules govern everything below. Both are hard gates, not preferences.
 
 ---
 
-## Don't Repeat the Data Card (Read This First)
+## RULE 1 — The character budget is a hard gate
 
-The MLS already publishes a structured data card next to the remarks: street address, city, ZIP, beds, baths, square footage, lot size, year built, parking, APN, HOA, taxes, school district. Every syndication feed (Zillow, Redfin, Realtor.com, Compass) carries those fields, and every AI search layer built on top of them reads the fields directly. Reciting them in the remarks buys nothing and burns 200–300 characters out of a 1,500-character budget.
+**Never deliver remarks without mechanically counting them first.** Not estimating. Counting.
 
-**Default rules:**
+### Limits
+
+| MLS / surface | Public remarks limit | Confirmed |
+|---|---|---|
+| **MLSListings (Graeham's default MLS)** | **1,300 characters** | Yes — 2026-08-25 |
+| Any other MLS | **ASK the agent** | — |
+| Flyer / brochure / postcard body | Ask, or write to the template's word count | — |
+| Social caption | Platform limit, but write far shorter | — |
+
+The 1,300 figure includes spaces and punctuation. Never assume a limit for an MLS you haven't confirmed, and never carry a number over from another board. If the agent doesn't know, write to 1,300 — it's the safest common denominator, and a short remark is always publishable while a long one gets truncated mid-sentence by the field.
+
+> **History:** this skill previously defaulted to 1,500, which put every draft roughly 200 characters over the real field limit. If a draft is ever rejected as too long, the first thing to check is whether the limit in this table is still correct for the board being used.
+
+### Target band: 1,200–1,300 characters
+
+Under 1,200 wastes budget — that's 100+ characters of searchable feature nouns left on the table, and AI search ranks on what the text actually names. Over 1,300 gets truncated by the MLS. Land inside the band.
+
+### The mandatory loop
+
+1. **Reserve first.** Before writing a word, subtract the characters required by any mandatory language — verification hedges, tenant-occupancy disclosure, permit notes. A verification sentence runs 120–180 characters. If the listing needs one, you're writing a 1,120-character body, not a 1,300-character body.
+2. **Draft** to the section allocation below.
+3. **Count it:**
+
+```bash
+python scripts/charcount.py draft.txt 1300
+```
+
+   The script collapses whitespace the way the MLS field does, reports over/under, and prints a per-sentence cost table so the trim pass targets the expensive sentences instead of guessing. It exits 1 when over the limit.
+4. **If over:** run the trim ladder. **If under 1,200:** run the fill ladder.
+5. **Recount.** Repeat until inside the band.
+6. **Deliver** with the count stated.
+
+If the counting script isn't available for some reason, count with `python -c "print(len(open('draft.txt').read().strip()))"` or any equivalent. Eyeballing the length is what caused the problem this rule exists to fix.
+
+### Trim ladder — cut in this order
+
+1. **Data-card recitals.** Address, bed/bath count, square footage, lot size, year built, `City, County, ZIP` close. See Rule 2. Usually recovers 150–250 characters on its own.
+2. **Zero-information adjectives.** stunning, gorgeous, spacious, welcoming, beautiful, charming, must-see, dream, rare, one-of-a-kind. AI search ignores them and buyers skim past them.
+3. **Filler openers and connectives.** "Step inside to," "You'll love," "This home offers," "Located in," "Boasting." Start the sentence at the noun.
+4. **Redundant pairs.** "parking and storage" when the garage sentence already said both. "room to gather, work, or set up separate zones" survives; "flexibility" after it does not.
+5. **Long lists trimmed to the three strongest items.** Six kitchen features cost 90 characters more than three and rank no better.
+6. **Compress, don't delete, the location close.** "Located approximately five minutes by car to Caltrain service at the Palo Alto station" → "Caltrain at the Palo Alto station is roughly five minutes by car." Saves 20+ characters, same facts.
+
+**Never trim these to hit the limit:** material disclosures, verification language, condition honesty on a fixer, or the one feature that makes the listing distinct. If the remarks won't fit with all of those in, cut a whole optional section (secondary bedrooms, systems) instead of shaving the required parts.
+
+### Fill ladder — when under 1,200, add in this order
+
+1. Finish materials by name (quartz, white oak, butcher block, slate).
+2. Appliance and system specifics with years (2023 HVAC, five-burner gas range, tankless water heater).
+3. Layout and orientation facts (rear-facing primary, ground-floor bedroom, north light).
+4. Outdoor use detail (covered patio, raised beds, fenced dog run).
+5. Named nearby landmarks, transit, and employers.
+
+### Section allocation for a 1,300-character remark
+
+Rough guide, not a straitjacket. Shift budget toward whatever the condition tier says to emphasize.
+
+| Section | Characters |
+|---|---|
+| Opening — what it is, where, what's distinct | 120–160 |
+| Approach / curb appeal | 100–140 |
+| Living, dining, kitchen | 280–340 |
+| Primary suite | 120–160 |
+| Secondary bedrooms + baths | 80–120 |
+| Outdoor space + parking | 150–200 |
+| Systems + upgrade years | 80–120 |
+| Location close | 140–180 |
+| Reserve: disclosures / verification | 0–180 |
+
+---
+
+## RULE 2 — Don't repeat the data card
+
+The MLS already publishes a structured data card next to the remarks: street address, city, ZIP, beds, baths, square footage, lot size, year built, parking, APN, HOA, taxes, school district. Every syndication feed (Zillow, Redfin, Realtor.com, Compass) carries those fields, and every AI search layer built on top of them reads the fields directly. Reciting them in the remarks buys nothing and burns 200–300 characters of a 1,300-character budget.
+
+**Defaults:**
 
 - **No street address in the remarks.** Not in the opening, not in the close.
-- **No bed / bath / square-foot / lot-size / year-built recital.** Open with what the home *is like*, not with its stat line.
-- **No `City, County, ZIP` tag line at the end.** That was old SEO habit carried over from web copy; it reads as filler to a buyer and adds nothing an AI engine can't already see in the fields.
-- **City and neighborhood may appear once**, naturally, in prose — they set context and the subdivision name often isn't in a clean structured field. Once is enough.
+- **No bed / bath / square-foot / lot-size / year-built recital.** Open with what the home is like, not with its stat line.
+- **No `City, County, ZIP` tag line at the end.** Old web-SEO habit. It reads as filler to a buyer and adds nothing an AI engine can't already see in the fields.
+- **City and neighborhood may appear once**, naturally, in prose. Subdivision names often aren't in a clean structured field, so they earn their place. Once is enough.
 
-**The one exception: when a spec IS the argument.** State a number when the sentence is making a point with it, not listing it. Legitimate uses:
+**The exception — when a spec IS the argument.** State a number when the sentence is making a point with it, not listing it:
 
-- Lot size when the pitch is a lot split, an ADU, or an expansion ("a parcel this size may allow for…")
-- Year built when condition framing depends on it ("original to its 1962 build")
-- Square footage when the layout claim needs the scale ("over 3,000 square feet across two wings")
-- Bed count when the *configuration* is the feature, not the count ("two of the four bedrooms sit on the ground floor")
+- Lot size when the pitch is a lot split, an ADU, or an expansion ("a parcel this size may open the door to…")
+- Year built when the condition framing depends on it ("original to its 1962 build")
+- Square footage when a layout claim needs the scale ("over 3,000 square feet across two wings")
+- Bed count when the configuration is the feature, not the count ("two of the four bedrooms sit on the ground floor")
 
-If you cut a number and the sentence still makes the same point, the number was a recital. Cut it.
-
-**Every character you save goes back into what the data card cannot hold:** finish materials, appliance detail, layout flow, light and orientation, condition and upgrade years, outdoor use, commute facts, and neighborhood landmarks.
+If you cut the number and the sentence still makes the same point, it was a recital. Cut it.
 
 ### Other surfaces (flyers, brochures, social, email)
 
-The same rule holds anywhere the piece already prints a spec block. Property flyers, brochures, just-listed postcards, and listing web pages all carry the address and stat line in their own template, usually in larger type than the body copy. Repeating it in the paragraph makes the piece read like it was assembled by three different people.
-
-At intake, ask which surface the copy is for and whether that surface prints the specs separately:
+The same rule holds anywhere the piece already prints a spec block. Flyers, brochures, just-listed postcards, and single-property sites all carry the address and stat line in their own template, usually in larger type than the body copy. Repeating it in the paragraph makes the piece read like three people assembled it.
 
 | Surface | Spec block present? | What the body copy does |
 |---|---|---|
-| MLS public remarks | Yes, structured fields | Features only — no address, no stat recital |
-| Property flyer / brochure | Yes, in the template header | Features only; write to the template's word count, not 1,500 chars |
-| Just-listed postcard | Usually address + beds/baths only | Features only; 2–3 sentences max |
+| MLS public remarks | Yes, structured fields | Features only, ≤1,300 characters |
+| Property flyer / brochure | Yes, template header | Features only; write to the template's word count |
+| Just-listed postcard | Usually address + beds/baths | Features only; 2–3 sentences |
 | Listing web page / single-property site | Yes, spec table | Features only |
-| Social caption | No | State the specs once, compressed, then features |
-| Text message / DM to a buyer | No | State the specs once, compressed |
+| Social caption | No | Stat line once, compressed, then features |
+| Text / DM to a buyer | No | Stat line once, compressed |
 
 When the surface has no spec block, give the stat line once in a single compressed clause and move on. Never twice.
 
@@ -54,318 +127,222 @@ When the surface has no spec block, give the stat line once in a single compress
 
 ## Before You Start — Read These
 
-1. **`../shared-references/identity.json`** — Graeham's brand identity. NEVER hardcode contact details, DRE, or brokerage from memory. Read this file first.
-2. **`../content-creation-engine/references/market-config.md`** (optional) — full neighborhood list, jurisdiction terms, content pillars. Use when writing for one of Graeham's primary markets.
-3. **`../comedy-craft/SKILL.md`** (optional) — when a remark calls for one line of dry character or wit, load `comedy-craft` for Graeham's voice (clean with a little bite). Keep it subtle and rare: remarks stay noun-dense and AI-searchable first, character second.
+1. **`../shared-references/identity.json`** — Graeham's brand identity. NEVER hardcode contact details, DRE, or brokerage from memory.
+2. **`../content-creation-engine/references/market-config.md`** (optional) — full neighborhood list, jurisdiction terms. Use for Graeham's primary markets.
+3. **`../comedy-craft/SKILL.md`** (optional) — when a remark calls for one line of dry character. Keep it rare: remarks stay noun-dense first, character second, and wit costs characters.
 
 ---
 
 ## Fair Housing + RESPA Guardrails (Non-Negotiable)
 
 NEVER write remarks that:
+
 - Reference race, religion, national origin, family status, disability, or sex
 - Use coded language: "safe neighborhood," "good area," "family-friendly," "up-and-coming," "exclusive community," "great for families," "perfect for empty nesters"
-- **Mention school quality, ratings, rankings, awards, or "improving" / "concerning" framing.** This is the most common Fair Housing trap in real estate marketing. School quality language has been treated by HUD as a demographic proxy. NAR Code of Ethics Article 10 prohibits it explicitly.
-  - You MAY factually name the school district ("Property is in Ravenswood City School District") if it adds material clarity — but most agents skip this since the district shows in the MLS metadata anyway.
-  - You MAY note distance to a specific school as a walkability fact ("within 0.4 miles of Costaño Elementary").
-  - You may NOT call schools "top-rated," "blue ribbon," "award-winning," "highly rated," "improving," or use any quality assessment whatsoever — positive OR negative.
-- Promote kickback arrangements with lenders, inspectors, title companies, or other vendors (RESPA violation)
-- Imply preference for or steering toward specific buyers based on protected characteristics
+- **Mention school quality, ratings, rankings, awards, or "improving" / "concerning" framing.** This is the most common Fair Housing trap in real estate marketing. HUD has treated school-quality language as a demographic proxy; NAR Code of Ethics Article 10 prohibits it explicitly.
+  - You MAY factually name the district ("Ravenswood City School District") — though it's in the MLS metadata anyway, so it usually isn't worth the characters.
+  - You MAY note distance to a named school as a walkability fact ("within 0.4 miles of Costaño Elementary").
+  - You may NOT call schools "top-rated," "blue ribbon," "award-winning," "highly rated," or "improving" — no quality assessment at all, positive or negative.
+- Promote kickback arrangements with lenders, inspectors, title companies, or other vendors (RESPA)
+- Imply preference for or steering toward buyers based on protected characteristics
 
-When referencing neighborhoods or location: stick to property types, price tiers, lot sizes, proximity to amenities (parks, transit, dining, retail, employers), architectural styles, age of housing stock, HOA structure, and walkability/commute facts. This is both the law (Fair Housing Act, RESPA, NAR Code of Ethics) and Graeham's brand standard.
+For location, stick to: property types, price tiers, lot sizes, proximity to amenities (parks, transit, dining, retail, employers), architectural styles, age of housing stock, HOA structure, walkability and commute facts.
 
 ---
 
 ## Truth-in-Advertising Rules (Non-Negotiable)
 
-These prevent claims that get agents into civil liability or DRE complaints, separate from Fair Housing.
+**ADU / lot-split language — only when verified, or explicitly hedged.** Never write "ADU potential," "ADU-ready," "buildable lot," "SB 9 eligible," "can add a unit," or "JADU possible" as a flat claim unless the agent has confirmed all three:
 
-**ADU language — only when verified.** NEVER write "ADU potential," "ADU-ready," "buildable lot," "can add a unit," "JADU possible," or any similar claim unless the agent has confirmed:
-1. Local zoning permits an ADU on this lot type, AND
-2. The lot meets minimum setback / size requirements for the jurisdiction, AND
-3. There are no HOA / CC&R / easement restrictions that would block it
+1. Local zoning permits it on this lot type, AND
+2. The lot meets minimum size / setback requirements for the jurisdiction, AND
+3. No HOA / CC&R / easement restriction blocks it
 
-If any of those three are unverified, **omit ADU language entirely.** Cities in the Bay Area have wildly different ADU rules — what's allowed in unincorporated San Mateo County may not be allowed in Palo Alto, and the rules change yearly. Speculation is false advertising.
+If any answer is unsure, you have two options: omit the language entirely, or write it as possibility plus an explicit buyer-verification sentence in the same remark:
 
-**Square footage** — state recorded square footage from county records or MLS. Never round up. Never combine living + non-living square footage (garage, basement, sunroom) without labeling it.
+> "A parcel this size may open the door to a lot split under California SB 9, an ADU, or a junior ADU. All development potential, permit history, square footage, and buildability to be verified by the buyer with the City of [jurisdiction] and [county]."
 
-**Lot size** — state recorded lot size from county records. Don't estimate from photos.
+That verification sentence costs about 140 characters. Reserve them before drafting. Bay Area ADU and SB 9 rules differ by city and change yearly — what's allowed in unincorporated San Mateo County may not be allowed in Palo Alto.
 
-**Year built** — state recorded year built. If extensively renovated, you may say "originally built [year], renovated [year]" but never imply newer construction than the records show.
+**Square footage** — recorded figure from county records or MLS. Never round up, never combine living with garage/basement/sunroom without labeling it.
 
-**Solar / EV / smart home features** — only mention if currently installed and operational. "Solar-ready" is OK if the panel is pre-wired; "solar-equipped" requires panels actively producing.
+**Lot size** — recorded figure. Don't estimate from photos or satellite.
 
-**Permits** — never call something "permitted" unless permits are confirmed in county records. Many additions and remodels in the Bay Area are unpermitted; misrepresenting them creates liability.
+**Year built** — recorded figure. "Originally built [year], renovated [year]" is fine; implying newer construction is not.
 
-When in doubt, omit. A factually accurate listing with fewer claims is always better than an enthusiastic one with one false claim.
+**Solar / EV / smart home** — only if installed and operational. "Solar-ready" requires pre-wiring; "solar-equipped" requires panels producing.
 
----
+**Permits** — never call anything "permitted" without confirmation in county records. Many Bay Area additions are unpermitted.
 
-## Writing Framework
+**When the county record and the walkthrough disagree** (a 2-bed record with four bedrooms on the tour, common with unpermitted additions): do not publish either number. Leave bed/bath/sqft out of the remarks entirely — Rule 2 already says to — and flag the discrepancy to the agent so they resolve it before the structured fields go live.
 
-### Nouns (What it is and where it is)
-- **Property type:** include Eichler and mid-century when accurate — these are Bay Area-specific search terms buyers actually use; otherwise name the style factually (ranch, craftsman, townhouse, condo, etc.)
-- **Location specifics:** neighborhood name, subdivision, city, ZIP, proximity landmarks ("two blocks from Cooley Landing," "walking distance to downtown Redwood City," "five-minute drive to Stanford")
-- **Features:** specific materials, room names, upgrades, systems
-- **Nearby amenities:** parks, retail, transit (Caltrain stations especially), employers (Meta, Google, Stanford, SLAC, etc.) — name them factually, don't rank them
-
-### Verbs and Modifiers
-- **Avoid:** stunning, gorgeous, amazing, dream home, must-see, breathtaking, one-of-a-kind, rare opportunity (these are zero-information words AI search ignores)
-
----
-
-## Bay Area Context (Default Localization)
-
-When the listing is in one of Graeham's primary markets, weave in regionally-meaningful details that buyers are actually searching for:
-
-**East Palo Alto (EPA):**
-- Proximity to Meta HQ (1 Hacker Way), Stanford Research Park, Cooley Landing, Bay Trail
-- Neighborhoods: Woodland Park, Weeks neighborhood, Gardens, Westside, University Village
-- Caltrain access via Palo Alto or Redwood City stations
-- 101 / Dumbarton Bridge access
-- School district: Ravenswood City School District (factual mention only)
-
-**Redwood City (RWC):**
-- Caltrain station (downtown), Highway 101, walkability to Courthouse Square, dining
-- Neighborhoods: Mt. Carmel, Stambaugh-Heller, Friendly Acres, Centennial, Roosevelt, Edgewood Park, Emerald Hills
-- Proximity to Oracle, Box, Electronic Arts
-
-**Palo Alto (PA):**
-- Stanford University, downtown University Avenue, Caltrain (downtown + California Ave stations)
-- Neighborhoods: Crescent Park, Old Palo Alto, Professorville, Community Center, Midtown, Barron Park, Greenmeadow
-- Proximity to Menlo Park / Sand Hill Road employers
-
-**Menlo Park (MP):**
-- Sand Hill Road (VC corridor), Stanford, downtown Santa Cruz Avenue
-- Neighborhoods: West Menlo, Allied Arts, Linfield Oaks, Sharon Heights, Belle Haven, Willows
-- Caltrain station
-
-**San Mateo County:**
-- Highway 101, 280, Caltrain spine, SFO access
-- Cities: San Mateo, Burlingame, Foster City, San Carlos, Belmont, Half Moon Bay
-
-For any market, name nearby Caltrain station, freeway access, and major employers when present — Bay Area buyers prioritize commute facts.
-
----
-
-## The Walkthrough Structure (How To Sequence the Description)
-
-Write the remarks as if walking the buyer through the property. Order the description in the sequence a buyer would experience the home, not as a feature dump. This is more readable for humans AND scans more naturally for AI search engines.
-
-Standard sequence (adjust to property type — condos and lofts may skip outdoor sections, multi-units may emphasize layout differently):
-
-1. **Opening line — what it is and what's distinct about it.** [Condition modifier] [property type] in the [specific neighborhood] of [city], plus the single most distinctive thing about the home. No bed/bath/sqft recital — the data card has it (see Don't Repeat the Data Card above). AI platforms truncate or summarize, so the first 50 words carry the most weight; spend them on the feature that separates this listing from the eight others in the same price band, not on numbers already in the feed.
-
-2. **Approach + curb appeal.** Street position, exterior architecture, landscaping, driveway, entry. Physical only — no neighborhood-quality language. ("Sits on a quiet residential street with mature trees" is OK. "Located in a great neighborhood" is not.)
-
-3. **Entry + main living areas.** Foyer, then the flow through living, dining, and kitchen. Kitchen is the hero of most listings — name materials (quartz, granite, butcher block), appliance details (gas range, double oven, wine fridge), and layout features (island with seating, walk-in pantry, breakfast nook).
-
-4. **Primary suite.** Bedroom features (vaulted ceiling, walk-in closet) + bathroom features (tiled shower, double vanity, soaking tub). Note location within the home (rear for privacy, upper level, separate wing).
-
-5. **Secondary bedrooms + bathrooms.** Number, layout, any standout features. Shared bath details if applicable.
-
-6. **Outdoor space.** Yard size, hardscape (patio, deck, pool), landscaping, fencing. Garage details (attached/detached, capacity, EV charging if installed). ADU only if verified per Truth-in-Advertising rules above.
-
-7. **Systems + recent upgrades.** Year-stamped: HVAC, roof, solar, electrical, plumbing, windows. Buyers searching "recently renovated" or "new HVAC" need these named explicitly.
-
-8. **Location context.** Nearby Caltrain station, freeway access, employer proximity, parks/Bay Trail/landmarks. End on a concrete commute or landmark fact. Do not close with a `City, County, ZIP` tag line.
-
-Not every section needs equal weight. A turnkey home spends most of its character budget on finishes and recent upgrades. A fixer spends most of its budget on lot size, location, and bones. (See Condition-Aware Framing below.)
+When in doubt, omit. A shorter accurate remark beats a longer one with a claim that can't be defended.
 
 ---
 
 ## Condition-Aware Framing
 
-Adapt emphasis based on the property's condition. Get the condition tier from the agent at intake — don't guess from photos.
+Get the condition tier from the agent at intake. Don't guess from photos.
 
-| Condition tier | Emphasize | De-emphasize |
+| Condition tier | Spend the budget on | Skip |
 |---|---|---|
-| **Fixer / poor condition / contractor special** | Lot size, location, bones (foundation, roof structure, layout potential), square footage, neighborhood demand, recent comparable sale prices in the area as honest market context. Use "investment opportunity," "bring your contractor," "blank canvas," "value-add potential" framing carefully — only when factually accurate. | Cosmetic finishes (kitchen, bath, flooring) — these are being replaced anyway. Don't name dated finishes by material; just acknowledge the home is dated. |
-| **Mid-range / lived-in / livable but dated** | Honest condition, square footage, layout flow, location, any genuine standout features (large lot, recently updated kitchen, recent roof). Acknowledge what's been updated and what hasn't — buyers can read between the lines. | Generic "lovingly maintained" language that signals nothing. Don't oversell mid-range as turnkey. |
-| **Move-in ready / well-maintained / recent updates** | Recent upgrades with year stamps (kitchen 2023, HVAC 2024, roof 2022), finish materials by name, system updates, turnkey framing, professional landscaping. | Areas that haven't been touched in years — if the bathrooms are original to a 1970s build, leave them out and let photos speak. |
-| **Renovated / fully remodeled** | Full feature stack with material specifics (quartz brand, hardwood species, appliance brands), down-to-the-studs framing if accurate, smart home integration, EV charging, solar production. | Pretending it's not a flip if it is — buyers can tell. Honest framing builds more trust than aspirational positioning. |
-| **New construction** | Year built, builder/developer name, warranty status, energy-efficiency ratings, smart home pre-wiring, finish package level. | Comparing favorably to older neighbors. |
+| **Fixer / contractor special** | Lot, location, bones (foundation, roof structure, layout), footprint, honest condition statement. "Bring your contractor," "value-add," "blank canvas" — only when accurate. | Cosmetic finishes being replaced anyway. Don't name dated materials; just say the home is original. |
+| **Mid-range / livable but dated** | Honest condition, layout flow, location, genuine standouts (large lot, recent roof, updated kitchen). Say what's been updated and what hasn't. | "Lovingly maintained" and other signal-free filler. Don't oversell mid as turnkey. |
+| **Move-in ready** | Upgrades with year stamps (kitchen 2023, HVAC 2024, roof 2022), finish materials by name, systems. | Rooms untouched since the build. Let photos carry those. |
+| **Renovated / fully remodeled** | Full material stack, down-to-the-studs framing if accurate, smart home, EV charging, solar production. | Pretending it isn't a flip if it is. Buyers can tell. |
+| **New construction** | Year built, builder name, warranty, energy ratings, pre-wiring, finish package level. | Comparisons to older neighbors. |
 
 **Special cases:**
-- **Tenant-occupied:** must disclose tenancy. Frame as "currently tenant-occupied at $X/mo, lease terms available" — buyers underwriting on cash flow want this front and center.
-- **Multi-unit / income property:** lead with unit mix, current rents, gross income, then property features.
-- **Probate / trust sale:** mention if relevant to disclosures. Frame factually.
-- **Short sale / REO:** disclose accurately. Don't dress up a distressed sale as standard.
+
+- **Tenant-occupied:** must disclose. "Currently tenant-occupied at $X/mo, lease terms available." Reserve the characters.
+- **Multi-unit / income:** lead with unit mix and current rents, then features.
+- **Probate / trust sale:** mention factually if relevant to disclosures.
+- **Short sale / REO:** disclose accurately.
 
 ---
 
-## Phase 0 — Address-First Research (Optional, Opt-In)
+## The Walkthrough Structure
 
-> **This phase is OPTIONAL.** It's the address-first workflow adapted from Jason Pantana's Listing Remarks Writer. Use it when the property has prior online presence (relist, expired-then-renewed listing, property that was previously rented or sold) and you want the skill to pre-populate the intake from public data rather than typing it all in. Skip it for new construction, pocket listings, or any property with no online footprint.
+Write as if walking the buyer through the property, in the order they'd experience it — more readable for humans, scans more naturally for AI search. Adjust for property type; condos skip outdoor sections, multi-units lead with layout.
 
-### When to use Phase 0
-
-**Use Phase 0 when:**
-- The property has been listed before on MLS, Zillow, Redfin, or Realtor.com (relist or expired/renewed)
-- You want to see how the home was previously described, especially if it failed to sell (so you can deliberately reframe)
-- The agent only gave you an address and wants the skill to pull specs from public sources before they confirm
-- You're rewriting a stale listing and want to compare your draft to the prior remarks before pushing
-
-**Skip Phase 0 when:**
-- New construction (no online history)
-- Pocket / off-market listings the agent doesn't want indexed
-- The agent has already provided all specs in the intake
-- Time-sensitive turnaround where the web pull would slow things down
-
-### How to invoke Phase 0
-
-The agent triggers Phase 0 by giving you ONLY a property address with no specs, OR by explicitly saying "run Phase 0," "research the listing first," or "pull past data on this address."
-
-### Phase 0 Steps
-
-1. **Web-search the address** across Zillow, Redfin, Realtor.com, Compass, and the MLS syndicator network using the available browser/fetch tools (Claude in Chrome MCP if connected, WebFetch otherwise). Pull whatever's public:
-   - Beds, baths, square footage, lot size, year built
-   - Tax parcel info, property tax history, recent sales
-   - HOA status and amenities (if applicable)
-   - Architectural style, exterior features (porches, patios, landscaping)
-   - Notable upgrades or renovations mentioned in any past listing
-   - Photos (URLs only — for reference)
-
-2. **Pull prior listing remarks** if the property was listed before:
-   - Capture the verbatim public remarks from each prior listing (Zillow and Redfin both archive these)
-   - Note the listing dates, list prices, sold prices (if sold), and DOM
-   - Note if the listing expired, was withdrawn, sold, or is currently active
-
-3. **Summarize prior listing themes** in 3-5 bullets:
-   - What features did prior remarks emphasize?
-   - What tone / voice did they use (luxury, family-friendly — note: avoid that descriptor in OUR output, but flag if prior remarks used it, investor-focused, lifestyle, factual)?
-   - What was omitted that probably should have been mentioned?
-   - Did prior remarks make any compliance-risky claims (Fair Housing proxies, unverified ADU language, school quality claims)? Flag these so we don't repeat the error.
-
-4. **Present findings to the agent in TWO clearly-labeled sections** before writing anything:
-
-   ```
-   ## Specs Found Online
-   [bulleted list of pulled property details with source]
-   
-   ## Themes / Remarks from Past Listings
-   [3-5 bullets summarizing prior listing voice, emphasis, and any compliance flags]
-   
-   ## Confirm before I draft:
-   - Are these specs still accurate, or have there been changes (new roof, new HVAC, updated kitchen, etc.)?
-   - Condition tier (fixer / mid / move-in / renovated / new construction)?
-   - Any standout features not in the online data that should be emphasized?
-   - Style direction: do you want to match the prior listing voice, deliberately diverge from it, or use a different sample?
-   ```
-
-5. **Wait for agent confirmation** before proceeding to the Intake checklist below. The agent's confirmation populates the intake fields automatically — items 1-4 of the Intake should already be answered from Phase 0 + agent confirmation. The agent only needs to fill in items 5-12.
-
-### Phase 0 Hard Rules
-
-- **Never fabricate specs.** If Zillow says 3 bed and Redfin says 4 bed, present both and ask the agent to confirm which is accurate. Don't silently pick one.
-- **Never use prior listing remarks verbatim.** Always rewrite. Verbatim copying creates copyright issues and re-imports any compliance errors the prior agent made.
-- **Always flag compliance issues in prior remarks.** If the prior listing said "great family neighborhood" or "blue ribbon schools," call it out so the agent knows we're not repeating that.
-- **Phase 0 does NOT replace the agent's verification.** The web-pulled specs are a starting point; the agent confirms final accuracy. County records still trump web sources for legal numbers.
+1. **Opening — what it is and what's distinct.** [Condition modifier] [property type] in the [neighborhood] of [city], plus the single most distinctive thing about the home. No stat recital. AI platforms truncate and summarize, so the first 50 words carry the most weight: spend them on what separates this listing from the eight others in its price band.
+2. **Approach + curb appeal.** Street position, exterior style, landscaping, driveway, entry. Physical only. "Quiet residential street with mature trees" is fine; "great neighborhood" is not.
+3. **Entry + main living areas.** Foyer, then flow through living, dining, kitchen. Kitchen is the hero of most listings: name materials, appliance detail, and layout features.
+4. **Primary suite.** Bedroom features plus bathroom features, and where it sits in the home.
+5. **Secondary bedrooms + baths.** Count of shared baths, layout, standouts.
+6. **Outdoor space.** Yard use, hardscape, landscaping, fencing, garage and parking. ADU or lot-split language only per the Truth-in-Advertising rule.
+7. **Systems + recent upgrades, year-stamped.** HVAC, roof, solar, electrical, plumbing, windows.
+8. **Location close.** Nearest Caltrain station, freeway access, employers, parks and landmarks. End on a concrete commute or landmark fact — no `City, County, ZIP` tag.
 
 ---
 
-## Intake (Ask Before Writing)
+## Bay Area Context
 
-> **If Phase 0 ran**, items 1-4 below are already answered from the web pull + agent confirmation. Skip to items 5-12. If Phase 0 was skipped, run the full intake.
+Name the Caltrain station, freeway access, and major employers when present. Bay Area buyers prioritize commute facts, and those nouns are what AI search matches on.
 
-Collect the following in one message if not already provided:
+**East Palo Alto:** Meta HQ (1 Hacker Way), Stanford Research Park, Cooley Landing, Bay Trail, Ravenswood shopping. Neighborhoods: Woodland Park, Weeks, Gardens, Westside, University Village. Caltrain via Palo Alto or Redwood City. 101 and Dumbarton Bridge.
+
+**Redwood City:** downtown Caltrain, 101, Courthouse Square. Neighborhoods: Mt. Carmel, Stambaugh-Heller, Friendly Acres, Centennial, Roosevelt, Edgewood Park, Emerald Hills. Oracle, Box, Electronic Arts.
+
+**Palo Alto:** Stanford, University Avenue, Caltrain (downtown + California Ave). Neighborhoods: Crescent Park, Old Palo Alto, Professorville, Community Center, Midtown, Barron Park, Greenmeadow.
+
+**Menlo Park:** Sand Hill Road, Stanford, Santa Cruz Avenue, Caltrain. Neighborhoods: West Menlo, Allied Arts, Linfield Oaks, Sharon Heights, Belle Haven, Willows.
+
+**San Mateo County:** 101, 280, Caltrain spine, SFO. San Mateo, Burlingame, Foster City, San Carlos, Belmont, Half Moon Bay.
+
+Eichler and mid-century are worth naming when accurate — Bay Area buyers search those terms directly.
+
+---
+
+## Phase 0 — Address-First Research (Optional)
+
+Use when the property has prior online presence (relist, expired-then-renewed, previously rented or sold) and you want the intake pre-populated from public data. Skip for new construction, pocket listings, or when the agent already gave you the specs.
+
+Triggered by the agent giving only an address, or saying "run Phase 0" / "research the listing first."
+
+1. **Search the address** across Zillow, Redfin, Realtor.com, and Compass (Claude in Chrome MCP if connected, WebFetch otherwise). Pull beds, baths, sqft, lot, year built, tax and sale history, HOA, style, exterior features, noted renovations.
+2. **Pull prior remarks verbatim** if previously listed, with dates, list and sold prices, DOM, and outcome (sold / expired / withdrawn).
+3. **Summarize prior themes** in 3–5 bullets: what they emphasized, what tone, what they omitted, and any compliance-risky claims (Fair Housing proxies, unverified ADU language, school-quality claims) so we don't repeat them.
+4. **Present findings in two labeled sections** — "Specs Found Online" and "Themes from Past Listings" — then ask: are these still accurate, what's the condition tier, what's not in the online data, and should we match or diverge from the prior voice?
+5. **Wait for confirmation** before drafting.
+
+**Hard rules:** never fabricate specs; if sources disagree, present both and ask. Never reuse prior remarks verbatim — copyright, plus it re-imports the prior agent's compliance errors. Always flag compliance issues you found. County records trump web sources.
+
+---
+
+## Intake
+
+If Phase 0 ran, items 1–4 are already answered. Collect the rest in one message.
 
 1. **Property address** (street, city, ZIP)
-2. **Property type** (single-family, condo, townhouse, multi-unit, etc.)
-3. **Beds / baths / square footage / lot size / year built** (from county records or MLS — verified)
-4. **Condition tier** (fixer / mid / move-in / renovated / new construction)
-5. **Recent upgrades with years** (kitchen 2023, HVAC 2024, roof 2022, etc.)
-6. **Standout features the agent wants emphasized** (the "wow" factors visible in photos or known to the agent)
-7. **Neighborhood / subdivision name**
-8. **Nearby amenities the listing benefits from** (parks, transit stations, employers — factually named, not rated)
-9. **Output surface + character limit** — MLS remarks (default 1500 for MLSListings; ask if other MLS), flyer, brochure, postcard, single-property site, social caption. Confirm whether that surface prints its own spec block; see Don't Repeat the Data Card.
-10. **ADU status** — if any ADU language is being considered: zoning permitted? lot meets requirements? HOA/CC&R checked? If any answer is "unsure," omit ADU language.
-11. **Compliance flags** (HOA, Mello-Roos, flood zone, special assessments, easements, tenant occupancy) — must be referenced if material to listing accuracy
-12. **Photos** (optional but useful) — if uploaded, use them to inform the walkthrough sequence and identify features the agent didn't mention
+2. **Property type**
+3. **Beds / baths / sqft / lot size / year built** — verified, for context and fact-checking even though they won't appear in the remarks
+4. **Condition tier**
+5. **Recent upgrades with years**
+6. **Standout features to emphasize**
+7. **Neighborhood / subdivision**
+8. **Nearby amenities** (parks, transit, employers — named, not rated)
+9. **Output surface + character limit** — MLS remarks (1,300 on MLSListings; ask for any other board), flyer, brochure, postcard, single-property site, social. Confirm whether the surface prints its own spec block.
+10. **ADU / lot-split status** — zoning permitted? lot qualifies? HOA/CC&R checked? If any answer is unsure, omit or hedge per the Truth-in-Advertising rule.
+11. **Compliance flags** — HOA, Mello-Roos, flood zone, special assessments, easements, tenant occupancy
+12. **Photos** (optional) — use them to sequence the walkthrough and catch features the agent didn't mention
 
-Don't proceed without items 1–4. Items 5–12 improve quality but aren't blockers.
-
----
-
-## Example (East Palo Alto, Move-In Ready)
-
-**Input:** 4 bed, 3 bath single-family, 2,400 sqft, 6,500 sqft lot, built 1962 / renovated 2023, Woodland Park neighborhood EPA, white oak floors, quartz kitchen, gas range, primary suite with walk-in closet, new HVAC + solar, two-car attached garage, near Cooley Landing + Bay Trail. Condition tier: move-in ready. ADU status: not verified (omit).
-
-**Output (~1290 chars):**
-
-Renovated single-family home in the Woodland Park neighborhood of East Palo Alto, sitting mid-block on a quiet residential street with mature trees and a recently replaced concrete driveway leading to a covered entry. Inside, the foyer opens to an open-concept main level with white oak hardwood floors throughout. The living room takes oversized windows facing the front yard and connects to a dining area with contemporary lighting. The kitchen anchors the space with white quartz countertops, a five-burner gas range, stainless steel appliances, a tiled backsplash, and a center island with seating for four. A walk-in pantry sits just off the kitchen. The primary suite occupies the rear of the home with a vaulted ceiling, walk-in closet, tiled walk-in shower, and double vanity. Three additional bedrooms share two full bathrooms in a separate wing. Out back, a fenced yard holds a covered patio, mature fruit trees, and turf landscaping. The attached garage provides direct interior access. A new HVAC system and roof-mounted solar panels installed in 2023 cut monthly utility costs. Caltrain service at the Palo Alto station is roughly five minutes by car, with Highway 101 and Dumbarton Bridge access nearby. Meta's Menlo Park headquarters, Stanford University, and Cooley Landing are all a short drive out.
-
-**What changed vs. the old pattern:** the bed/bath count, the 2,400 sqft, the 6,500 sqft lot, the garage capacity, and the `East Palo Alto, San Mateo County, 94303` close are all gone. The MLS fields carry every one of them. That freed roughly 190 characters, which went back into finish and layout detail. Nothing searchable was lost.
+Don't proceed without 1–4 and 9. The rest improve quality but aren't blockers.
 
 ---
 
-## Example (Same Property, Fixer Condition Tier)
+## Example 1 — East Palo Alto, move-in ready
 
-**Input:** Same address. 4 bed, 3 bath, 2,400 sqft, 6,500 sqft lot, built 1962, NOT renovated — original kitchen, original baths, dated finishes, deferred maintenance. Condition tier: fixer.
+**Input:** 4 bed, 3 bath single-family, 2,400 sqft, 6,500 sqft lot, built 1962 / renovated 2023, Woodland Park, white oak floors, quartz kitchen, gas range, primary suite with walk-in closet, new HVAC + solar, two-car attached garage, near Cooley Landing + Bay Trail. Condition: move-in ready. ADU: not verified (omit). Limit: 1,300.
 
-**Output:**
+**Output — 1,239 characters:**
 
-Single-family home on an oversized lot in the Woodland Park neighborhood of East Palo Alto, with a flexible single-level floor plan and strong bones for renovation. Original to its 1962 build, the home keeps its mid-century footprint: an open main living area, a separate primary suite, and three additional bedrooms in a secondary wing. Hardwood floors run throughout under existing carpet. The kitchen and bathrooms are in original condition and ready for updating. Outside, the lot carries mature fruit trees, a detached patio area, and an attached garage with direct interior access. Mechanical systems and roof are original to the home, so buyers should plan for system upgrades alongside cosmetic work. Caltrain service at the Palo Alto station is roughly five minutes by car, with Highway 101 and Dumbarton Bridge access nearby. Meta's Menlo Park headquarters, Stanford University, and Cooley Landing are all a short drive out. Woodland Park has seen significant renovation activity in recent years. Bring your contractor and your vision.
+Renovated single-family home in the Woodland Park neighborhood of East Palo Alto, mid-block on a quiet street with mature trees and a new concrete driveway leading to a covered entry. The foyer opens to a main level with white oak hardwood floors throughout. The living room takes oversized front-facing windows and connects to a dining area with contemporary lighting and a sliding door to the patio. The kitchen anchors the space with white quartz counters, a five-burner gas range, stainless appliances, a tiled backsplash, and an island seating four. A walk-in pantry sits just off the kitchen. The primary suite occupies the rear with a vaulted ceiling, walk-in closet, tiled shower, and double vanity. Three additional bedrooms share two full baths in a separate wing. Out back, a fenced yard holds a covered patio, mature fruit trees, and turf landscaping. The attached garage has direct interior access, with a laundry room off the entry. A new HVAC system and roof-mounted solar installed in 2023 cut monthly utility costs. Caltrain at the Palo Alto station is roughly five minutes by car, with Highway 101 and Dumbarton Bridge access nearby. Meta's Menlo Park headquarters, Stanford, and Cooley Landing are all a short drive out.
 
-**The exception in action:** 1962 stays because the condition argument depends on it, and the lot is called "oversized" rather than given a number. The number is in the fields; the judgment is not. If this listing were being pitched for a lot split or an ADU, the actual square footage would earn its place in the sentence making that pitch.
+**What's absent and why:** the bed/bath count, 2,400 sqft, 6,500 sqft lot, garage capacity, and a `City, County, ZIP` close — roughly 190 characters the data card already carries. That budget went into finish and layout detail instead.
 
 ---
 
-## Optional Enrichment (If Available)
+## Example 2 — Same property, fixer tier
 
-If the user wants the remarks enhanced with public-data context:
+**Output — 1,228 characters:**
 
-- **County records (Santa Clara or San Mateo):** verified parcel data — square footage, year built, lot size, HOA status, recorded permits. Use to fact-check the agent's intake numbers and verify ADU eligibility before any ADU language is permitted.
-- **Zillow Apify scraper:** comparable nearby listings — use to identify what features comparable homes are emphasizing (so this listing names them too if present and accurate).
-- **MLS Data Analyzer / market-update narrative module:** market context for the price band — informs the closing-line framing without overstating market conditions.
+Single-family home on an oversized lot in the Woodland Park neighborhood of East Palo Alto, with a flexible single-level floor plan and strong bones for renovation. Original to its 1962 build, the home keeps its mid-century footprint: an open main living area, a separate primary suite, and three additional bedrooms in a secondary wing. Hardwood floors run throughout under existing carpet. The kitchen and baths are original and ready for updating. Outside, the lot carries mature fruit trees, a detached patio area, a long driveway parking three cars, and an attached garage with direct interior access. Lot dimensions may support an expanded footprint or a second unit, to be verified by the buyer with the City of East Palo Alto. Mechanical systems and roof are original, so plan for system upgrades alongside cosmetic work. Caltrain at the Palo Alto station is roughly five minutes by car, with Highway 101 and Dumbarton Bridge access nearby. Meta's Menlo Park headquarters, Stanford, and Cooley Landing are all a short drive out. Ravenswood shopping, Cooley Landing, and the Bay Trail sit within a few minutes. Woodland Park has seen significant renovation activity in recent years. Bring your contractor and your vision.
 
-These are optional. The skill works without them. If the user has these integrations wired and wants them used, they'll say so at intake.
+**The Rule 2 exception in action:** 1962 stays, because the condition argument depends on it. The lot is called "oversized" rather than numbered — the number is in the fields, the judgment is not. The expansion line is hedged, not claimed, because zoning wasn't verified.
+
+---
+
+## Example 3 — Budget-constrained rewrite (430 Garden St, East Palo Alto)
+
+The agent's draft ran 1,428 characters against a 1,300 limit: 128 over. The stat recital and filler carried the overage.
+
+**Output — 1,299 characters:**
+
+Single-level home on a 10,113-square-foot lot. A wide front yard, long driveway, and covered entry lead into a bright living room with large windows and light wood flooring that opens to the dining area. The kitchen offers abundant cabinetry, granite-style counters, stainless appliances, a gas range, recessed lighting, and storage, with access to the side and rear of the home. Multiple living areas give room to gather, work, or set up separate zones. Bedrooms are well sized and take in natural light. The primary retreat holds space for a sitting area or desk, plus an attached bath with dual vanity and shower. Additional baths carry modern tile, refreshed vanities, and neutral tones. Out back, an expansive fenced yard opens to patio areas, mature trees, and open ground for entertaining, gardening, play, or pets. A detached rear garage and extended driveway add parking and storage. A parcel this size may open the door to a lot split under California SB 9, an ADU, or a junior ADU. All development potential, permit history, square footage, and buildability to be verified by the buyer with the City of East Palo Alto and San Mateo County. Close to Palo Alto, Menlo Park, Stanford, Meta, Amazon, Ravenswood shopping, the Bay Trail at Cooley Landing, Highway 101, and the Dumbarton Bridge.
+
+**Where the 129 characters came from:** the `East Palo Alto, California` in the opening and the `East Palo Alto, San Mateo County, 94303` close (Rule 2, ~65), "welcoming" / "spacious" and other zero-information adjectives (~20), "Step inside to" and similar filler openers (~25), "stainless steel" → "stainless" and "independently verified" → "verified" (~19). The lot size stayed — it's carrying the SB 9 argument. Google and one park reference were dropped from the closing list, which already named five employers.
 
 ---
 
 ## Humanizer Final Pass (Mandatory)
 
-Before delivering the remarks, run the draft through the `humanizer` skill. Listing remarks are read by humans on Zillow, Redfin, and Compass — and increasingly cited verbatim by AI search engines that surface property results. Both audiences penalize obvious AI patterns: buyers skim past "stands as a testament to," and AI engines down-weight content that matches the LLM-output fingerprint.
+Run the draft through the `humanizer` skill before delivering. Remarks are read by humans on Zillow, Redfin, and Compass, and increasingly quoted by AI search engines. Both penalize obvious AI patterns.
 
-**What gets humanized:**
-- The full body of the remarks (the walkthrough prose)
-- Any variation labels and short/long versions
-- The closing location-context sentence
+**Humanize:** the walkthrough prose, any variation labels, the location close.
 
-**What does NOT get humanized:**
-- Any recorded factual number that survived the data-card cut (a lot size supporting a lot-split pitch, a year built supporting condition framing) — these stay exact
-- Material disclosure flags (tenant-occupied status, permit notes — legally required exact phrasing)
-- Verification language ("to be independently verified by the buyer with the City of...")
+**Do NOT humanize:** any recorded number that survived the Rule 2 cut (a lot size carrying an SB 9 pitch, a year built carrying condition framing), material disclosure flags, and verification language — those stay exact.
 
-**Voice calibration:** Pass a 2-sentence sample of how Graeham would describe a property in person if available; otherwise use the default humanizer voice tuned for noun-dense, AI-searchable copy. The rewrite should preserve every searchable noun while removing AI tells (em-dash overuse, "boasts a," rule-of-three, "nestled in," "stunning," etc. — which the AI-search optimization section already flags).
+**Order matters:** humanize, then recount. The humanizer pass changes length, sometimes by 60+ characters. A draft that passed the count before humanizing can be over after it. Count again, always, as the last step before delivery.
 
-**How to invoke:**
-1. Draft the remarks per the walkthrough structure and condition-aware framing.
-2. Separate the prose from the factual data points.
-3. Pass the prose to humanizer with the voice note.
-4. Verify the humanized version still passes the Top 5 searchable nouns QC and the character-count budget.
-5. Deliver.
-
-If the humanized version drops below the searchable-noun threshold or cuts a verified material fact, redo the humanizer pass with an explicit instruction to preserve specified nouns.
+If the humanized version drops below the searchable-noun threshold or cuts a verified fact, redo the pass with an explicit instruction to preserve the named nouns.
 
 ---
 
 ## Output Format
 
-Deliver the remarks as a single block of plain text — no headers, no bullets, no formatting. The output should paste directly into the MLSListings public remarks field with no cleanup required.
+Deliver the remarks as a single block of plain text — no headers, no bullets, no formatting — so it pastes straight into the public remarks field. If variations are requested (short + long, or A/B), label each block separately and count each one.
 
-If the user requests variations (short version + long version, or A/B versions), produce them as separate blocks clearly labeled.
+After the remarks, always provide:
 
-After the remarks, optionally provide:
-- **Character count** of the main version (so the user can verify against MLS limit)
-- **Top 5 searchable nouns** the description loaded — quick QC for the AI-search optimization angle
-- **Compliance check** — confirm no school quality language, no demographic proxies, no unverified ADU/permit claims, no RESPA violations
-- **Data-card check** — confirm no street address, no bed/bath/sqft/lot/year recital, no `City, County, ZIP` close, and for any number that did stay, name the argument it is carrying
-- **Humanizer confirmation** — confirm the final draft was run through the humanizer skill
+- **Character count** against the stated limit, from an actual count
+- **Top 5 searchable nouns** the description loaded
+- **Compliance check** — no school-quality language, no demographic proxies, no unverified ADU/permit claims, no RESPA issues
+- **Data-card check** — no street address, no bed/bath/sqft/lot/year recital, no `City, County, ZIP` close; for any number that stayed, name the argument it carries
+- **Humanizer confirmation**
+
+### Delivery checklist — all five must be true
+
+1. Counted mechanically, not estimated
+2. Inside the 1,200–1,300 band (or the confirmed limit for the board in use)
+3. No data-card recital
+4. Every claim verified or hedged
+5. Humanized, then recounted
 
 ---
 
 ## Used By
 
-- **Standalone** — agent writes/rewrites listing remarks for a new listing or stale listing.
-- **`content-creation-engine`** — when a listing-spotlight content package is requested, the engine pulls the listing remarks via this skill as the source-of-truth description, then generates downstream blog/social/video copy from it.
+- **Standalone** — writing or rewriting remarks for a new or stale listing.
+- **`content-creation-engine`** — pulls the remarks via this skill as the source-of-truth description, then generates downstream blog / social / video copy from it.
+- **`listing-launch-engine`** — uses the remarks as the anchor copy for the launch sequence.
