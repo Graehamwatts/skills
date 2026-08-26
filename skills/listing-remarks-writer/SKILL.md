@@ -1,6 +1,6 @@
 ---
 name: listing-remarks-writer
-description: "MLS listing remarks writer optimized for AI-powered home search (ChatGPT with Zillow, Perplexity, Google AI Overviews) and Bay Area buyers. Walks the buyer through the property as if touring it, adapts framing to property condition (fixer / mid / move-in ready), and produces noun-dense AI-searchable copy. Use this skill ANY time the user asks to: write listing remarks, write MLS description, draft listing copy, write property remarks, rewrite a stale listing, optimize listing for AI search, write the public remarks for a new listing, draft remarks for a fixer or renovated home, or improve an existing listing description. Trigger when the user uploads listing photos and asks for the description, mentions a new listing, or pastes property details and wants the listing copy. Localized for Graeham's Bay Area markets (East Palo Alto, Redwood City, Palo Alto, Menlo Park, San Mateo County) with California-specific framing."
+description: "MLS listing remarks writer optimized for AI-powered home search (ChatGPT with Zillow, Perplexity, Google AI Overviews) and Bay Area buyers. Walks the buyer through the property as if touring it, adapts framing to property condition (fixer / mid / move-in ready), and produces noun-dense AI-searchable copy. Use this skill ANY time the user asks to: write listing remarks, write MLS description, draft listing copy, write property remarks, rewrite a stale listing, optimize listing for AI search, write the public remarks for a new listing, draft remarks for a fixer or renovated home, or improve an existing listing description. Also use for property flyer, brochure, postcard, and single-property-site body copy. Trigger when the user uploads listing photos and asks for the description, mentions a new listing, or pastes property details and wants the listing copy. Never repeats the address or the bed/bath/sqft/lot/year stat line, which the MLS data card and print templates already carry. Localized for Graeham's Bay Area markets (East Palo Alto, Redwood City, Palo Alto, Menlo Park, San Mateo County) with California-specific framing."
 ---
 
 # Listing Remarks Writer
@@ -278,7 +278,7 @@ Collect the following in one message if not already provided:
 6. **Standout features the agent wants emphasized** (the "wow" factors visible in photos or known to the agent)
 7. **Neighborhood / subdivision name**
 8. **Nearby amenities the listing benefits from** (parks, transit stations, employers — factually named, not rated)
-9. **MLS character limit** (default 1500 for MLSListings; ask if other MLS)
+9. **Output surface + character limit** — MLS remarks (default 1500 for MLSListings; ask if other MLS), flyer, brochure, postcard, single-property site, social caption. Confirm whether that surface prints its own spec block; see Don't Repeat the Data Card.
 10. **ADU status** — if any ADU language is being considered: zoning permitted? lot meets requirements? HOA/CC&R checked? If any answer is "unsure," omit ADU language.
 11. **Compliance flags** (HOA, Mello-Roos, flood zone, special assessments, easements, tenant occupancy) — must be referenced if material to listing accuracy
 12. **Photos** (optional but useful) — if uploaded, use them to inform the walkthrough sequence and identify features the agent didn't mention
@@ -291,9 +291,11 @@ Don't proceed without items 1–4. Items 5–12 improve quality but aren't block
 
 **Input:** 4 bed, 3 bath single-family, 2,400 sqft, 6,500 sqft lot, built 1962 / renovated 2023, Woodland Park neighborhood EPA, white oak floors, quartz kitchen, gas range, primary suite with walk-in closet, new HVAC + solar, two-car attached garage, near Cooley Landing + Bay Trail. Condition tier: move-in ready. ADU status: not verified (omit).
 
-**Output (~1480 chars):**
+**Output (~1290 chars):**
 
-Renovated 4-bedroom, 3-bathroom single-family home in the Woodland Park neighborhood of East Palo Alto, California. The 2,400-square-foot residence sits mid-block on a quiet residential street with mature trees and a recently replaced concrete driveway leading to a covered entry. Inside, the foyer opens to an open-concept main level with white oak hardwood floors throughout. The living room features oversized windows facing the front yard and connects to a dining area with contemporary lighting. The kitchen anchors the space with white quartz countertops, a five-burner gas range, stainless steel appliances, a tiled backsplash, and a center island with seating for four. A walk-in pantry sits just off the kitchen. The primary suite occupies the rear of the home with a vaulted ceiling, walk-in closet, tiled walk-in shower, and double vanity. Three additional bedrooms share two full bathrooms in a separate wing. The 6,500-square-foot lot offers a fenced backyard with a covered patio, mature fruit trees, and turf landscaping. A two-car attached garage provides direct interior access. A new HVAC system and roof-mounted solar panels installed in 2023 reduce monthly utility costs. Located approximately five minutes by car to Caltrain service at the Palo Alto station, with Highway 101 and Dumbarton Bridge access nearby. Meta's Menlo Park headquarters, Stanford University, and Cooley Landing are within a short drive. East Palo Alto, San Mateo County, 94303.
+Renovated single-family home in the Woodland Park neighborhood of East Palo Alto, sitting mid-block on a quiet residential street with mature trees and a recently replaced concrete driveway leading to a covered entry. Inside, the foyer opens to an open-concept main level with white oak hardwood floors throughout. The living room takes oversized windows facing the front yard and connects to a dining area with contemporary lighting. The kitchen anchors the space with white quartz countertops, a five-burner gas range, stainless steel appliances, a tiled backsplash, and a center island with seating for four. A walk-in pantry sits just off the kitchen. The primary suite occupies the rear of the home with a vaulted ceiling, walk-in closet, tiled walk-in shower, and double vanity. Three additional bedrooms share two full bathrooms in a separate wing. Out back, a fenced yard holds a covered patio, mature fruit trees, and turf landscaping. The attached garage provides direct interior access. A new HVAC system and roof-mounted solar panels installed in 2023 cut monthly utility costs. Caltrain service at the Palo Alto station is roughly five minutes by car, with Highway 101 and Dumbarton Bridge access nearby. Meta's Menlo Park headquarters, Stanford University, and Cooley Landing are all a short drive out.
+
+**What changed vs. the old pattern:** the bed/bath count, the 2,400 sqft, the 6,500 sqft lot, the garage capacity, and the `East Palo Alto, San Mateo County, 94303` close are all gone. The MLS fields carry every one of them. That freed roughly 190 characters, which went back into finish and layout detail. Nothing searchable was lost.
 
 ---
 
@@ -303,7 +305,9 @@ Renovated 4-bedroom, 3-bathroom single-family home in the Woodland Park neighbor
 
 **Output:**
 
-Single-family home on a 6,500-square-foot lot in the Woodland Park neighborhood of East Palo Alto, California. The 2,400-square-foot residence offers 4 bedrooms, 3 bathrooms, and a flexible single-level floor plan with strong bones for renovation. Original to its 1962 build, the home retains its mid-century footprint with an open-concept main living area, separate primary suite, and three additional bedrooms in a secondary wing. Hardwood floors run throughout under existing carpet. The kitchen and bathrooms are in original condition and ready for updating. The 6,500-square-foot lot features mature fruit trees, a detached patio area, and a two-car attached garage with direct interior access. Mechanical systems and roof are original to the home — buyers should plan for system upgrades alongside cosmetic updates. Located approximately five minutes by car to Caltrain service at the Palo Alto station, with Highway 101 and Dumbarton Bridge access nearby. Meta's Menlo Park headquarters, Stanford University, and Cooley Landing are within a short drive. The Woodland Park neighborhood has seen significant renovation activity in recent years. Bring your contractor and your vision. East Palo Alto, San Mateo County, 94303.
+Single-family home on an oversized lot in the Woodland Park neighborhood of East Palo Alto, with a flexible single-level floor plan and strong bones for renovation. Original to its 1962 build, the home keeps its mid-century footprint: an open main living area, a separate primary suite, and three additional bedrooms in a secondary wing. Hardwood floors run throughout under existing carpet. The kitchen and bathrooms are in original condition and ready for updating. Outside, the lot carries mature fruit trees, a detached patio area, and an attached garage with direct interior access. Mechanical systems and roof are original to the home, so buyers should plan for system upgrades alongside cosmetic work. Caltrain service at the Palo Alto station is roughly five minutes by car, with Highway 101 and Dumbarton Bridge access nearby. Meta's Menlo Park headquarters, Stanford University, and Cooley Landing are all a short drive out. Woodland Park has seen significant renovation activity in recent years. Bring your contractor and your vision.
+
+**The exception in action:** 1962 stays because the condition argument depends on it, and the lot is called "oversized" rather than given a number. The number is in the fields; the judgment is not. If this listing were being pitched for a lot split or an ADU, the actual square footage would earn its place in the sentence making that pitch.
 
 ---
 
@@ -329,9 +333,9 @@ Before delivering the remarks, run the draft through the `humanizer` skill. List
 - The closing location-context sentence
 
 **What does NOT get humanized:**
-- The recorded factual data (sqft, lot size, year built, bed/bath count — these stay exact)
-- The address line and ZIP repeat for AI search anchoring
+- Any recorded factual number that survived the data-card cut (a lot size supporting a lot-split pitch, a year built supporting condition framing) — these stay exact
 - Material disclosure flags (tenant-occupied status, permit notes — legally required exact phrasing)
+- Verification language ("to be independently verified by the buyer with the City of...")
 
 **Voice calibration:** Pass a 2-sentence sample of how Graeham would describe a property in person if available; otherwise use the default humanizer voice tuned for noun-dense, AI-searchable copy. The rewrite should preserve every searchable noun while removing AI tells (em-dash overuse, "boasts a," rule-of-three, "nestled in," "stunning," etc. — which the AI-search optimization section already flags).
 
@@ -356,6 +360,7 @@ After the remarks, optionally provide:
 - **Character count** of the main version (so the user can verify against MLS limit)
 - **Top 5 searchable nouns** the description loaded — quick QC for the AI-search optimization angle
 - **Compliance check** — confirm no school quality language, no demographic proxies, no unverified ADU/permit claims, no RESPA violations
+- **Data-card check** — confirm no street address, no bed/bath/sqft/lot/year recital, no `City, County, ZIP` close, and for any number that did stay, name the argument it is carrying
 - **Humanizer confirmation** — confirm the final draft was run through the humanizer skill
 
 ---
