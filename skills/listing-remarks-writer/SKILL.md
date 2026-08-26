@@ -5,9 +5,50 @@ description: "MLS listing remarks writer optimized for AI-powered home search (C
 
 # Listing Remarks Writer
 
-Write MLS listing descriptions that surface in AI-powered home search. Buyers increasingly search through ChatGPT (with Zillow integration), Perplexity, Google AI Overviews, and similar — and these platforms can ONLY read the public remarks text. They cannot interpret photos, 3D tours, video tours, or captions. Every feature you don't name in the remarks is invisible to AI search.
+Write MLS listing descriptions that surface in AI-powered home search. Buyers increasingly search through ChatGPT (with Zillow integration), Perplexity, Google AI Overviews, and similar. Those platforms read the structured listing fields and the public remarks text. They cannot interpret photos, 3D tours, video tours, or captions. Any feature that lives only in a photo is invisible to AI search unless the remarks name it.
 
 This skill produces noun-dense, AI-searchable MLS copy. Walks the buyer through the property as if touring it, adapts framing to property condition, and stays inside Fair Housing / RESPA guardrails by design.
+
+---
+
+## Don't Repeat the Data Card (Read This First)
+
+The MLS already publishes a structured data card next to the remarks: street address, city, ZIP, beds, baths, square footage, lot size, year built, parking, APN, HOA, taxes, school district. Every syndication feed (Zillow, Redfin, Realtor.com, Compass) carries those fields, and every AI search layer built on top of them reads the fields directly. Reciting them in the remarks buys nothing and burns 200–300 characters out of a 1,500-character budget.
+
+**Default rules:**
+
+- **No street address in the remarks.** Not in the opening, not in the close.
+- **No bed / bath / square-foot / lot-size / year-built recital.** Open with what the home *is like*, not with its stat line.
+- **No `City, County, ZIP` tag line at the end.** That was old SEO habit carried over from web copy; it reads as filler to a buyer and adds nothing an AI engine can't already see in the fields.
+- **City and neighborhood may appear once**, naturally, in prose — they set context and the subdivision name often isn't in a clean structured field. Once is enough.
+
+**The one exception: when a spec IS the argument.** State a number when the sentence is making a point with it, not listing it. Legitimate uses:
+
+- Lot size when the pitch is a lot split, an ADU, or an expansion ("a parcel this size may allow for…")
+- Year built when condition framing depends on it ("original to its 1962 build")
+- Square footage when the layout claim needs the scale ("over 3,000 square feet across two wings")
+- Bed count when the *configuration* is the feature, not the count ("two of the four bedrooms sit on the ground floor")
+
+If you cut a number and the sentence still makes the same point, the number was a recital. Cut it.
+
+**Every character you save goes back into what the data card cannot hold:** finish materials, appliance detail, layout flow, light and orientation, condition and upgrade years, outdoor use, commute facts, and neighborhood landmarks.
+
+### Other surfaces (flyers, brochures, social, email)
+
+The same rule holds anywhere the piece already prints a spec block. Property flyers, brochures, just-listed postcards, and listing web pages all carry the address and stat line in their own template, usually in larger type than the body copy. Repeating it in the paragraph makes the piece read like it was assembled by three different people.
+
+At intake, ask which surface the copy is for and whether that surface prints the specs separately:
+
+| Surface | Spec block present? | What the body copy does |
+|---|---|---|
+| MLS public remarks | Yes, structured fields | Features only — no address, no stat recital |
+| Property flyer / brochure | Yes, in the template header | Features only; write to the template's word count, not 1,500 chars |
+| Just-listed postcard | Usually address + beds/baths only | Features only; 2–3 sentences max |
+| Listing web page / single-property site | Yes, spec table | Features only |
+| Social caption | No | State the specs once, compressed, then features |
+| Text message / DM to a buyer | No | State the specs once, compressed |
+
+When the surface has no spec block, give the stat line once in a single compressed clause and move on. Never twice.
 
 ---
 
@@ -113,7 +154,7 @@ Write the remarks as if walking the buyer through the property. Order the descri
 
 Standard sequence (adjust to property type — condos and lofts may skip outdoor sections, multi-units may emphasize layout differently):
 
-1. **Opening line — what it is + where it is.** [Condition modifier] [property type] + [bed/bath] + [lot or square footage] + in the [specific neighborhood] of [city, state]. Front-load the most searchable terms here. AI platforms truncate or summarize — the first 50 words carry the most weight.
+1. **Opening line — what it is and what's distinct about it.** [Condition modifier] [property type] in the [specific neighborhood] of [city], plus the single most distinctive thing about the home. No bed/bath/sqft recital — the data card has it (see Don't Repeat the Data Card above). AI platforms truncate or summarize, so the first 50 words carry the most weight; spend them on the feature that separates this listing from the eight others in the same price band, not on numbers already in the feed.
 
 2. **Approach + curb appeal.** Street position, exterior architecture, landscaping, driveway, entry. Physical only — no neighborhood-quality language. ("Sits on a quiet residential street with mature trees" is OK. "Located in a great neighborhood" is not.)
 
@@ -127,7 +168,7 @@ Standard sequence (adjust to property type — condos and lofts may skip outdoor
 
 7. **Systems + recent upgrades.** Year-stamped: HVAC, roof, solar, electrical, plumbing, windows. Buyers searching "recently renovated" or "new HVAC" need these named explicitly.
 
-8. **Location context.** Nearby Caltrain station, freeway access, employer proximity, parks/Bay Trail/landmarks. Close with the city, county, and ZIP repeated for AI search anchoring.
+8. **Location context.** Nearby Caltrain station, freeway access, employer proximity, parks/Bay Trail/landmarks. End on a concrete commute or landmark fact. Do not close with a `City, County, ZIP` tag line.
 
 Not every section needs equal weight. A turnkey home spends most of its character budget on finishes and recent upgrades. A fixer spends most of its budget on lot size, location, and bones. (See Condition-Aware Framing below.)
 
