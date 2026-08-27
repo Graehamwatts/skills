@@ -13,6 +13,18 @@
     "_brokerage_display_note": "Marketing/prose form only. The licensed broker name is 'Compass' and that is what must appear in structured fields and any DRE advertising context. Graeham asked for the longer conversational form in the attribution line on 2026-08-15.",
     "team": "The Boyenga Team",
     "brand_line": "Powered by The Boyenga Team at Compass Real Estate",
+    "tagline": {
+      "_rule": "Approved by Graeham 2026-08-26. This replaces 'YOUR HOME, OUR PASSION & COMMITMENT - THE EXPERIENCE YOU DESERVE' (retired same date; do not use in new output). The tagline is a method promise, chosen because it can never be falsified by a slow sale, it contrasts with the industry's own 'Just Listed' language, and 'launch' is the native metaphor of Peninsula tech clients. Use short form on signage/cards; long form where a full sentence fits (hero sections, flyer covers); sign_rider on yard-sign riders and A-frames only.",
+      "short": "Launched, not listed.",
+      "long": "Your home. Launched, not listed.",
+      "sign_rider": "This home was launched, not listed.",
+      "supporting_line": "The difference between sold, and sold well.",
+      "_supporting_line_note": "Existing line from the seller leave-behind cover. Pairs under the tagline in long-form materials; never replaces it.",
+      "retired": [
+        "YOUR HOME, OUR PASSION & COMMITMENT - THE EXPERIENCE YOU DESERVE",
+        "THE EXPERIENCE YOU DESERVE"
+      ]
+    },
     "cobrand_lockup": {
       "_purpose": "Boyenga + Compass shown side by side at EQUAL visual weight, divider between them. Graeham's 2026-08-15 instruction: neither brand may dominate the other.",
       "source_dir": "C:\\Users\\Graeham Watts\\Documents\\Compass\\Boyenga And Compass\\",

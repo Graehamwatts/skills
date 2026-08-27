@@ -74,12 +74,18 @@ Clear space around the logo: minimum 1x the logo height on every side. More is b
 
 ## Slogan / tagline
 
-"YOUR HOME, OUR PASSION & COMMITMENT — THE EXPERIENCE YOU DESERVE"
+**"LAUNCHED, NOT LISTED."**
+
+Approved by Graeham 2026-08-26. Canonical source: `shared-references/identity.json` → `identity.tagline`. Forms:
+- Short (signage, cards, headers): "Launched, not listed."
+- Long (hero sections, flyer covers): "Your home. Launched, not listed."
+- Yard-sign rider / A-frame only: "This home was launched, not listed."
+- Supporting line (long-form materials, beneath the tagline, never instead of it): "The difference between sold, and sold well."
 
 Usage rules:
-- Full slogan appears once per piece, usually in hero or footer.
-- Short form "THE EXPERIENCE YOU DESERVE" can be used as a recurring accent on section headers or CTA buttons.
-- Never paraphrase. It's the registered tagline.
+- Tagline appears once per piece, usually in hero or footer.
+- Never paraphrase. Never soften to "we launch homes" or similar.
+- RETIRED, do not use in new output: "YOUR HOME, OUR PASSION & COMMITMENT — THE EXPERIENCE YOU DESERVE" and its short form "THE EXPERIENCE YOU DESERVE". Replace on sight when editing any file that still carries them.
 
 ## Contact footer (required on every realtor deliverable)
 
