@@ -9,10 +9,10 @@
     "title": "REALTOR",
     "_brand_rule": "Graeham Watts is the PRIMARY brand and always leads, set largest. The attribution line sits beneath it, set SMALLER THAN THE NAME BUT STILL PLAINLY READABLE (roughly 15-17px against a 40px+ name, never a fine-print size). Use `brand_line` verbatim for footers and contact strips; use `brokerage` alone ('Compass') in structured fields and in legal/DRE advertising contexts, where the licensed broker must be named. Updated 2026-08-15 on Graeham's request to raise the team/brokerage prominence.",
     "brokerage": "Compass",
-    "brokerage_display": "Compass Real Estate",
-    "_brokerage_display_note": "Marketing/prose form only. The licensed broker name is 'Compass' and that is what must appear in structured fields and any DRE advertising context. Graeham asked for the longer conversational form in the attribution line on 2026-08-15.",
+    "brokerage_display": "Compass",
+    "_brokerage_display_note": "CORRECTED 2026-08-27, approved by Graeham. Was 'Compass Real Estate', set 2026-08-15 when he asked for a longer conversational form. That is the WRONG LICENSED ENTITY for California and must not come back. Compass's own DBA logo-architecture document maps California to plain 'COMPASS'; 'Compass Real Estate' is the licensed name for Idaho (submarkets other than Sun Valley), Maine, New Hampshire, Vermont and Wyoming. The document states that using the wrong name/logo can result in fines for BOTH the agent and Compass, because state real estate advertising law requires naming the brokerage the agent is actually licensed under. There is therefore no 'marketing form' of the brokerage name that differs from the legal one: in California it is 'Compass' in prose, in structured fields, and in DRE advertising contexts alike.",
     "team": "The Boyenga Team",
-    "brand_line": "Powered by The Boyenga Team at Compass Real Estate",
+    "brand_line": "Powered by The Boyenga Team at Compass",
     "tagline": {
       "_rule": "Approved by Graeham 2026-08-26. This replaces 'YOUR HOME, OUR PASSION & COMMITMENT - THE EXPERIENCE YOU DESERVE' (retired same date; do not use in new output). The tagline is a method promise, chosen because it can never be falsified by a slow sale, it contrasts with the industry's own 'Just Listed' language, and 'launch' is the native metaphor of Peninsula tech clients. Use short form on signage/cards; long form where a full sentence fits (hero sections, flyer covers); sign_rider on yard-sign riders and A-frames only.",
       "short": "Launched, not listed.",
@@ -27,11 +27,13 @@
     },
     "cobrand_lockup": {
       "_purpose": "Boyenga + Compass shown side by side at EQUAL visual weight, divider between them. Graeham's 2026-08-15 instruction: neither brand may dominate the other.",
-      "source_dir": "C:\\Users\\Graeham Watts\\Documents\\Compass\\Boyenga And Compass\\",
-      "dark_bg_asset": "built from 'BOYENGA logo white.png' + 'compass_logo_white_transparent.png', both white-on-transparent",
-      "light_bg_asset": "boyenga.compasslogo.png (black artwork, opaque white background, 8117x1684)",
-      "proportion_rule": "The two-line boyenga block sits at about 1.63x the height of the single-line COMPASS wordmark. That ratio is what makes them read as equal weight; do not set them to the same pixel height.",
-      "build_note": "Crop each source to its alpha bounding box first, both ship with heavy transparent padding that destroys the spacing if composed raw."
+      "source_dir": "C:\\Users\\Graeham Watts\\Documents\\Compass\\Compass branding\\How to use branding\\Boyenga And Compass\\",
+      "dark_bg_asset": "Boyenga Team + Compass white.png (RGBA 2744x325, transparent background)",
+      "light_bg_asset": "Boyenga-Team-+-Compass-blk.png (RGBA 2744x325, transparent background)",
+      "build_note": "DO NOT hand-compose the lockup any more. Compass ships finished Boyenga+Compass lockups, already correctly proportioned and already on transparent backgrounds, in the source_dir above. Use them as-is. The previous instruction here described building one from separate Boyenga and Compass files in Documents\\Compass\\Boyenga And Compass\\ and cropping each to its alpha bounding box; that was a workaround written before the official kit was found on 2026-08-27, and the old light-background file it named (boyenga.compasslogo.png) has an OPAQUE WHITE background that shows as a white box on any coloured surface.",
+      "_authority": "Graeham designated C:\\Users\\Graeham Watts\\Documents\\Compass\\Compass branding\\How to use branding\\ as the source of truth for all Compass branding on 2026-08-27. Read it before producing anything carrying the Compass mark. It also holds the California-approved Compass logos (California\\ subfolder, plus SVGs) and two rule PDFs: __202205_DBA_LogoArchitecture_Updated_Final.pdf (which state maps to which licensed name) and '__How-To_ Logos 4.pdf' (clear space, scale, needle at 45 degrees North-East, program-logo rules).",
+      "compass_required_disclaimer": "Compass is a licensed real estate broker and abides by Equal Housing Opportunity laws. All material presented herein is intended for informational purposes only. Information is compiled from sources deemed reliable but is subject to errors, omissions, changes in price, condition, sale, or withdraw without notice. No statement is made as to accuracy of any description. All measurements and square footages are approximate. Exact dimensions can be obtained by retaining the services of an architect or engineer. This is not intended to solicit property already listed.",
+      "_disclaimer_note": "Verbatim from Compass's '__How-To_ Logos 4.pdf' sample collateral. Use on marketing pieces and site footers that carry the Compass mark. Quoted here exactly; do not paraphrase."
     },
     "_brokerage_history": {
       "Intero Real Estate": "Former brokerage through mid-2026. Do NOT use in new output. ~67 files across this repo still hardcode it as of 2026-08-13 and are being migrated; if you encounter it in a file you are editing, fix it.",
