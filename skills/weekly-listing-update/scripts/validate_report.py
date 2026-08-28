@@ -39,12 +39,17 @@ PRIOR_SELLER_MARKERS = [
     "1908 Cooley", "Cooley Ave", "Cooley Avenue", "ML82027334", "SHPCO",
 ]
 
-BANNED_BRAND = [
-    ("02015066", "blocklisted DRE (correct is 01466876)"),
-    ("Intero Real Estate", "retired brokerage (now Compass)"),
-    ("Berkshire Hathaway", "Intero's affiliate tagline; Compass is not one"),
-    ("Martin Team", "stale team name (correct is The Boyenga Team)"),
-]
+# Banned values load from identity.json (single source of truth). Never
+# hardcode the blocked DRE here — the repo tripwire blocks pushes carrying it.
+import json as _json
+_IDENTITY = Path(__file__).resolve().parents[2] / "shared-references" / "identity.json"
+_id = _json.loads(_IDENTITY.read_text(encoding="utf-8"))  # fail closed if missing
+BANNED_BRAND = (
+    [(v, "blocklisted DRE (correct is " + _id["identity"]["dre"] + ")")
+     for v in _id["_blocked_values"]["dre_blocklist"]]
+    + [(v, "blocked brand value (see identity.json)")
+       for v in _id["_blocked_values"]["brand_blocklist"]]
+)
 
 
 def main() -> int:

@@ -103,12 +103,14 @@ def main() -> int:
                        f"decayed build was 60KB. Small size means silent truncation even "
                        f"when signatures match."))
 
-    # --- brand ---
-    brand = m.get("brand", {})
-    for bad in brand.get("forbidden", []):
+    # --- brand (from identity.json, the single source of truth; fail closed) ---
+    _identity_path = Path(__file__).resolve().parents[2] / "shared-references" / "identity.json"
+    _id = json.loads(_identity_path.read_text(encoding="utf-8"))
+    forbidden = _id["_blocked_values"]["dre_blocklist"] + _id["_blocked_values"]["brand_blocklist"]
+    for bad in forbidden:
         if bad.lower() in html.lower():
             misses.append(("BRAND", bad, "blocked brand value present in output"))
-    dre = brand.get("required_dre")
+    dre = _id["identity"]["dre"]
     if dre and dre not in html:
         notes.append(f"note: DRE {dre} not found (fine if this page carries no contact strip)")
 

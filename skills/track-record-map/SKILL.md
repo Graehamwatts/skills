@@ -18,7 +18,7 @@ Default behavior when asked to use this skill: **refresh the same evergreen page
 
 ## 0. Brand identity — read this first
 
-Read `skills/shared-references/identity.json` before writing any brand text (DRE, brand line). Never hardcode from memory. Correct DRE is `01466876`; `02015066` is permanently blocklisted.
+Read `skills/shared-references/identity.json` before writing any brand text (DRE, brand line). Never hardcode from memory. Correct DRE is `01466876`; the blocklisted old DRE lives in identity.json `_blocked_values` and must never appear in output.
 
 ## 1. Why this exists (the incident that shaped it)
 
@@ -99,7 +99,7 @@ The two views are: (1) a wide South Bay/Peninsula/East Bay footprint auto-fit to
 ```
 python scripts/qc_check.py
 ```
-Checks: wrong DRE (`02015066`) absent, correct DRE (`01466876`) present, "Intero" absent, em-dashes absent, HTML tag-balance, inline `<script>` syntax validity (via Node `new Function()`), and — critically, since this was the recurring defect — **zero occurrences of split-legend text** ("Graeham Watts individually" / "Boyenga Team listing" or similar per-agent labeling). If any of those checks fail, fix before publishing; don't ship with a failing QC.
+Checks: blocked brand values (identity.json `_blocked_values`) absent, correct DRE (`01466876`) present, "Intero" absent, em-dashes absent, HTML tag-balance, inline `<script>` syntax validity (via Node `new Function()`), and — critically, since this was the recurring defect — **zero occurrences of split-legend text** ("Graeham Watts individually" / "Boyenga Team listing" or similar per-agent labeling). If any of those checks fail, fix before publishing; don't ship with a failing QC.
 
 ### Step 6 — Export Excel
 

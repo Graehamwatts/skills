@@ -1,7 +1,16 @@
 import os
 WORKDIR = os.environ.get('TRM_WORKDIR', os.getcwd())
 
-import sys, re
+import sys, re, json
+
+# Brand values come from identity.json — the single source of truth. Never
+# hardcode the DRE (correct or blocked) in this script; the repo tripwire
+# blocks pushes that contain the blocked value as a literal.
+IDENTITY = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', 'shared-references', 'identity.json')
+with open(IDENTITY, encoding='utf-8') as f:  # fail closed: no identity.json -> crash, don't skip
+    _id = json.load(f)
+CORRECT_DRE = _id['identity']['dre']
+BLOCKED = _id['_blocked_values']['dre_blocklist'] + _id['_blocked_values']['brand_blocklist']
 
 PATH = os.path.join(WORKDIR, 'track-record-map-output.html')
 
@@ -10,23 +19,18 @@ with open(PATH, encoding='utf-8') as f:
 
 ok = True
 
-if '02015066' in html:
-    print("FAIL: wrong DRE 02015066 present")
-    ok = False
-else:
-    print("PASS: wrong DRE 02015066 absent")
+for bad in BLOCKED:
+    if re.search(re.escape(bad), html, re.IGNORECASE):
+        print(f"FAIL: blocked brand value present: {bad}")
+        ok = False
+if ok:
+    print("PASS: no blocked brand values (DRE blocklist + brand blocklist) present")
 
-if '01466876' in html:
-    print("PASS: correct DRE 01466876 present")
+if CORRECT_DRE in html:
+    print(f"PASS: correct DRE {CORRECT_DRE} present")
 else:
-    print("FAIL: correct DRE 01466876 NOT present")
+    print(f"FAIL: correct DRE {CORRECT_DRE} NOT present")
     ok = False
-
-if re.search(r'intero', html, re.IGNORECASE):
-    print("FAIL: 'Intero' present")
-    ok = False
-else:
-    print("PASS: 'Intero' absent")
 
 if '\u2014' in html:
     print("FAIL: em-dash character present")

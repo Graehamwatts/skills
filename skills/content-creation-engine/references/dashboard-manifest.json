@@ -1,35 +1,64 @@
 {
   "_purpose": "Machine-checkable contract for the weekly content dashboard. This file exists because the dashboard lost 72% of its content between 2026-05-21 (216KB) and 2026-06-22 (60KB), losing features one at a time across rebuilds, and nobody noticed until the artifacts were diffed side by side. Prose rules did not prevent that; three separate rule files each claimed to be canonical and each described a different page. A rebuild is now PASS/FAIL against this manifest instead of against anyone's memory.",
-
   "_how_to_use": "After building a dashboard, run: python scripts/validate_dashboard.py <built.html>. Exit 0 = every required element present. Exit 1 = something regressed; the output names exactly what. Never publish a dashboard that has not passed. Never build by copying last week's output (see _build_rule).",
-
   "_build_rule": "BUILD FROM THE TEMPLATE, NEVER FROM LAST WEEK'S OUTPUT. The scheduled task previously said to replicate the most recent production-calendar.html. That is the root cause of the decay: copying an output means any feature that dropped once is gone permanently, and each week's loss compounds. Start from templates/main-dashboard-template.html, fill it with this week's data, then validate.",
-
   "_provenance": "Reconciled 2026-08-13 from three conflicting specs (weekly-dashboard-rules.md, weekly-calendar-rules.md, content-calendar/references/dashboard-architecture.md) against the REAL published artifacts in online-content/dashboards/weekly-calendars/. Where the specs disagreed, the built artifact won, because that is the page Graeham actually opens. High-water mark used as the baseline: 2026-05-21 (216KB).",
-
   "page": {
     "h1": "Weekly Content Calendar",
     "_h1_note": "Chosen by Graeham 2026-08-13 as the self-explanatory title. The old weekly-calendar-rules.md forbade the words 'Weekly Calendar' in the title while the canonical filename was production-calendar.html; that contradiction is retired. The FILENAME stays production-calendar.html for URL continuity.",
     "filename_pattern": "YYYY-MM-DD-production-calendar.html",
     "publish_path": "online-content/dashboards/weekly-calendars/"
   },
-
   "required_tabs": [
-    {"id": "research", "label": "Research",      "signature": ">Research<"},
-    {"id": "diagram",  "label": "Diagram",       "signature": ">Diagram"},
-    {"id": "calendar", "label": "Calendar",      "signature": ">Calendar"},
-    {"id": "video",    "label": "Video Content", "signature": "Video Content"},
-    {"id": "blog",     "label": "Blog Content",  "signature": "Blog Content"}
+    {
+      "id": "research",
+      "label": "Research",
+      "signature": ">Research<"
+    },
+    {
+      "id": "diagram",
+      "label": "Diagram",
+      "signature": ">Diagram"
+    },
+    {
+      "id": "calendar",
+      "label": "Calendar",
+      "signature": ">Calendar"
+    },
+    {
+      "id": "video",
+      "label": "Video Content",
+      "signature": "Video Content"
+    },
+    {
+      "id": "blog",
+      "label": "Blog Content",
+      "signature": "Blog Content"
+    }
   ],
   "_tabs_note": "These five are what the real artifacts have shipped since 2026-05-21. weekly-dashboard-rules.md said Research/Diagram/Calendar/Video/Blog; weekly-calendar-rules.md said Research/Diagram/Content/Video Content/Blog Content. The built page is a hybrid of both, and it is the authority.",
-
   "required_sections": [
-    {"key": "live_data_layer", "signature": "Live Data Layer",       "why": "Shows which live sources fed this week's picks. Present since May 11."},
-    {"key": "full_research",   "signature": "Full Weekly Research",  "why": "The underlying research table behind the five picks."},
-    {"key": "pipeline_diagram","signature": "How We Built This",     "why": "The 10-step data pipeline explainer."},
-    {"key": "interlay",        "signature": "interlay",              "why": "Explains how the data inputs combine into the ranking. This is the section that answers 'why these five'."}
+    {
+      "key": "live_data_layer",
+      "signature": "Live Data Layer",
+      "why": "Shows which live sources fed this week's picks. Present since May 11."
+    },
+    {
+      "key": "full_research",
+      "signature": "Full Weekly Research",
+      "why": "The underlying research table behind the five picks."
+    },
+    {
+      "key": "pipeline_diagram",
+      "signature": "How We Built This",
+      "why": "The 10-step data pipeline explainer."
+    },
+    {
+      "key": "interlay",
+      "signature": "interlay",
+      "why": "Explains how the data inputs combine into the ranking. This is the section that answers 'why these five'."
+    }
   ],
-
   "required_features": [
     {
       "key": "chart_brush",
@@ -81,7 +110,6 @@
       "status": "stable"
     }
   ],
-
   "content_minimums": {
     "video_topics": 5,
     "blog_topics": 5,
@@ -89,10 +117,8 @@
     "min_file_kb": 150,
     "_size_note": "The high-water mark was 216KB (2026-05-21) and the last build was 60KB. A dashboard under 150KB is almost certainly missing content even if every signature above happens to match. This is a blunt instrument on purpose: it catches silent truncation that signature checks miss."
   },
-
   "brand": {
-    "_rule": "Read ../shared-references/identity.json at runtime. Do not hardcode.",
-    "required_dre": "01466876",
-    "forbidden": ["02015066", "Intero Real Estate", "Berkshire Hathaway", "Martin Team"]
+    "_rule": "Brand values live ONLY in ../../shared-references/identity.json. validate_dashboard.py loads required_dre and the forbidden list from there at runtime; nothing is hardcoded here so the repo's blocked-DRE tripwire stays clean.",
+    "source": "../../shared-references/identity.json"
   }
 }
