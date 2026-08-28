@@ -121,7 +121,7 @@ Every campaign that advertises listings, home valuations, buying, selling, or re
 
 ## Output Conventions
 
-Chat tables by default; date range + currency always stated. For client-facing or coach-facing reports, hand off to his branded HTML pattern (`html-email` skill or the navy/gold dashboard style in `shared-references/branding.md`). Round dollars to whole numbers in tables, keep CPL to cents. Never paste raw JSON at Graeham.
+Chat tables by default; date range + currency always stated. For client-facing or coach-facing reports, build branded HTML in the navy/gold dashboard style (`shared-references/branding.md`) and publish it directly to the `online-content` repo (see `shared-references/publishing-via-composio.md` for the direct-git pattern). Round dollars to whole numbers in tables, keep CPL to cents. Never paste raw JSON at Graeham.
 
 ## Handoffs
 

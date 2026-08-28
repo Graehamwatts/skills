@@ -276,7 +276,7 @@ farming-postcard/
 1. Append the shipped card to BOTH the "Cards shipped" table AND the "Repetition tracker" table (core claim / villain / CTA destination) in `headline-library.md`
 2. Move the picked option in `option-cache.md` to "Resolved"
 3. Run Step 7 (auto-publish to online archive at `Graehamwatts/online-content/farming-postcards/`)
-4. Push skill update to GitHub via `github-skill-sync` if any reference files changed
+4. If any reference files changed, they auto-push at session end (SessionEnd hook); a manual direct `git` push per `shared-references/publishing-via-composio.md` is also fine
 
 ## Live archive
 

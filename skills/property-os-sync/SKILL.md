@@ -255,7 +255,7 @@ This makes the docs queryable in Obsidian via dataview if you ever install that 
 - **Edit on the machine you're on.** If you update from chat on Windows, Obsidian Sync will propagate to Mac. The reverse also works.
 - **GitHub is for version history, not real-time sync.** The repo gets pushed on every spec edit and via the daily scheduled task as a safety net.
 - **Don't commit the .obsidian config folder.** The vault root is one level up from `PropIQ/`. The git repo is rooted at `PropIQ/`, so `.obsidian/` (which is in `Obsidian/`) is naturally excluded.
-- **Commit messages are day-first format:** `DD-MM-YYYY-HHMM` to match `github-skill-sync` convention.
+- **Commit messages are day-first format:** `DD-MM-YYYY-HHMM` (long-standing repo convention).
 
 ## Troubleshooting
 
