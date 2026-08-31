@@ -212,3 +212,25 @@ These were flagged when the 2896 Illinois build shipped a confusing/inaccurate l
 - **This pricing-behavior section is ADDITIVE, not a replacement.** It does NOT substitute for the required chart set (`trendPrice`, `trendLS`, `newList`, `monthsInv`, `compBar`, `priceDom`, `priceJourney`, `$/sqft`) or the full comp-table columns. A report must contain BOTH the required charts/columns AND this section. Do not drop required charts to make room.
 - **Equity vs gross appreciation.** Never call (today's value minus purchase price) "equity." Equity requires subtracting loan payoff and selling costs, which we usually do not have. Label it **"gross appreciation"** or **"value gained since purchase, before payoff and selling costs."** Only say "equity" if you actually have payoff + cost figures.
 - **Data source for the comp pricing fields.** Original List, Final List, Sold, DOM, Close Date, Lot, Year all come cleanly from the MLS **"Appraiser Form 1004MC Detailed" export** (Results → select all → Export → that format → CSV). Beds/baths, exact # of price reductions (vs the orig-minus-final approximation), condition notes, and active-inventory counts (for `newList`/`monthsInv`) are NOT in that export and need a separate pull or the MLS Stats tool. If those are unavailable, state it rather than faking them.
+
+## Target Price Reality Check (added 2026-08-30, Graeham request — 37375 California St)
+
+Trigger this whenever a client states a specific target price and the computed value range does not support it. Never treat this as an error case to smooth over or a number to argue against directly. The goal is to hand the client the same data Graeham would use on a call: not "you're wrong," but "here's exactly what it would take."
+
+Three parts, always in this order, always grounded in comps already in the report (never a fresh unrelated pull just for this section):
+
+### 1. Real proof-of-price comp
+Find the closest real, non-outlier sale at or near the client's stated target from the comp set already built for this report. "Non-outlier" matters: skip anything already flagged as auction-style, distressed, or deliberately underpriced to draw bids (those inflate the effective $/sf and would overstate what's achievable). Describe what that comp actually was in plain terms: size, condition, remodel scope, DOM. This is "here's what someone got for that money," stated as fact, not as a hypothetical.
+
+### 2. Reverse-engineered gap
+Using that comp's real $/sq ft rate, calculate what the subject would need to reach the target:
+- `needed_sqft = target_price / comp_rate_per_sqft`
+- State the delta plainly: "that's roughly N sq ft more than it has now" (an addition), or if the subject already exceeds that sqft, say so and explain the gap must be closing on condition/remodel instead.
+- Only invoke lot size as part of the gap if the underlying comp data in THIS market actually shows a lot-size premium (check whether larger-lot comps command higher $/sf here first — see `comp-research.md`). Do not force a lot-size narrative onto a market where finished square footage and remodel level are what's actually driving price (confirmed to not apply in the Newark small-lot-starter-home segment, 2026-08-30 — verify per-market, don't assume the Hayward-style land-value story applies everywhere).
+- State the condition/remodel level required in the same concrete terms the comp used ("a full permitted remodel plus a real addition," not "needs updating").
+
+### 3. Market-velocity delta
+Pull the DOM/absorption trend data already required for every CMA (`trendDom` / MLS Stats Days-to-Sell). Compare the current trailing months against the fastest period in the same lookback window, using the real monthly averages, never a client's or agent's remembered anecdote ("it used to sell in a week") taken at face value — check the anecdote against the actual chart data first and correct the specific number if the real data doesn't match it, while keeping the direction of the claim if the data supports it. State plainly whether reaching a stretch number is getting easier or harder right now given that trend.
+
+### Where it goes in the report
+Its own section, placed after the Pricing Strategy / value-range section (it references the value range, so it must come after). Do not fold it into the Special Considerations or closing sections. Section heading should name the actual target number, e.g. "Is $1,000,000-$1,100,000 Realistic? Here's What It Would Take" — a real question the client asked, not a generic header.
