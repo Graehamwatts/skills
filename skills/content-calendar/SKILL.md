@@ -29,6 +29,24 @@ DRE# 01466876, Bay Area / East Palo Alto). Your job is to analyze what's working
 audience wants, and what competitors are doing — then produce a scored, prioritized content
 calendar for the coming week.
 
+## V6 SLOT-AWARE SELECTION (adopted 2026-08-31 — this supersedes "pick 5 good topics")
+
+The weekly calendar no longer selects 5 undifferentiated topics. It fills 5 NAMED SLOTS, mirroring the PropCast Master Brain's Weekly Slot Template (this is the manual run of the PropCast intelligence until the product ships — Graeham is the pilot agent, archetype HYBRID_RING):
+
+- **Mon — Local Business Giveaway** (real Graeham on camera, never avatar; business + $50 card handled by Giselle; fixed timeslot, appointment content)
+- **Tue — Client Story / Closing Video** (real footage + VO; permission logged; rotate client types deliberately)
+- **Wed — Market Signal** (split-screen avatar; THIS is where policy decodes land — see the class boost below)
+- **Thu — Listing content or Deal Breakdown** (listing-launch engine owns active launches; otherwise a real closed-deal ROI story)
+- **Fri — Geo reel** (broad Bay Area/Peninsula hook, EPA/mid-Peninsula payload; never lead social with the town name)
+
+Scoring changes:
+1. **Policy-decode class boost.** A topic sourced from a law, tax, ballot measure, insurance ruling, or government decision (AB 1482, SB9, Prop 19, FAIR Plan, ADU rules, transfer taxes) outranks a same-score market-recap topic. Evidence: exemplar channel analysis 2026-08-31 — policy decodes pull 10-30x the discovery views of recap updates on identical distribution (Leah Courage, 86.6K subs: decodes 30-180K views vs recaps 1-7K). Run a quick legislative sweep during weekly research: Google News for California housing bills/measures from the last 14 days; note that a bill gets TWO timeliness windows (passage date and effective date).
+2. **Long-form rotation (the 6th selection, biweekly minimum, weekly when capacity allows):** Week 1 policy decode → Week 2 market deep-dive with a thesis → Week 3 ranking-series episode ("Ranking Every Peninsula City" — one city per episode across the geo rings) → Week 4 second decode or Moving-to-the-Peninsula guide. Long-forms follow the AEO ruleset (question-phrased chapters, FAQ block, lead-magnet link stack) and file into the five standard playlists.
+3. **Exemplars calibrate, actuals override.** Faith Barrett's mix, Leah Courage's formats, and Cuha's YouTube framework set the PRIORS above. Graeham's OWN performance data (his analytics in this skill's Rearview layer, GSC, attribution) overrides them the moment they disagree — his data already shows client stories 8x news commentary, and EPA exact-match content belongs on search surfaces (YouTube/blog/GBP), not the IG feed. Never recommend copying an exemplar against his own numbers.
+4. **Effort budget:** at most one HIGH-effort piece in production at a time (flagship/parody/launch stunts are monthly, not weekly).
+
+Topic cards t1-t5 in the dashboard map to Mon-Fri slots in order. Everything downstream (Rules 8-11, dashboard structure, validation gates, handoff to content-creation-engine) is unchanged.
+
 This skill is an orchestration layer. It doesn't collect data itself — it pulls from existing
 data sources that are already connected. Think of it as the "brain" that connects the dots
 between performance data, audience demand, and competitive intelligence to make smart content
