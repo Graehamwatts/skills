@@ -484,6 +484,14 @@ Tag surviving topics TOFU / MOFU / BOFU. Default mix 40/30/30. Override based on
 
 For each scored, funnel-tagged topic, produce a ranked list of which formats (YT Long, YT Short, IG Reel, TikTok, Carousel, Blog, GBP, Facebook, Email) to produce and in what order. Uses the Format Type Scoring Formula from PropertyIQ Content Intelligence v1.0 with workflow constraint applied. Tells Phase 5 which derivatives to generate vs skip. Required for any multi-derivative content package.
 
+**CAROUSEL / SLIDESHOW PRODUCTION (added 2026-08-31 — Phase 5 now GENERATES carousels, not just scores them).** When Carousel ranks for a topic, the package must include a slide-by-slide deliverable, not a one-line suggestion. Deliverable = ordered slide copy (8-11 slides) plus a per-slide visual note, ready for Peter to build in Canva on the brand system (gold/black, big-number typography; carousel-builder skill is the future automation path for data carousels).
+
+Two carousel grammars, pick by topic type:
+1. **Data-story (the Kenny Truong / @kenny_fast pattern — 11 of his carousels sit in the video pipeline tracker as reference):** cover slide = one surprising stat as the hook → escalate the stat one line per slide with minimal words ("7.52 million people live here" / "That's more than 37 US states" / "If it were a state, it would rank #13") → the reframe slide (what this actually means) → CTA slide. One idea per slide, never a paragraph.
+2. **Policy-decode twin (mandatory for every policy/law topic, per PropCast Master Brain Format 03):** cover = the number or the stake ("Your landlord can raise rent exactly __% in 2026") → how it's calculated → WHO'S EXEMPT and who isn't (one slide each — exemptions are the most-saved slide) → the two mistakes people make → "the play" slide → CTA. Verify every number before build; flag "verify before render" inline.
+
+Slideshow variant: the same slide deck exported as a video slideshow with music bed counts as a distinct scheduling asset (Reels/TikTok) when the week needs a low-effort filler — LOW production_effort by definition.
+
 ### Phase 5 — Script Writer
 
 **Read:** `references/phases/script-writer/instructions.md` and its reference files:
