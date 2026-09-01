@@ -33,7 +33,7 @@ calendar for the coming week.
 
 The weekly calendar no longer selects 5 undifferentiated topics. It fills 5 NAMED SLOTS, mirroring the PropCast Master Brain's Weekly Slot Template (this is the manual run of the PropCast intelligence until the product ships — Graeham is the pilot agent, archetype HYBRID_RING):
 
-- **Mon — Local Business Giveaway** (real Graeham on camera, never avatar; business + $50 card handled by Giselle; fixed timeslot, appointment content)
+- **Mon — Timely Signal** (the week's freshest policy/legislative or market item, quick-hit format. NOTE 2026-08-31: this slot was originally Local Business Giveaway; Graeham SUSPENDED the giveaway until Wesley's batch runs build a business-video bank — do not schedule giveaways until he reactivates. When reactivated, giveaway returns here and Timely Signal folds back into Wednesday.)
 - **Tue — Client Story / Closing Video** (real footage + VO; permission logged; rotate client types deliberately)
 - **Wed — Market Signal** (split-screen avatar; THIS is where policy decodes land — see the class boost below)
 - **Thu — Listing content or Deal Breakdown** (listing-launch engine owns active launches; otherwise a real closed-deal ROI story)
