@@ -21,7 +21,7 @@ This skill exists because Meta opened its Marketing API to AI assistants on Apri
 | Organic IG / FB page insights | **Windsor** (`instagram`, `facebook_organic`) | The official Ads MCP has ZERO organic tools — all 29 are ads-side |
 | Cross-channel blended reporting (ads + GSC + YouTube + GHL) | **Windsor** | Single query surface across 325 connectors |
 | Ad copy and creative concepts | `copywriter` / `content-creation-engine` | They write; this skill deploys |
-| What happens to leads after the click | GoHighLevel / `ghl-crm-audit` | Ads end at the form fill; GHL owns nurture |
+| What happens to leads after the click | GoHighLevel (see `shared-references/integrations.md` §12) | Ads end at the form fill; GHL owns nurture |
 
 Don't blur these lines. The most common mistake is reaching for Windsor's `facebook` connector for ads questions — when the direct connector is live, it is the canonical ads source.
 
@@ -131,7 +131,7 @@ Chat tables by default; date range + currency always stated. For client-facing o
 | Full content package the ad amplifies | `content-creation-engine` |
 | Video creative / b-roll | `higgsfield-video`, `heygen-video`, `vaibhav-template` |
 | What converts in ads → feed content topics | `content-calendar` (paid signal informs the weekly plan) |
-| Lead follow-up after the form fill | `ghl-crm-audit` / GoHighLevel connector |
+| Lead follow-up after the form fill | GoHighLevel connector (`shared-references/integrations.md` §12) |
 | Weekly organic report | `content-calendar` |
 
 ## Troubleshooting

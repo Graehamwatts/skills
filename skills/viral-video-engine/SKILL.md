@@ -147,5 +147,5 @@ Content filter false-flags aerials/yards randomly — reword and resubmit (see e
 
 For listing/social video content, this skill is the entry point — it CALLS heygen-video,
 higgsfield-video/Higgsfield MCP, and vaibhav-template internally. Don't freestyle those
-individually for listing content. video-script-creation-engine remains the source for
+individually for listing content. content-creation-engine remains the source for
 non-video content packages and SSML variants.

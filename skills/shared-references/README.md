@@ -10,7 +10,7 @@
 | `data-contracts.md` | Cross-skill data contracts: input/output schemas and ownership of pipeline phases |
 | `identity.json` | Canonical agent identity (DRE#, brokerage, markets) — referenced by every skill that produces content |
 | `integrations.md` | Per-skill integration map (which connectors and APIs each skill uses) |
-| `publishing-via-composio.md` | The canonical pattern for publishing HTML/Markdown content via Composio (replaces the deprecated `html-email` and `github-skill-sync` skills) |
+| `publishing-via-composio.md` | The canonical pattern for publishing HTML/Markdown content to GitHub. **Filename is stale** — the method inside is direct `git` push; Composio was retired workspace-wide 2026-06-09. The name is kept only because 8+ skills link to it. |
 | `skill-deprecation-protocol.md` | The protocol for deprecating, absorbing, or replacing skills cleanly |
 
 ## How skills reference this folder

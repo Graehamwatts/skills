@@ -220,7 +220,7 @@ This document covers:
 | **Credentials â local** | `C:\Users\Graeham Watts\Documents\Skills LLMS\Claude\Skills\ghl-pit.txt` (gitignored). Line 1: PIT (starts `pit-`). Line 2: Location ID (`6wuU3haUH7uNeT20E3UZ`). |
 | **Credentials â GitHub Actions** | Repo secrets `GHL_PIT` and `GHL_LOCATION_ID` in `Graehamwatts/online-content` for any Action that pulls GHL data. |
 | **Sandbox constraint** | The Cowork sandbox cannot call `services.leadconnectorhq.com`. As of 2026-06-07 direct PIT calls from the sandbox are blocked by Cloudflare bot protection (HTTP 403, Error 1010 "Access denied"); earlier sessions saw `403 blocked-by-allowlist` / HTTP 000. Do NOT attempt to spoof around Cloudflare. In-sandbox fallback order: (1) GHL web app via Claude-in-Chrome using the user's logged-in session (search contacts, read/add notes through the UI), (2) GitHub Action using `GHL_PIT` / `GHL_LOCATION_ID` repo secrets, (3) run on the user's local machine. Windsor backup only if its license is active (see STATUS above). |
-| **Used by** | `pipeline-dashboard` (full data pull via PIT), `ghl-crm-audit` (audit + Adrian's task list), `content-creation-engine` (CTA generation), `content-calendar` (keyword cycling + performance attribution). |
+| **Used by** | `pipeline-dashboard` (full data pull via PIT), `content-creation-engine` (CTA generation), `content-calendar` (keyword cycling + performance attribution). CRM auditing has no dedicated skill — use section 12 of this file directly. |
 | **Endpoints used** | `POST /contacts/search`, `GET /opportunities/search`, `GET /opportunities/pipelines`, `GET /users/`, `GET /contacts/{id}/notes`, `GET /contacts/{id}/tasks`, `GET /conversations/search`, `GET /locations/{id}/customFields`. |
 | **Active keywords** | SELL, BUY, COSTS, OPTIONS, 1482, EPA, VALUE, READY, INVEST, NUMBERS, RELOCATING, MARKET, CHECKLIST, WATCH, RWC, PA, MP, SF |
 | **Reliability** | PIT direct: stable when token is valid. Windsor: stable but limited (cannot cross-reference `contact_source` with `pipeline_stage` in a single query). |
@@ -234,7 +234,7 @@ This document covers:
 |---|---|
 | **Purpose** | Skills repo source of truth (`Graehamwatts/skills`); all published content publishing (`Graehamwatts/online-content` â formerly `cma-reports`, renamed 2026-05-01 to reflect that it holds CMAs, offers, disclosures, newsletters, AND dashboards, not just CMAs) |
 | **Integration type** | git push (GitHub Desktop app â no PAT needed for normal commits); GitHub Contents API via JS fetch (for CMA HTML publishing â requires PAT) |
-| **Used by** | `github-skill-sync`, `cma-generator` (publishing), all skills (source storage) |
+| **Used by** | `cma-generator` (publishing), all skills (source storage). Pushing is done with plain `git` — there is no sync skill. |
 | **Reliability** | Desktop sync stable; Contents API needs PAT refresh annually |
 | **Verification status** | GitHub Desktop confirmed working Apr 2026 |
 

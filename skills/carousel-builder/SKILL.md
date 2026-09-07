@@ -1,6 +1,6 @@
 ---
 name: carousel-builder
-description: Generates Graeham Watts' branded 15-image real estate social media package (two Instagram carousels + 4 standalone static images) for a property listing, using a PIL-based image compositing engine (no browser needed). Use this skill ANY time the user asks to create social media graphics, carousel posts, static images, or a "production package" for a real estate listing, especially when they reference a specific property address with photos already on disk. Also trigger on: "make me a carousel for [address]", "create the social media package for this listing", "generate the investment math / multi-gen carousel", "do the same thing we did for [previous property] but for [new property]", or any request to turn property photos + facts into branded Instagram-ready images. This skill produces IMAGES only (carousels + statics) — for video scripts, HeyGen avatar renders, or B-roll for the same listing, hand off to video-script-creation-engine, heygen-video, and higgsfield-video after this skill's images are done.
+description: Generates Graeham Watts' branded 15-image real estate social media package (two Instagram carousels + 4 standalone static images) for a property listing, using a PIL-based image compositing engine (no browser needed). Use this skill ANY time the user asks to create social media graphics, carousel posts, static images, or a "production package" for a real estate listing, especially when they reference a specific property address with photos already on disk. Also trigger on: "make me a carousel for [address]", "create the social media package for this listing", "generate the investment math / multi-gen carousel", "do the same thing we did for [previous property] but for [new property]", or any request to turn property photos + facts into branded Instagram-ready images. This skill produces IMAGES only (carousels + statics) — for video scripts, HeyGen avatar renders, or B-roll for the same listing, hand off to content-creation-engine, heygen-video, and higgsfield-video after this skill's images are done.
 ---
 
 # Listing Social Carousel Generator
@@ -141,7 +141,7 @@ than assuming from the filename.)
 
 This skill covers the carousel + static IMAGES only. Video scripts, HeyGen
 avatar renders, and Higgsfield b-roll for the same listing are separate
-downstream steps handled by other skills (`video-script-creation-engine`,
+downstream steps handled by other skills (`content-creation-engine`,
 `heygen-video`, `higgsfield-video`) — mention this handoff to the user if
 they ask for the full production package (images + videos), don't try to
 generate video from this skill.
