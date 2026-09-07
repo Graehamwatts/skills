@@ -27,26 +27,22 @@ The commercial tools in this space all solve award **search** for new bookings. 
 
 ---
 
-## The one integration genuinely worth considering
+## Automated balance sync: blocked by the airlines themselves
 
-**AwardWallet Account Access API.** The only vendor here with a free, documented, self-registrable path to user-consented balance data.
+AwardWallet has a documented API and it looks like the obvious fix for a manual wallet. **It does not work for the carriers that matter.**
 
-- Endpoint `business.awardwallet.com/api/export/v1`, `X-Authentication` header
-- Returns balances, elite level, expiration dates, transaction history
-- Free tier real, business account required but free personal accounts can upgrade
-- Reads only accounts the user has explicitly shared
+American forced AwardWallet to drop AAdvantage entirely in Dec 2021. Delta, United and Southwest are reduced to email statement forwarding with no login-based tracking at all. The airlines closed this door deliberately.
 
-**What it would buy:** the wallet stops going stale. Balances and certificate expiry dates update themselves instead of relying on Graeham to remember what he had.
+So automated balance sync covers hotel programs and some smaller airlines, and misses every US major. Their flight award search API also explicitly contains no upgrade inventory.
 
-**What it would not buy:** any upgrade data whatsoever. Their own flight award search API explicitly contains no upgrade inventory.
-
-**Verdict:** worth doing only if the manual wallet proves annoying in practice. Balances change slowly and certificate expiry dates are the only genuinely time-sensitive field. Do not build this speculatively. Wait until the manual version has actually failed.
+**Verdict: do not build this.** The manual wallet is not a compromise, it is the only thing that works for United, Delta, American and Southwest. Keep it current by asking at the start of each audit rather than trying to automate around a wall the airlines put up on purpose.
 
 ---
 
 ## Dead ends, so nobody re-proposes them
 
-- **Amadeus Self-Service.** The entire `amadeus4dev` GitHub org was archived in July 2026 and the portal is being deprecated. Anything built on it has a shelf life. Do not start here.
+- **Amadeus Self-Service. Decommissioned 17 July 2026.** Not deprecated, gone. New registrations paused in March, existing API keys disabled in July, and the registration URLs now 301 to the root. Verified first-hand. The enterprise portal survives but requires a commercial agreement. This was the only self-service API that exposed real booking-class letters, which is why it keeps getting suggested. It no longer exists.
+- **Every commercial flight API, for a different reason than you would guess.** Seat maps and order changes bind to an offer the API itself generated or an order the API itself created. Duffel states it plainly: seat maps accept `offer_id` only, and it does not support selecting a seat after an order exists. Travelport PNR retrieval is ownership-scoped and needs claim authority. NDC Order Retrieve is channel-scoped. **No vendor at any price accepts a confirmation code for a booking made somewhere else.** That single fact rules out the entire category, not just the free tiers.
 - **awardwiz**, the canonical open-source award scraper covering AA, Aeroplan, Alaska, Delta, JetBlue, Southwest and United. Archived, last commit Feb 2024. Dead.
 - **Any Plusgrade integration.** GitHub search returns 34 repos for "plusgrade" and every one is a job-interview take-home. No API, no docs, no open-source footprint. The only way to see a bid offer is to be the passenger holding the PNR.
 - **Open-source loyalty balance aggregation.** AwardWallet's GitHub org has zero public repos. The only client library ever published was archived in 2017. One working project exists, `itswcl/PointsTracker`, with zero stars.
@@ -72,13 +68,33 @@ It is an excellent award-search machine. It is not an upgrade tool, and adopting
 
 ---
 
-## The legal line
+## What the airline sites actually do to automation
 
-Air Canada and Aeroplan are suing seats.aero's operator in federal court under the CFAA over roughly 265,000 scraped routes. Settlement talks hit impasse in Feb 2026.
+Measured directly, 2026-09-06. This is why `# CHASE` uses Graeham's own already-open browser instead of launching a fresh one.
 
-**This skill stays on the safe side by design.** It drives Graeham's own logged-in session, on his own booking, at human pace, and collects nothing in bulk. That is a categorically different activity from operating a scraping service.
+| Site | Behavior |
+|---|---|
+| **united.com** | **No HTTP response at all.** TLS renegotiation loop, connection dropped. Blocked below the HTTP layer, consistent with TLS fingerprint rejection. The hardest of the three |
+| **aa.com** | **403 Forbidden**, "Access Denied", Akamai error reference |
+| **delta.com** | Serves the page, then challenges. Akamai Bot Manager cookies (`_abck`, `bm_sz`) |
+| **southwest.com** | Serves, Akamai Bot Manager |
+| **alaskaair.com** | Materially lighter. No Akamai bot cookies on the paths tested |
 
-Any future proposal involving automated collection across accounts, routes or users is a legal question before it is a technical one. Raise it as such rather than treating it as an engineering decision.
+All three target carriers sit behind Akamai. **A fresh automated browser does not get in.** An existing session Graeham logged into himself does, because it is his real session doing what a person would do.
+
+Keep it to a handful of checks a day. One person checking one flight is not the traffic pattern Akamai is tuned for.
+
+---
+
+## The legal line, and the more likely risk
+
+Air Canada and Aeroplan are suing seats.aero's operator under the CFAA over roughly 265,000 scraped routes. American won a $9.4M jury verdict against Skiplagged in Oct 2024, notably on **copyright** rather than CFAA, now on appeal.
+
+**But the realistic downside here is not a lawsuit.** Those cases target people operating services at scale. For one person checking their own booking, the exposure is account-side: Delta prohibits crawler and scraper access and audits accounts without notice, and United reserves audit rights with termination and mile forfeiture.
+
+The thing to protect is the MileagePlus balance, not a legal position.
+
+**This skill stays clear by design.** It drives Graeham's own logged-in session, on his own booking, at human pace, and collects nothing in bulk. Any future proposal involving automated collection across accounts, routes or users is a different activity, and a legal question before it is an engineering one.
 
 ---
 

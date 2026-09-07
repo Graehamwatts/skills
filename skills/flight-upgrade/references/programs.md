@@ -38,6 +38,8 @@ Displayed classes: `PZ`, `PN`, `RN`, `IN`, `I`, `XN`, `X`, `JN`, `YN`.
 
 **Catch:** search **paid** tickets, not award tickets, or the award classes will not display. `HIGH`
 
+**Why there is no alternative source.** United's PZ, PN and RN are airline-internal buckets that are **not published to the GDS at all**. `HIGH` That is why no paid tool can sell them and why United was able to cut ExpertFlyer off from upgrade inventory outright. Expert Mode on united.com is not merely the cheapest route to this number, it is the only one that exists.
+
 If Graeham flies United, walking him through enabling Expert Mode once is worth more than everything else in this file combined. After that, `# CHASE` can read PZ directly instead of guessing from the seat map.
 
 ---
@@ -72,6 +74,8 @@ The confusion is easy because `U` genuinely is the upgrade inventory bucket **on
 | **Alaska** | Unknown whether alaskaair.com exposes U directly to logged-in members | `UNCERTAIN` |
 
 **A seat map showing empty seats is weak evidence about upgrade space.** A cabin can look half empty while the upgrade bucket sits at zero. Treat it as a hint, never an answer.
+
+Delta says so on its own site: seat map availability does not necessarily match upgrade availability. `HIGH` When the only evidence is a seat map, say the confidence is low rather than dressing it up as a read.
 
 ---
 
