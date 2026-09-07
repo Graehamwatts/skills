@@ -87,9 +87,23 @@ If any precondition is missing, stop and say which one.
 
 Say what is on screen while working. If the page does not match expectations, stop and describe what is actually there rather than guessing at the next click. Airline sites change layouts often, and a wrong click on a booking page can cancel things.
 
+### Session rules — these are not optional
+
+Airline sites sit behind Akamai Bot Manager. The rules below are what separates a working run from a locked account.
+
+1. **Never automate the login.** Graeham logs in by hand. Account-security telemetry is densest at login, and that is where the downside is worst.
+2. **Drive the same real Chrome profile, on the same machine, from the same home IP that logged in.** Not a fresh browser, not a copied session.
+3. **Never export cookies into a script.** Akamai's `_abck` cookie carries a signed prefix describing the browser that earned it, cross-checked against the connection's TLS signature, HTTP/2 frame ordering and IP reputation. Move it to a different stack or IP and it fails. This is the single most common way people break this.
+4. **No proxies, residential or otherwise.** They move him off the IP his account normally logs in from, which is itself a security signal. He does not have an IP reputation problem at home.
+5. **A handful of checks a day, not a loop.** Behavioral and velocity scoring is the layer where low volume genuinely helps.
+
+Real Chrome at human pace on a home connection is indistinguishable from a passenger refreshing his upgrade list, because that is what it is.
+
 ### If blocked
 
-Airline sites run aggressive bot detection. If the page will not load, a form will not accept input, or a challenge appears: **stop and hand back to Graeham with the exact next click.** Do not attempt to work around a bot challenge. Being useful here means telling him precisely what to press, not defeating a security control.
+If the page will not load, a form will not accept input, or a challenge appears: **stop and hand back to Graeham with the exact next click.** Do not attempt to work around a bot challenge, and never retry harder. Being useful here means telling him precisely what to press.
+
+**The real risk is his account, not a lawsuit.** Delta locked as many as 68,000 SkyMiles accounts in a single June 2025 sweep. Recovery can take months and sometimes a passport scan. No documented case exists of an individual losing an account for automating their own session, but the lock trigger is cheap and the mileage balance is the thing worth protecting.
 
 ---
 

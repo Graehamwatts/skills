@@ -15,7 +15,7 @@ Upgrade space is not award space. They live in different booking-class buckets a
 - **Award space** is scraped off consumer sites by every tool in the market. seats.aero's own terms describe cached data retrieved and interpreted from airline sites. `HIGH`
 - **Upgrade space** is GDS-published inventory. ExpertFlyer is the only consumer-priced product holding that position, because the moat is a GDS contract rather than code. `HIGH`
 
-**The exploitable seam:** ExpertFlyer covers award and upgrade classes for only **28 airlines**, and **United and Delta are not among them**. `HIGH` United cut ExpertFlyer off from upgrade classes in Nov 2013, Delta in Sept 2014. Those two carriers instead expose some of it on their own websites.
+**The exploitable seam:** ExpertFlyer covers award and upgrade classes for only **27 to 28 airlines, down from 87**, and **United and Delta are not among them**. `HIGH` Both carriers cut off access years ago and it was never restored; a further 29 airlines including most of Star Alliance were dropped on 2023-10-06. Those carriers instead expose some of it on their own websites, or nowhere.
 
 So for the two most likely US carriers, the paid tool cannot help and the airline's own site can. That is the opposite of what intuition suggests, and it is the single most useful fact in this file.
 

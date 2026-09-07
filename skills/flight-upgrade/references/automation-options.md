@@ -72,17 +72,32 @@ It is an excellent award-search machine. It is not an upgrade tool, and adopting
 
 Measured directly, 2026-09-06. This is why `# CHASE` uses Graeham's own already-open browser instead of launching a fresh one.
 
-| Site | Behavior |
-|---|---|
-| **united.com** | **No HTTP response at all.** TLS renegotiation loop, connection dropped. Blocked below the HTTP layer, consistent with TLS fingerprint rejection. The hardest of the three |
-| **aa.com** | **403 Forbidden**, "Access Denied", Akamai error reference |
-| **delta.com** | Serves the page, then challenges. Akamai Bot Manager cookies (`_abck`, `bm_sz`) |
-| **southwest.com** | Serves, Akamai Bot Manager |
-| **alaskaair.com** | Materially lighter. No Akamai bot cookies on the paths tested |
+| Site | Edge | Bot manager | Plain request result |
+|---|---|---|---|
+| **united.com** | Akamai | Akamai Bot Manager | **TCP reset, no HTTP response at all.** Blocked below the HTTP layer. The hardest |
+| **aa.com** | Akamai | Akamai Bot Manager | **403 Access Denied** before any HTML is served |
+| **delta.com** | Akamai | Akamai Bot Manager | 200 shell, but `_abck` carries the `~-1~` "sensor not validated" flag |
+| **southwest.com** | Akamai | Akamai Bot Manager | 200, plus a `terms-of-service` header shipped in-band on every response |
+| **alaskaair.com** | Fastly + Azure Front Door | **None observed** | 200, no challenge. Analytics cookies only |
 
-All three target carriers sit behind Akamai. **A fresh automated browser does not get in.** An existing session Graeham logged into himself does, because it is his real session doing what a person would do.
+**Alaska is the outlier.** No Akamai, no bot-management cookies, no anti-bot script on the pages probed. If a flight happens to be on Alaska, this is materially easier. Their login and shopping POST endpoints were not tested, so do not assume it holds everywhere.
 
-Keep it to a handful of checks a day. One person checking one flight is not the traffic pattern Akamai is tuned for.
+### Why session reuse works and cookie export does not
+
+This is the distinction that decides whether an approach works at all.
+
+Akamai's `_abck` cookie carries a signed prefix describing the browser that earned it. The edge cross-checks it against the presenting connection's TLS fingerprint, HTTP/2 frame ordering and IP reputation. **Move the cookie to a different stack or a different IP and it fails.** The trust window also ages out, so the page's own JS has to keep the sensor alive.
+
+Practical translation: keep driving the same real Chrome profile from the same IP that logged in. Never dump cookies into a script.
+
+### Why low volume helps, but only partly
+
+Two layers, and they behave differently.
+
+- **Volume-insensitive:** TLS fingerprint, HTTP/2 frame ordering, IP reputation, headless-runtime tells. All evaluated on request one. A single badly-fingerprinted request fails exactly as hard as ten thousand, which is why one plain `curl` got a TCP reset from United.
+- **Volume-sensitive:** behavioral scoring and account-side velocity locks. Here low volume genuinely helps.
+
+So running real Chrome solves the first layer by not lying, and human pace solves the second. **Residential proxies are counterproductive:** they move him off the IP his account normally logs in from, which is itself a security signal, and solve a problem he does not have at home.
 
 ---
 
@@ -98,11 +113,23 @@ The thing to protect is the MileagePlus balance, not a legal position.
 
 ---
 
+## The per-carrier playbook
+
+| Carrier | Best path | Why |
+|---|---|---|
+| **United** | **Expert Mode on united.com.** Free | `PZ` is airline-internal and not published to the GDS, so no tool can sell it. Expert Mode puts it in his own logged-in page. Their ToS is a flat prohibition on automated access with no commercial carve-out, so read the page, do not crawl the funnel |
+| **American** | **Buy ExpertFlyer**, $6.99 to $12.99/mo | AA is covered, showing `C` and `A`. Their ToS clause is scoped to "business or commercial purposes," which a personal subscription sidesteps entirely. Cheaper and safer than automating aa.com, which 403s anything that is not a browser |
+| **Delta** | **Check by hand.** No good path exists | No ExpertFlyer coverage, Akamai on the site, and a demonstrated willingness to lock 68,000 accounts at once. Not worth the risk for a domestic upgrade |
+| **Alaska** | Easiest. No bot management observed | If the flight is on Alaska, this is the soft case |
+| **Air Canada** | Mock booking with the eUpgrade display option | Shows `R` space plus the co-pay |
+
+---
+
 ## If more automation is genuinely wanted
 
 In order of value per unit of effort:
 
-1. **Scheduled sweeps.** Zero new dependencies. Register the 72-hour and 24-hour checks as scheduled tasks so the checkpoints actually happen. This is where nearly all the real-world value sits, because the most common failure is simply forgetting to look again.
-2. **United Expert Mode parsing.** If United is the usual carrier, reading `PZ` from an already-open logged-in page turns the single most important input from an estimate into a fact. No API, no subscription, no new legal surface.
-3. **AwardWallet balance sync.** Only after the manual wallet has actually proven annoying.
-4. **Everything else.** Cost exceeds benefit for one person's flights.
+1. **Scheduled sweeps.** Zero new dependencies, no new legal surface. Register the 72-hour and 24-hour checks as scheduled tasks so the checkpoints actually happen. **This is where nearly all the real-world value sits**, because the most common failure is not a missing API, it is forgetting to look again.
+2. **United Expert Mode.** Turns the most important input from an estimate into a fact, for free.
+3. **ExpertFlyer, only if he flies American.** Do not buy it otherwise.
+4. **Everything else.** Cost, effort or risk exceeds the benefit for one person's flights.
