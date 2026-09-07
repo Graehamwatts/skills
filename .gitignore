@@ -66,3 +66,9 @@ _wt.txt
 online_content_files/
 graphify-out/
 **/graphify-out/
+
+# Added 2026-09-06 - flight-upgrade personal wallet (cards, balances, loyalty numbers, conf codes)
+# Repo is PUBLIC. These must never be committed regardless of where they land.
+wallet.md
+**/wallet.md
+**/flight-upgrade/outputs/
