@@ -192,10 +192,11 @@ read at send time, never printed). The old n8n webhook (`HKOs6tJHdNeONah7`) is *
 do not depend on it.
 
 **Recipients (hardcoded — the content/video team, NOT Adrian. Adrian = database/CRM only):**
-- **John** (blog / SEO): `graehamwattsmarketing@gmail.com`
 - **Peter** (video): `graehamwattsvideo@gmail.com`
 - **Ellie** (video): `graehamwattsvideo2@gmail.com`
 - **CC Graeham:** `graehamwatts@gmail.com`
+
+> **BLOG TRACK IS UNASSIGNED as of 2026-09-02.** John left the team; his address must never receive these emails. Still generate blog topics into the dashboard, but do not email that leg to anyone, and do not reassign it to Peter or Ellie, until Graeham names a replacement.
 
 **Cadence (Claude Code scheduled task `daily-content-focus-email`, weekdays 7:30 AM PT):**
 - **Monday — weekly plan:** generate the week's calendar with `templates/weekly-calendar-builder.py`,

@@ -17,10 +17,10 @@
 
 ### Report Recipients
 
-- **TO:** graehamwattsmarketing@gmail.com
-- **CC:** graehamwattsclientcare@gmail.com, graehamwatts@gmail.com
+- **TO:** graehamwatts@gmail.com
+- **CC:** graehamwattsclientcare@gmail.com
 
-Always include all three addresses on reports.
+**NEVER send to graehamwattsmarketing@gmail.com (John).** He left the team 2026-09-02. That address was the TO on this report until 2026-09-07.
 
 ### STEP 0: Connection Health Check (MUST RUN FIRST — EVERY TIME)
 
@@ -211,8 +211,9 @@ Save dashboard: `mnt/outputs/weekly-social-dashboard.html`
 Save raw data: `social-media-data/weekly-data-{date}.json`
 
 Draft email via Gmail MCP:
-- TO: graehamwattsmarketing@gmail.com
-- CC: graehamwattsclientcare@gmail.com, graehamwatts@gmail.com
+- TO: graehamwatts@gmail.com
+- CC: graehamwattsclientcare@gmail.com
+- NEVER graehamwattsmarketing@gmail.com (John, off the team 2026-09-02)
 - Subject: "Weekly Social Media Report — [DATE RANGE] — Health Score: [SCORE]/100"
 
 ### Visual Color Coding (Analytics)
