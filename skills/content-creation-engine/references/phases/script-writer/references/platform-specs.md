@@ -13,8 +13,8 @@ Each platform has its own format requirements, length constraints, hashtag rules
 - **Hook:** Must land in the first 30 seconds. State the question, preview the answer, give one surprising data point.
 - **Structure:** Hook → Context → Main answer (broken into 3–5 sub-sections) → Summary → CTA.
 - **Script markers:** Use `[TEXT OVERLAY]`, `[PAUSE]`, `[B-ROLL]`, `[AEO KEY STATEMENT]` inline so Graeham (or editor) knows exactly what's happening on screen.
-- **Description:** 200+ words, Q&A structure, timestamps, E-E-A-T bio paragraph, 3–5 hashtags at the end. See `aeo-geo-requirements.md`.
-- **Tags:** 10–15 SEO tags drawn from Search Console data where possible. Primary keyword + variants + location modifiers.
+- **Description:** 200+ words, Q&A structure, timestamps, E-E-A-T bio paragraph. **The first 125 characters are the search snippet** — write them as a real sentence containing the exact target keyword, not a keyword list. Hashtags at the end, **15 maximum** (over 15 and YouTube ignores all of them; the first 3 display above the title). See `aeo-geo-requirements.md`.
+- **Tags:** 5–8 tags. Primary keyword + 2–3 variants + 2 location modifiers. **Corrected 2026-09-09:** this previously said 10–15. YouTube's own help documentation states tags "play a minimal role in your video's discovery" and names title, thumbnail, and description as what matters; tags mainly catch commonly misspelled terms. Do not attempt to fill the 500-character tag budget — excessive tagging violates YouTube's spam policy. Cap tagging effort at two minutes and spend the time on the thumbnail/title pair and the first 30 seconds of the edit instead.
 - **Thumbnail note:** Include a one-sentence thumbnail concept at the bottom of the script.
 - **CTA:** Comment keyword + subscribe. End screen with 1 suggested next video.
 
@@ -41,22 +41,27 @@ Each platform has its own format requirements, length constraints, hashtag rules
 **Format requirements:**
 - **Hook:** First 3 seconds. Pattern interrupt — surprising statement, bold claim, or "wait till you see this" energy. Text overlay mandatory.
 - **Structure:** Hook → 3–5 punchy points → CTA.
-- **Caption (IMPORTANT):** Long caption (2–4 paragraphs). Instagram rewards longer captions with more reach. Don't paste the same short TikTok caption here.
+- **Caption (IMPORTANT):** The **first 125 characters carry the weight** — they must contain the primary local keyword ("East Palo Alto," "Menlo Park," a street name) written as a natural hook sentence. **Since July 2025, Google and Bing index public posts from professional accounts**, so the caption is indexed text. Instagram also reads on-screen text (OCR) and spoken audio, so the city should be said aloud in the video and burned into the first frame.
 - **Caption structure:**
-  - First line: hook that makes them tap "more"
-  - Paragraph 1: the problem/question
-  - Paragraph 2: the insight or answer
-  - Paragraph 3: the CTA with keyword
-  - Paragraph 4: a personal note or question
-- **Hashtags:** 15–20 hashtags. Mix of 4 tiers (see below).
-- **CTA:** Comment keyword-specific. Always a specific deliverable.
+  - First 125 chars: hook containing the local keyword (this is what gets indexed and what shows before "more")
+  - 2–4 short body lines: the problem, then the insight
+  - Exactly ONE CTA with one keyword
+- **Hashtags:** **3 specific hashtags, in the caption itself.** **Corrected 2026-09-09:** this previously said 15–20 across 4 tiers. Instagram **capped posts and Reels at 5 hashtags** on 2025-12-18; anything past the fifth is ignored. Mosseri's stated position is that hashtags never meaningfully drove reach and only classify topic, and reporting in March 2026 suggests a further cut toward 3. Never put hashtags in the first comment (does nothing now) and never use a hashtag-generator tool.
+- **CTA:** Comment keyword-specific. Always a specific deliverable. Use a **unique, odd keyword per post** (`EPA25`, not `INFO`) so the comment-to-DM automation doesn't fire on unrelated comments.
+- **Alt text:** one plain sentence naming the neighborhood. Accessibility feature with no confirmed IG ranking lift; it earns its 10 seconds only because Google now indexes the post. Not a keyword list.
+- **Cover frame:** build 1080x1920 but keep faces, price, and address inside the **center 1080x1080 square** — the grid crops 3:4, feed 4:5, Reels tab 9:16.
+- **Collab + location tags:** collab-tag the photographer/stager/lender on listing Reels (publishes to both grids). Location-tag the smallest real place, not "SF Bay Area."
+- **Links:** Reel captions are NOT clickable. Never write "link in caption." Instagram natively supports 5 bio links.
 
-### Instagram hashtag tiers (15–20 total)
+### Choosing the 3 hashtags
 
-- **Tier 1 (brand — always include):** #BayAreaRealEstate #SiliconValleyHomes #BayAreaRealtor #Compass #GraehamWatts
-- **Tier 2 (city — pick relevant):** #EastPaloAlto #RedwoodCity #PaloAlto #MenloPark #SanMateoCounty #SanFranciscoRealEstate
-- **Tier 3 (topic — pick relevant):** #MarketUpdate #HomeBuying #RealEstateInvesting #FirstTimeHomeBuyer #RealEstateInvestor
-- **Tier 4 (lifestyle — for TOFU):** #BayAreaLife #BayAreaFood #SiliconValley #BayAreaLiving
+Pick the three most *specific* tags that describe the actual content — specificity beats volume now that the count is capped. Draw from these pools rather than defaulting to the biggest tag available:
+
+- **City (usually pick 1):** #EastPaloAlto #RedwoodCity #PaloAlto #MenloPark #SanMateoCounty
+- **Topic (usually pick 1):** #MarketUpdate #HomeBuying #RealEstateInvesting #FirstTimeHomeBuyer
+- **Brand or lifestyle (pick 1):** #BayAreaRealEstate #BayAreaRealtor #BayAreaLife
+
+`#EastPaloAlto` beats `#realestate` every time.
 
 ---
 
@@ -89,15 +94,21 @@ Each platform has its own format requirements, length constraints, hashtag rules
 
 ## Google Business Profile (GBP) Post
 
-**Purpose:** Local SEO. Google Business posts help Graeham show up in local map pack searches.
+**Purpose:** Local conversion. **Corrected 2026-09-09:** this previously said GBP posts "help Graeham show up in local map pack searches." They are **not a confirmed ranking factor** and Google has never claimed they move the map pack — they lift click-through once someone is already viewing the profile. Treat them as conversion assets. What actually drives local ranking is proximity, primary category, and review velocity.
 
 **Format requirements:**
-- **Length:** Short. 100–300 words.
+- **Post types:** Update (default), Offer, Event.
+- **Length:** 1,500-char limit, but only ~100–150 characters show before truncation. Write 150–300 words with the point first.
 - **Structure:** Headline → one-paragraph content → CTA.
 - **CTA button:** Pick from Google's options — "Learn more" linking to the blog companion, or "Call" linking to Graeham's number.
-- **Media:** Include a thumbnail or B-roll image.
+- **Media — photo:** 720x720 minimum.
+- **Media — video:** **30 seconds MAX, 75MB, 720p+, MP4/MOV, uploaded as a file.** You **cannot link a YouTube video into a GBP post** — it must be downloaded and re-uploaded. Every GBP-bound video therefore needs its own 30-second cut; budget that as a real editing task.
+- **Approval:** 24–48 hours.
 - **Keyword focus:** Local — include the city name and one primary keyword.
-- **Frequency:** GBP rewards consistent posting. Every long-form video should have a GBP post derivative.
+- **Frequency:** 1–2 per week. Every long-form video should have a GBP post derivative.
+- **Do NOT seed Q&A:** the GBP Q&A section was deprecated (API killed 2025-11-03, public section from 2025-12-03) and replaced by Gemini "Ask Maps," which pulls from the business description, reviews, and photos. Any guidance to seed your own Q&A is stale.
+- **Do NOT geotag photos:** Google strips EXIF on upload. Independently tested across 27 locations with zero ranking impact. Ban geotagging tools.
+- **GBP links are nofollow** and pass no authority. "GMB backlink stacks" are worthless.
 
 ---
 
@@ -110,7 +121,8 @@ Each platform has its own format requirements, length constraints, hashtag rules
 - **Slide 1 (hook):** Bold statement or surprising stat. Text must be readable at thumbnail size.
 - **Slides 2–7 (content):** One key point per slide. Text + visual.
 - **Slide 8 (CTA):** Comment keyword + save reminder.
-- **Caption:** Same format as Reels caption (long, 4 paragraphs, 15–20 hashtags).
+- **Caption:** Same format as the Reels caption above — keyword in the first 125 characters, 2–4 short body lines, one CTA, **3 hashtags** (corrected 2026-09-09 from "15–20"; see the Reels section for the cap).
+- **Why carousels still earn their slot:** they hold the highest engagement rate of any IG format (~0.55% vs Reels ~0.52%, static ~0.37%). **Sends-per-reach is a public ranking signal** and a DM share carries roughly 3–5x a like, so write the final slide to be worth sending to someone.
 
 ---
 
