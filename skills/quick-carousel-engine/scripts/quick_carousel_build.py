@@ -24,6 +24,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from quick_carousel_lib import (
     configure, _sync_footer,
     quick_title_card, quick_rank_card, quick_table_card, quick_cta_card,
+    editorial_rank_list_card,
     impact_takeover_stat_card,
 )
 from quick_carousel_lib import card_number_badge, swipe_cue, save  # for the raw stat-card path
@@ -43,11 +44,31 @@ _sync_footer(CONFIG)
 W, H = 1080, 1350
 
 # ===========================================================================
-# CATEGORY 1 -- Trend/Stat Editorial Carousel
-# (reverse-engineered from viral-hook-library/references/notes/
-#  15_sfgate-rent-carousel.md -- "Rent in X is up Y%. It signals a larger
-#  trend." One stat leads, then a short data barrage, then zoom-out, then
-#  CTA. See references/template-categories.md before reusing.)
+# CATEGORY 1A -- Standalone editorial rank-list post (the direct analog of
+# the "Where People Are Moving" reference Graeham pointed to). ONE image,
+# not a multi-card carousel -- this is the fastest version of Category 1
+# and usually the right default. Light background, black headline, tinted
+# two-column ranked list. See references/template-categories.md.
+# ===========================================================================
+
+editorial_rank_list_card(
+    W, H, "01A_Standalone.jpg", 1, 1,
+    headline_text="Where People Are [Moving]",
+    accent_word="Moving",
+    sub_text="The cities people are leaving the Peninsula for -- and moving in from.",
+    left_label="Leaving",
+    left_rows=[f"[City {i}, ST]" for i in range(1, 11)],
+    right_label="Moving To",
+    right_rows=[f"[City {i}, ST]" for i in range(1, 11)],
+    source_note="[Cite the real source + month here before posting, e.g. USPS/Redfin migration data]",
+)
+
+# ===========================================================================
+# CATEGORY 1B -- Multi-card carousel version (optional -- use when the topic
+# needs more room than one standalone image: a single hero stat, a data
+# barrage, a region zoom-out, then a CTA card). Reverse-engineered from
+# viral-hook-library/references/notes/15_sfgate-rent-carousel.md -- "Rent in
+# X is up Y%. It signals a larger trend."
 # ===========================================================================
 
 quick_title_card(

@@ -9,15 +9,33 @@ markets). Pick ONE per post.
 Graeham pointed at the `kenny_fast` Instagram account (2026-09-09) as an
 example of a realtor posting a steady stream of easy, engaging carousels —
 data infographics ("Where People Are Moving") mixed with light pop-culture
-tie-ins. That account (and several others posting near-identical formats)
-is almost certainly running on a premade template subscription service.
-Graeham explicitly declined to subscribe to one (2026-09-09): "we can now
-basically build everything we need to with you." So instead of cloning that
-account's specific templates, this skill reverse-engineers the underlying
-*structure* that makes data/comparison carousels work — most of which was
-already documented independently in `viral-hook-library`'s reference notes
-from real viral examples (not `kenny_fast` specifically) — and rebuilds it
-in Graeham's own black/gold Compass brand with his own data.
+tie-ins ("If Fairytale Princesses Had Boundaries..."). Neither of those two
+specific posts carries any Kenny Truong branding — no logo, no contact
+info — which is itself the tell: these are unbranded, repostable content,
+not custom-designed-for-him templates. Confirmed via web research
+(2026-09-09): **Coffee & Contracts** (~$54/mo) is the best-documented match
+for "that company" — a real estate social-media subscription whose monthly
+library explicitly includes both branded templates AND unbranded
+"viral-ready"/meme content (their own marketing calls out "The Broke Agent
+memes that give everyone shared, viral-ready content" — see
+[coffeecontracts.com/blog](https://coffeecontracts.com/blog)). Graeham
+explicitly declined to subscribe to one (2026-09-09): "we can now basically
+build everything we need to with you." So instead of cloning that specific
+company's templates, this skill reverse-engineers the underlying
+*structure* that makes each format work and rebuilds it in Graeham's own
+brand with his own data — the data/comparison carousel structure was
+already independently documented in `viral-hook-library`'s reference notes
+from unrelated real viral examples, which turned out to match the
+`kenny_fast` reference closely once rebuilt (see Category 1's
+`editorial_rank_list_card`).
+
+**Not yet built: the illustrated pop-culture/meme category** ("Fairytale
+Princesses" style). That's a different production problem — it needs
+AI-generated illustration (character art, painterly style), not typography
+on a data card, so it doesn't fit this skill's PIL-based engine. The
+`https_mcp_higgsfield_ai_mcp` connector's `generate_image` tool can produce
+that kind of illustration on request; flag to Graeham as a possible
+Category 4 if he wants it pursued, but don't build it speculatively.
 
 ## Category 1 — Trend/Stat Editorial Carousel
 
@@ -25,7 +43,22 @@ in Graeham's own black/gold Compass brand with his own data.
 (SFGate's "Rent in SF's Alamo Square is up 42%" carousel — 1.7K likes, 181
 comments, real editorial data journalism packaged for swiping).
 
-**Structure (5-7 cards):**
+**Two ways to ship this — pick based on the topic, not by default:**
+
+**1A — Standalone editorial post (usually the right default).**
+`editorial_rank_list_card` — ONE image, not a multi-slide carousel. This is
+the direct, faithful analog of the exact reference Graeham pointed to
+("Where People Are Moving": light background, bold black headline with one
+gold accent word, a small `sub_text` line of context, and a two-column
+tinted ranked list — muted red "Leaving" vs. muted green "Moving To", 10
+rows each, numbered badges). It's the fastest thing in this whole skill:
+one function call, one data pull (a real ranked list with a real source),
+done. Use this whenever the topic genuinely IS a ranked list or two-sided
+comparison — it doesn't need a swipe to land.
+
+**1B — Multi-card carousel (when the topic needs more room).**
+Reverse-engineered from `viral-hook-library/references/notes/15_sfgate-rent-carousel.md`.
+5-7 cards:
 1. `quick_title_card` — the single most shocking stat as the hook, e.g.
    "RENT IN REDWOOD CITY IS UP 18%." Kicker line: "It signals a larger
    trend →."

@@ -71,12 +71,15 @@ enforces for scripted content, applied here to carousels.
 ## Files in this skill
 
 - `scripts/quick_carousel_lib.py` — the photo-free card engine:
-  `quick_title_card` (hook/title, no photo), `quick_rank_card` (one ranked
-  list entry — city, stat, whatever), `quick_table_card` (photo-free
-  label/value table, the workhorse for "top N" lists), `quick_cta_card`
-  (closing card with the gold button). Also re-exports
-  `impact_takeover_stat_card` from carousel-builder directly (already
-  photo-free, no need to duplicate it).
+  `editorial_rank_list_card` (light-bg, two-column tinted ranked list — the
+  direct "Where People Are Moving" analog, usually shippable as ONE
+  standalone image, not a carousel — this is the flagship card, reach for
+  it first for any ranked/comparison topic), `quick_title_card` (dark-bg
+  hook/title, no photo), `quick_rank_card` (one ranked list entry — city,
+  stat, whatever), `quick_table_card` (dark-bg label/value table, the
+  workhorse for "top N" lists), `quick_cta_card` (closing card with the
+  gold button). Also re-exports `impact_takeover_stat_card` from
+  carousel-builder directly (already photo-free, no need to duplicate it).
 - `scripts/quick_carousel_build.py` — the per-post driver, one worked example
   per category (commented out for categories 2 and 3 — uncomment the one you
   need). Copy this file per post, same convention as carousel-builder's
