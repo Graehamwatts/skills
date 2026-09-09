@@ -33,7 +33,12 @@ One page that ends the wrong-skill problem. Read this FIRST when a request is co
 │   ├─ MLS description → listing-remarks-writer
 │   ├─ Photo captions → listing-photo-captioner
 │   ├─ Full listing launch (shoot plan + posts + ads + scripts) → listing-launch-engine
+│   ├─ Social carousel/static images, ONE property, real photos → carousel-builder
 │   └─ Postcard → farming-postcard
+│
+├─ Easy/quick carousel — no listing, no full topic research (trend data,
+│  price/market comparison, "this week's listings" snapshot)?
+│   └─ quick-carousel-engine  .................... additive to content-calendar's weekly slots
 │
 └─ Performance question ("how did content DO")?
     └─ content-calendar (analytics layer — absorbed social-media-analyzer)
