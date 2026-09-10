@@ -25,7 +25,7 @@ This guide is written for a developer joining the project (Mehmood — building 
 
 ## The Project: PropCast
 
-PropCast is a unified **content + transaction operating system** for real estate agents, built first for Graeham Watts (REALTOR, Intero Real Estate, Bay Area / East Palo Alto) and structured to be productized for other agents later.
+PropCast is a unified **content + transaction operating system** for real estate agents, built first for Graeham Watts (REALTOR, Compass / The Boyenga Team, Bay Area / East Palo Alto) and structured to be productized for other agents later.
 
 PropCast covers two surfaces:
 
