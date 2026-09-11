@@ -94,7 +94,7 @@ def resolve_input(src, out):
     if not re.match(r"https?://", src):
         sys.exit(f"Not a file or a link: {src}")
     dest = out / "source.mp4"
-    box = re.match(r"https?://(?:app\.)?box\.com/s/([A-Za-z0-9]+)", src)
+    box = re.search(r"box\.com/(?:s/|file/\d+/?\?s=)([A-Za-z0-9]+)", src)
     if box:
         src = f"https://app.box.com/shared/static/{box.group(1)}.mp4"
     if "box.com/shared/static/" in src or re.search(r"\.(mp4|mov|m4v|webm)(\?|$)", src, re.I):
