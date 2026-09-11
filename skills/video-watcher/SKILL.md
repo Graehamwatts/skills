@@ -1,6 +1,6 @@
 ---
 name: video-watcher
-description: "AI video analysis skill for Graeham Watts's team. Paste any video URL and the system WATCHES the video frame-by-frame using vision AI, returning a structured blueprint — shot list, on-screen text catalog, production style fingerprint, and a Replicate-This Brief for recreating it with HeyGen + Higgsfield + Remotion. Pairs with video-transcriber for complete A+V understanding. Use this skill ANY time the user mentions: watch this video, analyze this video, video analysis, visual analysis, shot list, shot breakdown, scene breakdown, video blueprint, recreate this video, make ours like this, how is this video made, B-roll catalog, B-roll breakdown, on-screen text, text overlays in video, video production style, video editing style, cut analysis, pacing analysis, frame-by-frame analysis, reference video, competitor video. Also trigger when the user pastes a video URL and asks for a breakdown or description. Distinct from video-transcriber: transcriber extracts WORDS only; video-watcher extracts VISUAL structure."
+description: "AI video analysis skill for Graeham Watts's team. Paste any video URL and the system WATCHES the video frame-by-frame using vision AI, returning a structured blueprint — shot list, on-screen text catalog, production style fingerprint, and a Replicate-This Brief for recreating it with HeyGen + Higgsfield + Remotion. Pairs with video-transcriber for complete A+V understanding. Use this skill ANY time the user mentions: watch this video, analyze this video, video analysis, visual analysis, shot list, shot breakdown, scene breakdown, video blueprint, recreate this video, make ours like this, how is this video made, B-roll catalog, B-roll breakdown, on-screen text, text overlays in video, video production style, video editing style, cut analysis, pacing analysis, frame-by-frame analysis, reference video, competitor video, hook check, check this short, check this reel before it posts, is the hook strong enough, Instagram safe zone, caption position. Also trigger when the user pastes a video URL and asks for a breakdown or description. Distinct from video-transcriber: transcriber extracts WORDS only; video-watcher extracts VISUAL structure."
 ---
 
 # Video Watcher
@@ -30,8 +30,6 @@ In which case both skills fire in parallel and the output is interleaved.
 **Peter and Ellie** (video editors): use this when Graeham sends them a reference video saying "make ours like this." The skill returns a shot list with exact timestamps telling them what shot type to use when, where text overlays go, what B-roll to pull, what color grade to match, and what pacing to hit.
 
 **Graeham**: use this to study any reference video personally — competitor analysis, "this viral Reel got 2M views, why" investigations, evaluating whether to commission a specific style for a new campaign.
-
-**John** (Blog Track): use this to extract the visual structure of a video for blog posts that include "here's how this video is made" content.
 
 **content-creation-engine**: uses this internally during Phase 0 Mode B (visual analysis pass) when generating new content from a reference video source. The engine no longer owns this code — it calls this skill as an external dependency.
 
@@ -142,6 +140,40 @@ The vision pass uses Claude's built-in multimodal capability — same model that
 
 For videos longer than 10 minutes, the skill confirms with the user before starting the vision pass (cost ramps up with frame count).
 
+## Short-form hook check (run before any Short or Reel posts)
+
+Added 2026-09-10 after the 42-to-Zero review. The frame-by-frame breakdown tells you what's in a video. This mode tells you whether a vertical short will hold people past its first 3 seconds, and whether its text survives Instagram's on-screen UI. Run it on every finished 9:16 short before it goes to Graeham for approval. Trigger phrases: "hook check this short", "check this reel before it posts", "is the hook strong enough".
+
+**1. Run the measurements**
+
+```bash
+python scripts/hook_check.py <video file, Box share link, or video URL> --place "East Palo Alto"
+```
+
+It writes a `hook-check-<name>/` folder: `hook_report.md` (the scorecard), `words.json` (word timings), `transcript.md`, contact sheets in `sheets/`, and Instagram safe-zone overlays in `overlays/`. The first run downloads the whisper model. A 2-minute video takes a few minutes.
+
+**2. Look at the images.** Read the sheets and overlays and add what the script can't measure: whether frame 0 names the place, the first moment the place shows up in on-screen text, whether every title card sits inside the green box, which B-roll is real footage of the place and which is AI or stock, caption typos, and on-screen numbers that don't match the voiceover.
+
+**3. The targets**
+
+| Check | Target |
+|---|---|
+| Runtime | 30–60 s, 90–160 spoken words |
+| Place | named in the first spoken words (within 3 s) and on screen at frame 0 |
+| Frame 0 | hook text already on screen, no fade-in |
+| Pacing | a new shot every 1–2 s for the first 5 s, then 3–6 s holds |
+| Stories | one per short. A second story is a second short. |
+| Text position (1080×1920) | between y 270 and y 1248. Instagram covers the top 14% and the bottom 35%. Captions around y 1200. |
+| Cover | text inside the center 1080×1080, the part the profile grid keeps |
+| Ending | one CTA. YouTube: spoken CTA, end card, Related video link. Instagram: a comment-keyword card, then loop back to 0:00. |
+| B-roll | real footage of the place in the hook and the payoff. AI only for what nobody filmed. |
+
+**4. Deliver** the scorecard, each FLAG in one line with its timecode, and a re-cut edit list with these columns: new time, source in–out, audio line, picture, on-screen text. Before asking for a reshoot, look for a line already in the audio that names the place and states the payoff, move it to 0:00, and end on that same line so the short loops. Word timings can be off by about 0.1 s, so tell the editor to cut on the waveform.
+
+**5. Two masters every time.** YouTube and Instagram share the edit but not the ending, the cover or the caption. Never ship one file to both.
+
+**Long-form to short:** a short is its own 30–60 second script with a 2-second hook, never a trimmed chapter of the long-form narration. The long-form cold open is built to take 30 seconds. A short gets 2.
+
 ## Trigger boundaries — when this skill fires vs siblings
 
 | User says | Skill that fires |
@@ -152,6 +184,7 @@ For videos longer than 10 minutes, the skill confirms with the user before start
 | "what's in this video" | video-watcher (visual) — though if context suggests "what was said" then transcriber |
 | URL alone with no verb | Default: video-transcriber (faster, cheaper, more common need). User can clarify "watch instead" to flip. |
 | "generate a blog post from this video" | content-creation-engine (which internally may call video-watcher + video-transcriber) |
+| "hook check this short" / "check this reel before it posts" | video-watcher, Short-form hook check mode (`scripts/hook_check.py`) |
 
 When in doubt: ask. Don't burn $0.80 of vision API on the wrong tool.
 
@@ -184,7 +217,7 @@ The skill ALWAYS reports estimated frame count before kicking off the vision pas
 The Cowork sandbox auto-installs these on first run:
 
 ```bash
-pip install yt-dlp youtube-transcript-api openai-whisper --break-system-packages
+pip install yt-dlp youtube-transcript-api openai-whisper pillow --break-system-packages
 apt install -y ffmpeg  # usually already installed
 ```
 
