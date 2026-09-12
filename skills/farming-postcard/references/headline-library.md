@@ -201,9 +201,12 @@ With 10 archetypes in the library, Workflow B should now always be able to offer
 | 07/15/26 | Buyer-tagged | Buyers are already searching for your home | none | Call/text (SMS keyword "BUYERS") |
 | 08/01/26 | Equity | You've built more wealth than you think | none | Call/text (SMS keyword "EQUITY") |
 | 08/15/26 | Quiet Sale / No-Hassle | Sell without a single open house | none | **Landing page** (seller consultation) |
-| 09/01/26 | Neighbor Envy (fresh remix) | Someone on your block just sold — here's what they got | none | **Landing page** (home valuation, 2nd page) |
+| 09/15/26 | Neighbor Envy (fresh remix) | Someone on your block just sold — here's what they got | none | Front: real IDX sold-homes map (Switchy). Back: direct call CTA, no QR |
+| 10/01/26 | Prop 19 Tax Transfer (2nd run) | The #1 reason you haven't moved just disappeared | none | Call/text (SMS keyword "PROP19") |
 
-**MAILED 2026-08-01** (confirmed by Graeham). **08/15/26 and 09/01/26 are both PRINT-READY, not yet mailed.**
+**MAILED 2026-08-01** (confirmed by Graeham).
+
+**Date correction (2026-09-11):** this file previously logged the Neighbor Envy remix card as "09/01/26." It never actually mailed on that date — the real printed/mailed PDF in Graeham's Farming Flyers 2026 folder is dated **09/15/26** (file confirms identical front/back copy to the v4/v5 build described below). No 09/01/26 card exists. Corrected here and in `archive.json`/`history.json` on the online-content repo so future differentiation checks use the real date.
 
 **09/01/26 note:** built same-day as 08/15 per Graeham's "need the next one now" — re-ran the differentiation check against 08/15 (Quiet Sale, seller_consultation) and 08/01 (Equity, call/text) before picking. Neighbor Envy was last used 06/01/26 (outside the 3-card cooldown) and its core claim got a genuine fresh remix, not a copy of the 06/01 headline. CTA required a destination other than seller_consultation or call/text — rather than fall back to a THIRD disguised SMS card, built a **second real landing page** (`east-palo-alto/home-valuation/`) so the CTA rotation has real depth instead of just one page absorbing every card.
 
@@ -276,5 +279,10 @@ When a user picks an archetype:
 | 06/01/26 | Neighbor envy | What Did The Last 5 Homes On Your Street Really Sell For? | Free home valuation |
 | 06/15/26 | Low-Inventory Timing | Right Now, Your Home Would Have Almost No Competition | Free market report |
 | 07/01/26 | Prop 19 Tax Transfer | Your Low Property Tax Rate Can Move With You | Call/text (SMS keyword) |
+| 07/15/26 | Buyer-tagged | Your Buyer Might Already Be Looking | Call/text (SMS keyword BUYERS) |
+| 08/01/26 | Equity | You've Built More Wealth Here Than You Think | Call/text (SMS keyword EQUITY) |
+| 08/15/26 | Quiet Sale / No-Hassle | Sell Your Home Without A Single Open House | Landing page (seller consultation) |
+| 09/15/26 | Neighbor Envy (fresh remix) | Someone On Your Block Just Sold. Here's What They Got. | Front: IDX sold-homes map (Switchy). Back: call CTA |
+| 10/01/26 | Prop 19 Tax Transfer (2nd run) | The #1 Reason You Haven't Moved Just Disappeared | Call/text (SMS keyword PROP19) |
 
 **Repetition rule:** Don't reuse the same archetype within 3 cards — AND run the full 4-axis differentiation check (see "Differentiation rules").
