@@ -56,6 +56,19 @@ y 270–1248**. Cards: box top at or below y 280, bottom above y 1248, max 900 p
   place; AI only for what nobody could film.
 - **Check:** run `video-watcher/scripts/hook_check.py` on every export before delivery.
 
+**CapCut-first path: how to run the compositor (added 2026-09-13, for Peter; the ladder's
+order of operations from Mon 2026-10-05). CapCut cuts first, the compositor burns text last.**
+1. In CapCut finish the cut: picture, voice, b-roll, SFX, music. Delete the Auto captions and every text element. Export 9:16, 1080x1920, 30 fps, no text on it.
+2. One-time setup: install Python 3 and ffmpeg (both on PATH), then `pip install pillow faster-whisper` (or `openai-whisper`). Download the `skills` repo (public, github.com/Graehamwatts/skills) and keep its folder layout: the script reads Montserrat, Great Vibes and the logo from `carousel-builder/assets`.
+3. Open `education-graeham-videos/assets/compositor_template.py` in any text editor and fill the numbered SETTINGS block at the top: 1 the export path, 2 its pixel size, 3 FPS (30), 4 AUDIO (`"video"` = the sound inside the export), 5 WORD_TIMING (`"whisper"`), 6 MODE, 7 to 9 the hook card, DM card and end card text, 10 caption fixes, 11 output. Nothing under "END OF SETTINGS" is ever edited.
+4. Run `python compositor_template.py`. It checks the file (size, frame rate, sound), times every word with whisper (saved next to the export as `<name>.words.json`), and writes `<name> IG.mp4` or `<name> YT.mp4` next to the export.
+5. Run `python compositor_template.py yt` (or `ig`) for the other master, same settings. Both masters, always.
+6. Re-cut? Export again and run again. The words.json is rebuilt whenever the export is newer than it, so captions never drift after a re-cut.
+7. Whisper misheard a name? Add it to CAPTION_FIXES (`{"Pallo": "Palo"}`) and run again; the timing stays, no re-transcribe.
+8. Check both masters: `python video-watcher/scripts/hook_check.py "<name> IG.mp4" --place "East Palo Alto"`. Required: "Caption position" PASS with the band inside y 1150 to 1230, and "Text on frame 0" CHECK with a y band (that band is the hook card).
+9. Anything the compositor burns (captions, hook card, DM card, end card) moves only by its setting, never by dragging in CapCut. Caption size and position are locked; do not edit them.
+10. Stuck? The script stops with one plain sentence naming the fix (wrong export size, frame-rate mismatch, no sound, no speech heard, missing font or logo). Fix that one thing and run again.
+
 
 **Process rules:** ask for all required credentials BEFORE any production work (missing keys =
 full stop and ask); NEVER downgrade or substitute the instructed format/avatar/voice/visuals —

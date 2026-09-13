@@ -31,9 +31,12 @@ lip-sync-training footage to QC before the look even exists.
     don't rebuild an existing look just to match the new method.
 - Identity reference for Higgsfield: `assets/identity_ref.png` (bundled in this skill).
 - SFX: `assets/sfx_whoosh.wav` (airy swept-noise build), `assets/sfx_pop.wav`.
-- Compositor: `assets/compositor_template.py` — fork per video, edit the marked config
-  (alignment file, SEGS word-finds, CAPS_STACKS, ELL/ARROW, stickers, endcard subject +
-  DM keyword, input/output filenames). All locked patterns live in it.
+- Compositor: `assets/compositor_template.py` (CapCut-first since 2026-09-13) — fill the
+  numbered SETTINGS block at the top (export path + size, FPS, audio source, word timing,
+  MODE, hook card, DM card, end card text), nothing else; it burns captions + hook card +
+  DM card / end card onto a finished 9:16 export. The avatar-era compositor (4K AV pipe,
+  alpha punch-ins, SEGS, CAPS_STACKS, ELL/ARROW, stickers, grade) is archived as
+  `assets/compositor_avatar_era_2026-09-13.py` for the in-session HeyGen pipeline below.
 
 ## Step 0 — Location decision (MANDATORY, every video)
 
@@ -141,7 +144,10 @@ overlays and VIEW them before compositing.
 
 ## Step 9 — Composite
 
-Fork `assets/compositor_template.py`. Key locked patterns already inside: 4K AV pipe with
+CapCut-first (from 2026-10-05): the cut is exported from CapCut with no text and
+`assets/compositor_template.py` burns captions + cards from its SETTINGS block (SKILL.md,
+"CapCut-first path"). For an in-session HeyGen build, fork
+`assets/compositor_avatar_era_2026-09-13.py` instead. Key locked patterns inside it: 4K AV pipe with
 frozen per-interval punch-ins (LANCZOS, crop coords ×2), hook native zj=1.0, EXAGGERATED
 jump cuts 1.15 <-> 1.75, insert zoom ease, wide strip paste (0,1385) + gold stroke,
 fixed-line pop-in captions y=1420, caps stacks, whip-blur + impact settle at cuts, warm
