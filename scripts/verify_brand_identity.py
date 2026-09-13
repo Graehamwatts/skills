@@ -95,6 +95,26 @@ def main() -> int:
         if hits:
             failures.append((blocked_value, hits))
 
+        # Letter-spaced variants ("I N T E R O", "0 2 0 1 5 0 6 6") slip past a literal grep.
+        # Re-check the first token of each blocked value with one or more spaces between characters.
+        token = blocked_value.split()[0]
+        if len(token) >= 4:
+            spaced = " +".join(list(token))
+            r2 = subprocess.run(["grep", "-rlniE", spaced, "--exclude-dir=.git", "."],
+                                cwd=repo_root, capture_output=True, text=True)
+            hits2 = []
+            for line in r2.stdout.strip().splitlines():
+                if not line:
+                    continue
+                normalized = line.lstrip("./")
+                if normalized in exempt or line.endswith("identity.json"):
+                    continue
+                if any(frag in normalized.replace(chr(92), "/") for frag in exempt_fragments):
+                    continue
+                hits2.append(line)
+            if hits2:
+                failures.append((blocked_value + " (letter-spaced: " + spaced + ")", hits2))
+
     if not failures:
         print("PASS: zero blocked values found in repo.")
         print(f"      Repo is clean against the {len(blocklist)}-item blocklist.")

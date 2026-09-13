@@ -19,6 +19,22 @@ FD = "/usr/share/fonts/truetype/liberation"
 BOLD = f"{FD}/LiberationSans-Bold.ttf"
 ACCENT = (196, 162, 101); WHITE = (255,255,255)
 
+# ── platform + safe-zone config (added 2026-09-13) ──────────────────────────
+# Instagram covers the top 14% (y<270) and bottom 35% (y>1248) of a 1080x1920 Reel with its
+# own UI, so every burned-in element lives inside y 270-1248 and x 90-990.
+MODE = "ig"             # "ig": DM keyword card over the last DM_CARD["seconds"], no brand end card, file loops
+                        # "yt": brand end card (build_endcard) from ENDCARD_START, appended after the last picture
+CAPTION_TOP_Y = 1140    # 60 px caption line -> text bottom ~1210; hook_check must read the band at y 1150-1230
+HOOK_CARD = {           # on frame 1 at 100% opacity, no fade, no animation in; hard cuts out at "hold"
+    "lines": ["EAST PALO ALTO", "1992: 42 HOMICIDES", "2025: ZERO"],   # first line = the place
+    "hold": 2.5,
+}
+DM_CARD = {"keyword": "ZERO", "subline": "FOR THE FULL STORY", "seconds": 3.0}   # ig only, box y 430-640
+ENDCARD_SUBJECT = "42 TO ZERO"                                  # gold cursive line on the yt card
+ENDCARD_BUTTON = "SUBSCRIBE FOR BAY AREA REAL ESTATE HISTORY"    # yt card button
+ENDCARD_PHONE = "OR CALL 650-308-4727"                           # yt card last line
+BROKERAGE_LINE = "C O M P A S S   \u00b7   D R E  # 0 1 4 6 6 8 7 6"
+
 al = json.load(open(f"{B}/alignment_road2.json"))
 chars, t0s, t1s = al["characters"], al["character_start_times_seconds"], al["character_end_times_seconds"]
 words = []
@@ -169,7 +185,7 @@ def draw_captions(frame, t):
         f = f_cap_s
         widths = [d.textlength(tok, font=f) for tok in toks]
     total = sum(widths) + gaps*(len(toks)-1)
-    x = (W-total)//2; y = 1420
+    x = (W-total)//2; y = CAPTION_TOP_Y
     for i2, w_ in zip(ln, widths):
         tok, a, b_ = words[i2]
         tok = _DISP.get(tok, tok)
@@ -230,12 +246,12 @@ def build_endcard():
     if _ec is not None: return _ec
     ov = Image.new("RGBA",(W,H),(0,0,0,0)); d = ImageDraw.Draw(ov)
     d.rectangle([0,0,W,H], fill=(0,0,0,150))
-    lw=860; lg=_logo.resize((lw,int(_logo.height*lw/_logo.width)),Image.LANCZOS)
-    ov.paste(lg,((W-lw)//2,130),lg)
-    ya=130+lg.height+30; f_int=mont(38,500)
-    txt="I N T E R O   ·   D R E  # 0 1 4 6 6 8 7 6"
+    lw=720; lg=_logo.resize((lw,int(_logo.height*lw/_logo.width)),Image.LANCZOS)
+    ov.paste(lg,((W-lw)//2,300),lg)            # stack lives inside y 300-1240 (Instagram-safe)
+    ya=300+lg.height+25; f_int=mont(38,500)
+    txt=BROKERAGE_LINE
     d.text(((W-d.textlength(txt,font=f_int))/2,ya),txt,font=f_int,fill=(235,235,235,255))
-    sub="The New Housing Law"; fsz=130
+    sub=ENDCARD_SUBJECT; fsz=130
     while fsz>40:
         f_v=ImageFont.truetype(_vibes,fsz); tw=d.textlength(sub,font=f_v)
         if tw<=980: break
@@ -243,19 +259,71 @@ def build_endcard():
     mask=Image.new("L",(W,240),0)
     ImageDraw.Draw(mask).text(((W-tw)/2,20),sub,font=f_v,fill=255)
     grad=_gold_gradient(W,240,light=(238,205,130),dark=(178,138,66)).convert("RGBA")
-    ov.paste(grad,(0,900),mask)
-    bw,bh=760,150; bx,by=(W-bw)//2,1220
+    ov.paste(grad,(0,720),mask)
+    bw,bh=760,150; bx,by=(W-bw)//2,990
     btn=_gold_gradient(bw,bh).convert("RGBA")
     m=Image.new("L",(bw,bh),0); ImageDraw.Draw(m).rounded_rectangle([0,0,bw,bh],radius=34,fill=255)
     btn.putalpha(m); ov.paste(btn,(bx,by),btn)
-    f_btn=mont(72,800); bt='DM  "EDGE"'
+    bt=ENDCARD_BUTTON; bsz=72
     d=ImageDraw.Draw(ov)
-    d.text(((W-d.textlength(bt,font=f_btn))/2,by+34),bt,font=f_btn,fill=(10,8,4,255))
-    f_oc=mont(46,700); oc="OR CALL — NUMBER IN BIO"
-    d.text(((W-d.textlength(oc,font=f_oc))/2,by+bh+60),oc,font=f_oc,fill=(255,255,255,255))
+    while bsz>30:                                   # shrink to fit inside the button
+        f_btn=mont(bsz,800)
+        if d.textlength(bt,font=f_btn) <= bw-60: break
+        bsz-=4
+    asc,desc=f_btn.getmetrics()
+    d.text(((W-d.textlength(bt,font=f_btn))/2,by+(bh-asc-desc)//2),bt,font=f_btn,fill=(10,8,4,255))
+    f_oc=mont(46,700); oc=ENDCARD_PHONE
+    d.text(((W-d.textlength(oc,font=f_oc))/2,by+bh+40),oc,font=f_oc,fill=(255,255,255,255))   # ends ~y 1230
     _ec=ov; return ov
 
 _ema = {}
+
+# ── frame-0 hook card + Instagram DM card (added 2026-09-13) ─────────────────
+_hook = None
+def build_hook_card():
+    """Place + number stack, centered, inside y 430-1150 and x 90-990. No animation: it is simply
+    composited at full opacity from the first frame until HOOK_CARD['hold']."""
+    global _hook
+    if _hook is not None: return _hook
+    ov = Image.new("RGBA",(W,H),(0,0,0,0)); d = ImageDraw.Draw(ov)
+    d.rectangle([0,0,W,H], fill=(0,0,0,128))
+    lines = HOOK_CARD["lines"]
+    def fitf(s, size, weight=800, maxw=900):
+        while size > 28:
+            f = mont(size, weight)
+            if d.textlength(s, font=f) <= maxw: return f
+            size -= 4
+        return mont(size, weight)
+    y = 430
+    f0 = fitf(lines[0], 104); d.text(((W-d.textlength(lines[0],font=f0))/2, y), lines[0], font=f0, fill=(255,255,255,255))
+    y += 104 + 34
+    d.rectangle([(W-280)//2, y, (W+280)//2, y+6], fill=ACCENT+(255,))
+    y += 36
+    for s in lines[1:]:
+        big = any(ch.isdigit() for ch in s) or "$" in s or "%" in s
+        f = fitf(s, 150 if big else 62)
+        d.text(((W-d.textlength(s,font=f))/2, y), s, font=f, fill=(ACCENT+(255,)) if big else (255,255,255,255))
+        y += f.size + 28
+    assert y <= 1180, f"hook card runs to y {y}; shorten the lines"
+    _hook = ov; return ov
+
+_dm = None
+def build_dm_card():
+    """Instagram closing: gold DM button plus one subline, box y 430-640. The brand end card is never
+    used on an Instagram master; the file ends 0.15 s after the last spoken word and loops."""
+    global _dm
+    if _dm is not None: return _dm
+    ov = Image.new("RGBA",(W,H),(0,0,0,0)); d = ImageDraw.Draw(ov)
+    bw,bh=760,150; bx,by=(W-bw)//2,430
+    btn=_gold_gradient(bw,bh).convert("RGBA")
+    m=Image.new("L",(bw,bh),0); ImageDraw.Draw(m).rounded_rectangle([0,0,bw,bh],radius=34,fill=255)
+    btn.putalpha(m); ov.paste(btn,(bx,by),btn)
+    bt=f'DM  "{DM_CARD["keyword"]}"'; f_btn=mont(72,800); asc,desc=f_btn.getmetrics()
+    d.text(((W-d.textlength(bt,font=f_btn))/2,by+(bh-asc-desc)//2),bt,font=f_btn,fill=(10,8,4,255))
+    f_sub=mont(40,700); sub=DM_CARD["subline"]
+    d.text(((W-d.textlength(sub,font=f_sub))/2,by+bh+14),sub,font=f_sub,fill=(255,255,255,255),
+           stroke_width=3, stroke_fill=(0,0,0,255))
+    _dm = ov; return ov
 
 # gold beat stickers on b-roll
 STICKERS = {f"{B}/broll_sj/construction": "SAN JOSE, CA"}
@@ -399,15 +467,19 @@ while True:
                 arr = (arr.astype(np.uint16) + np.roll(arr, shift, axis=1) + np.roll(arr, -shift, axis=1))//3
                 frame = Image.fromarray(arr.astype(np.uint8))
             break
-    if t < ENDCARD_START:
-        draw_caps_stack(frame, t)
-        draw_captions(frame, t)
-    else:
-        ov = build_endcard()
+    if MODE == "yt" and t >= ENDCARD_START:
+        ov = build_endcard()                       # YouTube only: brand card appended after the last picture
         prog = min(1.0, (t-ENDCARD_START)/0.4)
         if prog < 1.0:
             ov = ov.copy(); alpha = ov.getchannel("A").point(lambda a2: int(a2*prog)); ov.putalpha(alpha)
         frame = Image.alpha_composite(frame.convert("RGBA"), ov).convert("RGB")
+    else:
+        draw_caps_stack(frame, t)
+        draw_captions(frame, t)
+        if t < HOOK_CARD["hold"]:                  # frame 1 onward, full opacity, no fade in, hard out
+            frame = Image.alpha_composite(frame.convert("RGBA"), build_hook_card()).convert("RGB")
+        if MODE == "ig" and t >= DUR - DM_CARD["seconds"]:
+            frame = Image.alpha_composite(frame.convert("RGBA"), build_dm_card()).convert("RGB")
     enc.stdin.write(frame.tobytes())
     n += 1
     if n % 250 == 0: print("frame", n, flush=True)

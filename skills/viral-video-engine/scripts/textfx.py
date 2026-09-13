@@ -157,7 +157,7 @@ def el_endcard():
     f1 = lib.get_font('Mont', 900, 92)
     dr.text((W//2, 700), 'GRAEHAM WATTS', font=f1, fill=(255,255,255,255), anchor='mm')
     f2 = lib.get_font('Mont', 600, 40)
-    dr.text((W//2, 790), 'R E A L T O R ®   ·   I N T E R O', font=f2, fill=(200,200,200,255), anchor='mm')
+    dr.text((W//2, 790), 'R E A L T O R ®   ·   C O M P A S S', font=f2, fill=(200,200,200,255), anchor='mm')
     fs = lib.get_script_font(120)
     lib.gradient_text(img, (W//2, 880), '1030 Bradley Way', fs, align='center', stops=lib.BRIGHT_GOLD_STOPS)
     lib.gradient_rounded_rect(img, [W//2-330, 1120, W//2+330, 1245], radius=26, stops=lib.BRIGHT_GOLD_STOPS)

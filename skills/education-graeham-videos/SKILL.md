@@ -9,17 +9,20 @@ description: "Education Graeham Videos — Reventure-style data-driven real esta
 closing shot:**
 1. TOP: white GRAEHAM WATTS logo lockup (gold roof icon + gold divider + REALTOR), from
    `carousel-builder/assets/logo/logo_white.png`, ~860px wide (1080-wide frame), centered.
-2. Under logo: `DRE #01466876` letter-spaced Montserrat, white — brokerage name ONLY, no
-   default text. Graeham left the former brokerage (first entry in identity.json brand_blocklist) as of 2026-08-09; do not print its name or
-   any other brokerage name on the end card unless Graeham explicitly names a new one to use.
-   The brand end card DOES show the DRE — on this card it supersedes any "no DRE on screen"
-   note elsewhere.
+2. Under logo: `COMPASS · DRE #01466876` letter-spaced Montserrat, white (brokerage resolved
+   to Compass 2026-08-30; the former brokerage, first entry in identity.json brand_blocklist,
+   must never appear, including letter-spaced). The brand end card DOES show the DRE — on this
+   card it supersedes any "no DRE on screen" note elsewhere.
 3. MIDDLE: the video's subject line in gold-gradient Great Vibes cursive
    (`carousel-builder/assets/fonts/GreatVibes-Regular.ttf`), auto-sized to fit ≤980px.
-4. Gold gradient rounded button (light→dark metallic), black Montserrat ExtraBold:
-   `DM "KEYWORD"` — keyword per viral-playbook CTA system, GHL comment-automation compatible.
-5. Below button, white Montserrat caps: `OR CALL — NUMBER IN BIO`.
-6. The SPOKEN CTA must match the button keyword. One CTA per video. Say it, show it, pin it.
+4. Gold gradient rounded button (light→dark metallic), black Montserrat ExtraBold. On the
+   YouTube master it reads `SUBSCRIBE FOR BAY AREA REAL ESTATE HISTORY`; a YouTube Short never
+   says "DM" or "bio" (no DMs on YouTube, links in Shorts descriptions are not clickable).
+5. Below button, white Montserrat caps: `OR CALL 650-308-4727`.
+6. The whole stack (logo top to phone line bottom) sits inside y 300–1240. This card is
+   appended as its own 4.0 s shot on YouTube masters ONLY. Instagram masters never carry it:
+   they close with the DM keyword card (below) over the last 3.0 s of picture and loop.
+7. The SPOKEN CTA must match the on-screen CTA of that master. One CTA per video.
 
 **Text treatment (reels/short-form):** Reventure concept in Watts colors — karaoke captions
 white extra-bold with black outline, active word on a General-Accent gold (#C4A265) rounded
@@ -28,10 +31,30 @@ no box); cover hook = white rounded box, dark bold text, exactly ONE emoji; evid
 RAW page screenshots with gold highlighter markings; backgrounds Watts Navy #0A1F44; panels
 black with 2px gold top stroke; ONE hero moment per video in protected Watts Gold #B8945A.
 
-**Text sizes (1080×1920 frame — locked after v7):** karaoke captions Bold 96px (shrink-to-fit
-floor 72px, max width ~1020px), outline 7px black, baseline y≈1540; active-word pill padding
-16/10px radius 18; section labels BoldItalic 64px; CTA overlay BoldItalic 88px; cover-box text
-Bold 58px. Text is BIG — it should dominate the lower third like the reference reels.
+**Text sizes (1080×1920 frame — locked after v7, caption POSITION re-locked 2026-09-13):**
+karaoke captions Bold 96px (shrink-to-fit floor 72px, max width 900px), outline 7px black,
+**bottom of the caption text at y 1210** (compositor `CAPTION_TOP_Y`; hook_check must read the
+caption band between y 1150 and y 1230); active-word pill padding 16/10px radius 18; section
+labels BoldItalic 64px; CTA overlay BoldItalic 88px; cover-box text Bold 58px. Text is BIG.
+
+**Instagram safe zone (added 2026-09-13, after four shorts shipped with captions under the
+Reels UI):** Instagram covers the top 14% (y<270) and bottom 35% (y>1248) of a Reel with its
+own username, caption, audio and buttons. Every burned-in element lives inside **x 90–990,
+y 270–1248**. Cards: box top at or below y 280, bottom above y 1248, max 900 px wide.
+- **Frame-0 hook card:** place name (white) + gold rule + the number (gold), stack inside
+  y 430–1150, on **frame 1 at 100% opacity, no fade, no animation in**, holds 2.5 s, hard cuts
+  out (compositor `HOOK_CARD`). Frame 1 is also the cover PNG: the stack already sits inside
+  the center 1080×1080 the grid keeps.
+- **DM keyword card (Instagram only):** gold button `DM "WORD"` + one subline that matches
+  what the voice promises, box y 430–640, over the last 3.0 s of picture (compositor
+  `DM_CARD`). The file ends 0.15 s after the last spoken word and loops to frame 1.
+- **Two masters per short, always:** `MODE = "ig"` (DM card, no brand card, loop) and
+  `MODE = "yt"` (brand end card appended 4.0 s, SUBSCRIBE button, no DM/bio in the voice).
+- **Opening:** three hard cuts inside 0:05.0, no shot longer than 2.0 s among those starting
+  in the first five seconds; a jump inside one clip is not a cut. After 0:05, no hold over
+  6.0 s (a 15% push-in counts as a cut there). Hook and payoff shots are real footage of the
+  place; AI only for what nobody could film.
+- **Check:** run `video-watcher/scripts/hook_check.py` on every export before delivery.
 
 
 **Process rules:** ask for all required credentials BEFORE any production work (missing keys =
