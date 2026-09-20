@@ -1,5 +1,5 @@
 # THE HOOK & TRANSITION PLAYBOOK
-## Reverse-engineered from Graeham's 29-video reference library (July 2026)
+## Reverse-engineered from Graeham's 29-video reference library (July 2026), plus #30 added 2026-09-20
 ### Companion to viral-video-engine — this governs the FIRST 3 SECONDS and every cut after it.
 
 Source: 29 reference reels/carousels watched frame-by-frame (notes in references/notes/).
@@ -62,6 +62,7 @@ RULE: roast the situation (commute, rent, landlord), never a protected class. Fl
 Promise hidden knowledge with a specific payoff.
 - "Secret Bubble Machine 📍 address" (#29) · "$2M around America" comparison (#13)
 - Stat hook: "Rent in Alamo Square is up 42%" (#15) · series scaffold "Day 1 of ranking every…" (#26)
+- Question hook over a clay-model city that descends onto the one full-color house (#30, added 2026-09-20)
 RULE: address chip on screen = save/share trigger. Second payoff at ~70% defeats early swipe.
 
 ---
@@ -125,6 +126,12 @@ or converted to object/canvas concepts. Property footage stays REAL (existing 4K
   library are selling prompts (#2, #27), not property.
 - Sell the seam with CONTINUITY: same wardrobe (white suit #24), same door, same lighting direction.
 - Exception: format-hijack narratives (#20) may be fully AI because the story is the ad.
+- FALLBACK LANE (added 2026-09-20, Graeham): when there are no photos, no listing info we can show, or
+  no permission, a story piece may be fully generated (#30): a color-isolated clay-model descent, one
+  rendered lifestyle scene, callout plates that state only verified facts, and a persistent
+  "rendering, not the actual property" disclaimer above the bottom 35% band, repeated in the caption.
+  Close the loop on screen with a number card (asking, sold, days on market). Sold homes first; an
+  active listing that is not ours needs the listing agent's OK. Never render a feature the property lacks.
 - Bake handheld drift into AI prompts ("handheld POV, slight camera shake") so generated clips read
   as camera footage next to real gimbal shots (#27's trick).
 
@@ -144,7 +151,8 @@ or converted to object/canvas concepts. Property footage stays REAL (existing 4K
 ## PART 7 — PRODUCTION TIERS (all-AI cadence — no filming Graeham, ever)
 
 - TIER A (pure AI object/canvas, same-day, no avatar): flying keys, address side-quests, screen-peel-
-  to-listing, skywriting, scissor-countdown (AI macro), fake-news open house. → every listing launch.
+  to-listing, skywriting, scissor-countdown (AI macro), fake-news open house, clay-descent sold-home
+  story (#30). → every listing launch.
 - TIER B (avatar composite + Seedance action): helicopter arrival, walk-up hooks, "agent on the roof",
   crime-scene drone (avatar lying in frame via composite), escalator clones (two composites masked).
   → 1/week.

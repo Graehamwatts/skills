@@ -1,9 +1,10 @@
 ---
 name: viral-hook-library
 description: >-
-  Graeham's reverse-engineered hook & transition system, built from his 29-video
+  Graeham's reverse-engineered hook & transition system, built from his 30-video
   reference library (flying keys, jumping ads, escalator clones, trunk skit,
-  helicopter drop, screen peel, fake-news open house, mockumentary series, and
+  helicopter drop, screen peel, fake-news open house, mockumentary series, a
+  clay-city sold-home story for when there are no photos or permission, and
   more — full frame-by-frame notes included). Use ANY time a video, reel, hook,
   transition, or listing-launch concept is being planned or edited: "make a hook",
   "viral hook", "beat sync", "music transitions", "like the flying keys video",
@@ -45,9 +46,13 @@ future videos should feel like these."
 14 phone-mouth-glam · 15 sfgate-rent-carousel · 16 scissor-countdown · 17 toy-story-andy ·
 18 logo-side-quests · 19 open-house-mockumentary · 20 fake-news-chase · 21 good-life-roast ·
 22 screen-wipe-napkin · 23 firecracker-pitch · 24 helicopter-drop · 25 meme-walkthrough ·
-26 ranking-series · 27 screen-peel · 28 fake-spoiler-gate · 29 secret-bubble-machine
+26 ranking-series · 27 screen-peel · 28 fake-spoiler-gate · 29 secret-bubble-machine ·
+30 clay-descent-overbid-story (added 2026-09-20: the no-photos, no-permission version, all
+generated visuals under a persistent disclaimer)
 
-Source URLs live in `references/manifest.json`.
+Source URLs live in `references/manifest.json`. The full list of every reference link Graeham has
+handed over, including ones that are not in this library, is kept in the PropCast vault at
+`Documents\Obsidian\Content Listing Engine\Structural Pattern Library\_Reference Links Register.md`.
 
 ## Hard rules (from the playbook — enforced every build)
 
