@@ -14,7 +14,7 @@ Produces the branded, tiered Marketing & Compensation Package page: what a selle
 **Read `skills/shared-references/identity.json` and copy values from there.** Never type brand details from memory.
 
 - Graeham Watts is the primary brand, always leads.
-- Brokerage attribution: **"Powered by The Boyenga Team at Compass Real Estate"** (spelling: Boyenga, not Boyanga).
+- Brokerage attribution: **"Powered by The Boyenga Team at Compass"** (spelling: Boyenga, not Boyanga). Not "Compass Real Estate": that is the wrong licensed name for California (identity.json, corrected 2026-08-27).
 - DRE **01466876** is the only valid DRE.
 - "Intero Real Estate" is the former brokerage and must not appear in new output.
 
@@ -42,6 +42,15 @@ When a seller pushes on rate and Graeham wants to offer a lower base without giv
 - Sale price at or above that threshold → the higher rate (e.g. 2.5%, Gold-tier rate)
 
 This is not a new permanent tier and does not replace Silver/Gold/Platinum — it is a per-client offer Graeham makes explicitly, in writing, when a client specifically negotiates on rate. State the exact dollar threshold (pulled straight from the CMA's Expected Sales Price), not a vague "if it sells well." This structure aligns Graeham's incentive with the client's outcome: he only earns the higher rate by actually beating the number he told the client to expect, which is the direct answer to "can you do better on rate without losing the service level."
+
+### 1b. Discount Model, a third variant (added 2026-09-23)
+
+Graeham asked for a relationship-rate version for clients doing several transactions with the team (first case: a multi-property 1031 client). It is the Standard page with every tier cut by a flat 0.5 point, each old rate struck through with the new one beside it: Silver 2.0% to 1.5%, Gold 2.5% to 2.0%, Platinum 3.0%-3.5% to 2.5%-3.0%. One added page, "The Relationship Discount," states the condition: it applies once a third transaction is under contract, each deal stands at its full rate until then, and no separate referral fee is paid out of relationship-rate business. Scope of service does not change.
+
+- **Unlisted, on purpose.** Published under an unguessable folder (`compensation/<random>/Compensation-Package-Discount-Model.html`), `noindex`, and never linked from Standard, Premium, a CMA or any other page. The live URL is in Graeham's memory notes, not in this repo, because the skills repo is public. Do not add it to the §2 table or to §5.
+- **Only for clients doing (or seriously considering) three or more transactions.** Not a default. No client names on the page.
+- **Build** from the current live Standard HTML: `python scripts/build_discount_model.py <Compensation-Package-Standard.html> <out.html>`. It patches exact strings and stops if the Standard markup no longer matches, so rerun it whenever Standard changes. Render the PDF like the others and save it as `Flyers & marketing\Compenstation Packages\Compensation Package - Discount Model.pdf`.
+- **Publish** with `python scripts/publish_discount_model.py <built.html> <slug-file>`. The slug file lives in Graeham's Flyers folder (`_build\discount_slug.txt`), not the repo, and keeps the URL stable across republishes. The script commits only that one file and never prints the token.
 
 ---
 
@@ -112,3 +121,4 @@ Swap in the Premium URL only if Graeham has specifically said to use the Premium
 |---|---|
 | Regenerating or editing the page | `references/template.html` |
 | Publishing to the live site | `references/publishing.md` |
+| Rebuilding or republishing the unlisted Discount Model | `scripts/build_discount_model.py`, `scripts/publish_discount_model.py` |
