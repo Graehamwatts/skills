@@ -145,3 +145,10 @@ downstream steps handled by other skills (`content-creation-engine`,
 `heygen-video`, `higgsfield-video`) — mention this handoff to the user if
 they ask for the full production package (images + videos), don't try to
 generate video from this skill.
+
+**Not the right skill if there's no specific property.** A request for a
+fast, low-effort carousel that ISN'T about one property's real photos —
+trending market data, a price/market comparison, "this week's listings"
+snapshot — belongs to `quick-carousel-engine` instead, which reuses this
+skill's `carousel_lib.py` engine but ships its own photo-free card
+templates.

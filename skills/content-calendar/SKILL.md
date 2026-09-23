@@ -47,6 +47,27 @@ Scoring changes:
 
 Topic cards t1-t5 in the dashboard map to Mon-Fri slots in order. Everything downstream (Rules 8-11, dashboard structure, validation gates, handoff to content-creation-engine) is unchanged.
 
+## Quick Carousels — additive lightweight track (added 2026-09-09)
+
+The 5 slots above are all effort-heavy (real footage, avatar renders, full
+research). They don't cover the low-effort, high-shareability carousel
+posts other agents (e.g. the `kenny_fast` account Graeham flagged) run
+constantly — trending data infographics, "$X gets you here" comparisons.
+`quick-carousel-engine` fills that gap: ~15-20 min per post, zero-to-one
+photos, no full topic-scoring pipeline required. Read that skill before
+assigning this work.
+
+**Suggested cadence:** 2x/week, on days that DON'T already have a heavy
+slot landing (e.g. Wed or Fri, alongside Market Signal / Geo Reel) — this is
+additive to the 5 slots, never a replacement for one of them. Assign to
+Peter or Ellie same as the daily slots; the `daily-content-focus-email`
+scheduled task can carry a "this week's quick carousel topic" line if
+Graeham wants it formalized into the automated cadence (not yet wired in as
+of 2026-09-09 — a manual assignment is enough to start).
+
+**Format A/B test:** see `references/testing-roadmap.md` for the standing
+test comparing carousel vs. video performance on the same topic.
+
 This skill is an orchestration layer. It doesn't collect data itself — it pulls from existing
 data sources that are already connected. Think of it as the "brain" that connects the dots
 between performance data, audience demand, and competitive intelligence to make smart content
