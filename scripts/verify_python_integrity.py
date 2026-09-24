@@ -37,6 +37,9 @@ def iter_targets(argv):
     for p in SCAN_ROOT.rglob("*.py"):
         if "__pycache__" in p.parts:
             continue
+        # skills/synced/ is the Claude app's own untracked copy (gitignored, never pushed).
+        if p.relative_to(SCAN_ROOT).parts[:1] == ("synced",):
+            continue
         yield p
 
 

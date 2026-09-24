@@ -67,7 +67,7 @@ def main() -> int:
     for blocked_value, case_insensitive in blocklist_specs:
         flags = "-rlni" if case_insensitive else "-rln"
         result = subprocess.run(
-            ["grep", flags, blocked_value, "--exclude-dir=.git", "."],
+            ["grep", flags, blocked_value, "--exclude-dir=.git", "--exclude-dir=synced", "."],
             cwd=repo_root,
             capture_output=True,
             text=True,
@@ -100,7 +100,7 @@ def main() -> int:
         token = blocked_value.split()[0]
         if len(token) >= 4:
             spaced = " +".join(list(token))
-            r2 = subprocess.run(["grep", "-rlniE", spaced, "--exclude-dir=.git", "."],
+            r2 = subprocess.run(["grep", "-rlniE", spaced, "--exclude-dir=.git", "--exclude-dir=synced", "."],
                                 cwd=repo_root, capture_output=True, text=True)
             hits2 = []
             for line in r2.stdout.strip().splitlines():
