@@ -5,7 +5,7 @@ description: "Property OS specification sync engine for Graeham Watts. Reads, wr
 
 # Property OS Sync
 
-Read, update, and version-control the Property OS module specifications stored in Graeham's Obsidian vault. Single source of truth lives in the vault on his Mac Studio + Windows (synced via Obsidian Sync). Disaster-recovery / version history lives in the `Graehamwatts/property-os` GitHub repo.
+Read, update, and version-control the Property OS module specifications stored in Graeham's Obsidian vault. Single source of truth lives in the vault on his Mac Studio + Windows (synced via Obsidian Sync). Disaster-recovery / version history lives in the `Graehamwatts/obsidian-vault-backup` GitHub repo.
 
 ## What This Skill Manages
 
@@ -40,7 +40,7 @@ Vault root on Mac: `~/Documents/Obsidian/PropIQ/` (or wherever Obsidian Sync pla
                                   │
             ┌─────────────────────┴────────────────────┐
             ▼                                          ▼
-   [ Obsidian Sync ]                          [ GitHub: Graehamwatts/property-os ]
+   [ Obsidian Sync ]                          [ GitHub: Graehamwatts/obsidian-vault-backup ]
             │                                          │
    Mac Studio ◄──► Windows                  Version history + disaster recovery
 ```
@@ -120,7 +120,7 @@ REPO=/tmp/property-os-repo
 
 # Clone fresh (or pull if already cloned this session)
 rm -rf "$REPO"
-git clone "https://${PAT}@github.com/Graehamwatts/property-os.git" "$REPO"
+git clone "https://${PAT}@github.com/Graehamwatts/obsidian-vault-backup.git" "$REPO"
 
 # Mirror vault contents into clone (rsync-style, deletes removed files too)
 # Exclude .obsidian if it ever ends up in the PropIQ subfolder
@@ -140,11 +140,11 @@ if git diff --cached --quiet; then
 else
     TS=$(date +"%d-%m-%Y-%H%M")  # day-first format
     git commit -m "Update <module-name>: <one-line summary> [$TS]"
-    git push "https://${PAT}@github.com/Graehamwatts/property-os.git" main
+    git push "https://${PAT}@github.com/Graehamwatts/obsidian-vault-backup.git" main
 fi
 
 # Scrub token from any cached remote config
-git remote set-url origin "https://github.com/Graehamwatts/property-os.git"
+git remote set-url origin "https://github.com/Graehamwatts/obsidian-vault-backup.git"
 ```
 
 **Important:** if the vault bash mount is in a stale state (rare but happens after folder renames), use the **Read tool** with the Windows path `C:\Users\Graeham Watts\Documents\Obsidian\PropIQ\<file>.md` and **Write tool** to manually mirror. Then run only the git commit/push portion.
@@ -163,7 +163,7 @@ VAULT="/sessions/*/mnt/Obsidian/PropIQ"
 REPO=/tmp/property-os-repo
 
 rm -rf "$REPO"
-git clone "https://${PAT}@github.com/Graehamwatts/property-os.git" "$REPO"
+git clone "https://${PAT}@github.com/Graehamwatts/obsidian-vault-backup.git" "$REPO"
 
 rsync -av --delete \
     --exclude='.obsidian' \
@@ -184,8 +184,8 @@ fi
 CHANGED=$(git diff --cached --name-only | head -10 | tr '\n' ', ')
 TS=$(date +"%d-%m-%Y-%H%M")
 git commit -m "Daily sync [$TS] — files: $CHANGED"
-git push "https://${PAT}@github.com/Graehamwatts/property-os.git" main
-git remote set-url origin "https://github.com/Graehamwatts/property-os.git"
+git push "https://${PAT}@github.com/Graehamwatts/obsidian-vault-backup.git" main
+git remote set-url origin "https://github.com/Graehamwatts/obsidian-vault-backup.git"
 ```
 
 ## Workflow C: ADD A NEW MODULE SPEC
@@ -207,7 +207,7 @@ User says "pull Property OS from GitHub", "restore Property OS", "I think I brok
 ```bash
 PAT=$(head -n 1 /sessions/*/mnt/outputs/.claude-credentials/github-pat.txt | tr -d '[:space:]')
 rm -rf /tmp/property-os-restore
-git clone --depth 1 "https://${PAT}@github.com/Graehamwatts/property-os.git" /tmp/property-os-restore
+git clone --depth 1 "https://${PAT}@github.com/Graehamwatts/obsidian-vault-backup.git" /tmp/property-os-restore
 ```
 
 Then ask the user before overwriting:
@@ -270,7 +270,7 @@ This makes the docs queryable in Obsidian via dataview if you ever install that 
 ## Repo Structure
 
 ```
-Graehamwatts/property-os/
+Graehamwatts/obsidian-vault-backup/
 ├── README.md
 ├── 00 - PropIQ Master/
 │   └── PropIQ-Master-Brain.md

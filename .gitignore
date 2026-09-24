@@ -72,3 +72,6 @@ graphify-out/
 wallet.md
 **/wallet.md
 **/flight-upgrade/outputs/
+
+# The Claude app keeps a synced copy of skills here (it reaches this repo through the ~/.claude/skills junction). Never commit it.
+skills/synced/
