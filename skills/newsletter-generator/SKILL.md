@@ -240,7 +240,7 @@ Write the output HTML into the Online Content clone at `C:/Users/Graeham Watts/D
 ```bash
 cd "C:/Users/Graeham Watts/Documents/Skills LLMS/Claude/Online Content"
 git add "newsletters/YYYY-MM-DD-newsletter-slug.html"
-git -c user.name="Graeham Watts" -c user.email="graehamwatts@gmail.com" commit -m "Newsletter: [date] [slug]"
+git -c user.name="Graeham Watts" -c user.email="228428257+Graehamwatts@users.noreply.github.com" commit -m "Newsletter: [date] [slug]"
 PAT=$(tr -d '[:space:]' < github-token.txt)
 git -c http.version=HTTP/1.1 push "https://${PAT}@github.com/Graehamwatts/online-content.git" HEAD:main
 ```

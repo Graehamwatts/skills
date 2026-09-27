@@ -112,7 +112,7 @@ We DO NOT init git inside the vault. The vault is Obsidian's working folder — 
 
 ```bash
 PAT=$(head -n 1 /sessions/*/mnt/outputs/.claude-credentials/github-pat.txt | tr -d '[:space:]')
-git config --global user.email "graehamwatts@gmail.com"
+git config --global user.email "228428257+Graehamwatts@users.noreply.github.com"  # GitHub blocks pushes that expose the private Gmail (email privacy on since 2026-09-27)
 git config --global user.name "Graehamwatts"
 
 VAULT="/sessions/*/mnt/Obsidian/PropIQ"
