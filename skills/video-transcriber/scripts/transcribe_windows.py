@@ -23,8 +23,8 @@ import tempfile
 import time
 from datetime import timedelta
 
-# Graeham's ffmpeg location. Adjust if it moves.
-FFMPEG_DIR = r"C:\Users\Graeham Watts\Documents\Skills LLMS\Claude\ffmpegvideoprocessingengine\bin"
+# Shared ffmpeg for all AI tools on this PC (also on PATH).
+FFMPEG_DIR = os.path.expanduser(r"~\Documents\Skills LLMS\FFmpeg\bin")
 
 
 def ensure_ffmpeg_on_path():

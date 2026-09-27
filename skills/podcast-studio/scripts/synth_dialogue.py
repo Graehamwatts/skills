@@ -28,9 +28,9 @@ ALBUM_DIR  = os.path.join(MUSIC_ROOT, ALBUM)
 AUTO_ADD   = os.path.join(MUSIC_ROOT, r"iTunes\iTunes Media\Automatically Add to iTunes")
 KEY = open(r"C:\Users\Graeham Watts\Documents\Skills LLMS\Claude\.heygen-credentials\elevenlabs-key.txt").read().strip()
 
-# ffmpeg/ffprobe come from PATH; fall back to the user's own copy in ~\bin.
-FFMPEG  = shutil.which("ffmpeg")  or os.path.expanduser(r"~\bin\ffmpeg.exe")
-FFPROBE = shutil.which("ffprobe") or os.path.expanduser(r"~\bin\ffprobe.exe")
+# ffmpeg/ffprobe come from PATH; fall back to the shared copy in Documents\Skills LLMS\FFmpeg.
+FFMPEG  = shutil.which("ffmpeg")  or os.path.expanduser(r"~\Documents\Skills LLMS\FFmpeg\bin\ffmpeg.exe")
+FFPROBE = shutil.which("ffprobe") or os.path.expanduser(r"~\Documents\Skills LLMS\FFmpeg\bin\ffprobe.exe")
 
 SAFE_ALBUM = re.sub(r'[<>:"/\\|?*]', "", ALBUM)
 SCRATCH = os.path.join(os.environ.get("TEMP", "."), "podcast-studio", SAFE_ALBUM, f"track{TRACK:02d}")

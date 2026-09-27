@@ -184,7 +184,7 @@ Common follow-ons the user may request after a transcript:
 pip install faster-whisper
 ```
 
-ffmpeg must be on PATH. Graeham's lives at `C:\Users\Graeham Watts\Documents\Skills LLMS\Claude\ffmpegvideoprocessingengine\bin\` — the script adds this to PATH automatically.
+ffmpeg must be on PATH. The shared copy lives at `~\Documents\Skills LLMS\FFmpeg\bin\`, and the script adds it to PATH automatically.
 
 **No API keys required.** Everything runs locally and free.
 
