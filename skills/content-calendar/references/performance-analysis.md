@@ -251,7 +251,7 @@ Every weekly report MUST include a data-driven video content strategy section.
 **Three-tier research approach:**
 
 - **Tier 1: Automated Apify scraping** — structured data from YouTube + Instagram scrapers
-- **Tier 2: YouTube transcript extraction via Supadata** — `GET https://api.supadata.ai/v1/youtube/transcript?url={video_url}&text=true` with `x-api-key: sd_10e83042186ce9c2feb277088382fdb2` (free tier: 200/month, budget ~10-15/week on competitors)
+- **Tier 2: YouTube transcript extraction via Supadata** — `GET https://api.supadata.ai/v1/youtube/transcript?url={video_url}&text=true` with header `x-api-key` set to the Supadata key from the `SUPADATA_API_KEY` environment variable (never paste the key into this repo, it is public) (free tier: 200/month, budget ~10-15/week on competitors)
 - **Tier 3: Claude in Chrome** — fallback + verification, visit channels directly
 
 **Competitor Instagram tracking:** @dannygould_realestate, @transformrealestate, @trunglam.realtor
