@@ -91,7 +91,7 @@ Chart selection is **situational by design**. The old skill demanded a fixed 15-
 4. Pull the three baseline trend charts from MLS Stats (§3).
 5. Compute the pricing-behavior statistics in Python, never by eye.
 6. Derive the **expected sales price** off the condition-matched comps, size-adjusted with a within-tier rate. Then set the three list-price strategies from it.
-7. Build the **Interactive HTML report** (master format, self-contained, Chart.js via CDN).
+7. Build the **Interactive HTML report** (master format, self-contained). Draw rebuilt charts as static inline SVG with `scripts/svgchart.py` so they render in file previews, email and PDF; Chart.js canvases come up blank anywhere scripts are off.
 8. Run the Pre-Flight Checklist (§2).
 9. Publish per `references/publishing.md` and verify the live URL loads.
 10. Email-safe HTML or PDF only if requested (see `references/report-build.md`).
@@ -123,7 +123,7 @@ Section order matters: the client reads the story first, the comps second, the d
 1. **Cover / Hero** — black header, "GRAEHAM WATTS" in gold caps, "R E A L T O R," report type, address, date, contact line.
 2. **Subject Property Summary** — branded table plus key-stat callout boxes. Include prior sale price and date here (checklist #3).
 3. **The Market Story** — narrative only, no stats boxes or charts. Where the market is, what is selling and for how much, where this property fits, honest expectations.
-4. **Comparable Sales** — full comp table (address, sold price, original list, % over/under, sqft, $/sqft, bed/bath, DOM, condition, city). Tier into Most Similar / Somewhat Similar / Use With Caution. Subject-vs-most-similar comparison table. Separate tables per city if the cohort spans cities. No radar charts.
+4. **Comparable Sales** — the **tiered comparison table** (required format, approved by Graeham 2026-09-27; full spec, CSS and subject-row example in `references/report-build.md` Part 2). A Most Similar table (same school or boundary, the condition tiers that bracket the subject, a Remodel/Updated/Dated/Fixer badge on every row, distance, $/sqft, % of original list, DOM, one-line notes, and the subject inserted as a highlighted row at its list price), then a Reference Only table with a school or boundary column, then Active & Pending in the same style. Separate tables per city if the cohort spans cities. No radar charts.
 5. **Market Data & Trends** — the baseline trend charts, stats boxes, price distribution, list-to-sale visual, key insight paragraph.
 6. **Pricing Strategy Analysis** — lead with market pricing behavior and the DOM correlation (`references/pricing-behavior-analysis.md`), then the three strategies. **Past-Client mode replaces this section entirely** with "What Your Home Is Worth Today" — see `references/past_client_mode.md`.
 7. **Recommended Price / Offer** — lead with an **Expected Sales Price** callout, then three LIST-price strategy boxes. See "Expected sales price vs list price" in `references/pricing-behavior-analysis.md`. In Past-Client mode these are relabeled "Likely range / Most-likely value today / Top of range in strong condition."

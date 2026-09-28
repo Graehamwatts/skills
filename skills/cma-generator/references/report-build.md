@@ -68,7 +68,8 @@ Never let a partial-month artifact set the direction of the market read. This is
 
 ## Chart implementation notes
 
-- **Interactive HTML (master format):** Chart.js via CDN.
+- **Rebuilt charts are static inline SVG (added 2026-09-27).** When a trend chart is rebuilt from MLS Stats Data-tab values, draw it with `scripts/svgchart.py` (`line_chart(values, labels, color, tick_fmt, label_fmt, ymin, ymax, step)`), not Chart.js. Canvas charts need JavaScript: they came up blank when Graeham opened a buyer CMA in the Claude app's file preview, which shows a static snapshot with scripts off, and they fail the same way in most email clients. SVG renders everywhere and prints sharply. Put a gap (`None`) in any month built on one or two sales and say so in the caption. Wrap each chart in `<div class="cw">` with `overflow-x:auto` and give the svg `min-width:600px` on screen, so phones scroll the chart instead of shrinking its text.
+- **Interactive HTML (master format):** static SVG for rebuilt charts as above. Chart.js via CDN is still acceptable for the interactive pricing-behavior visuals on a published page, but check the file once with scripts off; if the report will be emailed or opened as a file, render those as SVG or PNG too.
 
   **Listing mode, the canonical set** (matches `dashboard_template.html`): the three baseline trends are MLS Stats **images**, not canvases. The four Chart.js canvases all live in the pricing-behavior section: `overUnderChart`, `lsrHistChart`, `scatterChart`, `outcomesChart`.
 
@@ -82,6 +83,40 @@ Never let a partial-month artifact set the direction of the market read. This is
 ---
 
 # PART 2 — REQUIRED CONTENT SECTIONS
+
+## The tiered comparison table — required format (approved by Graeham 2026-09-27)
+
+First built on a Berryessa buyer CMA; Graeham's verdict: "I absolutely love what you did here with the comparison table with the tiers." Use this shape for the Comparable Sales section in every mode.
+
+**Split the comps by relevance into two tables, not one long list:**
+
+1. **Most Similar.** Sold comps that share the subject's school assignment (or the neighborhood or city boundary, where schools do not split value) AND sit in the condition tiers that bracket the subject: its own tier plus the next one up, usually Updated and Remodel for a refreshed home. Sort by sold price, high to low. **Insert the subject as its own highlighted row at its list price** (the recommended price in listing mode), so the reader sees exactly where the home lands among its comps. This row replaces the old separate subject-vs-comps table.
+2. **Reference Only.** Everything else in the radius and window: lower condition tiers inside the same boundary, and homes across the school or city line. Add a High School (or Boundary) column. One plain intro line: these set the floor and show what the boundary is worth; they are not the target.
+
+Then an **Active & Pending** table in the same style, with a "cut" flag where the list price sits under the original list and a one-line note per listing.
+
+**Most Similar columns:** Tier badge | Address | Mi (straight-line distance from the subject, two decimals) | Sold | $/sqft | Vs. Orig List (sold ÷ original list) | DOM | Bd/Ba | SqFt | Notes. Half baths show as .5, read from the MLS "Baths (F/P)" field, so 2 full + 1 half prints as 2.5, not 3. Notes is one line from the remarks saying what was actually done ("Remodeled kitchen and baths, new roof May 2026"; "Bought as-is in March, remodeled, resold in August"). Leave the MLS # out of the table to save width; it lives in the working data.
+
+**Tier badges** come from the condition tiering in `pricing-behavior-analysis.md`: Remodel (green), Updated (blue), Dated (amber), Fixer (red), plus the amber badge relabeled for a different product type ("ADU product"). CSS:
+
+```css
+.tierlbl{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:2px 6px;border-radius:4px;white-space:nowrap}
+.tR{background:#dff0d8;color:#2e6b34}.tU{background:#dce8f7;color:#2b567f}.tD{background:#f3e8d0;color:#8a6a1e}.tF{background:#f3d8d3;color:#a13a2c}
+tbody tr.subj{background:#e9e2c9;font-weight:700}
+.tw{overflow-x:auto;-webkit-overflow-scrolling:touch} /* wrap every wide table so phones scroll the table, not the page */
+```
+
+Subject row:
+
+```html
+<tr class="subj"><td><span class="tierlbl tU">Updated</span></td><td>123 Example Ct <em>(this home, at list)</em></td><td>0.00</td><td>$1,850,000</td><td>$1,028</td><td>list</td><td>3</td><td>4/2</td><td>1,800</td><td>Single-story. Updated baths, floors, paint</td></tr>
+```
+
+**Under each table**, one small italic note: the source and filters ("MLSListings Matrix, Agent Full records, single family within 1.0 mile, 1,450 to 2,250 sq ft, closed [dates]"), where the school data came from, and each tier's median price and $/sqft with its n. Under the Reference table, an exclusions line naming any sale left out and why (for example, it closed inside the window but went into contract a year earlier).
+
+**Pair it with the narrative.** Lead the market story with the two nearest same-boundary sales in the subject's tier (address, distance, size, price, $/sqft), explain why the bigger numbers nearby are different houses (size, flips, location), give the dollar gap across the school or city line, then the pricing-behavior numbers from the Most Similar table (median % of original list, median DOM, and what happened to the homes that listed above their comps).
+
+**Gathering it fast.** Matrix Residential Search has a radius field: put the address in `Fm9_Ctrl72_TB`, call `MapSearchJs.geocode()`, click the offered `li[lat][lon]`, pick the radius in `Fm9_Ctrl72_Radius`. Switch to Agent Full and loop the records with a sessionStorage extractor. School names only appear after clicking each record's GreatSchools rollout (`span[onclick*=rolloutTriggerClick]` containing "School Information"). Get distances from the US Census batch geocoder. Tier every comp from its remarks before building the tables.
 
 ## Interest rate environment — required, multi-source
 
@@ -196,7 +231,7 @@ Do a distinct second pass. Do not re-read what you wrote; go back to the source 
 - Trailing month checked for partial-aggregation artifact.
 - Chart data matches the tables (12 comps in the table = 12 points in the chart).
 - Captions carry the MLS Stats source line.
-- No broken or empty canvases.
+- No broken or empty canvases. Open the HTML once with scripts off (the Claude app's file preview does this) or check the rendered PDF: every chart must still show.
 
 **5. Narrative consistency**
 - Every claim in the market story is supported by data appearing later.
@@ -220,3 +255,5 @@ Fix everything found. If a range changed or a comp was removed, tell the user so
 **Email-safe HTML (on request).** All inline styles, no external CSS/JS/CDN, table-based layout, charts as base64 PNGs, 600px max width, system fonts. Condensed: property summary, top 8 comps, pricing strategy, recommendation.
 
 **PDF (on request).** Print-optimized HTML converted via WeasyPrint (preferred) or xhtml2pdf; ReportLab + matplotlib as fallback. Static chart images, `@media print` page breaks, interactive elements removed, premium styling kept. See `branding.md` for PDF-specific font and color mapping.
+
+**Proven PDF path on Graeham's PC (2026-09):** headless Edge, run from a PowerShell script (from bash it fails silently): `msedge.exe --headless=new --disable-gpu --no-sandbox --user-data-dir=<scratch profile> --virtual-time-budget=20000 --run-all-compositor-stages-before-draw --no-pdf-header-footer --window-size=1200,2000 --print-to-pdf=<out.pdf> <file:///...report.html>`. Print CSS that keeps the 1020px layout at about 9 to 11 letter pages: `@page{size:letter;margin:0.45in}`, `html{zoom:.74}`, `*{print-color-adjust:exact}`, `.nav{display:none}`, and `break-inside:avoid` on cards, charts, table rows and the footer. Without the zoom, Chrome prints at 100% once no fixed-width canvas forces shrink-to-fit, and a 10-page report became 15 with cramped table columns.
