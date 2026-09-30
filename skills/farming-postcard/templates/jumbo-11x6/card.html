@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Graeham Watts Farming Postcard - October 1, 2026 (holiday timeline, no photo)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:ital,wght@0,500;0,700;0,800;0,900;1,500;1,600;1,700&display=swap" rel="stylesheet">
+<style>
+  @page { size: 11.472in 6.472in; margin: 0; }
+  :root { --gold: #C2A14E; --ink: #111418; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { font-family: 'Montserrat', sans-serif; color: var(--ink); }
+
+  /* page = trim 11x6 + 0.118in bleed + 0.118in mark band on every side */
+  .page { position: relative; width: 11.472in; height: 6.472in; overflow: hidden; page-break-after: always; background: #fff; }
+  .page:last-child { page-break-after: auto; }
+  .art { position: absolute; left: 0.118in; top: 0.118in; right: 0.118in; bottom: 0.118in; background: #fff; overflow: hidden; }
+  .art::before { content: ''; position: absolute; inset: 0; background: url('pattern.jpg') center / cover no-repeat; opacity: 0.38; }
+  .bar-l { position: absolute; left: 0; top: 0; bottom: 0; width: 0.218in; background: var(--gold); z-index: 1; }
+  .bar-b { position: absolute; left: 0; right: 0; bottom: 0; height: 0.218in; background: var(--gold); z-index: 1; }
+  .trim { position: absolute; left: 0.236in; top: 0.236in; width: 1056px; height: 576px; z-index: 3; }
+
+  .mark { position: absolute; background: #000; z-index: 9; }
+  .mh { height: 0.5px; width: 0.118in; }
+  .mv { width: 0.5px; height: 0.118in; }
+
+  /* ---------- FRONT ---------- */
+  .f-head { position: absolute; left: 50px; top: 26px; width: 980px; }
+  .f-l1 { font-weight: 900; font-size: 80px; line-height: 0.98; letter-spacing: -1.5px; text-transform: uppercase; white-space: nowrap; }
+  .f-l2 { font-weight: 900; font-size: 98px; line-height: 0.98; letter-spacing: -2px; text-transform: uppercase; white-space: nowrap; }
+  .f-l2 .g { color: var(--gold); }
+  .f-sub { position: absolute; left: 52px; top: 222px; font-weight: 800; font-size: 29px; line-height: 1.2; }
+  .f-sub .flip { color: var(--gold); }
+  .f-cta { position: absolute; left: 52px; top: 288px; }
+  .gold-box { display: inline-block; background: var(--gold); color: #fff; font-family: 'Anton', sans-serif; font-size: 35px; letter-spacing: 1px; padding: 4px 16px 3px; text-transform: uppercase; line-height: 1.1; }
+  .f-phone { font-family: 'Anton', sans-serif; font-size: 88px; line-height: 1; letter-spacing: 0.5px; margin-top: 8px; margin-left: -3px; }
+
+  .f-lock { position: absolute; right: 34px; bottom: 30px; width: 470px; }
+  .f-lock .r1 { display: flex; align-items: center; gap: 20px; }
+  .f-lock .gw { height: 76px; }
+  .f-lock .bp { height: 52px; }
+  .f-lock .t { margin-top: 8px; font-size: 13px; line-height: 1.4; }
+  .f-lock .t b { font-weight: 800; font-size: 15px; }
+  .f-lock .team { font-size: 11px; line-height: 1.35; margin-top: 3px; }
+
+  /* ---------- BACK ---------- */
+  .b-col { position: absolute; left: 52px; top: 30px; width: 500px; }
+  .b-head { font-family: 'Anton', sans-serif; font-size: 50px; line-height: 1.02; text-transform: uppercase; letter-spacing: -0.2px; }
+  .b-head .box { background: var(--gold); color: #fff; padding: 0 10px; display: inline-block; margin-top: 4px; }
+  .b-body { font-style: italic; font-weight: 500; font-size: 16.5px; line-height: 1.45; margin-top: 14px; color: #222; }
+  .b-body b { font-style: normal; font-weight: 800; }
+  .steps { display: flex; margin-top: 14px; width: 500px; }
+  .step { flex: 1; height: 38px; background: var(--ink); color: #fff; font-family: 'Anton', sans-serif; font-size: 14px; letter-spacing: 0.6px; display: flex; align-items: center; justify-content: center; text-transform: uppercase;
+          clip-path: polygon(0 0, calc(100% - 13px) 0, 100% 50%, calc(100% - 13px) 100%, 0 100%, 13px 50%); margin-left: -8px; padding-left: 8px; }
+  .step:first-child { margin-left: 0; padding-left: 0; clip-path: polygon(0 0, calc(100% - 13px) 0, 100% 50%, calc(100% - 13px) 100%, 0 100%); }
+  .step.gold { background: var(--gold); }
+  .step.end { background: #fff; color: var(--ink); box-shadow: inset 0 0 0 0; border: 0; outline: 0; background-image: linear-gradient(var(--gold), var(--gold)); color: #fff; }
+  .b-cta { margin-top: 15px; font-family: 'Anton', sans-serif; font-size: 27px; letter-spacing: 0.5px; color: var(--gold); text-transform: uppercase; line-height: 1.1; }
+  .b-phone { font-family: 'Anton', sans-serif; font-size: 58px; line-height: 1; margin-top: 2px; margin-left: -2px; }
+  .b-note { font-style: italic; font-weight: 600; font-size: 12.5px; margin-top: 3px; color: #333; }
+  .b-qr { position: absolute; left: 410px; top: 344px; width: 84px; }
+  .b-qr img { display: block; width: 84px; height: 84px; background: #fff; }
+  .b-qr .pill { background: #111; color: #fff; text-align: center; font-family: 'Anton', sans-serif; font-size: 15px; letter-spacing: 1.2px; padding: 3px 0 2px; }
+
+  .b-lock { position: absolute; left: 52px; bottom: 28px; right: 66px; height: 88px; }
+  .b-lock .gw { position: absolute; left: 0; bottom: 0; height: 84px; }
+  .b-lock .mid { position: absolute; left: 204px; bottom: 0; }
+  .b-lock .bp { display: block; height: 52px; }
+  .b-lock .team { font-size: 11.5px; line-height: 1.3; margin-top: 4px; }
+  .b-lock .contact { position: absolute; left: 500px; bottom: 0; display: flex; gap: 26px; font-size: 14.5px; line-height: 1.4; }
+  .b-lock .contact .role { font-weight: 800; font-size: 19px; }
+  .b-lock .contact .ph { font-weight: 800; font-size: 22px; }
+
+  .disc { position: absolute; right: 12px; top: 0; height: 556px; writing-mode: vertical-rl; transform: rotate(180deg); text-align: center; font-size: 9.2px; font-weight: 700; white-space: nowrap; color: #111; z-index: 8; }
+</style>
+</head>
+<body>
+
+<!-- ============ FRONT ============ -->
+<div class="page">
+  <div class="art"><div class="bar-l"></div><div class="bar-b"></div></div>
+  <div class="trim">
+    <div class="f-head">
+      <div class="f-l1">The holidays are</div>
+      <div class="f-l2"><span class="g">12 weeks</span> away.</div>
+    </div>
+    <div class="f-sub">Selling a home takes most of them. <span class="flip">FLIP OVER</span> for your timeline.</div>
+    <div class="f-cta">
+      <div class="gold-box">Call or text me this week</div>
+      <div class="f-phone">650-308-4727</div>
+    </div>
+    <div class="f-lock">
+      <div class="r1"><img class="gw" src="gw_logo.png"><img class="bp" src="bp_compass.png"></div>
+      <div class="t"><b>REALTOR&reg; &nbsp;DRE #01466876</b><br>graehamwatts@gmail.com &nbsp;|&nbsp; www.graehamwatts.com</div>
+      <div class="team">Eric Boyenga DRE #01254725 &nbsp;|&nbsp; Janelle Boyenga DRE #01254724</div>
+    </div>
+  </div>
+  <div class="mark mh" style="left:0;top:0.236in"></div><div class="mark mv" style="left:0.236in;top:0"></div>
+  <div class="mark mh" style="right:0;top:0.236in"></div><div class="mark mv" style="right:0.236in;top:0"></div>
+  <div class="mark mh" style="left:0;bottom:0.236in"></div><div class="mark mv" style="left:0.236in;bottom:0"></div>
+  <div class="mark mh" style="right:0;bottom:0.236in"></div><div class="mark mv" style="right:0.236in;bottom:0"></div>
+</div>
+
+<!-- ============ BACK ============ -->
+<div class="page">
+  <div class="art"><div class="bar-l"></div><div class="bar-b"></div></div>
+  <div class="trim">
+    <div class="b-col">
+      <div class="b-head">Want to close before<br>the holidays?<br><span class="box">Start this month.</span></div>
+      <div class="b-body">Prep, photos, showings, offers, escrow: it adds up fast. List by mid-October and there's room to close before the holidays. Wait until November and there's no slack.</div>
+      <div class="steps">
+        <div class="step gold">Call me</div><div class="step">Prep</div><div class="step">List</div><div class="step">Offers</div><div class="step">Escrow</div><div class="step end">Holidays</div>
+      </div>
+      <div class="b-cta">Call or text me today!</div>
+      <div class="b-phone">650-308-4727</div>
+      <div class="b-note">Free timeline, no pressure. Text &ldquo;TIMELINE&rdquo; or scan.</div>
+    </div>
+    <div class="b-qr"><img src="qr_timeline.png"><div class="pill">SCAN ME</div></div>
+
+    <div class="b-lock">
+      <img class="gw" src="gw_logo.png">
+      <div class="mid">
+        <img class="bp" src="bp_compass.png">
+        <div class="team">Eric Boyenga DRE #01254725<br>Janelle Boyenga DRE #01254724</div>
+      </div>
+      <div class="contact">
+        <div><div class="role">REALTOR&reg;</div><div>DRE #01466876</div></div>
+        <div><div class="ph">650-308-4727</div><div>graehamwatts@gmail.com</div><div>www.graehamwatts.com</div></div>
+      </div>
+    </div>
+    <div class="disc">If your home is listed with another broker, please disregard this postcard. Homes not necessarily sold by this broker.</div>
+  </div>
+  <div class="mark mh" style="left:0;top:0.236in"></div><div class="mark mv" style="left:0.236in;top:0"></div>
+  <div class="mark mh" style="right:0;top:0.236in"></div><div class="mark mv" style="right:0.236in;top:0"></div>
+  <div class="mark mh" style="left:0;bottom:0.236in"></div><div class="mark mv" style="left:0.236in;bottom:0"></div>
+  <div class="mark mh" style="right:0;bottom:0.236in"></div><div class="mark mv" style="right:0.236in;bottom:0"></div>
+</div>
+
+</body>
+</html>

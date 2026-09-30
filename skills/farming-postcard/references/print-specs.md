@@ -1,5 +1,13 @@
 # Print Specs — Universal Mail Works Defaults
 
+## ⚠️ CORRECTION 2026-09-30: real mailed size is 11 x 6 in, NOT 6 x 4
+
+Checked every PDF in `Documents\Farming List & mailers & letters\Farming Flyers to mail\Farming Flyers 2026\`. The cards that actually mailed are jumbo: trim 11.0 x 6.0 in, exported from Canva as 11.472 x 6.472 in (0.118 in / 3 mm bleed plus a 0.118 in crop-mark band each side; TrimBox inset 0.236 in, BleedBox inset 0.118 in). Only the first 2025 cards were 8.5 x 5.5 or 11.3 x 6.3. The 6 x 4 layouts below (and every HTML preview built from `postcard-template.html`) are design mocks, not printable files. Do not send a 6.25 x 4.25 PDF to the printer.
+
+For a printable card use `templates/jumbo-11x6/` (render.py writes the 11.472 x 6.472 page with crop marks and sets the Trim/Bleed boxes). Back-side rule from the real cards: keep the right half of the back clear for the address block; the contact lockup can sit in the bottom band.
+
+Original notes (6 x 4 mock era, kept for reference):
+
 ⚠️ **VERIFY BEFORE FIRST PRINT RUN** — UMW's exact spec sheet isn't locked in this skill. These are industry-standard 6×4 postcard defaults that should work for most vendors but should be confirmed with UMW before first print.
 
 ## Default specs

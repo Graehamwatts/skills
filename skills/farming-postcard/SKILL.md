@@ -73,7 +73,9 @@ Structure (always):
 
 ### Step 4 — Render
 
-Substitute slots in `templates/postcard-template.html`:
+**Updated 2026-09-30: build the real size.** Mailed cards are 11 x 6 in jumbo, not 6 x 4. Use `templates/jumbo-11x6/` (README inside): copy it to the session scratchpad, edit `card.html`, run `render.py`, and put ONLY the final PDF in `Documents\Farming List & mailers & letters\Farming Flyers to mail\Farming Flyers 2026\` as `Farming Postcard EPA MM DD YY.pdf`. Do not write drafts to Downloads. Photo-free cards are approved (design-tokens.md). The 6 x 4 steps below (and the `C:\Users\Admin\Downloads` paths) are the old mock workflow.
+
+Substitute slots in `templates/postcard-template.html` (6 x 4 mock only):
 - `{{MAIL_DATE}}`, `{{ARCHETYPE}}`, `{{FRONT_HEADLINE_HTML}}`, `{{FRONT_SUBLINE_HTML}}`, `{{BACK_HEADLINE_HTML}}`, `{{BACK_BODY_HTML}}`, `{{BACK_CTA_LINE}}`, `{{QR_SCAN_LABEL}}`, `{{QR_IMAGE_SRC}}`, `{{FRONT_PHOTO_SRC}}`, `{{BACK_PHOTO_SRC}}`
 
 **LOCKED — never substitute** (see `references/design-tokens.md`): All design tokens, the bottom contact lockup, gold border, chevron pattern, vertical disclaimer.

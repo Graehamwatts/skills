@@ -173,6 +173,23 @@ Six proven archetypes from Graeham's past cards, each with the **psychological l
 
 ---
 
+## 11. SEASONAL DEADLINE (calendar scarcity)
+
+**Status:** New archetype, added 2026-09-30. First run 10/01/26.
+**Lever:** "The calendar is the deadline" — a real, countable date (holidays, spring market, school year) turns "someday" into "start now." No market data needed, so nothing to fabricate.
+**Best for:** rush drops, cards with no photo/video, the 1st or 15th of Sep/Oct/Nov/Jan/Feb. Pairs with a timeline graphic instead of a headshot.
+**Default CTA:** Call/text (keyword TIMELINE)
+
+**Remix patterns:**
+- "The holidays are 12 weeks away. Selling a home takes most of them."
+- "Want to close before the holidays? Start this month."
+- "Spring buyers start looking in February. Your prep starts now."
+
+**Gold-highlight rule:** the number ("12 weeks") on the front; "Start this month" on the back.
+**⚠ Verify:** the weeks-to-date count for the actual mail week, and any "list by [date] to close by [date]" line (Graeham's call on the timing).
+
+---
+
 ## Differentiation rules (added 2026-06-11 after repetition audit)
 
 Rotating archetype names is NOT enough. Audit on 2026-06-11 found the first 6 cards repeated underlying elements even while archetypes rotated. Before recommending ANY option (Workflow A or B), check ALL FOUR axes against the Repetition tracker below:
@@ -202,7 +219,9 @@ With 10 archetypes in the library, Workflow B should now always be able to offer
 | 08/01/26 | Equity | You've built more wealth than you think | none | Call/text (SMS keyword "EQUITY") |
 | 08/15/26 | Quiet Sale / No-Hassle | Sell without a single open house | none | **Landing page** (seller consultation) |
 | 09/15/26 | Neighbor Envy (fresh remix) | Someone on your block just sold — here's what they got | none | Front: real IDX sold-homes map (Switchy). Back: direct call CTA, no QR |
-| 10/01/26 | Prop 19 Tax Transfer (2nd run) | The #1 reason you haven't moved just disappeared | none | Call/text (SMS keyword "PROP19") |
+| 10/01/26 | Seasonal Deadline (new #11) | The holidays are 12 weeks away and selling takes most of them | none | Call/text (SMS keyword "TIMELINE") |
+
+**10/01/26 note (2026-09-29/30):** Graeham asked for an Oct 1 card that needs no video/headshot and has a strong call to action for the time of year. Built photo-free with a new archetype, #11 Seasonal Deadline (calendar scarcity). The earlier Prop 19 (2nd run) draft, "The #1 Reason You Haven't Moved Just Disappeared," was never mailed and is HELD for a later drop; it still needs real headshots and was built at the wrong size (6x4). Prop 19's last real send is still 07/01/26.
 
 **MAILED 2026-08-01** (confirmed by Graeham).
 
@@ -283,6 +302,6 @@ When a user picks an archetype:
 | 08/01/26 | Equity | You've Built More Wealth Here Than You Think | Call/text (SMS keyword EQUITY) |
 | 08/15/26 | Quiet Sale / No-Hassle | Sell Your Home Without A Single Open House | Landing page (seller consultation) |
 | 09/15/26 | Neighbor Envy (fresh remix) | Someone On Your Block Just Sold. Here's What They Got. | Front: IDX sold-homes map (Switchy). Back: call CTA |
-| 10/01/26 | Prop 19 Tax Transfer (2nd run) | The #1 Reason You Haven't Moved Just Disappeared | Call/text (SMS keyword PROP19) |
+| 10/01/26 | Seasonal Deadline (#11) | The Holidays Are 12 Weeks Away. Selling A Home Takes Most Of Them. | Call/text (SMS keyword TIMELINE) |
 
 **Repetition rule:** Don't reuse the same archetype within 3 cards — AND run the full 4-axis differentiation check (see "Differentiation rules").

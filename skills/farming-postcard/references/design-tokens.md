@@ -114,6 +114,16 @@ padding-bottom: 2px;
 - **Whether the front carries its own QR** (added 2026-07-27, per Graeham). Default is back-only, but a front QR + its own short CTA line is an approved pattern — e.g. the front poses a curiosity hook with its own QR/offer. When used, mint a SEPARATE Switchy link for the front QR (see cta-router.md's Switchy section) — never reuse the back's link for the front.
 - **Whether the back carries a QR at all, or a direct call-to-action instead** (settled 2026-07-27, per Graeham, same day as the above — this is now the DEFAULT, not the exception). A back with no QR — just "WANT A [OFFER]? CALL ME TODAY!" + a large phone number + gold arrow — is Graeham's proven real house style (see the Sept 2025 "Is Now The Right Time To Sell?" card). **Default to ONE QR total (front) + a call CTA on the back**, unless the specific offer genuinely needs its own landing page. Only mint a Switchy link for a QR that actually appears on the card.
 
+- **Whether the card carries a headshot at all** (approved 2026-09-30, per Graeham, for a rush Oct 1 drop). A photo-free card needs no video or photo shoot: the big headline, a giant phone number and a timeline graphic carry it. Use `templates/jumbo-11x6/`.
+
+## Lockup rules from the Compass handbook (added 2026-09-30, binding for new cards)
+
+Source: `Documents\Go High Level\Compass Compliance Reference - Website and Profiles.docx`.
+- The Compass logo must be at least as prominent as the Graeham Watts logo (the jumbo template sets the boyenga|COMPASS strip wider than the GW logo).
+- DRE #01466876 at contact-info size, never smaller than the smallest text other than the legal disclaimer.
+- Wherever "The Boyenga Team" / the boyenga PROPERTY NERDS logo appears, print "Eric Boyenga DRE #01254725" and "Janelle Boyenga DRE #01254724" with it. Cards through 09/15/26 did not do this; Peter should add it to the Canva master.
+- REALTOR® always caps with the ®.
+
 ## What's NEVER negotiable
 
 - Color tokens above
