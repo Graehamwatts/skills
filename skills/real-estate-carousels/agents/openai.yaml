@@ -1,0 +1,4 @@
+interface:
+  display_name: "Real Estate Carousels"
+  short_description: "Property carousels, editable PDFs, and captions"
+  default_prompt: "Use $real-estate-carousels to create a property listing carousel with PNG slides, an editable PDF, and a caption."
