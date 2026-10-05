@@ -203,7 +203,21 @@ Afterward, verify no number, address, or price range was altered.
 
 # PART 4 — QUALITY CONTROL (mandatory before delivery)
 
-Do a distinct second pass. Do not re-read what you wrote; go back to the source data and cross-check.
+## Who runs it: a separate reviewer, not the session that wrote the report
+
+Run the quality pass as a separate read-only review agent (subagent). The session that built a report tends to confirm its own numbers, so the check has to come from a reader that starts from the sources. This is the same pattern `disclosure-analyzer` uses for its verification step.
+
+Give the reviewer exactly three things:
+
+1. **The finished report**, as it will be delivered (the HTML or the PDF).
+2. **The raw source data**: the MLS records for the subject and every comp, and the MLS Stats pulls behind every chart.
+3. **The disclosure packet**, whenever disclosure, inspection or pest findings are folded into the report (repair costs, seller statements, who the sellers are). The reviewer checks those statements against the packet pages, not against your summary of them.
+
+Do not give the reviewer your notes, draft tables or reasoning. It recomputes from the sources and reports what it finds. It does not edit the report.
+
+If a subagent is not available, do the pass yourself as a distinct second pass. Do not re-read what you wrote; go back to the source data and cross-check.
+
+## What the reviewer checks
 
 **1. Comp selection**
 - Every comp meets criteria: radius (or justified expansion), same city, reasonable sqft, appropriate timeframe.
@@ -244,7 +258,26 @@ Do a distinct second pass. Do not re-read what you wrote; go back to the source 
 - Renders at multiple widths.
 - No typos in addresses or dollar amounts.
 
-Fix everything found. If a range changed or a comp was removed, tell the user so they know the report was refined.
+**7. Disclosure, inspection and pest material (only when folded into the report)**
+- Every statement taken from the packet is re-read on the packet page it came from, and the page is noted.
+- Every cost total is re-added from the report's own line items. A subtotal for one section of a pest or inspection report is never presented as the report's total, and items marked pending or unpriced are named as such.
+- Who said or signed what matches the form. If a form says "seller" without saying which seller, the report does not name one.
+- No finding is stated more strongly or more mildly than the inspector's own wording.
+
+## What the reviewer returns: a findings table
+
+| # | Severity | Where in the report | What the source says | What the report says | Fix |
+|---|---|---|---|---|---|
+
+- **Blocker**: a wrong number, address, price, date or name, or a claim the sources contradict. The report does not go out with a Blocker open.
+- **Should fix**: a claim the sources do not support, or wording looser than the data.
+- **Note**: worth knowing, no change required.
+
+Clean checks are written down too, one line per group above, saying what was checked and how many: "Data accuracy: 5 comps spot-checked against MLS, 12 $/sqft values recomputed, 0 differences." A review that returns an empty table and no clean-check lines did not run. Do it again.
+
+## After the review
+
+Fix every Blocker and Should fix in the report, then send the changed sections back to the reviewer to re-check those rows only. If a range changed or a comp was removed, tell the user so they know the report was refined.
 
 ---
 

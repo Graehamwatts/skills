@@ -60,7 +60,7 @@ Use Past-Client Mode when the request comes from the past-client follow-up syste
 
 **Before publish**
 13. **Brand validator passes**, DRE and brokerage correct per §0.
-14. **Quality control pass complete** per `references/report-build.md` (comp accuracy, math spot-checks, narrative consistency).
+14. **Quality control pass complete** per `references/report-build.md` Part 4, run by a separate read-only reviewer that gets the finished report, the raw MLS data and, when disclosure findings are folded in, the disclosure packet. It returns a findings table (comp accuracy, math spot-checks, narrative consistency, disclosure statements); no open Blocker at delivery.
 
 ---
 
