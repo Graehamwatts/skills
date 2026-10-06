@@ -75,3 +75,7 @@ wallet.md
 
 # The Claude app keeps a synced copy of skills here (it reaches this repo through the ~/.claude/skills junction). Never commit it.
 skills/synced/
+
+# The same Claude app sync moves skills it removes into skills/.trash (the app deletes that folder itself after cleanupPeriodDays).
+# Never commit it. A 2026-10-04 snapshot of it blocked every push for two days: the brand tripwire and the python integrity gate both read it.
+skills/.trash/
