@@ -11,7 +11,7 @@ About 400 words of plain prose, no dashes, no ad dollar amounts, no placeholder 
 5. Only if the seller has a real decision to make (a creative direction, the AI staging disclosure): one short paragraph asking for it. Drop the paragraph otherwise.
 6. Close with the next call time.
 
-Rules: use only the real report's facts. Numbers from a SAMPLE never appear in a seller email. Do not claim a call or conversation you cannot source ("as you asked on our last call"). Address the seller as "you" and never narrate the research conversation with Graeham. Run the narrative through the humanizer skill, then scan for every dash like character (em, en, minus, figure dash, horizontal bar) before saving.
+Rules: use only the real report's facts. Numbers from a SAMPLE never appear in a seller email, and the attachment is checked first: hash against the real build, metadata title, and a text search for "Sample report" (SKILL.md rule 8). Do not claim a call or conversation you cannot source ("as you asked on our last call"). Address the seller as "you" and never narrate the research conversation with Graeham. Run the narrative through the humanizer skill, then scan for every dash like character (em, en, minus, figure dash, horizontal bar) before saving.
 
 ## Making the draft in Gmail
 

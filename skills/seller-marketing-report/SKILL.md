@@ -27,7 +27,7 @@ The worked example lives in `C:\Users\Graeham Watts\Documents\Skills LLMS\Claude
 5. **Honest denominators.** State how many sales closed, which are excluded and why, and what the average and median become if the excluded sale counts as zero days. Say "halfway between the 51 and 69 day sales" when the median is a midpoint. Quietly dropping the same day sale flatters the story and a careful reader will catch it.
 6. **Brand and compliance.** Read `skills/shared-references/identity.json` for the DRE, brokerage line ("Powered by The Boyenga Team at Compass"), contact details and the Compass disclaimer, and copy the disclaimer verbatim even where it reads oddly. REALTOR always carries the registered mark. If creative uses AI generated furniture or props, the report says so, since California requires disclosure of digitally altered listing images.
 7. **Voice.** No em or en dashes anywhere: body, image alt text, PDF metadata, email. Follow `cma-generator/references/report-build.md` Part 3 (banned openers, no data source apologies, humanizer pass on narrative prose). Quote agents as they reported. Never mention a buyer's disability, health, family or finances.
-8. **Draft, never send.** The email is a Gmail draft for Graeham to review and send. Do not delete, edit or send an earlier draft unless he asks.
+8. **Draft, never send, and never the wrong file.** The email is a Gmail draft for Graeham to review and send. Do not delete, edit or send an earlier draft unless he asks. Before a seller email is drafted or a PDF is copied into a listing folder, prove the file is the real report: its metadata title does not start with SAMPLE, no page carries a "Sample report" line, and its SHA256 equals the real build's. Every number in the email body must appear in that PDF. A sample was once mistaken for the real file and mailed to a seller, so a sample keeps its SAMPLE name, stays in `reports\`, and is never renamed to look like the real report.
 9. **Verify before you hand it over.** Numbers are computed and asserted in code (the builder stops if a printed number changes), then at least one independent reviewer rechecks the final text against sources. The first report took three passes, and the first two missed a mobile home counted as a condo.
 
 ## Workflow
@@ -52,7 +52,7 @@ When Graeham asks to see what a full campaign report would look like before any 
 - Every printed number traces to a source read this session, and the code asserts the computed ones.
 - No dashes of any kind, no "example" wording, DRE only from identity.json, REALTOR with the registered mark, links resolve and match the expected set.
 - Nothing runs past the bottom margin on any page.
-- The email is an unsent draft with the PDF attached and working links, and no sample numbers anywhere.
+- The email is an unsent draft with the PDF attached and working links, and no sample numbers anywhere. The attached file passed the real file check in rule 8, and every number in the body appears in it.
 - Open questions for Graeham are listed in the reply (unconfirmed ad delivery, property page issues, disclosures).
 
 ## Reference map
