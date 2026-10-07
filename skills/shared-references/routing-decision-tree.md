@@ -33,6 +33,7 @@ One page that ends the wrong-skill problem. Read this FIRST when a request is co
 │   ├─ MLS description → listing-remarks-writer
 │   ├─ Photo captions → listing-photo-captioner
 │   ├─ Full listing launch (shoot plan + posts + ads + scripts) → listing-launch-engine
+│   ├─ Paid ads for ONE listing (area research, keywords, ad copy, campaign setup, Peter brief) → listing-ads
 │   └─ Postcard → farming-postcard
 │
 └─ Performance question ("how did content DO")?
