@@ -28,4 +28,5 @@ So when you spec an `A` shot, the default hold is **2–3 minutes of clean sourc
 
 1. **Locked, stable angle.** Tripod or locked gimbal. The camera does not drift. (A separate loose walking B-roll clip is fine — it's just not the avatar source.)
 2. **Clean, even light.** Soft frontal or open-shade light. No harsh side shadows, no backlight, no blown highlights, no mixed color temperature.
-3. **Defined 
+3. **Defined, held framing.** Straight-on, eye level, Graeham centered, with the same headroom from the first second to the last. Use the shot size the packet's `A` shot calls for, and do not reframe mid-take.
+4. **Enough footage.** 2 to 3 minutes of continuous delivery per look, not 60 seconds. More footage makes a better twin.

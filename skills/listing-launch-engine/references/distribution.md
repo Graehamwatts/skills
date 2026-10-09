@@ -43,4 +43,6 @@ The Gmail connector available here (`mcp__…__create_draft`) **creates drafts o
 1. Build + save the master and per-role HTML.
 2. Present the master to Graeham (he eyeballs it).
 3. Create the Gmail drafts per the matrix above.
-4. Report: "Drafts are in your Gmai
+4. Report: "Drafts are in your Gmail: [recipient/subject for each]. Review and send when you're happy." List exactly which drafts you created.
+
+If Graeham hasn't given recipient emails, build + present the HTML and ask for the addresses before drafting. Don't guess an email.
