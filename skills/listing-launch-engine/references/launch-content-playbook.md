@@ -158,4 +158,3 @@ Produce 3 variations.
 - **Fair Housing** — property features, price, market data, amenities, commute only. Never describe who lives in an area; no "safe / good / family-friendly"; no school rankings as a selling point.
 - **DRE# 01466876** on every paid ad. **No DRE number on screen in video graphics.**
 - **Private** — seller price-reduction talking points are agent-to-seller only.
-</content>
