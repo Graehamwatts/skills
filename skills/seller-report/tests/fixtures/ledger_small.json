@@ -1,0 +1,1441 @@
+{
+ "schema_version": 1,
+ "meta": {
+  "slug": "sample-glen",
+  "built_at": "2026-04-13",
+  "synthetic": true,
+  "note": "Synthetic test data. Every name and comment is invented."
+ },
+ "listing": {
+  "slug": "sample-glen",
+  "address": "218 Sample Glen Ct",
+  "city": "Fixture City",
+  "state": "CA",
+  "zip": "94000",
+  "beds": 3,
+  "baths": 2.0,
+  "sqft": 1480,
+  "property_type": "Single Family",
+  "list_date": "2026-03-12",
+  "list_price": 1195000,
+  "price_history": [
+   {
+    "date": "2026-03-12",
+    "price": 1195000,
+    "event": "listed"
+   }
+  ],
+  "status": "Active",
+  "mls": "ML00000218",
+  "hero_photo": null,
+  "seller_first_names": [
+   "Pat",
+   "Sam"
+  ]
+ },
+ "report": {
+  "issue_number": 5,
+  "report_date": "2026-04-13",
+  "week_start": "2026-04-06",
+  "week_end": "2026-04-12",
+  "tracking": {
+   "keybox_showings": true,
+   "disclosure_sent": true,
+   "disclosure_opened": true
+  },
+  "since_week_closed": {
+   "through": "2026-04-13",
+   "items": [
+    {
+     "date": "2026-04-13",
+     "kind": "touch",
+     "contact_id": "c003",
+     "name_short": "Wilhelmina R.",
+     "summary_safe": "Sent a text on Monday morning. No answer yet."
+    }
+   ]
+  },
+  "weeks_on_market": 5,
+  "days_on_market": 32,
+  "days_on_market_at_week_end": 31
+ },
+ "themes_vocabulary": {
+  "version": 1,
+  "groups": [
+   {
+    "key": "home",
+    "label": "About the home and its setting"
+   },
+   {
+    "key": "changeable",
+    "label": "Things we can change"
+   },
+   {
+    "key": "buyer",
+    "label": "About the buyer"
+   },
+   {
+    "key": "other",
+    "label": "Other"
+   }
+  ],
+  "themes": [
+   {
+    "key": "location",
+    "label": "Location or surroundings",
+    "group": "home",
+    "hide_in_link_copy": false
+   },
+   {
+    "key": "size_layout",
+    "label": "Size or layout",
+    "group": "home",
+    "hide_in_link_copy": false
+   },
+   {
+    "key": "floor_level",
+    "label": "Floor level",
+    "group": "home",
+    "hide_in_link_copy": false
+   },
+   {
+    "key": "stairs",
+    "label": "Stairs",
+    "group": "home",
+    "hide_in_link_copy": false
+   },
+   {
+    "key": "parking",
+    "label": "Parking",
+    "group": "home",
+    "hide_in_link_copy": false
+   },
+   {
+    "key": "yard_outdoor",
+    "label": "Yard or outdoor space",
+    "group": "home",
+    "hide_in_link_copy": false
+   },
+   {
+    "key": "hoa",
+    "label": "HOA",
+    "group": "home",
+    "hide_in_link_copy": false
+   },
+   {
+    "key": "condition_disclosures",
+    "label": "Condition or disclosures",
+    "group": "changeable",
+    "hide_in_link_copy": false
+   },
+   {
+    "key": "staging",
+    "label": "Staging or presentation",
+    "group": "changeable",
+    "hide_in_link_copy": false
+   },
+   {
+    "key": "buyer_timing",
+    "label": "Buyer's timing",
+    "group": "buyer",
+    "hide_in_link_copy": false
+   },
+   {
+    "key": "still_deciding",
+    "label": "Still deciding",
+    "group": "buyer",
+    "hide_in_link_copy": true
+   },
+   {
+    "key": "chose_another_home",
+    "label": "Chose or preferred another property",
+    "group": "buyer",
+    "hide_in_link_copy": false
+   },
+   {
+    "key": "no_reason",
+    "label": "No reason given",
+    "group": "buyer",
+    "hide_in_link_copy": false
+   },
+   {
+    "key": "other",
+    "label": "Other",
+    "group": "other",
+    "hide_in_link_copy": false
+   }
+  ],
+  "liked": [
+   {
+    "key": "home_overall",
+    "label": "The home overall"
+   },
+   {
+    "key": "layout_space",
+    "label": "Layout or space"
+   },
+   {
+    "key": "condition_updates",
+    "label": "Condition or updates"
+   },
+   {
+    "key": "light_views",
+    "label": "Light or views"
+   },
+   {
+    "key": "outdoor_space",
+    "label": "Yard or outdoor space"
+   },
+   {
+    "key": "location",
+    "label": "Location"
+   },
+   {
+    "key": "community",
+    "label": "Community or amenities"
+   },
+   {
+    "key": "value",
+    "label": "Value for the price"
+   },
+   {
+    "key": "other",
+    "label": "Other"
+   }
+  ],
+  "price_rows": [
+   {
+    "key": "too_high",
+    "label": "Said the price is too high"
+   },
+   {
+    "key": "fair_or_positive",
+    "label": "Said the price is fair or good"
+   },
+   {
+    "key": "not_raised",
+    "label": "Did not bring up price"
+   }
+  ]
+ },
+ "contacts": [
+  {
+   "id": "c001",
+   "name_short": "Odalys V.",
+   "name_recorded": true,
+   "brokerage": "Harborlight Realty",
+   "kind": "agent",
+   "is_open_house_host": false,
+   "team_side": false,
+   "represented_by": null,
+   "reached_through": null,
+   "phone_out_of_service": false,
+   "engagements": [
+    {
+     "type": "keybox_showing",
+     "date": "2026-03-14",
+     "date_quality": "exact",
+     "confirmed": true,
+     "time_text": "2 to 3 PM"
+    },
+    {
+     "type": "disclosure_link_sent",
+     "date": "2026-03-16",
+     "date_quality": "exact",
+     "confirmed": true
+    },
+    {
+     "type": "disclosure_opened",
+     "date": "2026-03-17",
+     "date_quality": "exact",
+     "confirmed": true
+    }
+   ],
+   "touches": [
+    {
+     "date": "2026-03-15",
+     "date_quality": "exact",
+     "channel": "call",
+     "direction": "outbound",
+     "outcome": "reached",
+     "summary_safe": "Asked for feedback the day after the showing. Her clients liked the layout."
+    },
+    {
+     "date": "2026-03-16",
+     "date_quality": "exact",
+     "channel": "email",
+     "direction": "outbound",
+     "outcome": "sent",
+     "summary_safe": "Sent an email."
+    },
+    {
+     "date": "2026-03-24",
+     "date_quality": "exact",
+     "channel": "text",
+     "direction": "outbound",
+     "outcome": "sent",
+     "summary_safe": "Sent a text."
+    },
+    {
+     "date": "2026-03-25",
+     "date_quality": "exact",
+     "channel": "text",
+     "direction": "inbound",
+     "outcome": "replied",
+     "summary_safe": "Replied by text. Her clients are still thinking it over."
+    },
+    {
+     "date": "2026-04-07",
+     "date_quality": "exact",
+     "channel": "voicemail",
+     "direction": "outbound",
+     "outcome": "left_voicemail",
+     "summary_safe": "Called, no answer. Left a voicemail."
+    },
+    {
+     "date": "2026-04-07",
+     "date_quality": "exact",
+     "channel": "text",
+     "direction": "outbound",
+     "outcome": "sent",
+     "summary_safe": "Sent a text."
+    },
+    {
+     "date": "2026-04-08",
+     "date_quality": "exact",
+     "channel": "call",
+     "direction": "inbound",
+     "outcome": "replied",
+     "summary_safe": "Called back. Her clients liked the yard and are comparing the home with one other."
+    }
+   ],
+   "feedback_log": [
+    {
+     "date": "2026-03-15",
+     "text_safe": "Her clients liked the layout and the home overall.",
+     "softened": false,
+     "source": "conversation",
+     "counts_as_conversation": true,
+     "price_reaction": "not_raised",
+     "price_asked": null,
+     "themes": [],
+     "liked": [
+      "home_overall",
+      "layout_space"
+     ]
+    },
+    {
+     "date": "2026-03-25",
+     "text_safe": "Her clients are still thinking it over.",
+     "softened": false,
+     "source": "conversation",
+     "counts_as_conversation": true,
+     "price_reaction": "not_raised",
+     "price_asked": null,
+     "themes": [
+      "still_deciding"
+     ],
+     "liked": []
+    },
+    {
+     "date": "2026-04-08",
+     "text_safe": "Her clients liked the yard and are comparing the home with one other.",
+     "softened": false,
+     "source": "conversation",
+     "counts_as_conversation": true,
+     "price_reaction": "not_raised",
+     "price_asked": null,
+     "themes": [
+      "still_deciding"
+     ],
+     "liked": [
+      "outdoor_space"
+     ]
+    }
+   ],
+   "feedback_safe": "Her clients liked the layout and the yard. They are comparing the home with one other.",
+   "feedback_date": "2026-04-08",
+   "price_reaction": "not_raised",
+   "price_asked": null,
+   "interest": "warm",
+   "offer_intent": "maybe",
+   "status": "replied",
+   "status_note_safe": null,
+   "themes": [
+    "still_deciding"
+   ],
+   "theme_other": null,
+   "liked": [
+    "home_overall",
+    "layout_space",
+    "outdoor_space"
+   ],
+   "liked_other": null,
+   "softened": false,
+   "next_followup_date": "2026-04-15",
+   "offer_basis_safe": "Comparing the home with one other.",
+   "offer_basis_date": "2026-04-08",
+   "followup": {
+    "outbound_touches": 5,
+    "outbound_days": 4,
+    "replies": 3,
+    "first_touch_date": "2026-03-15",
+    "last_touch_date": "2026-04-08",
+    "last_outbound_date": "2026-04-07",
+    "last_reply_date": "2026-04-08",
+    "tries_since_last_answer": 0,
+    "days_since_last_touch": 4,
+    "calls_not_connected": 0
+   },
+   "lists": [
+    "showings",
+    "disclosure"
+   ],
+   "primary_list": "showings",
+   "offer_word": "possibly",
+   "active_this_week": true
+  },
+  {
+   "id": "c002",
+   "name_short": "Thaddeus K.",
+   "name_recorded": true,
+   "brokerage": "Northgate Homes",
+   "kind": "agent",
+   "is_open_house_host": false,
+   "team_side": false,
+   "represented_by": null,
+   "reached_through": null,
+   "phone_out_of_service": false,
+   "engagements": [
+    {
+     "type": "agent_reported_tour",
+     "date": "2026-03-21",
+     "date_quality": "approximate",
+     "confirmed": true,
+     "date_label": "week of Mar 16"
+    }
+   ],
+   "touches": [
+    {
+     "date": "2026-03-23",
+     "date_quality": "exact",
+     "channel": "voicemail",
+     "direction": "outbound",
+     "outcome": "left_voicemail",
+     "summary_safe": "Called, no answer. Left a voicemail."
+    },
+    {
+     "date": "2026-03-23",
+     "date_quality": "exact",
+     "channel": "text",
+     "direction": "outbound",
+     "outcome": "sent",
+     "summary_safe": "Sent a text."
+    },
+    {
+     "date": "2026-03-26",
+     "date_quality": "exact",
+     "channel": "call",
+     "direction": "outbound",
+     "outcome": "reached",
+     "summary_safe": "Reached him by phone. His clients chose another property closer to work."
+    }
+   ],
+   "feedback_log": [
+    {
+     "date": "2026-03-26",
+     "text_safe": "His clients chose another property closer to work.",
+     "softened": false,
+     "source": "conversation",
+     "counts_as_conversation": true,
+     "price_reaction": "not_raised",
+     "price_asked": null,
+     "themes": [
+      "location",
+      "chose_another_home"
+     ],
+     "liked": []
+    }
+   ],
+   "feedback_safe": "His clients chose another property closer to work.",
+   "feedback_date": "2026-03-26",
+   "price_reaction": "not_raised",
+   "price_asked": null,
+   "interest": "passed",
+   "offer_intent": "no",
+   "status": "passed",
+   "status_note_safe": null,
+   "themes": [
+    "location",
+    "chose_another_home"
+   ],
+   "theme_other": null,
+   "liked": [],
+   "liked_other": null,
+   "softened": false,
+   "next_followup_date": null,
+   "offer_basis_safe": null,
+   "offer_basis_date": null,
+   "followup": {
+    "outbound_touches": 3,
+    "outbound_days": 2,
+    "replies": 1,
+    "first_touch_date": "2026-03-23",
+    "last_touch_date": "2026-03-26",
+    "last_outbound_date": "2026-03-26",
+    "last_reply_date": "2026-03-26",
+    "tries_since_last_answer": 0,
+    "days_since_last_touch": 17,
+    "calls_not_connected": 0
+   },
+   "lists": [
+    "showings"
+   ],
+   "primary_list": "showings",
+   "offer_word": "no",
+   "active_this_week": false
+  },
+  {
+   "id": "c003",
+   "name_short": "Wilhelmina R.",
+   "name_recorded": true,
+   "brokerage": null,
+   "kind": "agent",
+   "is_open_house_host": false,
+   "team_side": false,
+   "represented_by": null,
+   "reached_through": null,
+   "phone_out_of_service": false,
+   "engagements": [
+    {
+     "type": "disclosure_link_sent",
+     "date": "2026-03-30",
+     "date_quality": "exact",
+     "confirmed": true
+    },
+    {
+     "type": "disclosure_opened",
+     "date": "2026-03-31",
+     "date_quality": "exact",
+     "confirmed": true
+    }
+   ],
+   "touches": [
+    {
+     "date": "2026-03-30",
+     "date_quality": "exact",
+     "channel": "email",
+     "direction": "outbound",
+     "outcome": "sent",
+     "summary_safe": "Sent the disclosure package link."
+    },
+    {
+     "date": "2026-04-02",
+     "date_quality": "exact",
+     "channel": "voicemail",
+     "direction": "outbound",
+     "outcome": "left_voicemail",
+     "summary_safe": "Called, no answer. Left a voicemail."
+    },
+    {
+     "date": "2026-04-02",
+     "date_quality": "exact",
+     "channel": "text",
+     "direction": "outbound",
+     "outcome": "sent",
+     "summary_safe": "Sent a text."
+    },
+    {
+     "date": "2026-04-09",
+     "date_quality": "exact",
+     "channel": "voicemail",
+     "direction": "outbound",
+     "outcome": "left_voicemail",
+     "summary_safe": "Called, no answer. Left a voicemail."
+    },
+    {
+     "date": "2026-04-09",
+     "date_quality": "exact",
+     "channel": "email",
+     "direction": "outbound",
+     "outcome": "sent",
+     "summary_safe": "Sent an email."
+    }
+   ],
+   "feedback_log": [],
+   "feedback_safe": null,
+   "feedback_date": null,
+   "price_reaction": "unknown",
+   "price_asked": null,
+   "interest": "unknown",
+   "offer_intent": "unknown",
+   "status": "awaiting_reply",
+   "status_note_safe": null,
+   "themes": [],
+   "theme_other": null,
+   "liked": [],
+   "liked_other": null,
+   "softened": false,
+   "next_followup_date": null,
+   "offer_basis_safe": null,
+   "offer_basis_date": null,
+   "followup": {
+    "outbound_touches": 5,
+    "outbound_days": 3,
+    "replies": 0,
+    "first_touch_date": "2026-03-30",
+    "last_touch_date": "2026-04-09",
+    "last_outbound_date": "2026-04-09",
+    "last_reply_date": null,
+    "tries_since_last_answer": 3,
+    "days_since_last_touch": 3,
+    "calls_not_connected": 0
+   },
+   "lists": [
+    "disclosure"
+   ],
+   "primary_list": "disclosure",
+   "offer_word": "not_discussed",
+   "active_this_week": true
+  },
+  {
+   "id": "c004",
+   "name_short": "Open house visitor, Mar 28",
+   "name_recorded": false,
+   "brokerage": null,
+   "kind": "open_house_visitor",
+   "is_open_house_host": false,
+   "team_side": false,
+   "represented_by": null,
+   "reached_through": "open_house_host",
+   "phone_out_of_service": false,
+   "engagements": [
+    {
+     "type": "open_house_visit",
+     "date": "2026-03-28",
+     "date_quality": "exact",
+     "confirmed": true
+    },
+    {
+     "type": "disclosure_link_sent",
+     "date": "2026-03-29",
+     "date_quality": "approximate",
+     "confirmed": true
+    }
+   ],
+   "touches": [
+    {
+     "date": "2026-03-29",
+     "date_quality": "approximate",
+     "channel": "unknown",
+     "direction": "outbound",
+     "outcome": "sent",
+     "summary_safe": "Sent the disclosure package to the open house host to pass along."
+    }
+   ],
+   "feedback_log": [
+    {
+     "date": "2026-03-28",
+     "text_safe": "The host described this visitor as interested. He asked for the disclosure package.",
+     "softened": false,
+     "source": "open_house_host",
+     "counts_as_conversation": false,
+     "price_reaction": "unknown",
+     "price_asked": null,
+     "themes": [],
+     "liked": []
+    }
+   ],
+   "feedback_safe": "The host described this visitor as interested. He asked for the disclosure package.",
+   "feedback_date": "2026-03-28",
+   "price_reaction": "unknown",
+   "price_asked": null,
+   "interest": "warm",
+   "offer_intent": "unknown",
+   "status": "awaiting_reply",
+   "status_note_safe": null,
+   "themes": [],
+   "theme_other": null,
+   "liked": [],
+   "liked_other": null,
+   "softened": false,
+   "next_followup_date": null,
+   "offer_basis_safe": null,
+   "offer_basis_date": null,
+   "followup": {
+    "outbound_touches": 1,
+    "outbound_days": 1,
+    "replies": 0,
+    "first_touch_date": "2026-03-29",
+    "last_touch_date": "2026-03-29",
+    "last_outbound_date": "2026-03-29",
+    "last_reply_date": null,
+    "tries_since_last_answer": 1,
+    "days_since_last_touch": 14,
+    "calls_not_connected": 0
+   },
+   "lists": [
+    "disclosure",
+    "open_house"
+   ],
+   "primary_list": "disclosure",
+   "offer_word": "not_discussed",
+   "active_this_week": false
+  },
+  {
+   "id": "c005",
+   "name_short": "Casimir D.",
+   "name_recorded": true,
+   "brokerage": "Bluewater Brokers",
+   "kind": "agent",
+   "is_open_house_host": false,
+   "team_side": false,
+   "represented_by": null,
+   "reached_through": null,
+   "phone_out_of_service": false,
+   "engagements": [
+    {
+     "type": "inquiry",
+     "date": "2026-04-09",
+     "date_quality": "exact",
+     "confirmed": true
+    }
+   ],
+   "touches": [
+    {
+     "date": "2026-04-09",
+     "date_quality": "exact",
+     "channel": "call",
+     "direction": "inbound",
+     "outcome": "replied",
+     "summary_safe": "Called to ask about the HOA dues and the open house times. We answered on the call."
+    }
+   ],
+   "feedback_log": [],
+   "feedback_safe": null,
+   "feedback_date": null,
+   "price_reaction": "unknown",
+   "price_asked": null,
+   "interest": "unknown",
+   "offer_intent": "unknown",
+   "status": "replied",
+   "status_note_safe": null,
+   "themes": [],
+   "theme_other": null,
+   "liked": [],
+   "liked_other": null,
+   "softened": false,
+   "next_followup_date": null,
+   "offer_basis_safe": null,
+   "offer_basis_date": null,
+   "followup": {
+    "outbound_touches": 0,
+    "outbound_days": 0,
+    "replies": 1,
+    "first_touch_date": "2026-04-09",
+    "last_touch_date": "2026-04-09",
+    "last_outbound_date": null,
+    "last_reply_date": "2026-04-09",
+    "tries_since_last_answer": 0,
+    "days_since_last_touch": 3,
+    "calls_not_connected": 0
+   },
+   "lists": [
+    "other_inquiries"
+   ],
+   "primary_list": "other_inquiries",
+   "offer_word": "not_discussed",
+   "active_this_week": true
+  },
+  {
+   "id": "c006",
+   "name_short": "Client of Wilhelmina R.",
+   "name_recorded": false,
+   "brokerage": null,
+   "kind": "buyer",
+   "is_open_house_host": false,
+   "team_side": false,
+   "represented_by": "c003",
+   "reached_through": null,
+   "phone_out_of_service": false,
+   "engagements": [
+    {
+     "type": "disclosure_shared_by_agent",
+     "date": null,
+     "date_quality": "missing",
+     "confirmed": true
+    }
+   ],
+   "touches": [],
+   "feedback_log": [],
+   "feedback_safe": null,
+   "feedback_date": null,
+   "price_reaction": "unknown",
+   "price_asked": null,
+   "interest": "unknown",
+   "offer_intent": "unknown",
+   "status": "through_agent",
+   "status_note_safe": null,
+   "themes": [],
+   "theme_other": null,
+   "liked": [],
+   "liked_other": null,
+   "softened": false,
+   "next_followup_date": null,
+   "offer_basis_safe": null,
+   "offer_basis_date": null,
+   "followup": {
+    "outbound_touches": 0,
+    "outbound_days": 0,
+    "replies": 0,
+    "first_touch_date": null,
+    "last_touch_date": null,
+    "last_outbound_date": null,
+    "last_reply_date": null,
+    "tries_since_last_answer": 0,
+    "days_since_last_touch": null,
+    "calls_not_connected": 0
+   },
+   "lists": [],
+   "primary_list": null,
+   "offer_word": "not_discussed",
+   "active_this_week": false
+  },
+  {
+   "id": "c007",
+   "name_short": "Leocadia M.",
+   "name_recorded": true,
+   "brokerage": "Harborlight Realty",
+   "kind": "agent",
+   "is_open_house_host": true,
+   "team_side": true,
+   "represented_by": null,
+   "reached_through": null,
+   "phone_out_of_service": false,
+   "engagements": [],
+   "touches": [
+    {
+     "date": "2026-03-29",
+     "date_quality": "exact",
+     "channel": "text",
+     "direction": "outbound",
+     "outcome": "sent",
+     "summary_safe": "Asked for a recap of the open house."
+    },
+    {
+     "date": "2026-03-29",
+     "date_quality": "exact",
+     "channel": "text",
+     "direction": "inbound",
+     "outcome": "replied",
+     "summary_safe": "Sent her recap of the weekend."
+    }
+   ],
+   "feedback_log": [],
+   "feedback_safe": null,
+   "feedback_date": null,
+   "price_reaction": "unknown",
+   "price_asked": null,
+   "interest": "unknown",
+   "offer_intent": "unknown",
+   "status": "replied",
+   "status_note_safe": null,
+   "themes": [],
+   "theme_other": null,
+   "liked": [],
+   "liked_other": null,
+   "softened": false,
+   "next_followup_date": null,
+   "offer_basis_safe": null,
+   "offer_basis_date": null,
+   "followup": {
+    "outbound_touches": 1,
+    "outbound_days": 1,
+    "replies": 1,
+    "first_touch_date": "2026-03-29",
+    "last_touch_date": "2026-03-29",
+    "last_outbound_date": "2026-03-29",
+    "last_reply_date": "2026-03-29",
+    "tries_since_last_answer": 0,
+    "days_since_last_touch": 14,
+    "calls_not_connected": 0
+   },
+   "lists": [],
+   "primary_list": null,
+   "offer_word": "not_discussed",
+   "active_this_week": false
+  }
+ ],
+ "open_houses": [
+  {
+   "date": "2026-03-14",
+   "date_quality": "exact",
+   "host": "Leocadia M.",
+   "host_contact_id": "c007",
+   "time_text": "1 to 4 PM",
+   "groups": 6,
+   "counted_unit": "groups",
+   "groups_source": "parsed_from_prose",
+   "recap_safe": "6 groups came through. Two asked about the school boundary.",
+   "softened": false,
+   "disclosure_requests": null
+  },
+  {
+   "date": "2026-03-15",
+   "date_quality": "exact",
+   "host": "Leocadia M.",
+   "host_contact_id": "c007",
+   "time_text": null,
+   "groups": null,
+   "counted_unit": "groups",
+   "groups_source": "not_recorded",
+   "recap_safe": null,
+   "softened": false,
+   "disclosure_requests": null
+  },
+  {
+   "date": "2026-03-28",
+   "date_quality": "exact",
+   "host": "Leocadia M.",
+   "host_contact_id": "c007",
+   "time_text": null,
+   "groups": 3,
+   "counted_unit": "groups",
+   "groups_source": "parsed_from_prose",
+   "recap_safe": "3 groups. One visitor with no agent asked for the disclosure package.",
+   "softened": false,
+   "disclosure_requests": 1
+  },
+  {
+   "date": "2026-04-11",
+   "date_quality": "exact",
+   "host": "Leocadia M.",
+   "host_contact_id": "c007",
+   "time_text": null,
+   "groups": 0,
+   "counted_unit": "groups",
+   "groups_source": "sheet_column",
+   "recap_safe": "No visitors.",
+   "softened": false,
+   "disclosure_requests": null
+  }
+ ],
+ "offers": [],
+ "weeks": [
+  {
+   "n": 1,
+   "start": "2026-03-09",
+   "end": "2026-03-15",
+   "is_current": false,
+   "list_price": 1195000,
+   "days_listed_in_week": 4,
+   "days_on_market_at_week_end": 3,
+   "showings": 1,
+   "keybox_showings": 1,
+   "agent_reported_tours": 0,
+   "inquiries": 0,
+   "disclosure_contacts_new": 0,
+   "disclosure_sent": 0,
+   "disclosure_opened": 0,
+   "open_house_sessions": 2,
+   "open_house_sessions_without_count": 1,
+   "open_house_groups": 6,
+   "touches_outbound": 1,
+   "outbound_people": 1,
+   "outbound_distinct_days": 1,
+   "replies_inbound": 1,
+   "conversations_with_feedback": 1,
+   "price_too_high": 0,
+   "price_fair_or_positive": 0,
+   "offers": 0,
+   "approximate_dates_used": 0,
+   "online_views": null,
+   "online_saves": null
+  },
+  {
+   "n": 2,
+   "start": "2026-03-16",
+   "end": "2026-03-22",
+   "is_current": false,
+   "list_price": 1195000,
+   "days_listed_in_week": 7,
+   "days_on_market_at_week_end": 10,
+   "showings": 1,
+   "keybox_showings": 0,
+   "agent_reported_tours": 1,
+   "inquiries": 0,
+   "disclosure_contacts_new": 1,
+   "disclosure_sent": 1,
+   "disclosure_opened": 1,
+   "open_house_sessions": 0,
+   "open_house_sessions_without_count": 0,
+   "open_house_groups": null,
+   "touches_outbound": 1,
+   "outbound_people": 1,
+   "outbound_distinct_days": 1,
+   "replies_inbound": 0,
+   "conversations_with_feedback": 0,
+   "price_too_high": 0,
+   "price_fair_or_positive": 0,
+   "offers": 0,
+   "approximate_dates_used": 1,
+   "online_views": null,
+   "online_saves": null
+  },
+  {
+   "n": 3,
+   "start": "2026-03-23",
+   "end": "2026-03-29",
+   "is_current": false,
+   "list_price": 1195000,
+   "days_listed_in_week": 7,
+   "days_on_market_at_week_end": 17,
+   "showings": 0,
+   "keybox_showings": 0,
+   "agent_reported_tours": 0,
+   "inquiries": 0,
+   "disclosure_contacts_new": 1,
+   "disclosure_sent": 1,
+   "disclosure_opened": 0,
+   "open_house_sessions": 1,
+   "open_house_sessions_without_count": 0,
+   "open_house_groups": 3,
+   "touches_outbound": 5,
+   "outbound_people": 3,
+   "outbound_distinct_days": 4,
+   "replies_inbound": 2,
+   "conversations_with_feedback": 2,
+   "price_too_high": 0,
+   "price_fair_or_positive": 0,
+   "offers": 0,
+   "approximate_dates_used": 2,
+   "online_views": null,
+   "online_saves": null
+  },
+  {
+   "n": 4,
+   "start": "2026-03-30",
+   "end": "2026-04-05",
+   "is_current": false,
+   "list_price": 1195000,
+   "days_listed_in_week": 7,
+   "days_on_market_at_week_end": 24,
+   "showings": 0,
+   "keybox_showings": 0,
+   "agent_reported_tours": 0,
+   "inquiries": 0,
+   "disclosure_contacts_new": 1,
+   "disclosure_sent": 1,
+   "disclosure_opened": 1,
+   "open_house_sessions": 0,
+   "open_house_sessions_without_count": 0,
+   "open_house_groups": null,
+   "touches_outbound": 3,
+   "outbound_people": 1,
+   "outbound_distinct_days": 2,
+   "replies_inbound": 0,
+   "conversations_with_feedback": 0,
+   "price_too_high": 0,
+   "price_fair_or_positive": 0,
+   "offers": 0,
+   "approximate_dates_used": 0,
+   "online_views": null,
+   "online_saves": null
+  },
+  {
+   "n": 5,
+   "start": "2026-04-06",
+   "end": "2026-04-12",
+   "is_current": true,
+   "list_price": 1195000,
+   "days_listed_in_week": 7,
+   "days_on_market_at_week_end": 31,
+   "showings": 0,
+   "keybox_showings": 0,
+   "agent_reported_tours": 0,
+   "inquiries": 1,
+   "disclosure_contacts_new": 0,
+   "disclosure_sent": 0,
+   "disclosure_opened": 0,
+   "open_house_sessions": 1,
+   "open_house_sessions_without_count": 0,
+   "open_house_groups": 0,
+   "touches_outbound": 4,
+   "outbound_people": 2,
+   "outbound_distinct_days": 2,
+   "replies_inbound": 2,
+   "conversations_with_feedback": 1,
+   "price_too_high": 0,
+   "price_fair_or_positive": 0,
+   "offers": 0,
+   "approximate_dates_used": 0,
+   "online_views": null,
+   "online_saves": null
+  }
+ ],
+ "totals": {
+  "through": "2026-04-12",
+  "contact_records": 7,
+  "contacts": 5,
+  "buyers_via_agent": 1,
+  "team_side_people": 1,
+  "contacted": 5,
+  "contacted_through_host": 1,
+  "not_yet_contacted": 0,
+  "replied": 3,
+  "awaiting_reply": 2,
+  "awaiting_reply_3plus_attempts": 1,
+  "awaiting_reply_answered_before": 0,
+  "awaiting_reply_quiet": 0,
+  "open_no_final_answer": 2,
+  "open_no_final_answer_quiet": 0,
+  "by_status": {
+   "not_yet_contacted": 0,
+   "awaiting_reply": 2,
+   "replied": 2,
+   "passed": 1,
+   "writing_offer": 0,
+   "offer_submitted": 0
+  },
+  "by_interest": {
+   "hot": 0,
+   "warm": 2,
+   "cold": 0,
+   "passed": 1,
+   "unknown": 2
+  },
+  "offer_intent_yes_or_maybe": 1,
+  "touches_outbound": 14,
+  "outbound_by_channel": {
+   "call": 2,
+   "voicemail": 4,
+   "text": 4,
+   "email": 3,
+   "in_person": 0,
+   "unknown": 1
+  },
+  "outbound_person_days": 10,
+  "outbound_distinct_days": 10,
+  "touches_direction_not_recorded": 0,
+  "calls_not_connected": 0,
+  "replies_inbound": 5,
+  "showings": 2,
+  "keybox_showings": 1,
+  "agent_reported_tours": 1,
+  "tours_undated": 0,
+  "tours_approximate_date": 1,
+  "tours_unconfirmed": 0,
+  "inquiries": 1,
+  "inquiries_undated": 0,
+  "disclosure_contacts": 3,
+  "disclosure_contacts_undated": 0,
+  "disclosure_shared_buyers": 1,
+  "disclosure_link_sent": 3,
+  "disclosure_opened_confirmed": 2,
+  "open_house_sessions": 4,
+  "open_house_sessions_without_count": 1,
+  "open_house_sessions_no_visitors": 1,
+  "open_house_groups": 9,
+  "open_house_disclosure_requests": 1,
+  "offers": 0,
+  "offers_by_state": {},
+  "people_with_feedback": 2,
+  "conversations_with_feedback": 4,
+  "team_side_set_aside": {
+   "people": 1,
+   "touches_outbound": 1,
+   "replies_inbound": 1
+  },
+  "lists": {
+   "showings": 2,
+   "disclosure": 3,
+   "open_house": 1,
+   "other_inquiries": 1
+  },
+  "lists_active_this_week": {
+   "showings": 1,
+   "disclosure": 1,
+   "open_house": 0,
+   "other_inquiries": 1
+  },
+  "online_views": null,
+  "online_saves": null
+ },
+ "pricing_tally": {
+  "people_with_feedback": 2,
+  "too_high": 0,
+  "fair_or_positive": 0,
+  "not_raised": 2,
+  "raised_price": 0,
+  "price_asked_recorded": 0,
+  "asked_directly": 0,
+  "conversations_with_feedback": 4,
+  "open_house_price_remarks": []
+ },
+ "themes_tally": {
+  "people_with_feedback": 2,
+  "rows": [
+   {
+    "key": "location",
+    "label": "Location or surroundings",
+    "group": "home",
+    "people": 1,
+    "new_this_week": 0,
+    "contact_ids": [
+     "c002"
+    ]
+   },
+   {
+    "key": "still_deciding",
+    "label": "Still deciding",
+    "group": "buyer",
+    "people": 1,
+    "new_this_week": 0,
+    "contact_ids": [
+     "c001"
+    ]
+   },
+   {
+    "key": "chose_another_home",
+    "label": "Chose or preferred another property",
+    "group": "buyer",
+    "people": 1,
+    "new_this_week": 0,
+    "contact_ids": [
+     "c002"
+    ]
+   }
+  ],
+  "people_with_no_theme": 0
+ },
+ "liked_tally": {
+  "people_with_feedback": 2,
+  "people": 1,
+  "rows": [
+   {
+    "key": "home_overall",
+    "label": "The home overall",
+    "people": 1,
+    "contact_ids": [
+     "c001"
+    ]
+   },
+   {
+    "key": "layout_space",
+    "label": "Layout or space",
+    "people": 1,
+    "contact_ids": [
+     "c001"
+    ]
+   },
+   {
+    "key": "outdoor_space",
+    "label": "Yard or outdoor space",
+    "people": 1,
+    "contact_ids": [
+     "c001"
+    ]
+   }
+  ]
+ },
+ "price_periods": [
+  {
+   "price": 1195000,
+   "start": "2026-03-12",
+   "end": "2026-04-12",
+   "days": 32,
+   "showings": 2,
+   "keybox_showings": 1,
+   "agent_reported_tours": 1,
+   "inquiries": 1,
+   "open_house_sessions": 4,
+   "open_house_groups": 9,
+   "touches_outbound": 14,
+   "replies_inbound": 5,
+   "conversations_with_feedback": 4,
+   "price_too_high": 0,
+   "price_fair_or_positive": 0,
+   "offers": 0
+  }
+ ],
+ "offer_watch": [
+  {
+   "contact_id": "c001",
+   "lead_state": "live",
+   "last_touch_date": "2026-04-08",
+   "days_since_last_touch": 4,
+   "basis_safe": "Comparing the home with one other.",
+   "basis_date": "2026-04-08"
+  }
+ ],
+ "team_side": [
+  {
+   "name_short": "Leocadia M.",
+   "role": "open house host",
+   "sessions_hosted": 4,
+   "contact_id": "c007"
+  }
+ ],
+ "market": {
+  "as_of": "2026-04-13",
+  "data_through": "2026-04-12",
+  "refreshed_for_this_issue": true,
+  "scope": "Fixture City single family homes that closed in the last six months",
+  "source": "Synthetic sales invented for the test fixture.",
+  "method": "Days are counted from the list date to the day the listing first went under contract.",
+  "sample": {
+   "closed": 6,
+   "used": 5,
+   "excluded": 1,
+   "exclusion_reason": "One sale was listed and closed on the same day."
+  },
+  "days_to_contract": {
+   "average": 24,
+   "median": 21,
+   "shortest": 9,
+   "longest": 44,
+   "values_sorted": [
+    9,
+    14,
+    21,
+    30,
+    44
+   ],
+   "over_90_days": 0
+  },
+  "subject_on_report_date": {
+   "date": "2026-04-13",
+   "days_on_market": 32,
+   "sales_under_contract_by_that_day": 4,
+   "of_sales": 5
+  },
+  "sales": [
+   {
+    "address": "200 Sample Glen Ct",
+    "sold_date": "2026-01-10",
+    "sold_price": 1100000,
+    "sqft": 1400,
+    "beds_baths": "3/2",
+    "list_date": "2025-10-01",
+    "list_price": 1090000,
+    "contract_date": "2026-01-01",
+    "days_to_contract": 9,
+    "used_in_average": true
+   },
+   {
+    "address": "201 Sample Glen Ct",
+    "sold_date": "2026-02-11",
+    "sold_price": 1125000,
+    "sqft": 1420,
+    "beds_baths": "3/2",
+    "list_date": "2025-11-02",
+    "list_price": 1120000,
+    "contract_date": "2026-01-02",
+    "days_to_contract": 14,
+    "used_in_average": true
+   },
+   {
+    "address": "202 Sample Glen Ct",
+    "sold_date": "2026-03-12",
+    "sold_price": 1150000,
+    "sqft": 1440,
+    "beds_baths": "3/2",
+    "list_date": "2025-12-03",
+    "list_price": 1150000,
+    "contract_date": "2026-01-03",
+    "days_to_contract": 21,
+    "used_in_average": true
+   },
+   {
+    "address": "203 Sample Glen Ct",
+    "sold_date": "2026-01-13",
+    "sold_price": 1175000,
+    "sqft": 1460,
+    "beds_baths": "3/2",
+    "list_date": "2025-10-04",
+    "list_price": 1180000,
+    "contract_date": "2026-01-04",
+    "days_to_contract": 30,
+    "used_in_average": true
+   },
+   {
+    "address": "204 Sample Glen Ct",
+    "sold_date": "2026-02-14",
+    "sold_price": 1200000,
+    "sqft": 1480,
+    "beds_baths": "3/2",
+    "list_date": "2025-11-05",
+    "list_price": 1210000,
+    "contract_date": "2026-01-05",
+    "days_to_contract": 44,
+    "used_in_average": true
+   },
+   {
+    "address": "240 Sample Glen Ct",
+    "sold_date": "2026-02-20",
+    "sold_price": 1180000,
+    "sqft": 1500,
+    "beds_baths": "3/2",
+    "list_date": "2026-02-20",
+    "list_price": 1180000,
+    "contract_date": null,
+    "days_to_contract": null,
+    "used_in_average": false
+   }
+  ],
+  "statement_safe": "Apr 13 is day 32. 4 of the 5 comparable sales were under contract by that point."
+ },
+ "marketing": {
+  "as_of": "2026-04-13",
+  "note": "Checked for this issue.",
+  "channels": [
+   {
+    "channel": "MLS and home search sites",
+    "status": "on",
+    "checked": "2026-04-13",
+    "detail": "On the MLS since Mar 12."
+   },
+   {
+    "channel": "Open houses",
+    "status": "on",
+    "checked": "2026-04-13",
+    "detail": "Four sessions held. The next is not scheduled yet."
+   },
+   {
+    "channel": "Facebook and Instagram ads",
+    "status": "on",
+    "checked": "2026-04-02",
+    "detail": "Two ads were running at the last check."
+   },
+   {
+    "channel": "YouTube ads",
+    "status": "prepared",
+    "checked": "2026-04-02",
+    "detail": "The video is uploaded. Nothing has launched."
+   }
+  ]
+ },
+ "online": null,
+ "nearby": null,
+ "next_week": [
+  "Keep trying Wilhelmina R. She has been followed up on three days since Mar 30 with no answer yet.",
+  "Check back with Odalys V. on Wednesday, Apr 15.",
+  "Ask the open house host where the Mar 28 visitor stands."
+ ],
+ "sources_used": [
+  {
+   "kind": "activity_sheet_live",
+   "label": "Activity sheet (synthetic)",
+   "as_of": "2026-04-13"
+  },
+  {
+   "kind": "market_data",
+   "label": "Comparable sales (synthetic)",
+   "as_of": "2026-04-13"
+  }
+ ],
+ "data_quality": [
+  "Synthetic fixture. The Mar 15 open house has no visitor count.",
+  "Thaddeus K. gave no exact tour day. It is placed in the week of Mar 16 and marked approximate."
+ ]
+}
