@@ -1,0 +1,24 @@
+{
+  "today": "2026-10-12",
+  "report_month": "October 2026",
+  "run_id": "pcfs-cma-autobuild-weekly-2026-10-12",
+  "data_source": "PUBLIC-FALLBACK",
+  "live_base": "https://graehamwatts.github.io/online-content/cma/",
+  "review_to": ["AGENT_EMAIL", "CLIENT_CARE_EMAIL"],
+  "rates": [
+    ["7.48%", "Mortgage News Daily, Oct 9, 2026"],
+    ["7.40%", "Freddie Mac PMMS, Oct 8, 2026"],
+    ["7.44%", "Bankrate California, Oct 12, 2026"],
+    ["7.28%", "NerdWallet California, Oct 12, 2026"]
+  ],
+  "subjects": {
+    "abc": {"mkt": "epa", "addr": "123 Example St", "lat": 37.4700, "lon": -122.1400, "side": "E"}
+  },
+  "active_list_dates": {},
+  "common_qc": [
+    "Data source: public records. MLS was signed out, so comps, list-price histories and days on market come from public listing records. Re-run when MLS is logged in if you want Matrix figures.",
+    "An independent reviewer recomputed every table cell and chart point from the raw sale records and its notes are applied."
+  ],
+  "held_note": "",
+  "held": []
+}
