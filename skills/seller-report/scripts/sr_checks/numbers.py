@@ -44,9 +44,10 @@ def to_int(s):
 
 
 class Claim(object):
-    def __init__(self, cid, label, value, shapes=(), required=False, zero_ok=False, money=False, kinds=core.KINDS):
+    def __init__(self, cid, label, value, shapes=(), required=False, zero_ok=False, money=False, kinds=core.KINDS, scope=None):
         self.id, self.label, self.value, self.shapes = cid, label, value, shapes
         self.required, self.zero_ok, self.money, self.kinds = required, zero_ok, money, kinds
+        self.scope = scope            # a section name: the sentence is looked for there only (other homes have beds and square feet too)
 
 
 def _claims(ctx, m):
@@ -163,8 +164,7 @@ def _more_claims(ctx, m):
         Claim("waiting_answered_before", "still waiting who answered an earlier follow-up", T["awaiting_reply_answered_before"],
               shapes=[(r"\b%s of the %s answered an earlier one" % (N, N), 1)]),
         Claim("approximate_of_tours", "showing dates that are approximate, where restated", T["tours_approximate_date"],
-              shapes=[(r"\b%s of the %s (?:tour|showing) dates (?:is|are) approximate" % (N, N), 1),
-                      (r"\b%s dates? (?:is|are) approximate and says? about" % N, 1)]),
+              shapes=[(r"\b%s of the %s (?:tour|showing) dates (?:is|are) approximate" % (N, N), 1)]),
         Claim("disclosure_dated", "disclosure list people dated in the weeks", dated_new, shapes=[(dis, 1)]),
         Claim("disclosure_undated", "disclosure list people with no date", T["disclosure_contacts_undated"], shapes=[(dis, 2)]),
         Claim("disclosure_in_all", "disclosure list people in all", T["disclosure_contacts"], shapes=[(dis, 3)]),
@@ -211,10 +211,12 @@ def _more_claims(ctx, m):
               shapes=[(r"Not in these totals: %s messages? to %s open house hosts? and %s repl(?:y|ies)" % (N, N, N), 3)]),
         Claim("approximate_tour_dates", "tour dates that are approximate", T["tours_approximate_date"],
               shapes=[(r"\b%s dates? of (?:a showing or tour|showings or tours) (?:is|are) approximate" % N, 1)]),
-        Claim("beds", "bedrooms", L.get("beds"), shapes=[(r"\b%s bed, [\d.]+ bath, %s sq ft" % (N, N), 1)]),
-        Claim("sqft", "square feet", L.get("sqft"), shapes=[(r"\b%s bed, [\d.]+ bath, %s sq ft" % (N, N), 2)]),
+        Claim("beds", "bedrooms", L.get("beds"), shapes=[(r"\b%s bed, [\d.]+ bath, %s sq ft" % (N, N), 1)], scope="masthead"),
+        Claim("sqft", "square feet", L.get("sqft"), shapes=[(r"\b%s bed, [\d.]+ bath, %s sq ft" % (N, N), 2)], scope="masthead"),
         Claim("marketing_running", "marketing channels confirmed running for this issue", X["marketing_running"],
-              shapes=[(r"\b%s channels? confirmed running" % N, 1)]),
+              shapes=[(r"\b%s channels? (?:confirmed )?running\b" % N, 1)]),
+        Claim("online_views_total", "online views since we listed", T.get("online_views"),
+              shapes=[(r"\b%s views? since we listed, as counted by" % N, 1), (r"\b%s views? since we listed on the sites? we read" % N, 1)]),
     ]
     if MK:
         under = r"\b%s of the %s [a-z ]{3,40}? were under contract by that" % (N, N)
@@ -295,8 +297,8 @@ def _marketing(B, ctx, m, text):
     """A channel is called running only when it is on and was checked for this issue."""
     late = [n for n in m["extra"]["marketing_not_running"] if n]
     bad = []
-    for name in late:
-        for mt in re.finditer(re.escape(name) + r"\s+(RUNNING\b|Running now|Switched on)", text):
+    for name in late:                                       # "switched on" with the day last checked is the honest word; "running" is not
+        for mt in re.finditer(re.escape(name) + r"\s+(RUNNING\b|Running\b|LIVE\b|ACTIVE\b)", text):
             bad.append("'%s' is shown as %s, but it was not confirmed on for this issue" % (name, mt.group(1)))
     if late or m["extra"]["marketing_running"]:
         B.judge("marketing_running_rule", bad, "no channel is called running unless it was checked on for this issue",
@@ -352,6 +354,8 @@ def _sentence_verdict(text, cl):
 
 def _judge_claim(B, ctx, cl, text):
     rule = cl.id
+    if cl.scope and ctx.section_text(cl.scope):
+        text = ctx.section_text(cl.scope)
     nodes = ctx.page.hooks(cl.id)
     if nodes:
         problems, loose, placed = _hook_verdict(ctx, cl, nodes)
@@ -502,7 +506,7 @@ def _saying(B, ctx, m):
 
 
 # ---------------------------------------------------------------------------------------------
-# kinds of showing are never merged, and offers print the recorded price and percent
+# what a showing counts, the counts this week in brief states, and offers with the recorded price and percent
 # ---------------------------------------------------------------------------------------------
 def _showings_defined(B, ctx, text):
     """Showings is one number: key-box showings plus the tours agents reported. The page must say what it
@@ -516,6 +520,36 @@ def _showings_defined(B, ctx, text):
         bad.append("the page does not say that an inquiry is not a showing")
     B.judge("showings_defined", bad, "the page says what a showing counts, and that an inquiry is never a showing",
             "the Showings number is printed without saying what it counts")
+
+
+BRIEF_COUNTS = ((r"\b(\d+|no|zero) (?:more |new )?showings?\b", "showings", "showings"),
+                (r"\b(\d+|no|zero) (?:more |new )?inquir(?:y|ies)\b", "inquiries", "inquiries"),
+                (r"\b(\d+|no|zero) new disclosure packages?\b", "disclosure_contacts_new", "new disclosure packages"),
+                (r"\b[Ww]e received (\d+|no|zero) offers?\b", "offers", "offers"))
+
+
+def _brief(B, ctx, m):
+    """This week in brief, and the inbox preview line that repeats its first sentence: the counts they state are
+    this week's counts. A brief the operator wrote is theirs."""
+    W = m["this_week"]
+    nodes = ctx.page.sections("brief")
+    if not W or ctx.page.sections("brief_override"):
+        return
+    skip = ctx.page.sections("since_week_closed")
+    text = core.squash(" ".join([ctx.page.text(root=n, skip=skip) for n in nodes] + [ctx.page.hidden_text()]))
+    if not text:
+        return
+    bad, seen = [], 0
+    for pattern, field, word in BRIEF_COUNTS:
+        for mt in re.finditer(pattern, text):
+            seen += 1
+            got = 0 if mt.group(1) in ("no", "zero") else to_int(mt.group(1))
+            if got != W[field]:
+                bad.append("'%s': this week had %d %s" % (core.excerpt(text, mt.start(), mt.end(), 20), W[field], word))
+    if bad:
+        B.fail("brief_week", "this week in brief states a count that is not this week's", bad)
+    elif seen:
+        B.ok("brief_week", "the %d counts this week in brief states are this week's" % seen)
 
 
 def _offers(B, ctx, text):
@@ -551,6 +585,7 @@ def check(ctx):
             _judge_claim(B, ctx, cl, text)
     _saying(B, ctx, m)
     _showings_defined(B, ctx, text)
+    _brief(B, ctx, m)
     _offers(B, ctx, text)
     _week_channels(B, ctx, m, text)
     _marketing(B, ctx, m, text)
@@ -562,6 +597,8 @@ def check(ctx):
     NL.check_lists(B, ctx, m)
     from . import numbers_dates as ND
     ND.check_dates(B, ctx)
+    from . import numbers_extras as NX
+    NX.check_extras(B, ctx)
     hooks = [h for h in ctx.page.hook_names()]
     if not hooks:
         B.info("hooks", "the page carries no data-sr hooks, so every number was looked for by its sentence or its "

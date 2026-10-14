@@ -277,7 +277,11 @@ def check(ctx):
     own_core = address_core(ctx.address())
     sales = [core.fold(s.get("address") or "") for s in ((ctx.ledger.get("market") or {}).get("sales") or [])]
     market_text = core.fold(ctx.section_text("market") or "")
-    bad, comps = [], 0
+    # Similar homes nearby: public street addresses are printed in that one section, as in a market analysis.
+    # Anywhere else on the page the same address is a failure like any other (never where a buyer went).
+    homes = [core.fold(h.get("address") or "") for h in ((ctx.ledger.get("nearby") or {}).get("homes") or []) if isinstance(h, dict)]
+    nearby_text = core.fold(ctx.section_text("nearby") or "")
+    bad, comps, watched = [], 0, 0
     for mt in STREET.finditer(everything):
         found = core.fold("%s %s" % (mt.group(1), mt.group(2))).replace(".", "")
         if own_core and (found == own_core or own_core.startswith(found) or found.startswith(own_core)):
@@ -287,10 +291,27 @@ def check(ctx):
             if not ctx.page.sections("market") or whole.rstrip(".") in market_text:
                 comps += 1
                 continue
-            bad.append("a comparable sale's address outside the market section: '%s'" % mt.group(0))
+            # a sale that is also a watched home nearby is held to the similar homes rule just below
+            if not any(s and (s.startswith(whole.rstrip(".")) or whole.rstrip(".") in s) for s in homes):
+                bad.append("a comparable sale's address outside the market section: '%s'" % mt.group(0))
+                continue
+        if any(s and (s.startswith(whole.rstrip(".")) or whole.rstrip(".") in s) for s in homes):
+            if ctx.page.sections("nearby") and nearby_text.count(whole.rstrip(".")) == core.fold(everything).count(whole.rstrip(".")):
+                watched += 1
+                continue
+            bad.append("a nearby home's address outside the similar homes section: '%s'" % mt.group(0))
             continue
         bad.append("'%s' in '%s'" % (mt.group(0), core.excerpt(everything, mt.start(), mt.end(), 25)))
+    # A watched home in this listing's own building reads as this listing's street, so its unit is what gives it
+    # away: the full address with its unit may be printed in the similar homes section and nowhere else.
+    page_text = core.fold(everything)
+    same_building = set(core.fold(h.get("address") or "") for h in ((ctx.ledger.get("nearby") or {}).get("homes") or [])
+                        if isinstance(h, dict) and own_core and address_core(h.get("address") or "") == own_core)
+    for whole in sorted(same_building - set(["", core.fold(ctx.address())])):
+        if page_text.count(whole) > nearby_text.count(whole):
+            bad.append("a nearby home's address outside the similar homes section: '%s'" % whole)
     B.judge("address_pattern", bad, "every street address on the page is this listing's (%s)%s"
-            % (ctx.address(), ", plus %d comparable sale(s) from the ledger's market block" % comps if comps else ""),
+            % (ctx.address(), (", plus %d comparable sale(s) from the ledger's market block" % comps if comps else "")
+               + (", plus %d watched home(s) in the similar homes section" % watched if watched else "")),
             "a street address that is not this listing's is on the page (say 'chose another property')", waivable=True)
     return B.results

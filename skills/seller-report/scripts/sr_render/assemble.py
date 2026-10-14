@@ -93,7 +93,7 @@ def build(m, fit=0):
     out = []
     for ln in lines:
         if len(ln) > 900:
-            for end in ("</td>", "</th>", "</div>", "</a>"):
+            for end in ("</td>", "</th>", "</div>", "</a>", "<br>"):       # after a <br> a line break changes nothing either
                 ln = ln.replace(end, end + "\n")
         out.append(ln)
     return "\n".join(out)
@@ -114,6 +114,16 @@ def _ledger_text(d):
             out.append(node.lower())
     walk(d)
     return " \n ".join(out)
+
+
+def without_sections(doc, names):
+    """The page with the named sections cut out (each runs from its hook to the next section's hook)."""
+    for name in names:
+        a = doc.find('data-sr-section="%s"' % name)
+        if a >= 0:
+            b = doc.find('data-sr-section="', a + 20)
+            doc = doc[:a] + doc[b if b >= 0 else len(doc):]
+    return doc
 
 
 def footing(doc, m):
@@ -198,8 +208,11 @@ def checks(doc, m):
     if m.link:
         amounts = set(money(o["price"]) for o in m.offers if o.get("price") is not None) - set(
             money(e["price"]) for e in (m.L.get("price_history") or [])) - set([money(m.L["list_price"])])
+        # a watched home or a comparable sale may carry the same public price as an offer: those two sections print
+        # public record amounts, so an offer amount is looked for everywhere else
+        private = without_sections(doc, ("nearby", "market"))
         for a in amounts:
-            if a in doc:
+            if a in private:
                 err.append("link copy carries an offer amount: " + a)
         for o in m.offers:
             if o.get("agent_short") and o["agent_short"] in body:

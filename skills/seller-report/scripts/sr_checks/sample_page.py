@@ -249,6 +249,51 @@ def build(ledger, identity, kind="email", hooks=True, link_url="https://seller-r
             "<p style=\"margin:4px 0\">%s: %s</p>" % (core.fmt_day(it["date"]), esc(it["summary_safe"])) for it in since)
             + "<p style=\"margin:4px 0\">Logged after Sunday, so it is not in this week's numbers.</p>"))
 
+    # ---- similar homes nearby (optional): public addresses, in this one section ---------------------
+    nearby = d.get("nearby") or {}
+    if nearby.get("homes"):
+        homes = nearby["homes"]
+        said = {"new_listing": "New listing", "price_change": "Price changed", "went_pending": "Went pending", "sold": "Sold",
+                "withdrawn": "Taken off the market", "back_on_market": "Back on the market"}
+        moved = [(i, h) for i, h in enumerate(homes) if h.get("change") in said]
+        head = ("%s of the %s homes we are watching changed" % (v("nearby_changed", len(moved)), v("nearby_homes", len(homes)))) if moved \
+            else "No change among the %s homes we are watching" % v("nearby_homes", len(homes))
+        when = ("Checked %s." if nearby.get("checked_for_this_issue") else "Last checked %s, not checked again for this report.") % core.fmt_day(nearby["as_of"])
+        lines = []
+        for i, h in moved:
+            t = "%s: %s on %s" % (esc(h["address"]), said[h["change"]], core.fmt_day(h["change_date"]))
+            if h["change"] == "price_change":
+                t += ", %s to %s" % (money(h["price_before"]), money(h["list_price"]))
+            elif h["change"] == "sold":
+                t += " for %s" % money(h["sold_price"])
+            lines.append('<p%s style="margin:4px 0">%s.</p>' % (at("data-sr-row", "change:%d" % i), t))
+        rows = ['<tr><th scope="col"%s %s>Home</th><th scope="col"%s %s>Status</th><th scope="col"%s %s>Price</th><th scope="col"%s %s>Days</th></tr>'
+                % (at("data-sr-col", "LABEL"), HEAD, at("data-sr-col", "status"), HEAD, at("data-sr-col", "price"), HEAD, at("data-sr-col", "days"), HEAD)]
+        for i, h in enumerate(homes):
+            price = h.get("sold_price") if h.get("status") == "sold" else h.get("list_price")
+            rows.append('<tr%s><th scope="row" %s>%s</th><td %s>%s</td><td %s>%s</td><td %s>%s</td></tr>' % (
+                at("data-sr-row", i), CELL, esc(h["address"]), CELL, esc(str(h.get("status") or "").capitalize()), CELL,
+                money(price) if price is not None else "not recorded", CELL, "&nbsp;" if h.get("days_on_market") is None else shown(h["days_on_market"])))
+        out.append(block("nearby", h2("Similar homes nearby") + '<p style="margin:4px 0">%s. %s</p>' % (head, when) + NL.join(lines)
+                         + '<table%s cellpadding="0" cellspacing="0" width="100%%">%s</table>' % (at("data-sr-table", "nearby"), NL.join(rows))))
+
+    # ---- online ads and marketing (optional): only when a channel is on or something was checked for this issue ----
+    mk = d.get("marketing") or {}
+    chans = mk.get("channels") or []
+    if any(ch.get("status") == "on" or (ch.get("checked") or "") >= R["week_start"] for ch in chans):
+        words = {"prepared": "PREPARED", "on_hold": "ON HOLD", "not_launched": "NOT LAUNCHED", "ended": "ENDED"}
+        rows, running = [], 0
+        for i, ch in enumerate(chans):
+            live = ch.get("status") == "on" and (ch.get("checked") or "") >= R["week_end"]
+            running += 1 if live else 0
+            word = "RUNNING" if live else ("SWITCHED ON" if ch.get("status") == "on" else words.get(ch.get("status"), ""))
+            when = "" if live else " Last checked %s." % core.fmt_day(ch["checked"])
+            if ch.get("ends_on"):
+                when += " %s %s." % ("Scheduled to end" if ch["ends_on"] >= R["report_date"] else "Was scheduled to end", core.fmt_day(ch["ends_on"]))
+            rows.append('<p%s style="margin:4px 0">%s %s%s %s</p>' % (at("data-sr-row", "channel:%d" % i), esc(ch["channel"]), word, when, esc(ch.get("detail") or "")))
+        lede = ("<p style=\"margin:4px 0\">%d channel%s running.</p>" % (running, "" if running == 1 else "s")) if running else ""
+        out.append(block("marketing", h2("Online ads and marketing") + lede + NL.join(rows)))
+
     # ---- next week ----------------------------------------------------------------------------
     names = dict((c["id"], c["name_short"]) for c in d["contacts"])
     items = [s for s in d.get("next_week") or [] if not (link and any(names[i] in s for i in (writers | weighing) if i in names))]
@@ -305,7 +350,9 @@ def build(ledger, identity, kind="email", hooks=True, link_url="https://seller-r
         if len(bands) > 1:
             rows.append('<tr%s><th scope="row" %s>%d wks at %s</th>%s</tr>' % (at("data-sr-row", "sub:%d" % price), CELL, len(ws), money(price),
                                                                           week_cells(total_of(ws), total=True)))
-    rows.append('<tr%s><th scope="row" %s>All %d</th>%s</tr>' % (at("data-sr-row", "all"), CELL, len(weeks), week_cells(total_of(weeks), total=True)))
+    grand = total_of(weeks)
+    grand["online_views"] = T.get("online_views")           # since we listed: a site's running count where one was read
+    rows.append('<tr%s><th scope="row" %s>All %d</th>%s</tr>' % (at("data-sr-row", "all"), CELL, len(weeks), week_cells(grand, total=True)))
     out.append(block("weekly_table", h2("Every week in one table") + '<table%s cellpadding="0" cellspacing="0" width="100%%">%s</table>'
                      % (at("data-sr-table", "weeks"), NL.join(rows))))
 

@@ -251,6 +251,10 @@ def _check_marketing(P, m):
         _enum(P, q + ".status", ch.get("status"), MARKETING_STATUS_KEYS)
         if not (ch.get("channel") or "").strip() or not _is_day(ch.get("checked")) or not (ch.get("detail") or "").strip():
             P.append("%s: needs channel, checked (an ISO date) and detail" % q)
+        if ch.get("ends_on") is not None and (not _is_day(ch["ends_on"]) or ch.get("status") != "on"):
+            P.append("%s.ends_on: the day a switched-on channel is scheduled to end (an ISO date)" % q)
+        if money_amounts("%s %s" % (ch.get("detail") or "", m.get("note") or "")):
+            P.append("%s: holds a dollar amount. Ad spend is never stored or printed" % q)
 
 
 def _check_online(P, o, n_weeks):
@@ -276,6 +280,19 @@ def _check_online(P, o, n_weeks):
                 P.append("%s.%s: keyed by a name in online.portals" % (q, kind))
             elif any(v is not None and (not isinstance(v, int) or isinstance(v, bool) or v < 0) for v in vals.values()):
                 P.append("%s.%s: every figure is a whole number, or null when not recorded" % (q, kind))
+    since = o.get("since_listing")
+    if since is None:
+        return
+    if not isinstance(since, dict) or any(k not in ("views", "saves") or not isinstance(v, dict) for k, v in since.items()):
+        P.append("online.since_listing: views and saves, each keyed by a name in online.portals")
+        return
+    for kind, vals in since.items():
+        for portal, v in vals.items():
+            weeks = sum(w[kind][portal] for w in o.get("weeks") or [] if isinstance(w, dict) and isinstance((w.get(kind) or {}).get(portal), int))
+            if portal not in portals or not isinstance(v, int) or isinstance(v, bool) or v < 0:
+                P.append("online.since_listing.%s.%s: a whole number for a portal in online.portals" % (kind, portal))
+            elif v < weeks:
+                P.append("online.since_listing.%s.%s: the running count (%d) is less than its weekly figures added up (%d)" % (kind, portal, v, weeks))
 
 
 def _check_nearby(P, nb, L):
@@ -303,6 +320,8 @@ def _check_nearby(P, nb, L):
             P.append("%s.change_date: a change needs the day it happened" % q)
         if h.get("change_date") is not None and (not _is_day(h["change_date"]) or h["change_date"] > nb["as_of"]):
             P.append("%s.change_date: an ISO date no later than as_of" % q)
+        if h.get("change_date_approximate") not in (None, True, False):
+            P.append("%s.change_date_approximate: true when the change was seen between two checks with no date on record" % q)
         if h.get("status") == "sold" and not isinstance(h.get("sold_price"), int):
             P.append("%s.sold_price: a sold home needs its price" % q)
         if h.get("change") == "price_change" and (not isinstance(h.get("price_before"), int) or not isinstance(h.get("list_price"), int)):

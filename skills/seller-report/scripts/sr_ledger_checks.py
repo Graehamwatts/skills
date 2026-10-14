@@ -302,7 +302,7 @@ def data_quality(d, raw, cur, listing, P, row_counts, deferred):
 GLANCE_LIMIT = 5
 
 
-def notes_for_operator(d, raw, listing, P, extra=()):
+def notes_for_operator(d, raw, listing, P, extra=(), optional=None):
     """The small file written beside the ledger. worth_a_glance holds at most five short plain lines, most
     important first, for the chat reply ("Worth a glance before you send"). also_noted keeps the rest for
     Claude. Nothing here is printed in a report and nothing here stops a build."""
@@ -328,6 +328,10 @@ def notes_for_operator(d, raw, listing, P, extra=()):
             C.fmt_date(as_of), C.fmt_date(we))
     for s in extra or []:                                   # what Claude noticed across sources for this issue
         add(1, s)
+    for s in (optional or {}).get("glance") or []:          # about an optional section: a count that went down, a heavy photo
+        add(5, s)
+    for s in (optional or {}).get("also") or []:
+        add(8, s)
     for who, s in P.unsure:                                 # what Claude was unsure of while reading a note
         add(1, s if (who or "") in s else "%s: %s" % (who, s))
     week_tours = [(c, e) for c in d["contacts"] for e in c["engagements"] if e["type"] in C.TOUR_TYPES and in_week(e.get("date"))]
@@ -375,8 +379,12 @@ def notes_for_operator(d, raw, listing, P, extra=()):
     if raw.get("warnings"):
         add(7, "The sheet parser raised %d warning(s). They are listed in the private parse file.", len(raw["warnings"]))
     ranked.sort()
-    top = [C.strip_dashes(s) for rank, _, s in ranked if rank < 7][:GLANCE_LIMIT]     # rank 7 and up is for Claude only
-    lines = [C.strip_dashes(s) for _, _, s in ranked]
+    # A lookup that was blocked or failed is always said: its line keeps a place at the end of the five (two at
+    # most; a third waits in also_noted), because the section it would have filled is missing from the report.
+    skipped = [C.strip_dashes(s) for s in (optional or {}).get("skipped") or []]
+    kept = skipped[:2]
+    top = [C.strip_dashes(s) for rank, _, s in ranked if rank < 7][:GLANCE_LIMIT - len(kept)] + kept     # rank 7 and up is for Claude only
+    lines = [C.strip_dashes(s) for _, _, s in ranked] + skipped
     return {"schema_version": C.SCHEMA_VERSION, "slug": d["meta"]["slug"], "issue_number": R["issue_number"],
             "report_date": R["report_date"], "week_start": ws, "week_end": we,
             "how_to_use": "worth_a_glance goes in the chat reply that hands over the Gmail draft, under the words "

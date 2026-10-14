@@ -15,6 +15,11 @@ Hard stops. The build writes nothing and exits with status 2 when:
   - the numbers do not foot (weeks against totals, price periods against totals, people against statuses);
   - sr_contract.validate_ledger finds a problem (privacy scan, enumerations, numbers against rows).
 
+The optional sections come from what is already on file: online_views.json becomes ledger.online, the snapshot
+nearby.json holds for this issue becomes ledger.nearby, and marketing.json is kept only when a channel is on or
+something was checked for this issue. Nothing is fetched here. A lookup that was skipped leaves its section
+out and puts one plain line in notes_for_operator.json.
+
 The cutoff. Nothing dated after the Sunday that ends the report week is in a count. Later entries, up to
 --through, go to report.since_week_closed. Entries after --through wait for the next issue.
 
@@ -36,10 +41,13 @@ if _HERE not in sys.path:
 import sr_contract as C                  # noqa: E402
 import sr_files as F                     # noqa: E402
 import sr_ledger_checks as K             # noqa: E402
+import online_views                      # noqa: E402
+import nearby_update                     # noqa: E402
+import hero_photo                        # noqa: E402
 from sr_build_people import People       # noqa: E402
 
 NOT_FOR_LEDGER = ("schema_version", "sheet", "keybox_number", "listing_folder", "numbering", "tracking",
-                  "tracking_since", "operator_notes", "status_checked")
+                  "tracking_since", "operator_notes", "status_checked", "extras")
 REQUIRED_LISTING = ("slug", "address", "city", "state", "beds", "baths", "sqft", "property_type", "list_date",
                     "price_history", "status", "mls", "hero_photo")
 TRACKING = ("keybox_showings", "disclosure_sent", "disclosure_opened")
@@ -318,11 +326,38 @@ def build(folder, report_date=None, run_date=None, through=None, issue=None, sou
                 w[flag] = None
         d["weeks"].append(w)
 
+    optional = {"skipped": [], "glance": [], "also": []}    # plain lines about the optional sections, for the chat reply
     market = F.load_json(paths["market"], default={}) or None
     if market:
         d["market"] = fill_market(market, C.days_on_market(listing["list_date"], rd), rd)
     d["marketing"] = F.load_json(paths["marketing"], default={}) or None
-    d["sources_used"] = K.sources_used(raw, events, sources)
+    if d["marketing"] and not C.marketing_recorded(d["marketing"], d["report"]):
+        d["marketing"] = None                              # nothing is on and nothing was checked for this issue
+        optional["also"].append("The ad and marketing status on file was last checked before this report's week and nothing is switched on, so that section is left out.")
+    # the optional sources: only what is already on file. Nothing is fetched here (sr_lookups holds the rules)
+    views, nearby = F.load_json(paths["online_views"], default={}), F.load_json(paths["nearby"], default={})
+    extra_sources = []
+    if views:
+        problems += ["online_views.json: " + p for p in online_views.validate_store(views)]
+        if not problems:
+            d["online"], notes = online_views.ledger_block(views, listing, d["report"])
+            extra_sources += online_views.sources(views, d["online"], d["report"])
+            for k in optional:
+                optional[k] += notes[k]
+    if nearby:
+        problems += ["nearby.json: " + p for p in nearby_update.validate_store(nearby, listing)]
+        if not problems:
+            d["nearby"], notes = nearby_update.ledger_block(nearby, listing, d["report"])
+            if d["nearby"]:
+                extra_sources.append("nearby_lookup|%s|%s" % (d["nearby"]["source"], d["nearby"]["as_of"]))
+            for k in optional:
+                optional[k] += notes[k]
+    if problems:
+        return None, problems, {}
+    heavy = hero_photo.heavy_note(listing)
+    if heavy:
+        optional["glance"].append(heavy)
+    d["sources_used"] = K.sources_used(raw, events, list(sources) + extra_sources)
 
     d["meta"] = {"slug": listing["slug"], "built_at": built_at or datetime.datetime.now().astimezone().replace(microsecond=0).isoformat()}
     info = {"row_counts": row_counts, "deferred_rows": sorted(deferred), "stats": dict(P.stats), "issue_number": number,
@@ -338,7 +373,7 @@ def build(folder, report_date=None, run_date=None, through=None, issue=None, sou
     problems += C.validate_ledger(d, identity=C.load_identity())
     info["headline"] = K.headline(d)
     if not problems:
-        info["notes_for_operator"] = K.notes_for_operator(d, raw, listing, P, glance)
+        info["notes_for_operator"] = K.notes_for_operator(d, raw, listing, P, glance, optional)
     return (None if problems else d), problems, info
 
 

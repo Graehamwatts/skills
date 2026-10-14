@@ -9,6 +9,7 @@ are shown in full and earlier people get one line each; the link copy and the PD
 """
 import sr_contract as C
 from .people import *        # noqa: F401,F403
+from .sections_saying import approx_words
 
 
 def s_details_band(m):
@@ -18,6 +19,9 @@ def s_details_band(m):
         hf(SIZE["h2"], 700, 1.25), P["on_dark"])
     if m.link:
         txt = "People are grouped by what they did. Everyone is shown in full, with every date we followed up."
+    elif any(len(m.members(k)[0]) > OPT["fit"]["full"] for k in C.LIST_KEYS):
+        # a very busy week: the email has no room for everyone in full, and must not say that it does
+        txt = "People are grouped by what they did. This was a busy week, so most people have one line each here."
     else:
         txt = "People are grouped by what they did. Everyone active this week is shown in full. Earlier people have one line each."
     s += para(txt, SIZE["text"], top=6, color=P["on_dark_soft"])
@@ -233,8 +237,7 @@ def s_showings(m):
         k = T["tours_unconfirmed"]
         extra.append("%s on the showing list with no confirmation that the tour took place." % cap1(n_(k, "of them is", "of them are")))
     if T.get("tours_approximate_date"):
-        k = T["tours_approximate_date"]
-        extra.append("%s approximate and %s about." % (cap1(n_(k, "date is", "dates are")), "says" if k == 1 else "say"))
+        extra.append("%s." % cap1(approx_words(m)))
     if T.get("tours_undated"):
         extra.append("%s no date on file." % cap1(n_(T["tours_undated"], "showing has", "showings have")))
     s = head("Showings", title, lede + ((" " + " ".join(extra)) if extra else ""))

@@ -312,7 +312,7 @@ def _span(ns):
 
 
 # ---------------------------------------------------------------------------------------------
-# the week in numbers
+# the numbers table: this week, last week, since we listed
 # ---------------------------------------------------------------------------------------------
 def _scorecards(ctx):
     named = ctx.page.named_table("scorecard")

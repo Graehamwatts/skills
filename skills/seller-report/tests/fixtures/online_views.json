@@ -1,0 +1,16 @@
+{
+ "schema_version": 1,
+ "slug": "sample-glen",
+ "_note": "Synthetic. Online views for the test listing (listed 2026-03-12). One portal gives running counts, the other weekly figures. The last row is after the Apr 13 issue's week and must not change that issue.",
+ "rows": [
+  {"week_start": "2026-03-23", "portal": "Zillow", "views": 410, "saves": 12, "counts": "since_listing", "as_of": "2026-03-30", "source": "operator"},
+  {"week_start": "2026-03-30", "portal": "Zillow", "views": 620, "saves": 18, "counts": "since_listing", "as_of": "2026-04-06", "source": "operator"},
+  {"week_start": "2026-03-30", "portal": "Redfin", "views": 65, "saves": 2, "counts": "week", "as_of": "2026-04-06", "source": "operator"},
+  {"week_start": "2026-04-06", "portal": "Zillow", "views": 800, "saves": 22, "counts": "since_listing", "as_of": "2026-04-13", "source": "portal_page"},
+  {"week_start": "2026-04-06", "portal": "Redfin", "views": 50, "saves": 1, "counts": "week", "as_of": "2026-04-13", "source": "operator"},
+  {"week_start": "2026-04-13", "portal": "Zillow", "views": 990, "saves": 30, "counts": "since_listing", "as_of": "2026-04-20", "source": "operator"}
+ ],
+ "lookups": [
+  {"report_date": "2026-04-13", "key": "portal:Zillow", "planned_at": "2026-04-13T09:00:00-07:00", "why": "asked", "outcome": "ok", "reason": null, "detail": null}
+ ]
+}

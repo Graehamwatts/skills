@@ -178,6 +178,8 @@ def check(ctx):
         for mt in RANGE.finditer(flat):                      # a 'Mon D to Mon D' range that opens on this week's Monday ends on its Sunday
             if not re.match(r"[A-Za-z]", mt.group(2)) or core.fold(mt.group(0)) in typed:
                 continue
+            if re.search(r"\bWeek \d+ includes $", flat[max(0, mt.start() - 24):mt.start()]):
+                continue                                     # the days of a price-change week that sit at the other list price
             if _norm_day(mt.group(1)) == _norm_day(core.fmt_day(ws)) and _norm_day(mt.group(2)) != _norm_day(core.fmt_day(we)):
                 bad.append("'%s': the week that starts %s ends %s" % (mt.group(0), core.fmt_day(ws), core.fmt_day(we)))
         for mt in re.finditer(r"\bIssued (?:[A-Z][a-z]+, )?((?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\.? \d{1,2})\b", flat):

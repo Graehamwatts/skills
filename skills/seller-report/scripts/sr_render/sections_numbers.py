@@ -67,6 +67,21 @@ def number_rows(m):
     return rows
 
 
+def online_note(m):
+    """Where the online view counts come from, in one or two plain sentences."""
+    o = m.online
+    sites = esc(join_and(o.get("portals") or [])) or "the listing sites"
+    since = (o.get("since_listing") or {}).get("views") or (o.get("since_listing") or {}).get("saves") or {}
+    running = bool(since) and set(since) == set(o.get("portals") or [])      # every site gave a running count
+    if running:
+        s = "Online views are the running count %s showed on %s." % (sites, md(o["as_of"]))
+    else:
+        s = "Online views are as counted by %s, read on %s." % (sites, md(o["as_of"]))
+    if running and m.cur.get("online_views") is None:
+        s += " A weekly figure needs two readings a week apart, so it starts with the next report."
+    return s
+
+
 def contact_line(m):
     """The one line under the table: 'We contacted 60 of 62 people. 55 answered. 5 still waiting.'"""
     T = m.T
@@ -96,6 +111,8 @@ def s_numbers(m):
         if src is None or key not in src:
             return ""
         v = src.get(key)
+        if v is None and key == "online_saves":
+            return ""                                           # no figure for saves that week: the views cell already says so
         return '<div style="%s;color:%s">%s</div>' % (fz(SIZE["micro"], 1.3), P["grey"], hk("%s:%s" % (scope, key), "%s %s" % (num(v), word) if v is not None else "not checked"))
     for label, sub, key, total, extra in number_rows(m):
         a_txt, a = week_val(m, cur, key)
@@ -132,6 +149,8 @@ def s_numbers(m):
     blind = [w["n"] for w in m.W if w.get("disclosure_opened") is None]
     if m.track.get("disclosure_opened") and blind:
         notes.append("Package opens in week%s %s could not be checked, so that count may be low." % ("" if len(blind) == 1 else "s", join_and(["%d" % k for k in blind])))
+    if m.online:
+        notes.append(online_note(m))
     s += para(" ".join(notes), SIZE["sub"], top=8, color=P["grey"])
     return sec(keep(s), top=22, name="numbers")
 
@@ -215,7 +234,7 @@ def s_charts(m):
         notes.append("Older weeks are shown in blocks of four to keep this email short. The complete record shows each one.")
     s += para(" ".join(notes), SIZE["sub"], top=8, color=P["grey"])
     out = sec(keep(s), top=24, name="weekly_chart")
-    if m.online:
+    if m.online_weekly and (m.link or OPT["fit"]["extras"] == "full"):       # the chart of views gives way first in a long email
         out += s_views_chart(m)
     return out
 

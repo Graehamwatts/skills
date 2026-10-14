@@ -22,7 +22,9 @@ C:\Users\Graeham Watts\Documents\Skills LLMS\Claude\reports\seller-reports\<slug
   curation.json     who is who, the seller-safe paraphrases, what each note says, the operator's corrections
   events.json       optional machine events pulled from emails, only when the operator asks
   market.json       optional: the days-on-market comparison for the short market section
-  marketing.json    optional: marketing status for the short marketing section
+  marketing.json    optional: status of the online ads and the rest of the marketing
+  online_views.json optional: views and saves per week and portal (extras.md)
+  nearby.json       optional: the watch list of similar homes nearby and one snapshot per issue (extras.md)
   ledger.json       the seller-safe dataset the renderer reads
   notes_for_operator.json   at most five plain lines for the chat reply that hands over the draft
   work\             Claude's own working files: todo.json (the work list), build\ (the pages being checked),
@@ -43,14 +45,15 @@ The pipeline, and which file each step owns:
 |---|---|---|---|
 | Intake (parse what the operator handed over) | `intake_sheet.py` | the xlsx export | `raw.json` |
 | Claude reads the new notes | `curation_tools.py todo`, then `apply` | `raw.json`, `curation.json` | `work\todo.json`, `curation.json` |
-| Ledger build | `build_ledger.py` | `listing.json`, `raw.json`, `curation.json`, `events.json`, `market.json`, `marketing.json` | `ledger.json`, `notes_for_operator.json` |
+| Optional sources, only when asked | `online_views.py`, `nearby_update.py`, `hero_photo.py` | compact JSON from the snippets in `scripts\web`, or the operator's numbers | `online_views.json`, `nearby.json`, `listing.json` (photo) |
+| Ledger build | `build_ledger.py` | `listing.json`, `raw.json`, `curation.json`, `events.json`, `market.json`, `marketing.json`, `online_views.json`, `nearby.json` | `ledger.json`, `notes_for_operator.json` |
 | Render | `render_report.py` | `ledger.json`, `identity.json` | `work\build\` |
 | Checks | `check_report.py` | the built pages, `ledger.json`, `listing.json`, `raw.json` | `work\gate.json` |
 | Keep the issue | `snapshot_issue.py freeze` | `work\build\` | `issues\NN\` |
 | The operator's correction | `curation_tools.py correct` | `curation.json` | `curation.json` |
 
-`run_issue.py` runs every step but the reading and the correction, in order, and stops with a line that starts
-`NEXT:` wherever Claude or the operator has to act.
+`run_issue.py` runs every step but the reading, the correction and the optional lookups, in order, and stops
+with a line that starts `NEXT:` wherever Claude or the operator has to act. It fetches nothing.
 
 Only the renderer's input, `ledger.json`, has to be seller-safe. `raw.json`, `curation.json`, `events.json` and
 `work\todo.json` hold phone numbers, full names and blunt notes and never leave the folder.
@@ -98,6 +101,8 @@ Only the renderer's input, `ledger.json`, has to be seller-safe. `raw.json`, `cu
   email has no greeting unless `--seller-greeting` is given.
 - Optional facts a listing may carry (`year_built`, `hoa_monthly`, `community`, `hero_photo_note`,
   `status_source`, `facts_checked`) pass through to `ledger.listing` unchanged.
+- `hero_photo` is used only when it is an https address (`hero_photo.py set`). `extras` holds the settings of
+  the optional sources (`online_views`, `nearby`, `hero`; see `extras.md`, section 6) and stays in this file.
 
 ## 3. raw.json (PRIVATE)
 
@@ -264,11 +269,17 @@ session. Never create mail filters or labels to collect them.
 `type` is `disclosure_opened`, `keybox_showing_start` or `keybox_showing_end`. A host opening the key box for
 an open house is `is_team_side: true` and is not a showing.
 
-### market.json and marketing.json (optional)
+### market.json, marketing.json, online_views.json, nearby.json (optional)
 
-When either file is in the listing folder the builder copies it into `ledger.market` or `ledger.marketing`
-(shapes in section 6). For the market block it recomputes `sample`, `days_to_contract` and
-`subject_on_report_date` from `sales[]`, so those numbers are never typed.
+When `market.json` or `marketing.json` is in the listing folder the builder copies it into `ledger.market` or
+`ledger.marketing` (shapes in section 6). For the market block it recomputes `sample`, `days_to_contract` and
+`subject_on_report_date` from `sales[]`, so those numbers are never typed. The marketing block is kept only
+when a channel is on or something was checked for this issue (`sr_contract.marketing_recorded`).
+
+`online_views.json` and `nearby.json` are described in `extras.md` with their tools. The builder turns them into
+`ledger.online` and `ledger.nearby` (`online_views.ledger_block`, `nearby_update.ledger_block`): rows and
+snapshots dated after the issue are left alone, so a rebuild of an older issue does not change. A file that
+fails its `validate_store` stops the build. A lookup logged as skipped leaves its section out.
 
 ## 6. ledger.json
 
@@ -285,7 +296,9 @@ Rules that hold everywhere in the ledger:
    list but in no count (see `counting-rules.md`). `totals.team_side_set_aside` says what was set aside.
 3. **Null means not recorded, never zero.**
 4. **Seller-safe text only**: no phone numbers, emails, access codes, first-person asides, other listings'
-   addresses, em dashes or en dashes. `validate_ledger` scans every string.
+   addresses, em dashes or en dashes. `validate_ledger` scans every string. Public street addresses are
+   allowed in two blocks only, `market.sales` and `nearby.homes`, and the page prints them in those two
+   sections only.
 5. **Feedback only.** The keys `recommendation`, `decision_log` and `seller_ask` are rejected anywhere in the
    file.
 6. **No working state.** Where a value came from and whether anyone looked at it are not in a ledger. The keys
@@ -314,7 +327,9 @@ Rules that hold everywhere in the ledger:
 | `offer_watch` | `finish_ledger` | open offer leads, each `live` or `earlier_interest` |
 | `team_side` | builder | the people on our side of the table |
 | `market` | builder | optional days on market comparison, or null |
-| `marketing` | builder | optional marketing status, or null |
+| `marketing` | builder | optional marketing status (online ads and the rest), or null |
+| `online` | builder | optional online views and saves per portal and week, or null |
+| `nearby` | builder | optional watch list of similar homes nearby, or null |
 | `next_week` | builder | plain sentences, in order |
 | `sources_used` | builder | every source the operator handed over or pointed to |
 | `data_quality` | builder | plain build notes for Claude. Never printed to a seller, and the checks fail a page that prints one |
@@ -370,7 +385,8 @@ Rules that hold everywhere in the ledger:
   "offer_basis_safe": null, "offer_basis_date": null,
   "followup": {"outbound_touches": 5, "outbound_days": 4, "replies": 3, "first_touch_date": "2026-03-15",
                "last_touch_date": "2026-04-08", "last_outbound_date": "2026-04-07", "last_reply_date": "2026-04-08",
-               "tries_since_last_answer": 0, "days_since_last_touch": 4, "calls_not_connected": 0}
+               "tries_since_last_answer": 0, "days_since_last_touch": 4, "calls_not_connected": 0},
+  "lists": ["showings", "disclosure"], "primary_list": "showings", "offer_word": "possibly", "active_this_week": true
 }
 ```
 
@@ -403,10 +419,15 @@ Rules that hold everywhere in the ledger:
 | `liked` | keys from `themes_vocabulary.liked`. `other` goes with a `liked_other` label |
 | `softened` | true when the comment or any entry was softened (optional `feedback_softened` marks the comment itself) |
 | `next_followup_date` | ISO date or null |
-| `followup` | set by `finish_ledger`. The separate-day numbers every card prints |
+| `followup` | set by `finish_ledger`. The separate-day numbers every entry prints |
+| `lists` | set by `finish_ledger`: the lists under "The details" the person is in, in page order (`showings`, `disclosure`, `open_house`, `other_inquiries`). Empty for a team-side host and a buyer whose only tie is a package their agent shared |
+| `primary_list` | the first of `lists`, or null: where the person is shown in full or in one line. Every other list has a pointer |
+| `offer_word` | what follows "Offer:": `offer_received`, `writing_one`, `possibly`, `not_yet`, `no`, `not_discussed`. Email only |
+| `active_this_week` | true when a touch, a remark of theirs or something they did is dated in the report week. Shown in full in the email |
 
 `finish_ledger` (through `settle_contact`) sets `followup`, `price_reaction`, `price_asked`, `softened`,
-`feedback_date`, `themes` and `liked` (when the entries carry them) and `status`. The builder sets `status`
+`feedback_date`, `themes` and `liked` (when the entries carry them), `status`, `lists`, `primary_list`,
+`offer_word` and `active_this_week`. `validate_ledger` recomputes all of them. The builder sets `status`
 only for the three a person decides: `passed`, `writing_offer`, `offer_submitted`.
 
 Engagements and open houses may carry `time_text`; an open house may carry `date_note`. A
@@ -443,8 +464,10 @@ knows whom to leave unnamed (`sr_contract.offer_people_ids`).
 ### weeks[], totals, price_periods
 
 Written by `finish_ledger`. Field by field definitions are in `counting-rules.md`. Every week from the list
-week to the report week is present, quiet weeks included. `weeks[].label` is the only field a builder may
-add. `keybox_showings`, `disclosure_sent`, `disclosure_opened`, `disclosure_link_sent`,
+week to the report week is present, quiet weeks included. `showings` (key-box showings plus reported tours,
+never an inquiry) is in every week, price period and the totals. `totals.lists` is the count in each list
+heading and `totals.lists_active_this_week` how many of those people the email shows in full. `online_views`
+and `online_saves` are null in a week with no figure. `weeks[].label` is the only field a builder may add. `keybox_showings`, `disclosure_sent`, `disclosure_opened`, `disclosure_link_sent`,
 `disclosure_opened_confirmed` and `open_house_groups` can be null. A builder that could not check one week
 may set that week's nullable count to null before calling `finish_ledger`, and the null is kept.
 
@@ -489,7 +512,58 @@ is never printed: the renderer writes the market sentence from the validated num
 
 `marketing` needs `as_of`, optional `note`, and `channels[]` with `channel`, `status`
 (`on`, `prepared`, `on_hold`, `not_launched`, `ended`), `checked` and `detail`. A channel is called running
-only when `sr_contract.channel_is_running(channel, report)` is true.
+only when `sr_contract.channel_is_running(channel, report)` is true; otherwise a channel that is on prints
+"Switched on" with the day it was last checked. A channel that is on may carry `ends_on` ("Scheduled to end").
+A dollar amount in a channel's detail is rejected: ad spend is never stored or printed.
+
+### online, nearby (optional, null when not collected)
+
+Built from `online_views.json` and `nearby.json` when those files hold something for the issue
+(`extras.md`). Otherwise null, and the page prints nothing about them.
+
+```json
+"online": {
+  "as_of": "2026-04-13",
+  "portals": ["Zillow", "Redfin"],
+  "weeks": [{"n": 4, "views": {"Zillow": 210, "Redfin": 65}, "saves": {"Zillow": 6, "Redfin": 2}},
+            {"n": 5, "views": {"Zillow": 180, "Redfin": 50}, "saves": {"Zillow": 4}}],
+  "since_listing": {"views": {"Zillow": 800}, "saves": {"Zillow": 22}}
+}
+```
+
+- `weeks[].n` is a week of this listing, used once. `views` and `saves` are keyed by a name in `portals`.
+  A figure is a whole number for **that week** (not a running total), or null.
+- `since_listing` (optional) is the running count a site showed at its latest reading. It can never be less
+  than that portal's weekly figures added up. `weeks` may be empty when a portal has been read only once.
+- `finish_ledger` sums the portals into `weeks[].online_views` and `online_saves` (`sr_contract.online_by_week`).
+  The totals take, portal by portal, the running count when there is one and otherwise the weeks added up
+  (`sr_contract.online_totals`). A week with no figure stays null.
+- With a figure on file the page adds an "Online views" row to the numbers table (second figure: saved). With a
+  weekly figure it also adds a chart of views by week and a "Views" column in the weekly table (in place of
+  the packages column, which the chart on top already gives: a phone has room for eight), whose last line is
+  the count since we listed. With `online` null none of it prints.
+
+```json
+"nearby": {
+  "as_of": "2026-04-13", "checked_for_this_issue": true,
+  "scope": "Five 3 bedroom homes within half a mile, chosen on Mar 16", "source": "Public listing pages",
+  "homes": [{"address": "14 Sample Fern Ln", "beds": 3, "baths": 2, "sqft": 1510,
+             "status": "active", "list_price": 1210000, "days_on_market": 3,
+             "change": "new_listing", "change_date": "2026-04-10"}]
+}
+```
+
+- At most 8 homes (`sr_contract.LIMITS["nearby_max_homes"]`). `status`: `active`, `pending`, `sold`,
+  `withdrawn`. `change` since the last issue: `new_listing`, `price_change`, `went_pending`, `sold`,
+  `withdrawn`, `back_on_market`, `none`. A change needs `change_date`; a price change needs `price_before`
+  and `list_price`; a sold home needs `sold_price`. `change_date_approximate: true` marks a change seen between
+  two checks with no date on record (printed "by", not "on").
+- `checked_for_this_issue` false prints "Last checked <as_of>, not checked again for this report". The builder
+  only writes a block for a snapshot taken for the issue, so it always writes true.
+- The page prints "Similar homes nearby": what changed first, then the whole list as one table (status, price,
+  days). The gate counts both again (`numbers.nearby_counts`, `nearby_table`, `nearby_changes`,
+  `nearby_checked`). The addresses may appear in that section and nowhere else on the page
+  (`privacy.address_pattern`), a unit in the listing's own building included.
 
 ### sources_used[], data_quality[]
 
@@ -523,7 +597,8 @@ words "Worth a glance before you send". It is never in the report and it is not 
   team's status email, and why); each `unsure` sentence from `curation.json`; a tour this week nothing
   confirms took place; a row on the showing tab counted as an inquiry because it has no showing date; a
   comment this week that was toned down; an approximate tour date; an open house with no count or no date;
-  an earlier correction that gave way to a newer sheet value.
+  an earlier correction that gave way to a newer sheet value. A lookup for an optional section that was
+  blocked or failed always keeps a place at the end of the five (two at most).
 - `also_noted` is the rest, for Claude only. Neither list uses working words: the operator never reads about
   how the notes were read.
 
@@ -537,7 +612,7 @@ words "Worth a glance before you send". It is never in the report and it is not 
   "ledger_sha256": "...",
   "files": [{"name": "email.html", "bytes": 61234, "sha256": "..."}],
   "email_bytes": 61234,
-  "flags": {"webfonts": false, "hero": null, "link_url": null, "sections": ["market", "marketing"], "fit_level": 0},
+  "flags": {"webfonts": false, "hero": null, "link_url": null, "sections": ["online", "nearby", "market", "marketing"], "fit_level": 0},
   "checks": {"ledger_problems": 0, "page_checks_run": 26,
              "ship_gate": {"passed": true, "checked_at": "...", "pages": 3, "blocking": 0, "warnings": 0}},
   "delivery": {"gmail_draft_id": null, "link_published_url": null, "link_published_on": null, "sent_on": null}
@@ -554,69 +629,8 @@ with it. The email's link to the complete record must equal `flags.link_url`.
 
 ## 8. Changes against the approved mockup shape
 
-The mockup carried two dialects (the first listing's file and the richer file of the second) and the generator
-bridged them. This contract picks one. Every change:
-
-**Removed (feedback only):** `recommendation`, `decision_log`, `seller_ask`, and
-`pricing_tally.statement_safe` (it explained what silence on price means).
-
-**Removed after the design review (2026-10-13):** the review step. `meta.tag_review`, `meta.confirmed_by`,
-`meta.confirmed_on`, `contacts[].tag_source` and `tag_sources`, the draft folder `issues\NN\draft\`,
-`manifest.build_kind` and `manifest.tag_review`, the yellow notice, the reviewer panel, the review table, and
-the `--draft`, `--final` and `--allow-unreviewed` switches. One build mode replaces them.
-
-**Added, as asked:** per-contact `themes` from a fixed vocabulary with a free `theme_other`, `liked` with
-`liked_other`, `price_asked`, `next_followup_date`; top-level `themes_vocabulary`; first-class
-`is_open_house_host`, `phone_out_of_service` and the separate-day fields (`contacts[].followup`,
-`totals.outbound_person_days`, `totals.outbound_distinct_days`, `weeks[].outbound_distinct_days`);
-`report.since_week_closed`; `sources_used`; `data_quality` (kept as plain sentences). Provenance is in
-`raw.json` and `curation.json` only and is rejected in a ledger.
-
-**Unified, because one renderer needs one shape:**
-
-1. `schema_version` and a required `meta` block (`slug`, `built_at`).
-2. Counts are buyer side in the ledger. The mockup stored totals with hosts in and subtracted on the page.
-   New `contacts[].team_side` and `totals.team_side_set_aside`.
-3. `showings` is gone. `keybox_showings` and `agent_reported_tours` are separate everywhere and never
-   summed. `showings_undated` and `showings_approximate_date` became `tours_undated`,
-   `tours_approximate_date`, plus `tours_unconfirmed`.
-4. New engagement type `disclosure_on_list` (on the disclosure tab, no record of sent or opened). The
-   Rows the first dialect typed `disclosure_opened` are now this. Buyers an agent shared the package with
-   are `disclosure_shared_by_agent`.
-5. `disclosure_contacts` counts people we follow up with. Buyers the package was shared with moved to
-   `totals.disclosure_shared_buyers`.
-6. `report.tracking` plus nulls replaces the implicit "is this recorded" tests.
-7. One reply rule. `got_response` is gone: a reply is an inbound touch or a call that reached the person,
-   counted once per person per day (`sr_contract.is_reply`). `responses` became `replies_inbound`.
-8. `direction` null became `unknown`. New outcome `did_not_connect`.
-9. `feedback_log` is required on every contact (the first dialect had one comment per person). Entry-level
-   `price_reaction`, `price_asked`, `themes`, `liked`, `source`, `counts_as_conversation`.
-10. A conversation is one person on one day. The first dialect counted a person once per week.
-11. `pricing_tally.people_with_feedback` is the one denominator (was `conversations_with_feedback` in one
-    dialect, `parties_with_a_conversation` in the other). Added `price_asked_recorded`, `asked_directly`.
-12. `objection_tally` (first dialect) and top-level `themes` (second dialect) became `themes_tally`. `price` is not a
-    theme. New `liked_tally` replaces the keyword match the page did.
-13. `price_periods` is in the ledger (the page computed it).
-14. `offer_watch` is derived, with `lead_state`. Its `after_week_end` flag is gone because nothing after the
-    week end is in the ledger.
-15. `since_week_end` moved to `report.since_week_closed`. The per-row flags `in_report_week` and
-    `after_week_end` are gone.
-16. `represented_by` holds a contact id in every listing (`via_agent_id`, `party_id` and `counts_in_totals`
-    are gone). New status `through_agent`.
-17. `attempts` became `followup.outbound_days`. `awaiting_reply_3plus_attempts` keeps its name and counts
-    days since the last answer.
-18. `price_history[].event` is `listed` or `price_change` (was `price change`).
-19. Open houses keep `groups` and `groups_source` and gain a required `counted_unit`, `date_quality`,
-    `host_contact_id`. `groups_source` gains `sheet_column`.
-20. Offers gain `id`, `contact_id`, `note_safe`.
-21. Marketing channel `status` is a key (`on`, `prepared`, `on_hold`, `not_launched`, `ended`), not a
-    display string.
-22. `definitions` is gone. The definitions are `counting-rules.md`.
-23. `status_note` became `status_note_safe`. `tag_notes` moved to `curation.json`.
-24. New totals: `contact_records`, `team_side_people`, `contacted_through_host`,
-    `awaiting_reply_answered_before`, `awaiting_reply_quiet`, `open_no_final_answer`,
-    `open_no_final_answer_quiet`, `calls_not_connected`, `people_with_feedback`, `offers_by_state`.
-    New per week: `outbound_people`, `outbound_distinct_days`, `open_house_sessions_without_count`.
+The numbered list of every change (what was removed, added and unified against the mockup, the summary-on-top
+layout, and the optional sections) is in `contract-changes.md`.
 
 ## 9. What builders must know
 
@@ -624,6 +638,9 @@ the `--draft`, `--final` and `--allow-unreviewed` switches. One build mode repla
   validation code sits in `sr_contract_counts.py` and `sr_contract_validate.py` and is reached through `C`.
 - Do not compute a total in a renderer. Read it from the ledger. If a number you need is missing, ask for it
   in the contract.
+- A build never fetches anything. The optional sources are looked up beforehand, once, only when asked, through
+  `online_views.py` and `nearby_update.py`, which hold the caps (`sr_lookups.py`; `extras.md`, section 1). A
+  blocked lookup is closed with `skip` and never worked around.
 - Read brand facts with `C.load_identity()`. Never type a DRE, phone, brokerage or brand line into code.
 - Another agent's brokerage can be a name on the brand blocklist. Keep it in the ledger as recorded and
   print it with `C.display_brokerage(name, identity)`.
@@ -637,6 +654,8 @@ the `--draft`, `--final` and `--allow-unreviewed` switches. One build mode repla
   with every awkward shape, for the intake, ledger, curation and run tests.
 - Never print the word "tag" in anything an operator or a seller reads, and never ask either of them to look
   over or confirm how the notes were read. What Claude reads from a note is internal. What Claude is unsure about goes in `notes_for_operator.json`, in plain words.
-- The page hooks the checks read (`data-sr`, `data-sr-section`, `data-sr-table`, `data-sr-person`) are listed by
-  `python scripts\check_report.py --hooks`. A page never carries a `draft_notice` or `reviewer_panel` section
+- The page hooks the checks read (`data-sr`, `data-sr-section`, `data-sr-table`, `data-sr-list`, `data-sr-entry`)
+  are listed by `python scripts\check_report.py --hooks`.
+- The order of the page is fixed (`sr_render/assemble.py`, `ORDER`): the summary, the black "The details"
+  band, the lists, the optional sections, next week, the record. See `counting-rules.md`, sections 14 and 15. A page never carries a `draft_notice` or `reviewer_panel` section
   and never names a build kind.

@@ -19,6 +19,11 @@ stop prints one line that starts with NEXT: and says what to do.
     7. keep        the checked files go to issues\NN with a manifest, and phone pictures to issues\NN\previews
                    (exit 3 when that issue was already recorded as sent)
 
+The optional sections (online views, similar homes nearby, online ads) are built from what is already on file
+in the listing folder. This command fetches nothing. A lookup is planned, run once and stored (or skipped)
+before it, with online_views.py and nearby_update.py, and only when the operator asked or the listing's
+settings say so.
+
 There is one build mode. What comes out is the report, clean and ready to send. Nothing waits for anyone to
 confirm anything. When the operator reads it and says what to change, apply it with curation_tools.py correct
 and run this again.
@@ -190,7 +195,7 @@ def run(a):
     infos = {}
     for mode, name in PAGES:
         kw = dict(mode=mode, hero=a.hero, no_hero=a.no_hero, greeting=a.seller_greeting, no_greeting=a.no_greeting,
-                  market=not a.no_market, marketing=not a.no_marketing)
+                  market=not a.no_market, marketing=not a.no_marketing, nearby=not a.no_nearby)
         if mode == "email":
             kw.update(link_url=a.link_url, no_link=a.no_link)
         try:
@@ -319,6 +324,7 @@ def main(argv=None):
     ap.add_argument("--no-greeting", action="store_true")
     ap.add_argument("--no-market", action="store_true")
     ap.add_argument("--no-marketing", action="store_true")
+    ap.add_argument("--no-nearby", action="store_true", help="leave the similar homes nearby section out of this build")
     ap.add_argument("--no-pdf", action="store_true")
     ap.add_argument("--no-previews", action="store_true")
     ap.add_argument("--no-probe", action="store_true", help="skip the phone layout check in Edge")

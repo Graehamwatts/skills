@@ -314,12 +314,64 @@ class CountingRules(unittest.TestCase):
         self.assertEqual(C.validate_ledger(d), [])
         return d
 
-    def test_showing_kinds_are_never_merged(self):
+    def test_showings_are_key_box_showings_plus_reported_tours_and_never_an_inquiry(self):
         for d in (self.small, self.busy):
-            self.assertNotIn("showings", d["totals"])
-            self.assertTrue(all("showings" not in w for w in d["weeks"]))
-            for k in ("keybox_showings", "agent_reported_tours", "inquiries"):
-                self.assertIn(k, d["totals"])
+            T = d["totals"]
+            for k in ("showings", "keybox_showings", "agent_reported_tours", "inquiries"):
+                self.assertIn(k, T)
+            self.assertTrue(T["inquiries"])                                   # both fixtures have inquiries, and none is a showing
+            self.assertEqual(T["showings"], T["keybox_showings"] + T["agent_reported_tours"])
+            for w in d["weeks"]:
+                self.assertEqual(w["showings"], w["keybox_showings"] + w["agent_reported_tours"])
+            for p in d["price_periods"]:
+                self.assertEqual(p["showings"], p["keybox_showings"] + p["agent_reported_tours"])
+            self.assertEqual(sum(w["showings"] for w in d["weeks"]) + T["tours_undated"], T["showings"])
+        d = self.busy                                                         # with no key-box record, showings are the tours agents reported
+        d["report"]["tracking"]["keybox_showings"] = False
+        for c in d["contacts"]:
+            for e in c["engagements"]:
+                if e["type"] == "keybox_showing":
+                    e["type"] = "agent_reported_tour"
+        self.refinish(d)
+        self.assertIsNone(d["totals"]["keybox_showings"])
+        self.assertEqual(d["totals"]["showings"], d["totals"]["agent_reported_tours"])
+        d = self.small                                                        # an inquiry that becomes a tour becomes a showing, and only then
+        inq = next(e for c in d["contacts"] for e in c["engagements"] if e["type"] == "inquiry")
+        before = d["totals"]["showings"]
+        inq["type"] = "agent_reported_tour"
+        self.refinish(d)
+        self.assertEqual((d["totals"]["showings"], d["totals"]["inquiries"]), (before + 1, 0))
+
+    def test_the_lists_under_the_details(self):
+        """People grouped by what they did. The first list a person belongs to is where they are shown in full."""
+        mk = lambda *types, **kw: dict(dict(id="c1", engagements=[{"type": t} for t in types]), **kw)
+        self.assertEqual(C.contact_lists(mk("keybox_showing", "disclosure_link_sent", "open_house_visit", "inquiry")),
+                         ["showings", "disclosure", "open_house"])
+        self.assertEqual(C.contact_lists(mk("agent_reported_tour")), ["showings"])
+        self.assertEqual(C.contact_lists(mk("disclosure_on_list", "inquiry")), ["disclosure"])        # the inquiry is not "other"
+        self.assertEqual(C.contact_lists(mk("inquiry")), ["other_inquiries"])
+        self.assertEqual(C.contact_lists(mk()), ["other_inquiries"])                                  # followed up with, did nothing else
+        self.assertEqual(C.contact_lists(mk("keybox_showing", team_side=True)), [])                   # a host is in no list
+        self.assertEqual(C.contact_lists(mk("disclosure_shared_by_agent", represented_by="c9")), [])  # stated as one count
+        self.assertEqual(C.contact_lists(mk("open_house_visit", "disclosure_shared_by_agent", represented_by="c9")), ["open_house"])
+        self.assertEqual(C.LIST_KEYS, ("showings", "disclosure", "open_house", "other_inquiries"))
+        for d in (self.small, self.busy):
+            T = d["totals"]
+            for c in d["contacts"]:
+                self.assertEqual(c["lists"], C.contact_lists(c))
+                self.assertEqual(c["primary_list"], c["lists"][0] if c["lists"] else None)
+                self.assertEqual(c["active_this_week"], C.active_in_week(c, d["report"]["week_start"], d["report"]["week_end"]))
+            self.assertEqual(T["lists"], dict((k, len([c for c in d["contacts"] if k in c["lists"]])) for k in C.LIST_KEYS))
+            self.assertEqual(T["lists"]["disclosure"], T["disclosure_contacts"])                      # the heading matches the number on top
+            self.assertEqual(len([c for c in d["contacts"] if C.is_counted(c) and c["primary_list"]]), T["contacts"])   # everyone has a place
+            self.assertEqual(sum(T["lists_active_this_week"].values()),
+                             len([c for c in d["contacts"] if c["primary_list"] and c["active_this_week"]]))
+        d = self.small
+        next(c for c in d["contacts"] if c["id"] == "c002")["primary_list"] = "disclosure"
+        self.assertTrue(any("contacts[c002].primary_list" in p for p in C.validate_ledger(d)))
+        d = self.busy
+        d["totals"]["lists"]["showings"] += 1
+        self.assertTrue(any("totals.lists" in p for p in C.validate_ledger(d)))
 
     def test_a_reply_counts_once_per_person_per_day(self):
         d = self.small
@@ -512,8 +564,11 @@ class ValidatorCatches(unittest.TestCase):
         d["weeks"][2]["replies_inbound"] += 1
         self.expect(d, "weeks[3].replies_inbound")
         d = copy.deepcopy(self.d)
-        d["totals"]["showings"] = 2
-        self.expect(d, "totals.showings: unknown key")
+        d["totals"]["showings"] += d["totals"]["inquiries"]              # an inquiry counted as a showing
+        self.expect(d, "totals.showings")
+        d = copy.deepcopy(self.d)
+        d["totals"]["tours_and_inquiries"] = 3
+        self.expect(d, "totals.tours_and_inquiries: unknown key")
         d = copy.deepcopy(self.d)
         d["themes_tally"]["rows"][0]["people"] += 1
         self.expect(d, "themes_tally.rows")

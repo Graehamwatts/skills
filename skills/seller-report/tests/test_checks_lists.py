@@ -15,6 +15,7 @@ if HERE not in sys.path:
     sys.path.insert(0, HERE)
 
 from gate_harness import GateHarness, swap, para, cell, cut, chain, add_cases     # noqa: E402
+import sr_contract as C                                                           # noqa: E402
 from sr_checks import core, recount                                               # noqa: E402
 
 CASES = []
@@ -47,7 +48,53 @@ case("pointer_where_the_full_entry_belongs", "numbers.list_placement", swap('dat
 case("link_copy_with_a_one_line_entry", "numbers.list_everyone_in_full", swap('data-sr-entry="full:c002"', 'data-sr-entry="line:c002"'), kind="link")
 
 
+def led_nearby(d, t):
+    """A watch list of two similar homes nearby. Their public addresses may be printed in that one section."""
+    d["nearby"] = {"as_of": d["report"]["report_date"], "checked_for_this_issue": True, "scope": "Two 3 bedroom homes within half a mile",
+                   "source": "Public listing pages", "homes": [
+                       {"address": "14 Sample Fern Ln", "status": "active", "list_price": 1210000, "change": "new_listing",
+                        "change_date": d["report"]["week_end"]},
+                       {"address": "31 Sample Alder Way", "status": "pending", "list_price": 1150000, "change": "none", "change_date": None}]}
+
+
+def led_online(d, t):
+    """Weekly views from two portals for the last two weeks of the listing."""
+    n = len(d["weeks"])
+    d["online"] = {"as_of": d["report"]["report_date"], "portals": ["Zillow", "Redfin"], "weeks": [
+        {"n": n - 1, "views": {"Zillow": 210, "Redfin": 65}, "saves": {"Zillow": 6}},
+        {"n": n, "views": {"Zillow": 180, "Redfin": 50}, "saves": {"Zillow": 4, "Redfin": 1}}]}
+    C.finish_ledger(d)
+
+
+case("nearby_address_outside_its_section", "privacy.address_pattern", para("Her clients chose 14 Sample Fern Ln instead."), led=led_nearby)
+case("online_views_wrong_in_the_numbers_table", "numbers.table_scorecard", cell('data-sr-row="online_views"', 0, "999"), led=led_online)
+case("online_views_wrong_in_the_weekly_table", "numbers.table_weeks", cell('data-sr-row="all"', 11, "999"), led=led_online)
+case("online_views_printed_when_none_are_recorded", "numbers.table_scorecard",
+     swap('<tr data-sr-row="offers">', '<tr data-sr-row="online_views"><th scope="row" bgcolor="#FFFFFF" style="color:#333333">Online views</th>'
+          '<td bgcolor="#FFFFFF" style="color:#333333">40</td><td bgcolor="#FFFFFF" style="color:#333333">30</td>'
+          '<td bgcolor="#FFFFFF" style="color:#333333">70</td></tr>\n<tr data-sr-row="offers">'))
+
+
+def brief(text):
+    """An edit: the page gets a 'This week in brief' section with this sentence."""
+    under = ">The numbers</h2>"
+    return swap('<tr><td data-sr-section="numbers"', '<tr><td data-sr-section="brief" bgcolor="#FFFFFF" style="padding:5px 6px;color:#333333">'
+                '<p style="margin:4px 0">%s</p></td></tr>\n<tr><td data-sr-section="numbers"' % text)
+
+
+case("brief_calls_an_inquiry_a_showing", "numbers.brief_week", brief("A quiet week: 1 showing and no visitors at the open house."))
+case("brief_inquiries_wrong", "numbers.brief_week", brief("A quiet week: no showings, 3 inquiries and no visitors at the open house."))
+case("inbox_preview_calls_an_inquiry_a_showing", "numbers.brief_week",
+     swap('<body style="margin:0;padding:0;background:#F5EFDC">', '<body style="margin:0;padding:0;background:#F5EFDC">'
+          '<div style="display:none;max-height:0;overflow:hidden">A quiet week: 1 showing and no visitors at the open house.</div>'))
+
+
 class ListsAndCharts(GateHarness):
+    def test_a_brief_with_the_weeks_own_counts_passes(self):
+        rep = self.gate(edit=brief("A quiet week: no showings, 1 inquiry and no visitors at the open house. No offers have come in yet."))
+        self.assertClean(rep)
+        self.assertIn("numbers.brief_week", [r.id for r in rep.results if r.level == core.PASS])
+
     def test_the_lists_are_counted_from_the_ledger_not_from_the_page(self):
         """The count in each heading equals the number of entries beneath it, and both equal the gate's own count."""
         for fx in ("small", "busy"):

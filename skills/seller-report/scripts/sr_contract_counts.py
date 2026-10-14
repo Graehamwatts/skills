@@ -150,6 +150,24 @@ def online_by_week(d):
     return out
 
 
+def online_totals(d):
+    """(views, saves) since the home was listed, from the optional ledger.online block. For each portal: the
+    running count the site showed at the latest reading (online.since_listing) when one is on file, otherwise the
+    sum of that portal's weekly figures. None when no portal has a figure of that kind."""
+    o = d.get("online") or {}
+    out = []
+    for kind in ("views", "saves"):
+        running = dict((p, v) for p, v in ((o.get("since_listing") or {}).get(kind) or {}).items() if isinstance(v, int))
+        weekly = {}
+        for w in o.get("weeks") or []:
+            for p, v in (w.get(kind) or {}).items():
+                if isinstance(v, int):
+                    weekly[p] = weekly.get(p, 0) + v
+        got = [running.get(p, weekly.get(p)) for p in sorted(set(running) | set(weekly))]
+        out.append(sum(got) if got else None)
+    return tuple(out)
+
+
 def _periods(L, we):
     hist = sorted((e for e in L["price_history"] if e["date"] <= we), key=lambda e: e["date"])
     out = []
@@ -308,10 +326,8 @@ def recount(d):
         "lists": dict((k, len([c for c in contacts if k in contact_lists(c)])) for k in LIST_KEYS),
         "lists_active_this_week": dict((k, len([c for c in contacts if (contact_lists(c) or [None])[0] == k
                                                  and active_in_week(c, ws, we)])) for k in LIST_KEYS),
-        "online_views": (sum(v for v, _ in online.values() if v is not None)
-                         if any(v is not None for v, _ in online.values()) else None),
-        "online_saves": (sum(x for _, x in online.values() if x is not None)
-                         if any(x is not None for _, x in online.values()) else None),
+        "online_views": online_totals(d)[0],
+        "online_saves": online_totals(d)[1],
     }
 
     tally = dict((k, len([c for c in people if c.get("price_reaction") == k])) for k in PRICE_BUCKETS)

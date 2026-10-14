@@ -221,7 +221,9 @@ class People(object):
 
         # nothing on record on or before the week end: this person belongs to a later issue
         anything_later = bool(later or engs_later or [d for d in dated if d > we])
-        if not touches and not feedback and not [e for e in engs if e.get("date")] and anything_later:
+        # someone curation already placed with no date (on the package list, date not recorded) has been on record all along
+        placed_undated = any(e.get("date") is None for es in (p.get("engagements") or {}).values() for e in es)
+        if not touches and not feedback and not [e for e in engs if e.get("date")] and anything_later and not placed_undated:
             self.stats["people_first_seen_after_week_end"] += 1
             if not c["team_side"]:
                 self.push_later(cid, name, later, engs_later, p)

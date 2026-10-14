@@ -273,7 +273,7 @@ def follow_value(m, x, limit=None):
     else:
         s = "%s (%s): %s." % (n_(len(od), "day"), channel_counts(out), days)
         dead = x["followup"].get("calls_not_connected") or 0
-        if dead:
+        if dead and "did not go through" not in days:           # the day itself says so unless it was folded away
             s += " %s did not go through." % cap1(n_(dead, "call"))
     if x.get("next_followup_date"):
         s += " Next: %s." % md(x["next_followup_date"])
@@ -392,8 +392,12 @@ def entry_full(m, x, key, limit=None):
         s += sp(9) + table("<tr>%s%s</tr>" % (
             c("&nbsp;", "card", w=4, bg=P["gold"], st="font-size:0;line-height:0"),
             c(body, "cream", pad="8px 12px 9px", at=' data-sr="comment"')))
-    else:
-        fields += _field("Said", "Kept to the email copy." if masked else "No feedback from them yet.")
+    elif masked:
+        fields += _field("Said", "Kept to the email copy.")
+    elif not m.link:
+        # The link copy prints no empty "Said:" line: there, a missing comment may be one whose sentences about an
+        # offer were taken out, and the page must not say which.
+        fields += _field("Said", "No feedback from them yet.")
     if not m.link:
         fields += _field("Offer", offer_value(m, x))
     fields += _field("Follow-up", follow_value(m, x, limit)) + _field("Responded", responded_value(m, x))
@@ -408,20 +412,20 @@ SHORT_IN_LIST = (("On the disclosure package list (", "On the list "), ("On the 
 
 
 def line_bits(m, x, key, detail):
-    did = did_words(m, x, key, only=True)
+    """What a one-line entry says after the name (see fit.FIT_LEVELS, line_detail)."""
+    did = did_words(m, x, key, only=True) if detail else []
     if key == "disclosure":
         for i, b in enumerate(did):
             for long_, short_ in SHORT_IN_LIST:
                 if b.startswith(long_):
                     did[i] = (short_ + b[len(long_):]).rstrip(")")
                     break
-    bits = did[:1] if detail < 2 else list(did)
-    bits.append(stands_words(m, x))
-    if detail and x.get("price_reaction") in ("too_high", "fair_or_positive") and x["id"] not in m.masked:
+    bits = list(did) + [stands_words(m, x)]
+    if x.get("price_reaction") in ("too_high", "fair_or_positive") and x["id"] not in m.masked:
         bits.append(PRICE_TAG[x["price_reaction"]])
-    if detail and x["_last"] and x["status"] != "awaiting_reply":
+    if detail > 1 and x["_last"] and x["status"] != "awaiting_reply":
         bits.append("Last contact %s" % md(x["_last"]))
-    elif detail and x["_last_out"] and x["status"] == "awaiting_reply":
+    elif detail > 1 and x["_last_out"] and x["status"] == "awaiting_reply":
         bits.append("Last tried %s" % md(x["_last_out"]))
     return bits
 
@@ -432,7 +436,7 @@ def entry_line(m, x, key, detail=2, first=False, this_week=False):
     b = brokerage(m, x)
     bits = line_bits(m, x, key, detail) + (["In touch this week"] if this_week else [])
     name = dname(m, x)
-    lead = (", %s. " % b) if (b and detail) else (" " if name.endswith(".") else ". ")       # 'Odalys V. Toured ...', never 'V..'
+    lead = (", %s. " % b) if (b and detail > 1) else (" " if name.endswith(".") else ". ")       # 'Odalys V. Toured ...', never 'V..'
     return '<div%s style="padding:6px 0%s"><b>%s</b>%s%s.</div>' % (
         entry_mark(m, x, "line"), "" if first else ";border-top:1px solid %s" % P["line"], name, lead, ". ".join(bits))
 
@@ -452,7 +456,7 @@ def line_names(m, xs, key):
 
 
 def entry_pointer(m, x, key, first=False):
-    """A person shown in full under an earlier list: 'Andy C.: see Agents who showed the home'."""
+    """A person shown in full under an earlier list: 'Odalys V.: see Agents who showed the home'."""
     m.entries.setdefault(key, []).append((x["id"], "pointer"))
     return '<div%s style="padding:5px 0%s"><b>%s</b>: see %s</div>' % (
         entry_mark(m, x, "pointer"), "" if first else ";border-top:1px solid %s" % P["line"], dname(m, x), LIST_TITLE[x["primary_list"]])

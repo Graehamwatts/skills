@@ -239,6 +239,8 @@ def recount(d):
     for b in bands:
         b.update(sum_weeks([w for w in weeks if w["n"] in b["weeks"]]))
     all_weeks = sum_weeks(weeks)
+    # the "all weeks" line of online views is the count since listing: a site's running count where one was read
+    all_weeks["online_views"], all_weeks["online_saves"] = _online_since(d, "views"), _online_since(d, "saves")
 
     # ---- totals ---------------------------------------------------------------------------
     def with_status(*names):
@@ -309,8 +311,8 @@ def recount(d):
         "lists": dict((k, len([c for c in everyone if k in lists_of(c)])) for k in LIST_KEYS),
         "lists_active_this_week": dict((k, len([c for c in everyone if (lists_of(c) or [None])[0] == k and active(c, ws, we)]))
                                        for k in LIST_KEYS),
-        "online_views": _sum_known([v for v, _ in online.values()]),
-        "online_saves": _sum_known([s for _, s in online.values()]),
+        "online_views": _online_since(d, "views"),
+        "online_saves": _online_since(d, "saves"),
     }
 
     # ---- what people are saying -------------------------------------------------------------
@@ -441,6 +443,21 @@ def _channels(touches):
         k = t.get("channel")
         out["call" if k in ("call", "voicemail") else (k if k in out else "unknown")] += 1
     return out
+
+
+def _online_since(d, kind):
+    """Views or saves since the home was listed, counted again: for each portal the running count the site showed
+    at the latest reading when the ledger has one, otherwise that portal's weekly figures added up."""
+    o = d.get("online") if isinstance(d.get("online"), dict) else {}
+    per = {}
+    for w in o.get("weeks") or []:
+        for portal, v in ((w.get(kind) or {}) if isinstance(w, dict) else {}).items():
+            if isinstance(v, int):
+                per[portal] = per.get(portal, 0) + v
+    for portal, v in (((o.get("since_listing") or {}).get(kind)) or {}).items():
+        if isinstance(v, int):
+            per[portal] = v
+    return sum(per.values()) if per else None
 
 
 def _sum_known(values):

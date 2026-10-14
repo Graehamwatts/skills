@@ -76,7 +76,8 @@ def s_masthead(m):
 
 
 def week_items(m):
-    """What happened this week, as short phrases. Every number names its kind."""
+    """What happened this week, as short phrases: showings (one number, never an inquiry), inquiries, new
+    disclosure packages, open house traffic in the host's own unit."""
     cur = m.cur
     sh = cur["showings"]            # key-box showings plus tours agents reported; an inquiry is never a showing
     items = [no_(sh, "showing")]
@@ -188,7 +189,10 @@ def preheader(m):
     T = m.T
     s = re.sub(r"<[^>]+>", "", brief_sentences(m)[0])
     vh = T["contacted_through_host"]        # someone reached only through a host is not counted as contacted here either
-    s += " We contacted %d of %d%s, %d answered." % (T["contacted"] - vh, T["contacts"], " directly" if vh else "", T["replied"])
+    if T["contacts"]:
+        s += " We contacted %d of %d%s, %d answered." % (T["contacted"] - vh, T["contacts"], " directly" if vh else "", T["replied"])
+    else:
+        s += " Nobody is on the log to follow up with yet."
     tail = " %s this week." % (cap1(n_(len(m.offers_week), "new offer")) if m.offers_week else "No offers")
     return s + (tail if len(s) + len(tail) <= 135 else "")
 

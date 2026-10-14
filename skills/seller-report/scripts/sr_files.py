@@ -17,7 +17,7 @@ import os
 import sys
 
 PRIVATE_NAMES = ("listing.json", "raw.json", "curation.json", "events.json", "ledger.json", "market.json", "marketing.json",
-                 "notes_for_operator.json")
+                 "online_views.json", "nearby.json", "notes_for_operator.json")
 
 
 def listing_paths(folder):

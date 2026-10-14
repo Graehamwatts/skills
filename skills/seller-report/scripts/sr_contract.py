@@ -70,11 +70,20 @@ TAB_KINDS = ("disclosure", "showing", "inquiry", "open_house", "offers", "other"
 EVENT_TYPES = ("disclosure_opened", "keybox_showing_start", "keybox_showing_end")
 SOURCE_KINDS = ("activity_sheet_live", "activity_sheet_file", "status_email", "open_house_schedule", "offer_summary",
                 "glide_email", "supra_email", "pasted_notes", "forwarded_email", "mls_public_page", "market_data",
-                "ad_accounts", "other")
-# marketing channel states and how each reads to a seller
+                "ad_accounts", "portal_page", "operator_numbers", "nearby_lookup", "other")
+# Marketing channel states and how each reads to a seller. "Running" is not a state: it is said only of a channel
+# that is on AND was checked for this issue (channel_is_running). A channel that is on may carry ends_on, the day
+# it is scheduled to end. No ad spend amount is ever stored or printed.
 MARKETING_STATUSES = (("on", "Switched on"), ("prepared", "Prepared"), ("on_hold", "On hold"),
                       ("not_launched", "Not launched"), ("ended", "Ended"))
 MARKETING_STATUS_KEYS = tuple(k for k, _ in MARKETING_STATUSES)
+MARKETING_RUNNING, MARKETING_ENDS = "Running", "Scheduled to end"
+# The optional sources (online views, similar homes nearby). A figure a site shows is a running count since the
+# home was listed; a figure the operator types may be for one week. Every lookup is logged with how it ended.
+ONLINE_COUNTS = ("week", "since_listing")
+ONLINE_SOURCES = ("operator", "portal_page")
+LOOKUP_OUTCOMES = ("planned", "ok", "skipped")
+SKIP_REASONS = ("blocked", "captcha", "failed", "pane_unavailable", "not_found")
 
 LIMITS = {
     "offer_lead_fresh_days": 21,   # an offer lead with no contact for longer than this is "earlier interest"
@@ -82,6 +91,12 @@ LIMITS = {
     "tries_flag": 3,               # "3 or more tries": separate follow-up days since the last answer
     "email_max_bytes": 95000,      # Gmail clips near 102 KB
     "nearby_max_homes": 8,         # the watch list of similar homes nearby is chosen once and stays this short
+    # token thrift: what an optional lookup may cost per issue (references/extras.md). Enforced by sr_lookups.
+    "nearby_lookups_per_issue": 1,     # ONE scripted lookup for the similar homes nearby
+    "portal_pages_per_issue": 1,       # at most ONE page per portal for online views
+    "nearby_candidates_max": 12,       # how many candidate homes the first lookup may hand back
+    "nearby_json_max_bytes": 12000,    # a lookup result larger than this is not the compact result and is refused
+    "portal_json_max_bytes": 600,
 }
 
 # The lists under "The details": people grouped by what they did, so each list matches a number on top and a
@@ -587,6 +602,19 @@ def is_reply(t):
     return t.get("direction") == "inbound" or t.get("outcome") == "reached"
 
 
+def money_amounts(text):
+    """Dollar amounts written in a sentence ('$1,200', '45 dollars', 'USD 300'). Used to keep ad spend out."""
+    return re.findall(r"\$\s?\d[\d,]*(?:\.\d+)?|\b\d[\d,]*(?:\.\d+)?\s?(?:dollars|usd)\b|\busd\s?\d[\d,]*", text or "", flags=re.I)
+
+
+def marketing_recorded(marketing, report):
+    """The online ads and marketing section prints only when a channel is switched on, or when something was
+    checked for this issue (on or after the first day of the report week)."""
+    chs = (marketing or {}).get("channels") or []
+    start = iso(report["week_start"])
+    return any(ch.get("status") == "on" or (ch.get("checked") or "") >= start for ch in chs)
+
+
 def channel_is_running(channel, report):
     """A marketing channel may be called running only when it is on AND was checked for this issue
     (on or after the last day of the report week). Otherwise print its state with the date last checked."""
@@ -621,6 +649,7 @@ contact_lists = _lazy(_C, "contact_lists", "The lists under 'The details' a pers
 derive_offer_word = _lazy(_C, "derive_offer_word", "What a person has said about writing an offer (an OFFER_WORDS key).")
 active_in_week = _lazy(_C, "active_in_week", "True when a person did something, or we did, inside the report week.")
 online_by_week = _lazy(_C, "online_by_week", "{week number: (views, saves)} from the optional ledger.online block.")
+online_totals = _lazy(_C, "online_totals", "(views, saves) since listing: the site's running count, else the sum of the weeks.")
 recount = _lazy(_C, "recount", "Every derived number in a ledger, recomputed from its rows.")
 finish_ledger = _lazy(_C, "finish_ledger", "Fills every derived block of a ledger from its rows, in place.")
 settle_contact = _lazy(_C, "settle_contact", "Sets the derived fields of one contact from its rows, in place.")

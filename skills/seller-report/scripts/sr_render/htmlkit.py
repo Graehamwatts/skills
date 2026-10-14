@@ -271,8 +271,8 @@ def h3(title, sub=None, top=24, color=None):
     return s
 
 
-def para(text, size=None, top=8, color=None, weight=None, lh=1.5):
-    return '<p style="margin:%dpx 0 0;%s">%s</p>' % (top, fz(size or SIZE["text"], lh, weight, color), text)
+def para(text, size=None, top=8, color=None, weight=None, lh=1.5, at=""):
+    return '<p%s style="margin:%dpx 0 0;%s">%s</p>' % (at, top, fz(size or SIZE["text"], lh, weight, color), text)
 
 
 CHIP = {"offer": ("ink", "gold"), "lean": ("tint", "ink"), "good": ("good_bg", "good_fg"),

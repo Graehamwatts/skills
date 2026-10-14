@@ -1,0 +1,9 @@
+{"ok":true,"site":"redfin","mode":"candidates","as_of":"2026-04-13","search":{"region_id":99001,"region_type":6,"market":null,"uipt":"1"},"subject":{"id":9000,"found":true},"dropped":{"city":1,"size":4,"type":1},"homes":[
+{"id":9001,"address":"14 Sample Fern Ln","city":"Fixture City","type":"Single Family Residential","beds":3,"baths":2,"sqft":1510,"list_date":"2026-04-10","list_price":1210000,"status":"active"},
+{"id":9002,"address":"31 Sample Alder Way","city":"Fixture City","type":"Single Family Residential","beds":3,"baths":2,"sqft":1440,"list_date":"2026-03-04","price_change":{"date":"2026-04-08","from":1199000,"to":1150000},"list_price":1150000,"status":"active"},
+{"id":9003,"address":"9 Sample Cedar Ct","city":"Fixture City","type":"Single Family Residential","beds":3,"baths":2.5,"sqft":1620,"list_date":"2026-03-28","pending_date":"2026-04-09","list_price":1249000,"status":"pending"},
+{"id":9004,"address":"52 Sample Birch Dr","city":"Fixture City","type":"Single Family Residential","beds":3,"baths":2,"sqft":1390,"list_date":"2026-03-10","pending_date":"2026-03-19","sold_date":"2026-04-07","sold_price":1182000,"list_price":1175000,"status":"sold"},
+{"id":9005,"address":"7 Sample Elm Pl","city":"Fixture City","type":"Single Family Residential","beds":3,"baths":2,"sqft":1475,"list_date":"2026-02-11","list_price":1225000,"status":"active"},
+{"id":9006,"address":"218 Sample Glen Ct","city":"Fixture City","type":"Single Family Residential","beds":3,"baths":2,"sqft":1480,"list_date":"2026-03-12","list_price":1195000,"status":"active"},
+{"id":9007,"address":"40 Sample Glen Ct","city":"Fixture City","type":"Single Family Residential","beds":3,"baths":2,"sqft":1485,"list_date":"2026-01-20","pending_date":"2026-02-02","sold_date":"2026-02-27","sold_price":1201000,"list_price":1189000,"status":"sold"}
+],"requests":16}

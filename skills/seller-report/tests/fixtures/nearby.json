@@ -1,0 +1,37 @@
+{
+ "schema_version": 1,
+ "slug": "sample-glen",
+ "_note": "Synthetic. A watch list of five invented homes for the test listing, with the snapshot of the issue before (Apr 6) and of this issue (Apr 13). Between the two: one home sold, one went pending, one cut its price, one came on the market, one did not change.",
+ "source": "Public listing pages",
+ "search": {"region_id": 99001, "region_type": 6, "market": null, "uipt": "1"},
+ "scope": "Five 3 bedroom single family homes in Fixture City, chosen on Mar 16",
+ "chosen_on": "2026-03-16",
+ "watch": [
+  {"id": "9001", "address": "14 Sample Fern Ln", "beds": 3, "baths": 2, "sqft": 1510, "type": "Single Family Residential", "why": "Same city, same bedroom count, 30 sq ft larger"},
+  {"id": "9002", "address": "31 Sample Alder Way", "beds": 3, "baths": 2, "sqft": 1440, "type": "Single Family Residential", "why": "Same city, same bedroom count, 40 sq ft smaller"},
+  {"id": "9003", "address": "9 Sample Cedar Ct", "beds": 3, "baths": 2.5, "sqft": 1620, "type": "Single Family Residential", "why": "Same city, same bedroom count, 140 sq ft larger"},
+  {"id": "9004", "address": "52 Sample Birch Dr", "beds": 3, "baths": 2, "sqft": 1390, "type": "Single Family Residential", "why": "Same city, same bedroom count, 90 sq ft smaller"},
+  {"id": "9005", "address": "7 Sample Elm Pl", "beds": 3, "baths": 2, "sqft": 1475, "type": "Single Family Residential", "why": "Same city, same bedroom count, 5 sq ft smaller"}
+ ],
+ "candidates": null,
+ "snapshots": [
+  {"report_date": "2026-04-06", "as_of": "2026-04-06", "homes": [
+    {"id": "9001", "address": "14 Sample Fern Ln", "status": "withdrawn", "list_price": 1235000, "list_date": "2026-01-15", "off_date": "2026-03-01"},
+    {"id": "9002", "address": "31 Sample Alder Way", "status": "active", "list_price": 1199000, "list_date": "2026-03-04"},
+    {"id": "9003", "address": "9 Sample Cedar Ct", "status": "active", "list_price": 1249000, "list_date": "2026-03-28"},
+    {"id": "9004", "address": "52 Sample Birch Dr", "status": "pending", "list_price": 1175000, "list_date": "2026-03-10", "pending_date": "2026-03-19"},
+    {"id": "9005", "address": "7 Sample Elm Pl", "status": "active", "list_price": 1225000, "list_date": "2026-02-11"}
+  ]},
+  {"report_date": "2026-04-13", "as_of": "2026-04-13", "homes": [
+    {"id": "9001", "address": "14 Sample Fern Ln", "status": "active", "list_price": 1210000, "list_date": "2026-04-10"},
+    {"id": "9002", "address": "31 Sample Alder Way", "status": "active", "list_price": 1150000, "list_date": "2026-03-04", "price_change": {"date": "2026-04-08", "from": 1199000, "to": 1150000}},
+    {"id": "9003", "address": "9 Sample Cedar Ct", "status": "pending", "list_price": 1249000, "list_date": "2026-03-28", "pending_date": "2026-04-09"},
+    {"id": "9004", "address": "52 Sample Birch Dr", "status": "sold", "list_price": 1175000, "list_date": "2026-03-10", "pending_date": "2026-03-19", "sold_date": "2026-04-07", "sold_price": 1182000},
+    {"id": "9005", "address": "7 Sample Elm Pl", "status": "active", "list_price": 1225000, "list_date": "2026-02-11"}
+  ]}
+ ],
+ "lookups": [
+  {"report_date": "2026-04-06", "key": "nearby", "planned_at": "2026-04-06T09:00:00-07:00", "why": "asked", "outcome": "ok", "reason": null, "detail": null},
+  {"report_date": "2026-04-13", "key": "nearby", "planned_at": "2026-04-13T09:00:00-07:00", "why": "settings", "outcome": "ok", "reason": null, "detail": null}
+ ]
+}

@@ -43,7 +43,7 @@ SIZE = dict(maxw=680, gutter=16, gutter_wide=32, lede=17, body=16, text=15, smal
 # (sub) or larger. Nothing on the page is under 12 px.
 LIMITS = dict(
     max_bytes=C.LIMITS["email_max_bytes"],      # hard ceiling for the email HTML (Gmail clips near 102 KB)
-    fit_target=93000,        # the fit ladder steps down until the email is at or under this (a photo, a button and a greeting fit in the rest)
+    fit_target=93500,        # the fit ladder steps down until the email is at or under this (a photo, a button and a greeting fit in the rest)
     lead_fresh_days=C.LIMITS["offer_lead_fresh_days"],
     quiet_days=C.LIMITS["quiet_days"],
     tries_flag=C.LIMITS["tries_flag"],

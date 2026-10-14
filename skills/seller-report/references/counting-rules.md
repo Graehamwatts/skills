@@ -45,26 +45,33 @@ and never explains what silence on price means, in either direction.
 - One person is one contact, however many tabs they sit on. Two different agents can shorten to the same
   "First L." label, so people are matched by id, never by label.
 
-## 3. Showings, tours and inquiries: three kinds, never merged
+## 3. Showings, and what is never a showing
 
 | Kind | What it is | Field |
 |---|---|---|
 | Key-box showing | A showing with a key-box record: a row on the team's key-box showing log, or a key-box notification | `keybox_showings` |
 | Agent-reported tour | A tour we know about only because the agent or buyer told us. No key-box record | `agent_reported_tours` |
+| **Showing** | Either of the two above. This is the Showings row a seller reads | `showings` |
 | Inquiry | A call, email or showing request with no tour: a question, a cancelled or postponed showing | `inquiries` |
 
-- The three are separate numbers in every week and in the totals. They are **never added into one
-  "showings" number**. A printed number always names its kind ("2 key-box showings", "1 tour reported by an
-  agent").
+- **Showings = key-box showings + tours agents reported.** `showings` is that sum in every week, in every
+  list price period and in the totals. It is the one number the top of the report prints ("Showings"), the
+  bars of the week by week chart, and the "Shown" column of the weekly table.
+- **An inquiry is never a showing.** It is not in `showings`, in any week or total, however the row was typed
+  and whichever tab it sits on. The page says so under the numbers table.
+- The two kinds of showing are still stored apart, and the page says how many of each make up the total when
+  the listing has a key-box record ("Showings count key-box showings (2 since we listed) and tours agents
+  told us about (1)").
 - When a listing has no key-box record to read, `keybox_showings` is null and prints as "not recorded". It
-  is not zero.
+  is not zero. `showings` is then the tours agents reported, and the page says the listing has no key-box
+  record.
 - A key-box entry made by an open house host opening up is not a showing.
 - A row with a phone number and no tour is an inquiry, even if it sits on the showing tab.
 - A tour listed with no confirmation that it took place still counts and is flagged (`confirmed: false`,
   `totals.tours_unconfirmed`). The page says how many.
 - A row on the showing tab with no showing date is read as an inquiry, never a tour, until the notes or the
   operator say a tour took place.
-- Tours and inquiries are counted for everyone who is not team side, a buyer listed under an agent included.
+- Showings and inquiries are counted for everyone who is not team side, a buyer listed under an agent included.
   Only the contact counts leave those buyers out.
 
 ## 4. Disclosure package: three states
@@ -76,7 +83,11 @@ and never explains what silence on price means, in either direction.
 | Opened | `disclosure_opened` | The disclosure platform shows the person opened it |
 
 - `disclosure_contacts` is the number of contacts tied to the package in any of these ways. Each person
-  counts once, in the week of their first dated package entry (`weeks[].disclosure_contacts_new`).
+  counts once, in the week of their first dated package entry (`weeks[].disclosure_contacts_new`). That is
+  the "Disclosure packages" row: new people this week, last week, and everyone since we listed. It is also the
+  count in the heading of the disclosure package list (section 15).
+- When the listing records opens, the row carries a second figure, "N opened", under each number. It is never
+  added to the first.
 - `disclosure_sent` and `disclosure_opened` are separate numbers. They are never reported as one "have the
   package" figure.
 - **When sent or opened is not recorded** (`report.tracking` is false, or a week could not be checked), the
@@ -192,19 +203,111 @@ and never explains what silence on price means, in either direction.
 
 - Every market number carries its window: `as_of`, `data_through`, the scope and the sample. Windows are not
   mixed in one sentence. Days are counted from the list date to the day the sale first went under contract.
-- A marketing channel is called running only if it is on **and was checked for this issue**. Anything older
-  prints its state with the date last checked.
+- A marketing channel is called **running** only if it is on **and was checked for this issue** (on or after
+  the last day of the report week). A channel that is on and was last checked earlier is **switched on**, with
+  the day it was last checked. The other words are **prepared**, **on hold**, **not launched** and **ended**,
+  and a switched-on channel may say when it is **scheduled to end**. No ad spend amount is printed.
+- The online ads and marketing section prints only when a channel is on or something was checked for this
+  issue. Otherwise it is left out.
+- **Similar homes nearby** is a watch list of at most 8 homes, chosen once. Each issue prints what changed
+  since the last check (new listing, price change, went pending, sold, taken off the market, back on the
+  market) and then every watched home with its status, price and days, with the day the list was checked.
+  - "N of the M homes we are watching changed" counts the homes whose change is not "none".
+  - A change is dated by its own event. When two checks differ and no date explains it, the change is dated the
+    day it was seen and printed with "by".
+  - Price is the list price, or the sale price for a home that sold. Days run from the list date to the first
+    accepted offer, the sale or the day the home left the market, and to the day of the check for a home still
+    for sale.
+  - The section exists only when the list was checked for this issue. Public street addresses are printed in
+    that one section, as in a market analysis. Everywhere else the rule is unchanged: never where a buyer went,
+    never another client's home.
 
 ## 13. What Claude is unsure about
 
 It is never in the report. It goes in the chat reply that hands over the draft, as "Worth a glance before you
 send": at most five short plain lines, most important first (`notes_for_operator.json`). Examples: could not
 tell whether a tour took place; a comment was toned down; a count here differs from the team's status email,
-and why. The independent checks (numbers recounted, privacy, tone, feedback only, brand, hygiene, email
+and why. An optional lookup that was blocked or failed is always among the five: the report has no such
+section and the operator should know why (`extras.md`, section 1). The independent checks (numbers recounted, privacy, tone, feedback only, brand, hygiene, email
 safety, wrong file) run silently before anything goes in a draft. The operator hears about a check only
 when it fails, in plain words.
 
-## 14. Do not repeat: five errors caught in a hand-built report
+## 14. The summary on top: the numbers table, the line under it, the charts
+
+- **One table**, three columns: this week, last week, since we listed. These rows print in every issue, zero
+  or not, so one report can be laid beside the next:
+
+  | Row | This week and last week | Since we listed |
+  |---|---|---|
+  | Showings | `weeks[].showings` | `totals.showings` |
+  | Disclosure packages | `weeks[].disclosure_contacts_new` (second figure: `disclosure_opened`) | `totals.disclosure_contacts` (second figure: `disclosure_opened_confirmed`) |
+  | Open house visitors, in the host's own unit | `weeks[].open_house_groups` | `totals.open_house_groups` |
+  | Follow-ups we made | `weeks[].touches_outbound` | `totals.touches_outbound` |
+  | Replies we received | `weeks[].replies_inbound` | `totals.replies_inbound` |
+  | Offers | `weeks[].offers` | `totals.offers` |
+  | Online views, only when recorded | `weeks[].online_views` (second figure: `online_saves`) | `totals.online_views` |
+
+- **One line directly under the table**: "We contacted X of Y people. Z answered. N still waiting."
+  (`totals.contacted`, `contacts`, `replied`, `awaiting_reply`). When someone was reached only through an
+  open house host the line says so in full: "We contacted 4 of 5 people directly and 1 through the open house
+  host." When someone has not been reached at all, a second short line says how many.
+- **The week by week chart** has a row for every week since the list week: showings and new disclosure
+  packages. A quiet week keeps its row, this week is marked, and each value is printed beside its bar. When
+  online views are recorded they get a chart of their own, and a week with no figure says "not recorded".
+- **Online views** for a week are the sum of the portals that gave a figure that week (`ledger.online`). A
+  week with no figure from any portal is null, never zero. A site shows a running count since the home was
+  listed, so a week's figure is one reading minus the reading of the week before, and a site read for the
+  first time gives no weekly figure yet. **Since we listed** is, site by site, the running count when one was
+  read, otherwise the weeks added up; it is also the last line of the Views column in the weekly table. The
+  page names the sites and the day they were read, and says each site counts views its own way.
+
+## 15. The details: people grouped by what they did
+
+The lists match the numbers on top and the way the team's sheet is kept.
+
+| List (`contacts[].lists`) | Who is in it | The count in its heading |
+|---|---|---|
+| `showings`: Agents who showed the home | Anyone not team side with a key-box showing or a reported tour | `totals.lists.showings` |
+| `disclosure`: People on the disclosure package list | A person we follow up with who is on the list, was sent the package or opened it | `totals.lists.disclosure`, always equal to `totals.disclosure_contacts` |
+| `open_house`: Open house visitors we know of | Anyone not team side who came to an open house and left a name | `totals.lists.open_house` |
+| `other_inquiries`: Other inquiries | Someone with an inquiry who is in none of the three lists above, and anyone else we follow up with | `totals.lists.other_inquiries` |
+
+- **The count in each heading equals the number of entries beneath it.** Both equal the number of people who
+  belong in the list, counted from their rows. The ship gate counts all three again and stops the build when
+  they differ.
+- **A person who did two things is listed once in full.** Their first list, in the order showings, then
+  disclosure packages, then open house, is where they are shown (`contacts[].primary_list`). In every other
+  list they belong to they are a one-line pointer ("Odalys V.: see Agents who showed the home"). A pointer is
+  an entry and is in the heading count. Nobody is shown in full twice.
+- **Everyone we follow up with has exactly one such place.** The people shown in full or in one line across
+  the lists are the `totals.contacts` people, each once.
+- **This week in full, earlier people in one line each.** A person is active in the report week when the log
+  holds a touch in either direction, something they told us, or something they did, dated inside the week
+  (`contacts[].active_this_week`, `totals.lists_active_this_week`). In the email they get a full entry: short
+  name and brokerage, what they did and when, "Said:" (as reported to our team), "Offer:", "Follow-up:" with
+  every date and its channel, "Responded:". Everyone else gets one line under an "Earlier" subhead: the name,
+  what they did, where it stands, the last contact. **The link copy and the PDF show everyone in full.**
+- **"Offer:"** is one of: offer received, writing one, possibly, not yet, no, not discussed
+  (`contacts[].offer_word`). An offer on file comes first, then what the person said. "Not yet" is someone who
+  said no offer for now and has not passed. The link copy prints no "Offer:" line for anyone.
+- **"Responded:"** is "Yes" with the date of their last answer, or "No reply yet after N tries" (section 6).
+  There is no separate "still waiting" section: waiting is a status on the entry, and the line under the
+  numbers carries the count.
+- **Not entries:** a buyer whose only tie is a package their own agent shared is stated as one count under
+  the disclosure list (`totals.disclosure_shared_buyers`). Open house hosts are on our side of the table and
+  are in no list.
+- **A list with no entries prints one honest sentence**, never an empty table. "Other inquiries" is printed
+  only when there is someone to list.
+- **Open houses** list each session (date, host, the count in the host's own unit, the recap) before the
+  visitors we know of. In the email, sessions before this week take one line each.
+- **When the email runs out of room** (`sr_render/fit.py`) the optional sections give way before anything about
+  people: similar homes nearby keeps what changed and says the homes that did not change in one sentence, the
+  chart of online views is left to the complete record, and prepared ad channels join the one sentence for
+  channels that are not on. Then the record half gives way, the pointers become a run of names, and the
+  one-line entries say less. Every person keeps an entry in every list they
+  belong to, so the heading count still equals the entries.
+
+## 16. Do not repeat: five errors caught in a hand-built report
 
 Graeham found these in one hand-compiled weekly report. Each is now impossible or caught by the validator.
 
@@ -223,11 +326,11 @@ Graeham found these in one hand-compiled weekly report. Each is now impossible o
 
 Two more from the same review, for the same reason:
 
-- "2 showings" had to become "2 completed key-box showings", and a phone contact had been counted as a tour.
-  See section 3.
+- A phone contact had been counted as a showing. An inquiry is never a showing, and the page says what the
+  Showings number counts. See section 3.
 - "4 agents have the disclosure package" counted two links that were sent and never opened. See section 4.
 
-## 15. Quick reference
+## 17. Quick reference
 
 | Printed as | Ledger field | Rule |
 |---|---|---|
@@ -237,10 +340,15 @@ Two more from the same review, for the same reason:
 | Follow-ups we made | `totals.touches_outbound`, `weeks[].touches_outbound` | section 5 |
 | Separate days | `totals.outbound_distinct_days`, `weeks[].outbound_distinct_days` | section 5 |
 | Replies we received | `totals.replies_inbound` | section 6 |
-| Key-box showings | `keybox_showings` | section 3 |
-| Tours reported to our team | `agent_reported_tours` | section 3 |
-| Inquiries | `inquiries` | section 3 |
-| New people on the disclosure package list | `weeks[].disclosure_contacts_new` | section 4 |
+| Showings | `showings` (key-box showings plus reported tours) | section 3 |
+| Key-box showings, tours agents told us about | `keybox_showings`, `agent_reported_tours` | section 3 |
+| Inquiries | `inquiries` (never a showing) | section 3 |
+| Disclosure packages (new people) | `weeks[].disclosure_contacts_new` | section 4 |
+| Online views, saves | `online_views`, `online_saves` (since listing: `sr_contract.online_totals`) | section 14 |
+| N of the M homes we are watching changed | `nearby.homes[].change` | section 12 |
+| Running, switched on, scheduled to end | `marketing.channels[]` (`status`, `checked`, `ends_on`) | section 12 |
+| The count in a list heading | `totals.lists` | section 15 |
+| Offer: | `contacts[].offer_word` | section 15 |
 | Packages sent, packages opened | `disclosure_sent`, `disclosure_opened` | section 4 |
 | Open house traffic | `open_house_groups` with `counted_unit` | section 7 |
 | Price came up with N of M people | `pricing_tally` | section 8 |

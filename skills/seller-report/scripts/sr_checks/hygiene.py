@@ -190,7 +190,12 @@ def _internal(B, ctx):
     snake = sorted(set(m.group(0) for m in re.finditer(r"(?<![\w@/.\-])[a-z]{2,}(?:_[a-z0-9]+)+(?![\w@/\-]|\.\w)", flat)))
     if snake:
         bad.append("field names are printed: %s" % ", ".join(snake[:6]))
-    for mt in re.finditer(r"\bClaude\b|\bChatGPT\b|\bAI[- ]generated\b|\blanguage model\b|\bthe ledger\b|\braw\.json\b|\bledger\.json\b", flat):
+    # an ad channel can be named after a product ("ChatGPT ads"): its own name, as the ledger has it, is not a tool name
+    tools = flat
+    for ch in ((ctx.ledger.get("marketing") or {}).get("channels") or []) if isinstance(ctx.ledger.get("marketing"), dict) else []:
+        if isinstance(ch, dict) and (ch.get("channel") or "").strip():
+            tools = tools.replace(ch["channel"], " " * len(ch["channel"]))
+    for mt in re.finditer(r"\bClaude\b|\bChatGPT\b|\bAI[- ]generated\b|\blanguage model\b|\bthe ledger\b|\braw\.json\b|\bledger\.json\b", tools):
         bad.append("'%s' in '%s'" % (mt.group(0), core.excerpt(flat, mt.start(), mt.end(), 30)))
     B.judge("internal_notes", bad, "no operator note, contact id, field name or tool name in the seller's text",
             "internal material is in the text a seller reads")
@@ -226,9 +231,14 @@ def _link_copy(B, ctx):
     low = core.fold(everything)
     flat = ctx.seller_flat()
     bad = []
+    # A watched home or a comparable sale can carry the same public price as an offer. Those two sections print
+    # public record amounts, each checked against the ledger by its own rule, so an offer price is looked for
+    # everywhere else on the page.
+    public = ctx.page.sections("nearby") + ctx.page.sections("market")
+    low_private = core.fold(ctx.page.text(skip=public)) if public else low
     for what, s in _offer_strings(ctx):
         f = core.fold(s)
-        hit = re.search(r"(?<![\w$,.])%s(?![\w,]|\.\d)" % re.escape(f), low)
+        hit = re.search(r"(?<![\w$,.])%s(?![\w,]|\.\d)" % re.escape(f), low_private if what.startswith("the price of offer") else low)
         if hit:
             bad.append("%s is on the page ('%s')" % (what, core.excerpt(low, hit.start(), hit.end(), 20)))
     by_id = dict((c["id"], c) for c in d.get("contacts") or [])

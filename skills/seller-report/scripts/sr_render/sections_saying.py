@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """sr_render.sections_saying: what people are saying.
 
-The weekly letter carries one ranked tally of the main points since listing, each as a plain count out of
+The summary on top carries one ranked tally of the main points since listing, each as a plain count out of
 the people who gave feedback. Price is always three rows, even at zero. The record half keeps every price
 comment and the plain table of the record at each list price.
 
@@ -37,7 +37,7 @@ def week_price_line(m):
 
 
 def s_saying(m):
-    """What people are saying: the ranked tally, placed in the weekly letter after this week's conversations."""
+    """What people are saying: the ranked tally, the last part of the summary on top, right above "The details"."""
     PT, TT, LT, K = m.PT, m.TT, m.LT, OPT["fit"]
     den = PT["people_with_feedback"]
     unit = "person" if den == 1 else "people"
@@ -151,15 +151,18 @@ def s_price_periods(m):
             ("Said the price is too high", of("price_too_high"), False, "price_too_high"),
             ("Said the price is fair or good", of("price_fair_or_positive"), False, "price_fair_or_positive")]
     wd = "%d%%" % (56 // len(ps))
-    hdr = "<tr>%s%s</tr>" % (gth("&nbsp;", pad="8px 6px 8px 8px"), "".join(
-        gth("At<br>%s" % money(p["price"]), w=wd, al="right", pad="8px 8px 8px 4px", st="font-size:14px;line-height:1.3", at=mark("col", p["price"])) for p in ps))
+    # three list prices or more: tighter cells, so the table still fits a 320 px phone in the link copy's wider font
+    tight = len(ps) > 2
+    lpad, vpad, hfont = ("8px 4px 8px 6px", "8px 5px 8px 2px", 13) if tight else ("8px 6px 8px 8px", "8px 8px 8px 4px", 14)
+    hdr = "<tr>%s%s</tr>" % (gth("&nbsp;", pad=lpad), "".join(
+        gth("At<br>%s" % money(p["price"]), w=wd, al="right", pad=vpad, st="font-size:%dpx;line-height:1.3" % hfont, at=mark("col", p["price"])) for p in ps))
     rows = ""
     for i, (label, fn, bold, field) in enumerate(spec):
         sf = zebra(i)
         rows += "<tr%s>%s%s</tr>" % (
             mark("row", field),
-            c(label, sf, pad="8px 6px 8px 8px", th=True, scope="row", st="font-weight:400"),
-            "".join(c(("<b>%s</b>" if bold else "%s") % fn(p), sf, al="right", pad="8px 8px 8px 4px") for p in ps))
+            c(label, sf, pad=lpad, th=True, scope="row", st="font-weight:400"),
+            "".join(c(("<b>%s</b>" if bold else "%s") % fn(p), sf, al="right", pad=vpad) for p in ps))
     note = "Counted by the date of each showing, open house, offer and conversation."
     if T.get("tours_approximate_date"):
         note += " %s." % cap1(approx_words(m))

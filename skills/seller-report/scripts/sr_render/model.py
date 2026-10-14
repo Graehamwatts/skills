@@ -79,6 +79,7 @@ class Model(object):
         self.oh_unit = list(units)[0] if len(units) == 1 else None
         self.regimes = self._regimes()
         self.online = d.get("online") if (self.T.get("online_views") is not None or self.T.get("online_saves") is not None) else None
+        self.online_weekly = bool(self.online) and any(w.get("online_views") is not None for w in self.W)   # a week by week figure exists
         self.nearby = d.get("nearby") or None
         self.after = list((self.R.get("since_week_closed") or {}).get("items") or [])
         if link:

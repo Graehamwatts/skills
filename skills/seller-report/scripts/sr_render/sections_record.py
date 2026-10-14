@@ -64,7 +64,8 @@ def s_followup_record(m):
             line += " %s of the %d still waiting %s been tried on 3 or more days." % (k3, nw, "has" if n3 == 1 else "have")
     s += para(line, SIZE["small"], top=14, color=soft)
     wkp = len([x for x in m.passed if x["_active"]])
-    bd = ["%d passed%s" % (len(m.passed), (" (%d this week)" % wkp) if wkp else "")] if m.passed else []
+    # people who passed earlier and were contacted again this week are in wkp too, so it is not "passed this week"
+    bd = ["%d passed%s" % (len(m.passed), (" (%d of them in touch this week)" % wkp) if wkp else "")] if m.passed else []
     if m.open:
         bd.append("%d gave no final answer" % len(m.open))
     if m.offered:
@@ -107,25 +108,30 @@ def s_stack(m):
     num_ = lambda fn: (lambda ws: num(sum(fn(w) for w in ws)))
 
     def views(ws):
+        if ws is W:                 # all weeks: the count since we listed, the same number as the table at the top
+            return num(T["online_views"]) if T.get("online_views") is not None else "&nbsp;"
         got = [w["online_views"] for w in ws if w.get("online_views") is not None]
         return num(sum(got)) if got else "&nbsp;"
     # Widths are set for a 320 px phone: every header word and every date fits its fixed column on one line.
     # "Shown" is the Showings row of the numbers table: key-box showings plus tours agents told us about.
-    ov = bool(m.online)
+    # A phone has room for eight columns. When online views are recorded they take the place of the packages
+    # column, which the week by week chart at the top already gives for every week.
+    ov = bool(m.online_weekly)
     wd_ = (lambda a, b: b) if ov else (lambda a, b: a)
-    cols = [("Shown", wd_("13%", "12%"), num_(lambda w: w["showings"]), "showings"),
-            ("Pkgs", wd_("10%", "9%"), num_(lambda w: w.get("disclosure_contacts_new") or 0), "disclosure_contacts_new"),
-            ("Open<br>house", wd_("12%", "11%"), "oh", "open_house_groups"),
-            ("Follow<br>ups", wd_("13%", "11%"), num_(lambda w: w["touches_outbound"]), "touches_outbound"),
-            ("Talks", wd_("11%", "10%"), num_(lambda w: w.get("conversations_with_feedback") or 0), "conversations_with_feedback"),
-            ("High/<br>fair", wd_("12%", "11%"), lambda ws: "%d&nbsp;/&nbsp;%d" % (sum(w["price_too_high"] for w in ws), sum(w["price_fair_or_positive"] for w in ws)), "PRICE_PAIR"),
-            ("Offers", wd_("12%", "11%"), num_(lambda w: w.get("offers") or 0), "offers")]
+    cols = [("Shown", wd_("14%", "13%"), num_(lambda w: w["showings"]), "showings")]
+    if not ov:
+        cols.append(("Pkgs", "10%", num_(lambda w: w.get("disclosure_contacts_new") or 0), "disclosure_contacts_new"))
+    cols += [("Open<br>house", wd_("12%", "11.5%"), "oh", "open_house_groups"),
+             ("Follow<br>ups", wd_("13%", "12%"), num_(lambda w: w["touches_outbound"]), "touches_outbound"),
+             ("Talks", wd_("11%", "10.5%"), num_(lambda w: w.get("conversations_with_feedback") or 0), "conversations_with_feedback"),
+             ("High/<br>fair", wd_("12%", "11.5%"), lambda ws: "%d&nbsp;/&nbsp;%d" % (sum(w["price_too_high"] for w in ws), sum(w["price_fair_or_positive"] for w in ws)), "PRICE_PAIR"),
+             ("Offers", "12%", num_(lambda w: w.get("offers") or 0), "offers")]
     if ov:
-        cols.append(("Views", "12%", views, "online_views"))
+        cols.append(("Views", "13.5%", views, "online_views"))
     ncol = len(cols) + 1
     # each header line is one word, so it cannot wrap inside its fixed column (600 keeps Inter inside it at 320 px)
     hs = "font-size:12px;font-weight:600;letter-spacing:-.2px"
-    hdr = "<tr>%s%s</tr>" % (gth("Week", w=wd_("17%", "13%"), pad="7px 0 7px 6px", st=hs, at=mark("col", "LABEL")), "".join(
+    hdr = "<tr>%s%s</tr>" % (gth("Week", w="16%", pad="7px 0 7px 6px", st=hs, at=mark("col", "LABEL")), "".join(
         gth(t, w=wd, al="right", pad="7px 5px 7px 0" if i == len(cols) - 1 else "7px 0", st=hs, at=mark("col", field))
         for i, (t, wd, _, field) in enumerate(cols)))
 
@@ -171,8 +177,8 @@ def s_stack(m):
             is_cur = len(ws) == 1 and w["n"] == cur["n"]
             sf = "tint" if is_cur else zebra(k)
             k += 1
-            date = '<br><span style="font-size:%dpx;white-space:nowrap">%s</span>' % (SIZE["sub"], md(ws[0]["start"]))
-            lab = ('<b style="white-space:nowrap">%d to %d</b>' % (ws[0]["n"], ws[-1]["n"]) if len(ws) > 1 else "<b>%d</b>" % w["n"]) + date
+            date = "<br>" + md(ws[0]["start"]).replace(" ", "&nbsp;")
+            lab = ("<b>%d&nbsp;to&nbsp;%d</b>" % (ws[0]["n"], ws[-1]["n"]) if len(ws) > 1 else "<b>%d</b>" % w["n"]) + date
             # a block of older weeks (see fit.FIT_LEVELS) is marked as such, so nothing reads it as one week
             opened = "<tr%s>" % mark("row", ("block:%d-%d" % (ws[0]["n"], ws[-1]["n"])) if len(ws) > 1 else w["n"])
             rows += "%s%s%s</tr>" % (opened, c(lab, sf, al="left", pad="5px 0 5px 6px", th=True, scope="row", st="font-weight:400"), cells(ws, sf, is_cur))
@@ -195,11 +201,12 @@ def s_stack(m):
     wk_sum = lambda key: sum(w.get(key) or 0 for w in W)
     people = m.PT["people_with_feedback"]
     notes = ["<b>Shown</b>: showings, the same count as the Showings row at the top."]
-    pk = "new people on the disclosure package list."
-    dated = wk_sum("disclosure_contacts_new")
-    if T["disclosure_contacts"] != dated:
-        pk += " %d dated in the weeks, %d more with no date on file, %d in all." % (dated, T["disclosure_contacts"] - dated, T["disclosure_contacts"])
-    notes.append("<b>Pkgs</b>: " + pk)
+    if not ov:
+        pk = "new people on the disclosure package list."
+        dated = wk_sum("disclosure_contacts_new")
+        if T["disclosure_contacts"] != dated:
+            pk += " %d dated in the weeks, %d more with no date on file, %d in all." % (dated, T["disclosure_contacts"] - dated, T["disclosure_contacts"])
+        notes.append("<b>Pkgs</b>: " + pk)
     if T.get("tours_undated"):
         notes.append("%s no date on file, so %s in the total since we listed and in no week." % (
             cap1(n_(T["tours_undated"], "showing has", "showings have")), "it is" if T["tours_undated"] == 1 else "they are"))
@@ -223,7 +230,10 @@ def s_stack(m):
             ph += " Changed %s to %s." % (md(b["date"]), money(b["price"]))
         notes.append("<b>Price history</b>: " + ph)
     if ov:
-        notes.append("<b>Views</b>: online views as counted by %s. A blank means no figure was recorded that week." % esc(join_and(m.online.get("portals") or []) or "the listing sites"))
+        notes.append("<b>Views</b>: online views as counted by %s. A blank means no figure was recorded that week.%s "
+                     "New disclosure packages by week are in the chart at the top."
+                     % (esc(join_and(m.online.get("portals") or []) or "the listing sites"),
+                        " The last line is the count since we listed." if (m.online.get("since_listing") or {}).get("views") else ""))
     if m.R["issue_number"] != cur["n"]:
         notes.append("Issue numbers count the reports we have sent. Week numbers count weeks on the market.")
     return sec(s + para("<br>".join(notes), SIZE["small"], top=10, color=P["grey"], lh=1.5), top=26, name="weekly_table")
@@ -311,7 +321,7 @@ def s_footer(m):
     if m.link:
         note = ("This copy leaves out offer prices, offer terms, the names of agents with an offer on file and who may be "
                 "weighing one.")
-    realtor = esc(ID["realtor_line"]).upper().replace("®", "&reg;")
+    realtor = esc(ID["realtor_line"]).upper().replace(chr(0xAE), "&reg;")
     links = '<a href="tel:+1%s" %s>%s</a><a href="mailto:%s" %s>%s</a>' % (
         re.sub(r"[^0-9]", "", ID["phone"]), a, esc(ID["phone"]), esc(ID["email"]), a, esc(ID["email"]))
     if web:
