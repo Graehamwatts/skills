@@ -24,7 +24,11 @@ The team's notes are shorthand written for themselves: blunt, full of phone numb
 
 **This reading is silent.** Nobody is shown it, nobody is asked to confirm it, and it never holds up a report. Graeham reads the finished draft. If something is wrong he says so in plain words, and you correct it (section 12).
 
-It is saved in `<listing>\curation.json`, keyed to the note's own wording, so next week only new or edited notes need reading. Inside that file and the readings file the values sit under a key named `tags`. That is a name in a data file and nothing more. Never say "tag" to an operator or a seller. Say "how I read the note" if you must say anything.
+**How the code and you split the work.** `intake_sheet.py` splits every Feedback and Notes cell into dated entries: a line that starts with a date such as `10/7 -` opens an entry, and a line that starts with `>` is the contact's own answer. Notes made only of stock phrases ("no answer, left a vm. sent a text and email", "LVM") are read by the code and never reach you. Everything else is yours, once: the work list holds only what nobody has read, and an edited note comes back with its old wording beside it.
+
+**The Email, Call and Text columns** hold one date each. Until Adrian answers the open question in `counting-rules.md` section 5, read a date there as a follow-up our team made that day, unless the row's note says the agent called us, which makes it their reply. Say in a glance line when that reading moves a count.
+
+**It is kept.** Your reading is saved in `<listing>\curation.json`, keyed to the note's own wording, so next week only new or edited notes need reading, and a correction the operator made is never overwritten (section 12). In that file and in the readings file the values for a person sit under the key the work list's `readings_file_format` shows. That key is a field name in a data file and nothing more: never use the word with an operator or a seller. If you must say anything, say "how I read the note".
 
 ## 2. The work list
 
@@ -198,7 +202,7 @@ Count what the person said. When the words do not support a value, do not pick t
 - `price_asked`: true when the note shows the team asked about price directly, false when it shows they did not, null when the note does not say. Mostly null.
 - Never write, in a comment or anywhere else, what it means that someone did not bring up price.
 
-**Interest** (on the person, `tags.interest`). The page prints the words in the right column.
+**Interest** (on the person, the `interest` value in the example above). The page prints the words in the right column.
 
 | Value | Printed as | Use when |
 |---|---|---|
@@ -210,7 +214,7 @@ Count what the person said. When the words do not support a value, do not pick t
 
 Someone who passed also gets `"status": "passed"`. A person is never shown both as passed and as an active lead.
 
-**Offer intent** (on the person, `tags.offer_intent`): `yes` when they said they will write or are writing, `maybe` when they said an offer is possible, `no` when they said they will not, `unknown` otherwise. With `yes` or `maybe`, give `offer_basis_safe` (the sentence that supports it) and `offer_basis_date`. After 21 days with no contact the report shows them as earlier interest, not as a live lead. `"status": "writing_offer"` or `"offer_submitted"` only when the notes say exactly that.
+**Offer intent** (on the person, the `offer_intent` value): `yes` when they said they will write or are writing, `maybe` when they said an offer is possible, `no` when they said they will not, `unknown` otherwise. With `yes` or `maybe`, give `offer_basis_safe` (the sentence that supports it) and `offer_basis_date`. After 21 days with no contact the report shows them as earlier interest, not as a live lead. `"status": "writing_offer"` or `"offer_submitted"` only when the notes say exactly that.
 
 **Points people raised** (`themes`, a list). Use the keys. Price is not one of them.
 
@@ -311,6 +315,9 @@ The operator reads the draft and says what is wrong in their own words. Turn tha
 | "That was a tour, not a call" | `correct --file` with that person's `engagements` |
 | "Those two are the same agent" | `correct --file` with `"merge": [{"keep": "c012", "absorb": "c031", "reason": "..."}]` |
 | "Change the wording to ..." | `correct --who "<name>" --reword "<old sentence>" --to "<new sentence>"` |
+| "I answered him myself on Oct 9" | `correct --file` with that person's `extra` touches, adding the dated outbound or reply line (section 11 shape). Without a date, ask for one |
+| "I did not reply to him myself" (or "I don't remember") | Nothing to change: the report already counts only what the log shows. Say so in one line, and leave his entry as it is |
+| "That offer expired" | A readings file with that offer under `offers`, the whole entry copied from `curation.json` with the same `id` and `state` set to `expired`, then `apply` (it replaces an offer by id; `correct` has no offers switch) |
 
 All of these are `python "<scripts>\curation_tools.py" correct --folder "<listing>" ...`. `python "<scripts>\curation_tools.py" correct --help` lists the switches.
 
@@ -323,7 +330,7 @@ All of these are `python "<scripts>\curation_tools.py" correct --folder "<listin
 
 **It is kept.** Everything a correction touches is marked as the operator's, with their words, and no later automatic pass overwrites it: `apply` skips it and says so. It holds every week from then on. One exception, by design: if the team later types a different value into that person's own sheet column, the newer sheet value is used, and a glance line says an earlier correction gave way.
 
-Then rebuild with `python "<scripts>\run_issue.py" --folder "<listing>"` and replace the body of the draft.
+Then rebuild with the issue's run line minus `--sheet` and `--as-of` (the NEXT line run_issue printed keeps every other switch; a bare `--folder` run would drop the photo, the glance lines, the brief and the sources), and replace the body of the same draft as `delivery.md` section 4 says. Tell the operator in one or two plain sentences what changed, never which command ran.
 
 ## 13. What will stop you
 

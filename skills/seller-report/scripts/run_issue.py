@@ -292,6 +292,8 @@ def run(a):
     F.say("")
     F.say("READY: Weekly Seller Report No. %02d for %s, dated %s, covering %s."
           % (R["issue_number"], ledger["listing"]["address"], R["report_date"], C.fmt_range(R["week_start"], R["week_end"])))
+    import draft_check
+    F.say("  subject: %s" % draft_check.subject_line(R["issue_number"], R["report_date"], ledger["listing"]["address"]))
     F.say("  email: %s" % os.path.join(issue_dir, "email.html"))
     F.say("  Gmail-safe copy (this one goes in the body of the unsent Gmail draft): %s" % os.path.join(issue_dir, GMAIL_PAGE))
     F.say("  link copy (published only when the operator says so): %s" % os.path.join(issue_dir, "link.html"))
@@ -301,7 +303,8 @@ def run(a):
         F.say("  Worth a glance before you send (for the chat reply, never for the report):")
         for line in notes["worth_a_glance"]:
             F.say("    - " + line)
-    F.say("NEXT: put %s in the body of an unsent Gmail draft for the operator (never send it), then record it:  " % GMAIL_PAGE +
+    F.say("NEXT: put %s in the body of an unsent Gmail draft for the operator (never send it), read it back with get_draft "
+          "(raw view) and check it:  python \"%s\" --issue \"%s\" --draft <the saved result>  then record it:  " % (GMAIL_PAGE, here("draft_check.py"), issue_dir) +
           "python \"%s\" record --folder \"%s\" --issue %d --gmail-draft-id <id>" % (here("snapshot_issue.py"), folder, R["issue_number"]))
     return EXIT_READY
 

@@ -3,7 +3,36 @@
 // Prints one JSON object: {portal: [...], hero: [...], nearby: {...}}.
 const fs = require('fs'), path = require('path');
 const dir = process.argv[2];
-for (const f of ['portal_views.js', 'hero_photo.js', 'nearby_lookup.js']) (0, eval)(fs.readFileSync(path.join(dir, f), 'utf8'));
+for (const f of ['portal_views.js', 'hero_photo.js', 'nearby_lookup.js', 'matrix_grid.js']) (0, eval)(fs.readFileSync(path.join(dir, f), 'utf8'));
+
+// a pretend Matrix results page: tables of rows of cells, the way the browser hands them to a page script
+const cellOf = (t, o) => { o = o || {}; return { innerText: t, textContent: t, colSpan: o.span || 1, getAttribute: () => null, querySelector: () => o.icon || null }; };
+const rowOf = cells => ({ cells: cells.map(c => (c && typeof c === 'object') ? c : cellOf(c)) });
+const tableOf = rows => ({ rows: rows.map(rowOf) });
+const MO = cellOf('', { icon: { getAttribute: k => (k === 'title' ? 'Members Only' : null) } });          // the flag drawn as an icon
+const pageOf = (tables, body, display) => ({
+  querySelectorAll: s => (s === 'table' ? tables : []),
+  querySelector: s => (display && /select/.test(s) ? { options: [{ innerText: display }], selectedIndex: 0 } : null),
+  body: { innerText: body || '' }
+});
+const LAYOUT = tableOf([['Search results', 'Map'], ['', '']]);                                         // a layout table with no grid in it
+const CLOSED = tableOf([
+  [cellOf('', { span: 2 }), 'MLS #', 'St', 'Address', 'City', 'Price', 'Sale Price', 'Close Date', 'DOM', 'Beds', 'Baths', 'Sq Ft', 'M.O.', 'Photo'],
+  ['', '', 'ML80000101', 'Active', '14 Sample Fern Ln', 'Fixture City', '$1,210,000', '', '', '3', '3', '2|1', '1,510', '', 'View'],
+  ['', '', 'ML80000102', 'Contingent', '9 Sample Cedar Ct', 'Fixture City', '$1,249,000', '', '', '15', '3', '2', '1,620', '', ''],
+  ['', '', 'ML80000103', 'Sold', '52 SAMPLE BIRCH DR', 'Fixture City', '$1,182,000', '$1,190,000', '4/7/2026', '28', '3', '2', '1,390', '', ''],
+  ['', '', 'ML80000104', 'Sold', '7 Sample Hidden Way', 'Fixture City', '$999,000', '$1,005,000', '3/30/2026', '12', '3', '2', '1,450', MO, ''],
+  ['', '', 'ML80000100', 'Active', '218 Sample Glen Ct', 'Fixture City', '$1,195,000', '', '', '6', '3', '2', '1,480', '', ''],
+  ['Totals for 5 listings', '', '', '']                                                           // a summary row of another width
+]);
+const HOT = tableOf([
+  ['MLS #', 'Status', 'Address', 'Price', 'Change Date', 'Change Type', 'M.O.'],
+  ['ML80000101', 'Active', '14 Sample Fern Ln', '$1,210,000', '4/10/2026', 'New Listing', ''],
+  ['ML80000102', 'Contingent', '9 Sample Cedar Ct', '$1,249,000', '4/9/2026', 'Active > Contingent', ''],
+  ['ML80000103', 'Sold', '52 SAMPLE BIRCH DR', '$1,190,000', '4/7/2026', 'Contingent > Sold', ''],
+  ['ML80000104', 'Sold', '7 Sample Hidden Way', '$1,005,000', '3/30/2026', 'Pending > Sold', 'Y'],
+  ['ML80000100', 'Active', '218 Sample Glen Ct', '$1,195,000', '4/7/2026', 'New Listing', '']
+]);
 
 const at = (y, mo, d, h) => Date.UTC(y, mo - 1, d, h || 20);          // 20:00 UTC is 1 pm Pacific: the same calendar day
 const V = v => ({ value: v, level: 1 });
@@ -97,5 +126,14 @@ function site(opts) {
   const imgs = [{ src: 'https://example.test/logo.svg', naturalWidth: 900, naturalHeight: 300 }, { src: 'https://example.test/agent.jpg', naturalWidth: 240, naturalHeight: 240 },
                 { currentSrc: 'https://media.example.test/218/living.jpg', naturalWidth: 2400, naturalHeight: 1600 }, { src: 'https://media.example.test/218/kitchen.jpg', naturalWidth: 2400, naturalHeight: 1600 }];
   out.hero.push(JSON.parse(await globalThis.srHeroPhoto({ document: { querySelector: () => null, querySelectorAll: () => imgs }, href: 'https://example.test/homes/218-sample-glen' })));
+
+  const mg = (tables, body, display) => JSON.parse(globalThis.srMatrixGrid({ document: pageOf(tables, body, display), now: Date.UTC(2026, 3, 14, 3, 0) }));
+  out.matrix = {
+    closed: mg([LAYOUT, CLOSED], 'Residential results 1 - 5 of 5', 'my:Closed date template'),
+    hotsheet: mg([LAYOUT, HOT], 'Residential results 1 - 5 of 5', 'Agent 1 Line Hotsheet'),
+    partial: mg([HOT], 'Residential results 1 - 50 of 73', null),
+    signed_out: mg([], 'Sign in to continue. Username Password', null),
+    no_grid: mg([LAYOUT], 'Nothing here', null)
+  };
   console.log(JSON.stringify(out));
 })().catch(e => { console.error(e); process.exit(1); });

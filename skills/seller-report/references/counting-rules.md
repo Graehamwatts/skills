@@ -65,6 +65,11 @@ and never explains what silence on price means, in either direction.
 - When a listing has no key-box record to read, `keybox_showings` is null and prints as "not recorded". It
   is not zero. `showings` is then the tours agents reported, and the page says the listing has no key-box
   record.
+- **A combo lockbox leaves no electronic record.** Some listings (one in Oct 2026) have a combination
+  lockbox, not an electronic key box, so there is no key-box record at all: `listing.json` has
+  `tracking.keybox_showings: false` with a `tracking.lockbox` note saying so. A tab the team keeps by hand for
+  showings (even one named after the key-box company) is a log of reported tours, read like any other tour row,
+  not a key-box record.
 - A key-box entry made by an open house host opening up is not a showing.
 - A row with a phone number and no tour is an inquiry, even if it sits on the showing tab.
 - A tour listed with no confirmation that it took place still counts and is flagged (`confirmed: false`,
@@ -110,6 +115,20 @@ and never explains what silence on price means, in either direction.
   `totals.outbound_person_days` adds up each person's days and is not a count of days: never call it "days".
 - A touch where the log does not say who called (`direction: unknown`) is not counted as a follow-up. It is
   reported as `touches_direction_not_recorded`.
+- **Open question (asked of Adrian, Oct 13, 2026): what a date in the sheet's Email, Call and Text columns
+  means.** It may be the day our team made that call, text or email; the day someone typed the row in; or, at
+  times, the day the agent called us. Graeham's own reading is that it is the day they called or entered it.
+  It is also not known whether Adrian overwrites an earlier date with a later one. Until Adrian answers, keep
+  the current reading: a date in those columns is a follow-up our team made on that day, except where the
+  row's note says the agent called us, which makes it a reply (one listing, Oct 12, 2026: 15 older Call dates read
+  as the agent calling us, so follow-ups since we listed read 290; read as our calls the total would be 305).
+  Say which reading was used in "Worth a glance" whenever it moves a count, and change nothing until Adrian's
+  answer is in. When it comes, record it here and drop this note.
+- **The hand-written reports count differently.** The series the team wrote by hand before this skill counted
+  cancelled tours, questions and open house hosts. This report does not (sections 2 and 3), so its totals are
+  lower (one listing, Oct 12, 2026: 35 showings against 37, and 44 on the package list against 52 agents). When a
+  seller or the operator asks why, that is the answer: the same people, without cancelled tours, questions and
+  hosts.
 
 ## 6. Replies, answered, still waiting
 

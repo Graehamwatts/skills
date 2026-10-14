@@ -19,6 +19,11 @@ candidates, and "choose" makes the watch list and the first snapshot from them w
 When the lookup fails, is blocked or meets a human check: STOP, run "skip", and the report is built without
 the section. Never work around a block.
 
+The other source is the MLS: "plan --site mls" plans the one lookup as one Matrix search on MLSListings, after
+Graeham signs in himself. scripts\web\matrix_grid.js reads the results grid in two displays and
+nearby_from_mls.py turns the two saved results into the result "store" keeps (references/extras.md). Its source
+line ("MLSListings, checked <date>") becomes the store's source.
+
 The differences against the previous issue are worked out here in Python, from the dated events of each home
 (and, where no date explains a change of status, from the two snapshots, marked approximate).
 
@@ -44,6 +49,8 @@ import sr_lookups as LK          # noqa: E402
 EXIT_OK, EXIT_INPUT, EXIT_REFUSED = 0, 2, 4
 KEY = "nearby"
 SNIPPET = os.path.join(_HERE, "web", "nearby_lookup.js")
+MLS_SNIPPET = os.path.join(_HERE, "web", "matrix_grid.js")
+MLS_SEARCH_URL = "https://search.mlslistings.com/Matrix/Search/Residential/ResidentialSearch"
 SOURCE = "Public listing pages on Redfin"
 HOME_KEYS = ("id", "address", "city", "type", "beds", "baths", "sqft", "status", "list_price", "list_date", "pending_date",
              "sold_date", "sold_price", "off_date", "price_change", "dom")
@@ -387,8 +394,10 @@ def cmd_plan(a):
         F.say("REFUSED: %s" % e)
         return EXIT_REFUSED
     save(a.folder, store)
-    call = F.save_text(os.path.join(paths["work"], "nearby_call.js"), call_text(store, listing, rd))
     me = os.path.join(_HERE, "nearby_update.py")
+    if getattr(a, "site", "redfin") == "mls":
+        return plan_mls(a, paths, listing, store, rd, me)
+    call = F.save_text(os.path.join(paths["work"], "nearby_call.js"), call_text(store, listing, rd))
     F.say("planned: ONE lookup of similar homes nearby for the issue dated %s (%s)."
           % (C.iso(rd), "the watch list of %d" % len(store["watch"]) if store["watch"] else "first use: candidates for the watch list"))
     F.say("  1. Open one public redfin.com page in the in-app browser (the page for the listing's city is enough). No sign-in, no forms.")
@@ -397,6 +406,34 @@ def cmd_plan(a):
           % (me, os.path.abspath(a.folder), C.iso(rd)))
     F.say("  If the page or the lookup is blocked, shows a human check or fails: STOP. Do not try another way. Run:  python \"%s\" skip --folder \"%s\" --reason <%s> --report-date %s"
           % (me, os.path.abspath(a.folder), "|".join(C.SKIP_REASONS), C.iso(rd)))
+    return EXIT_OK
+
+
+def plan_mls(a, paths, listing, store, rd, me):
+    """The one lookup, made on MLSListings: one Matrix search read in two displays (references/extras.md)."""
+    with open(MLS_SNIPPET, encoding="utf-8") as f:
+        code = f.read()
+    call = F.save_text(os.path.join(paths["work"], "nearby_call.js"), code.rstrip() + "\n\nglobalThis.srMatrixGrid()\n")
+    work, folder = paths["work"], os.path.abspath(a.folder)
+    beds = listing.get("beds")
+    F.say("planned: ONE lookup of similar homes nearby for the issue dated %s, on MLSListings (%s)."
+          % (C.iso(rd), "the watch list of %d" % len(store["watch"]) if store["watch"] else "first use: candidates for the watch list"))
+    F.say("  1. Graeham signs in to MLSListings in the in-app browser himself. Claude never types a password or a code.")
+    F.say("  2. Matrix Residential Search: %s" % MLS_SEARCH_URL)
+    F.say("     Status: Active, Contingent, Pending, Sold. Property sub type: %s. Beds: %s. City or zip: %s. COE Date: a start date with a"
+          " plus, such as 6/1/2026+ (the close date applies to sold rows only). Search once."
+          % (listing.get("property_type") or "the listing's", ("%s" % beds) if beds is not None else "the listing's", listing.get("city") or "the listing's"))
+    F.say("  3. Results display 'my:Closed date template'. Run the text of this file there once: %s" % call)
+    F.say("     Save exactly what it returned to %s" % os.path.join(work, "mls_grid_closed.json"))
+    F.say("  4. Switch the display to 'Agent 1 Line Hotsheet' (same results, no new search). Run the same text again and save it to %s"
+          % os.path.join(work, "mls_grid_hotsheet.json"))
+    F.say("  5. python \"%s\" --folder \"%s\" --grid \"%s\" --grid \"%s\"%s"
+          % (os.path.join(_HERE, "nearby_from_mls.py"), folder, os.path.join(work, "mls_grid_closed.json"), os.path.join(work, "mls_grid_hotsheet.json"),
+             (" --city \"%s\"" % listing["city"]) if listing.get("city") else ""))
+    F.say("     then:  python \"%s\" store --folder \"%s\" --result \"%s\" --report-date %s"
+          % (me, folder, os.path.join(work, "nearby_mls_result.json"), C.iso(rd)))
+    F.say("  If the page is a sign-in page, shows an error or a human check: STOP. Do not try another way. Run:  python \"%s\" skip --folder \"%s\" --reason <%s> --report-date %s"
+          % (me, folder, "|".join(C.SKIP_REASONS), C.iso(rd)))
     return EXIT_OK
 
 
@@ -422,6 +459,12 @@ def cmd_store(a):
         F.say("REFUSED: %s" % e)
         return EXIT_REFUSED
     as_of = data.get("as_of") if _day(data.get("as_of")) else C.iso(datetime.date.today())
+    # the source the section names is the one this result came from: nearby_from_mls.py says "MLSListings, checked
+    # Oct 13, 2026"; the public site snippet says nothing, and its own line is used
+    if isinstance(data.get("source"), str) and data["source"].strip():
+        store["source"] = C.strip_dashes(" ".join(data["source"].split()))[:120]
+    elif data.get("site") == "redfin":
+        store["source"] = SOURCE
     for k, v in (data.get("search") or {}).items():
         if v is not None:
             store["search"][k] = v
@@ -509,6 +552,8 @@ def main(argv=None):
         return p
     p = common(sub.add_parser("plan", help="before the lookup: checks the rules, logs it, writes work\\nearby_call.js"))
     p.add_argument("--asked", action="store_true", help="the operator asked for this in this session")
+    p.add_argument("--site", choices=("redfin", "mls"), default="redfin",
+                   help="redfin: the public site snippet. mls: one Matrix search on MLSListings, after Graeham signs in (nearby_from_mls.py)")
     p.set_defaults(fn=cmd_plan)
     p = common(sub.add_parser("store", help="keep what the snippet returned (candidates on first use, the snapshot after)"))
     p.add_argument("--result", required=True, help="a file holding exactly what the snippet returned")

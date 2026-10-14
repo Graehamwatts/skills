@@ -99,6 +99,45 @@ class Snippets(unittest.TestCase):
         self.assertEqual(h[4], {"photo_url": "https://media.example.test/218/living.jpg", "width": 2400, "height": 1600,
                                 "page": "https://example.test/homes/218-sample-glen", "from": "first large photo on the page"})
 
+    def test_the_matrix_grid_is_read_by_its_column_heads_in_either_display(self):
+        g = self.out["matrix"]["closed"]
+        self.assertTrue(g["ok"])
+        self.assertEqual((g["site"], g["grid"], g["as_of"], g["display"]), ("mlslistings", "matrix", "2026-04-13", "my:Closed date template"))
+        self.assertEqual(g["columns"], ["status", "mls", "address", "city", "list_price", "sale_price", "close_date", "dom", "beds", "baths",
+                                        "sqft", "members_only"])
+        self.assertEqual(g["rows"][0], ["Active", "ML80000101", "14 Sample Fern Ln", "Fixture City", "$1,210,000", "", "", "3", "3", "2|1", "1,510", ""])
+        self.assertEqual(g["rows"][3][-1], "Members Only")              # the flag drawn as an icon is read from its title
+        self.assertEqual((g["skipped_columns"], g["odd_rows"], g["partial"]), (["Photo"], 1, None))
+        h = self.out["matrix"]["hotsheet"]
+        self.assertEqual(h["columns"], ["status", "mls", "address", "list_price", "change_date", "change_type", "members_only"])
+        self.assertEqual(h["rows"][1][4:6], ["4/9/2026", "Active > Contingent"])
+
+    def test_the_matrix_grid_says_when_it_is_not_all_there_or_not_there_at_all(self):
+        m = self.out["matrix"]
+        self.assertEqual(m["partial"]["partial"], {"shown": 50, "total": 73})
+        self.assertEqual((m["signed_out"]["ok"], m["signed_out"]["reason"]), (False, "signed_out"))
+        self.assertEqual((m["no_grid"]["ok"], m["no_grid"]["reason"]), (False, "no_grid"))
+
+    def test_the_two_displays_go_through_nearby_from_mls(self):
+        import sys
+        import tempfile
+        sys.path.insert(0, os.path.join(SKILL, "scripts"))
+        sys.path.insert(0, os.path.join(HERE, "fixtures"))
+        import nearby_from_mls as M
+        import make_workbook as W
+        import sr_files as F
+        with tempfile.TemporaryDirectory(prefix="sr matrix ") as tmp:
+            folder = os.path.join(tmp, "sample-glen")
+            os.makedirs(folder)
+            listing = dict(W.LISTING, mls="ML80000100")
+            F.save_json(os.path.join(folder, "listing.json"), listing)
+            result, _ = M.build(folder, [self.out["matrix"]["closed"], self.out["matrix"]["hotsheet"]])
+        homes = dict((h["id"], h) for h in result["homes"])
+        self.assertEqual(sorted(homes), ["ML80000101", "ML80000102", "ML80000103"])
+        self.assertEqual(result["excluded"], {"members_only": 1, "this_listing": 1})
+        self.assertEqual(homes["ML80000102"]["pending_date"], "2026-04-09")
+        self.assertEqual((homes["ML80000103"]["sold_price"], homes["ML80000103"]["sold_date"]), (1190000, "2026-04-07"))
+
     def test_no_snippet_types_into_a_page_or_sends_anything_elsewhere(self):
         for name in os.listdir(WEB):
             with open(os.path.join(WEB, name), encoding="utf-8") as f:

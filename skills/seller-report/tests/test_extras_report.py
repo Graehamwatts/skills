@@ -276,7 +276,7 @@ class BuiltWithTheOptionalFiles(unittest.TestCase):
         self.put("nearby.json", fixture("nearby.json"))
         code, out = run(*self.fast)
         self.assertEqual(code, RI.EXIT_READY, out)
-        self.assertIn("all checks passed on 3 page(s)", out)
+        self.assertIn("all checks passed on 4 page(s)", out)
         d = self.issue("ledger.json")
         self.assertEqual((d["totals"]["online_views"], d["totals"]["online_saves"]), (915, 25))
         self.assertEqual(len(d["nearby"]["homes"]), 5)

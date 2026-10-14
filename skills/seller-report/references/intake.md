@@ -28,9 +28,11 @@ Every source used is recorded with the build so the record shows where the facts
 | `offer_summary` | The offers workbook or the offers tab of another file |
 | `glide_email`, `supra_email` | Disclosure platform and key-box notices read from Gmail |
 | `pasted_notes`, `forwarded_email` | Anything typed or forwarded into the chat |
-| `mls_public_page` | The MLS or portal page read for status, price history or view counts |
-| `market_data` | Closed sales pulled for the market check |
+| `mls_public_page` | The MLS or MLSListings public page read for status or price history |
+| `market_data` | Closed sales pulled for the time on the market section |
 | `ad_accounts` | Ad platform status or a written status note |
+| `portal_page`, `operator_numbers` | Online views read from a portal page, or given by the operator (`online_views.py` records these itself) |
+| `nearby_lookup` | The similar homes lookup (`nearby_update.py` records it itself) |
 | `other` | Anything else, named in the label |
 
 The label is plain words ("Open house schedule sheet"). No Drive ids, message ids, addresses of other listings or names in a label.
@@ -50,7 +52,9 @@ Where each fact comes from, and what to do when you do not have it:
 | Address, beds, baths, sq ft, type, MLS number, status | The MLS record or the MLSListings public page, read this session | Ask the operator if you were not pointed to one. Do not fill these from memory |
 | `list_date`, `price_history` | The listing's own history | Read the whole history before writing "listed at". A listing can enter at one price and change the next morning. The first entry is `listed`, later ones `price_change`, oldest first |
 | `seller_first_names` | The operator | Makes the greeting ("Hi Pat and Sam,"). Leave the list empty rather than guess: the email then has no greeting |
-| `hero_photo` | An https address of a hosted photo | A local path is never put on a page. With null the masthead has no photo |
+| `hero_photo` | An https address of a hosted photo, set with `hero_photo.py` (`extras.md`, section 5) | A local path is never put on a page. With null the masthead has no photo |
+| `property_page` | Graeham's own page for the listing, when there is one | Read only to find the photo |
+| `extras` | Settings for the optional sections | `extras.md`, section 6 |
 | `sheet` | The Drive id and title of the View Activity sheet | Stays in this file. Never copied into the report |
 | `keybox_number` | The team's lockbox inventory sheet | Needed only to match Supra notices. Boxes are reused between listings, so read the row for this listing's dates |
 | `tracking` | What is truly recorded for this listing | See below |
@@ -59,7 +63,7 @@ Where each fact comes from, and what to do when you do not have it:
 
 `tracking` has three flags, and each one decides whether a number prints or the words "not recorded" print:
 
-- `keybox_showings`: true only when there is a key-box record to read for this listing (Supra notices, or a key-box log the team keeps). With false, tours reported by agents are still counted, as reported tours.
+- `keybox_showings`: true only when there is an electronic key-box record to read for this listing (Supra notices, or a key-box log exported from Supra). With false, tours reported by agents are still counted, as reported tours. A combination lockbox leaves no record at all: set false and say so in `tracking.lockbox` ("combo lockbox, so there is no electronic showing record"). A showing tab the team keeps by hand, even one named after the key-box company, is then a log of reported tours (`counting-rules.md`, section 3).
 - `disclosure_sent`: true only when the notes say when a package link was sent.
 - `disclosure_opened`: true only when opens can be checked (the disclosure platform's notices). If they can be checked only from some date on, put that date in `tracking_since`: earlier weeks then keep "not recorded", never a zero.
 
@@ -86,7 +90,7 @@ The export holds phone numbers and blunt notes. Keep it in the scratchpad. Never
 
 ### The client care weekly status email and its Excel attachment
 
-Each Monday client care may email a status report with a copy of the sheet attached. Read it only when asked, through Gmail search (`subject:"Weekly Status Report" "<street name>" has:attachment`).
+Client care (Adrian, graehamwattsclientcare@gmail.com) has written a weekly status report by hand for some listings, often with a copy of the sheet attached. Read these only when asked, or for the numbering check in section 7, through Gmail search (`subject:"Weekly Status Report" "<street name>"`, add `has:attachment` for the sheet copy). The Gmail connector reads Graeham's own inbox, so a status email shows there when he was on it.
 
 - **The attachment is a copy of the sheet, and it can be old.** Compare its date with the live sheet. When it is used as the workbook, pass `--sheet-kind activity_sheet_file` so the record says a saved copy was read. If the Gmail connector cannot download an attachment, ask the operator to save it and give you the path, or use the live sheet.
 - **The email's own counts are a cross-check, not a source.** The report's numbers come from the log by the counting rules. Where the email says something different (it counts "showings" as one number, or counts an agent and that agent's buyer twice), keep the report's number and tell the operator in one glance line: `--glance "The status email counts 2 showings. This report counts 1 key-box showing and 1 inquiry, because one row has no showing date."`
@@ -122,7 +126,7 @@ There is no script for this step. Write `<listing>\events.json` by hand in the s
 
 There is no script for these either. What to do depends on who the note is about:
 
-- **Someone already on the sheet**: add the dated touch or the dated feedback under that person's `extra` in your readings file (`tagging-and-tone.md`, "Notes that are not on the sheet"). Every extra line needs a date. Ask for one if it is missing.
+- **Someone already on the sheet**: add the dated touch or the dated feedback under that person's `extra` in your readings file (`reading-and-tone.md`, section 11). Every extra line needs a date. Ask for one if it is missing.
 - **Someone not on the sheet**: ask the operator to have a row added to the sheet, then export again. The sheet is the team's single log, and a person who exists only in a chat message would vanish from next week's count. If they want the report now, leave the person out and say so in a glance line.
 
 Add `--source "pasted_notes|Notes pasted in by the operator|<today>"` or the `forwarded_email` kind.
@@ -146,9 +150,9 @@ The states are not interchangeable (carried over from the earlier weekly report,
 
 "Pending" or "in contract" is a status of the listing (`listing.json` `status`), reached after an acceptance. Never call a listing pending because an offer was received. Offer price, terms and the offer agent's name print in the email only. The link copy and the PDF carry none of them.
 
-### Portal view counts (optional)
+### The optional sources
 
-When the operator hands over or asks for the view and save counts from Zillow, Redfin or another portal, they go in the marketing status as one dated sentence on the home search channel (`market-and-marketing.md`). Read the page in this session and give the date. Never estimate them.
+Online views, similar homes nearby, the masthead photo and the online ads status are read only when asked in this session (or when `listing.json` `extras.<source>.every_issue` is true), one lookup each. Their tools, caps and procedures are in `extras.md`; time on the market and the ads status are in `market-and-marketing.md`. Never estimate a figure, and never open a page only to find one.
 
 ## 4. When two sources disagree
 
@@ -182,15 +186,16 @@ Ask only what you cannot find, and ask it once, in plain words:
 - The date of an open house session the sheet gives none for.
 - Whether a row with no showing date was a tour.
 - Whether to read Glide or Supra notices this week.
+- On a listing's first issue: how many reports the seller has had, and whether to check Gmail for them (section 7).
 
 Do not ask them to confirm how you read a note. Read it, count it, and put real doubt in a glance line.
 
 ## 7. Issue numbering
 
-Issue numbers continue what the seller has already received, so the stack reads as one series.
+Issue numbers continue what the seller has already received, so the stack reads as one series. On Oct 12, 2026 one listing continued a hand-written series at No. 07 and another at No. 10.
 
 - `listing.json` `numbering.first_issue_number` is the number this skill's first issue carries. If the seller already received No. 04 to No. 06 written by hand, set it to 7, set `first_issue_date` to that Monday, and say so in `note`.
-- Ask how many reports the seller has had. If nobody knows, look for the earlier reports only when pointed to them. Do not start again at 1 on a listing that has been reported on.
+- **Count what reached the seller, not what was written.** For a listing's first issue, or whenever the number is in doubt, ask the operator how many reports the seller has had and offer to check. With their go-ahead (or when they point you there), search Gmail for Adrian's status emails for this address (`subject:"Weekly Status Report" "<street name>"`) and look at the ones that went to the seller. A draft, or a report sent only to Graeham, is not in the series. The highest number that reached the seller, plus one, is this issue. If nothing can be found, ask; never start again at 1 on a listing that has been reported on.
 - After the first issue, the number is one more than the highest issue on file. A week with no report does not skip a number. A rebuild for the same report date keeps its number.
 - Check what comes next at any time:
   ```
@@ -200,3 +205,5 @@ Issue numbers continue what the seller has already received, so the stack reads 
 - `--issue <N>` on `run_issue.py` overrides the number. Use it only when Graeham says the series needs correcting.
 
 The report date is always the Monday after the week covered, whatever day the report is built. Built on a Thursday, it still covers the same week and carries the same Monday.
+
+**Why the counts differ from the hand-written series.** Those reports counted cancelled tours, questions and open house hosts; this one does not (`counting-rules.md`, sections 2, 3 and 5). The first issue of a listing that had hand-written reports carries a glance line saying so, with both figures, and that is the answer if the seller asks.

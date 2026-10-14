@@ -29,7 +29,8 @@ C:\Users\Graeham Watts\Documents\Skills LLMS\Claude\reports\seller-reports\<slug
   notes_for_operator.json   at most five plain lines for the chat reply that hands over the draft
   work\             Claude's own working files: todo.json (the work list), build\ (the pages being checked),
                     gate.json (the last check report)
-  issues\NN\        issue NN as it would be sent: ledger.json, notes_for_operator.json, email.html, link.html,
+  issues\NN\        issue NN as it would be sent: ledger.json, notes_for_operator.json, email.html,
+                    email_gmail.html (the Gmail-safe copy that goes into the draft, section 7), link.html,
                     print.html, report.pdf, manifest.json, previews\
 ```
 
@@ -45,7 +46,7 @@ The pipeline, and which file each step owns:
 |---|---|---|---|
 | Intake (parse what the operator handed over) | `intake_sheet.py` | the xlsx export | `raw.json` |
 | Claude reads the new notes | `curation_tools.py todo`, then `apply` | `raw.json`, `curation.json` | `work\todo.json`, `curation.json` |
-| Optional sources, only when asked | `online_views.py`, `nearby_update.py`, `hero_photo.py` | compact JSON from the snippets in `scripts\web`, or the operator's numbers | `online_views.json`, `nearby.json`, `listing.json` (photo) |
+| Optional sources, only when asked | `online_views.py`, `nearby_update.py` (with `nearby_from_mls.py` for the MLS route), `hero_photo.py` | compact JSON from the snippets in `scripts\web`, or the operator's numbers | `online_views.json`, `nearby.json`, `listing.json` (photo) |
 | Ledger build | `build_ledger.py` | `listing.json`, `raw.json`, `curation.json`, `events.json`, `market.json`, `marketing.json`, `online_views.json`, `nearby.json` | `ledger.json`, `notes_for_operator.json` |
 | Render | `render_report.py` | `ledger.json`, `identity.json` | `work\build\` |
 | Checks | `check_report.py` | the built pages, `ledger.json`, `listing.json`, `raw.json` | `work\gate.json` |
@@ -551,7 +552,7 @@ Built from `online_views.json` and `nearby.json` when those files hold something
 ```json
 "nearby": {
   "as_of": "2026-04-13", "checked_for_this_issue": true,
-  "scope": "Five 3 bedroom homes within half a mile, chosen on Mar 16", "source": "Public listing pages",
+  "scope": "Five 3 bedroom homes within half a mile, chosen on Mar 16", "source": "MLSListings, checked Apr 13, 2026",
   "homes": [{"address": "14 Sample Fern Ln", "beds": 3, "baths": 2, "sqft": 1510,
              "status": "active", "list_price": 1210000, "days_on_market": 3,
              "change": "new_listing", "change_date": "2026-04-10"}]
@@ -563,6 +564,10 @@ Built from `online_views.json` and `nearby.json` when those files hold something
   `withdrawn`, `back_on_market`, `none`. A change needs `change_date`; a price change needs `price_before`
   and `list_price`; a sold home needs `sold_price`. `change_date_approximate: true` marks a change seen between
   two checks with no date on record (printed "by", not "on").
+- `source` is `nearby.json` `source`: "Public listing pages on Redfin" for the public site snippet, or
+  "MLSListings, checked <date>" for the MLS route (`nearby_from_mls.py`, `extras.md` section 3).
+  `days_on_market` is the MLS's own DOM when the result carried one (`dom`), and is left out for a sale whose day
+  count in the market chart differs, so one sale never shows two day counts.
 - `checked_for_this_issue` false prints "Last checked <as_of>, not checked again for this report". The builder
   only writes a block for a snapshot taken for the issue, so it always writes true.
 - The page prints "Similar homes nearby": what changed first, then the whole list as one table (status, price,
@@ -615,11 +620,12 @@ words "Worth a glance before you send". It is never in the report and it is not 
   "report_date": "2026-04-13", "week_start": "2026-04-06", "week_end": "2026-04-12",
   "built_at": "2026-04-13T10:02:00-07:00",
   "ledger_sha256": "...",
-  "files": [{"name": "email.html", "bytes": 61234, "sha256": "..."}],
+  "files": [{"name": "email.html", "bytes": 61234, "sha256": "..."}, {"name": "email_gmail.html", "bytes": 60980, "sha256": "..."}],
   "email_bytes": 61234,
+  "email_gmail_bytes": 60980,
   "flags": {"webfonts": false, "hero": null, "link_url": null, "sections": ["online", "nearby", "market", "marketing"], "fit_level": 0},
   "checks": {"ledger_problems": 0, "page_checks_run": 26,
-             "ship_gate": {"passed": true, "checked_at": "...", "pages": 3, "blocking": 0, "warnings": 0}},
+             "ship_gate": {"passed": true, "checked_at": "...", "pages": 4, "blocking": 0, "warnings": 0}},
   "delivery": {"gmail_draft_id": null, "link_published_url": null, "link_published_on": null, "sent_on": null}
 }
 ```
@@ -630,7 +636,65 @@ record of what was sent, and `freeze` refuses to replace it (exit status 3) unle
 `ledger.json` in the issue folder is the ledger exactly as rendered. `email_bytes` must stay under
 `sr_contract.LIMITS["email_max_bytes"]` (95,000): an email at or over the limit is not kept. The manifest is
 written by `snapshot_issue.py` only, after the checks pass, and `check_report.py` compares each file's hash
-with it. The email's link to the complete record must equal `flags.link_url`.
+with it. The email's link to the complete record must equal `flags.link_url`. `email_gmail_bytes` is the size
+of the Gmail-safe copy (null for an issue kept before the copy existed). `flags` are the email's: the copy has no
+photo whatever `flags.hero` says.
+
+### email_gmail.html: the Gmail-safe copy, and the draft
+
+The email goes into an unsent Gmail draft through the Gmail connector (`create_draft`, `update_draft`), and the
+connector rewrites the HTML it is handed. Seen on Oct 13, 2026, on both drafts:
+
+- every `<img>` is removed
+- a `tel:` link becomes `javascript:void(0)`, a dead link
+- every `background:` declaration is removed (a cell keeps its `bgcolor` attribute)
+- the `<head>`, `<style>` blocks, Outlook conditional comments, and `role`, `class`, `scope` and `data-*`
+  attributes are removed
+- a website link becomes a `google.com/url` redirect with a short-lived timestamp, and a web address written as
+  plain text (such as the agent's website in the footer) is turned into such a link
+- text and numbers come through intact
+
+So every build writes `email_gmail.html` beside `email.html` (`run_issue.py` step 4,
+`sr_render.render_email_pair`), and that copy is the one that goes into the draft. It is drawn by the renderer
+with one switch (`render(..., gmail_safe=True)`, `sr_render.htmlkit.gmail_safe`), never by editing the email
+afterwards:
+
+- no photo row
+- the phone (in the footer and on the call button) and the website are plain text with the same look as the
+  links they replace. The email address stays a `mailto:` link, which the connector keeps
+- the website, and any other web address in running text, is written with every dot and the part after it in
+  a span of its own (`htmlkit.no_autolink`): `example<span style="color:#FFFFFF">.com</span>` for the website
+  in identity.json. No single
+  run of text holds a whole address, so nothing can turn it into a link, and a reader sees and copies exactly
+  the address. A zero-width character before ".com" would do the same on screen, but it travels into a copied
+  address and a browser then looks up a different name, so spans are used
+- every status chip sits on a one-cell table whose cell has a `bgcolor` (aligned right beside an entry,
+  `display:inline-table` inside a line of text), in place of a span with a background
+- `<meta name="sr:copy" content="gmail">` marks the file for the ship gate
+- it is drawn at the same fit level as the email, so the two say the same words. When the copy would pass the
+  95,000 byte ceiling at that level, both step down the fit ladder together
+
+The complete-record button, when the operator gave a link copy address (`--link-url`), stays a web link in the
+copy: it still opens the record through Gmail's redirect, and the gate notes it (`email_safety.gmail_record_button`).
+
+**The ship gate on the copy** (`sr_checks.email_safety`, as well as every rule the email has): `gmail_images` (no
+image), `gmail_links` (no `tel:` and no web link), `gmail_backgrounds` (no span, div or other element with a
+background), `gmail_addresses` (no web address in running text outside a link), `gmail_same_words` (the words
+a reader sees, read with block elements and cells as breaks, are exactly those of `email.html` beside it),
+`size` (under 95,000 bytes). Any failure stops the run.
+
+**Putting it in the draft.** Pass the file's text into `create_draft` exactly: at 70 to 95 KB, read the file in
+line ranges and join them with care, nothing added and nothing dropped. Then check what Gmail kept:
+`get_draft` with the raw view (the harness saves the large result to a file), then
+`scripts\draft_check.py --issue <issues\NN> --draft <that file>`. It finds the HTML part (raw MIME, base64url
+MIME inside JSON, or the part already decoded), compares the words with `email_gmail.html` after the clean-up
+rules above, and fails on an image or a dead link (the email itself went in) and on a subject that is not
+`Weekly Seller Report No. NN · <Month D, YYYY> - <address>` (`draft_check.subject_line`, which `run_issue.py`
+also prints). It says when the draft has no CC. These routes did not
+work and are not tried: signing in to Gmail from a script with a stored app password (the session's permission
+rules block it), and the Chrome extension's browser (it may be on another computer). If a later
+`update_draft`, for example to add the CC, is refused as unrequested, tell Graeham to add it himself, and
+never work around the refusal.
 
 ## 8. Changes against the approved mockup shape
 

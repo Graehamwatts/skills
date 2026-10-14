@@ -6,7 +6,7 @@ with none of them is a complete report. `run_issue.py` fetches nothing: it reads
 | Section | File in the listing folder | Tool | Prints |
 |---|---|---|---|
 | Online views | `online_views.json` | `scripts\online_views.py` | a row in the numbers table, a chart and a column in the weekly table |
-| Similar homes nearby | `nearby.json` | `scripts\nearby_update.py` | what changed this week, then the watch list as one table |
+| Similar homes nearby | `nearby.json` | `scripts\nearby_update.py` (and `scripts\nearby_from_mls.py` for the MLS route) | what changed this week, then the watch list as one table |
 | Online ads and marketing | `marketing.json` | written by hand from a status note | each channel with its status word |
 | Masthead photo | `listing.json` (`hero_photo`) | `scripts\hero_photo.py` | the photo under the masthead band |
 
@@ -38,7 +38,9 @@ These are enforced by `scripts\sr_lookups.py`, not left to memory.
    "worth a glance" lines.
 
 Public pages only, read-only, no sign-in, nothing typed into a page. The snippets read; they never click,
-submit or send anything anywhere.
+submit or send anything anywhere. The one exception is the MLS route for similar homes nearby (section 3): there
+Graeham signs in to MLSListings himself, and the snippet still only reads the results grid on the screen. Claude
+never types a password, a code or a username anywhere.
 
 ## 2. Online views
 
@@ -60,6 +62,10 @@ Views and saves per portal, kept so they build up week by week.
   reading gives the "since we listed" number and no weekly figure yet (in week 1 the two are the same). A count
   that went down gives no weekly figure and a line for the operator.
 - `week`: a figure for that one week, for example from a portal's weekly email.
+
+**Zillow in practice (Oct 13, 2026).** One page: the listing's own Zillow page shows the views and saves since
+the home was listed, so it is read with `--counts since_listing`. A weekly figure needs two readings, a week
+apart: the first reading of a portal only gives the "since we listed" number.
 
 A reading belongs to the week the report covers (read on Monday or Tuesday, it closes the week that just ended).
 `--week` or `--report-date` says otherwise. One row per week per portal: a later figure replaces the earlier one.
@@ -89,7 +95,8 @@ A watch list of at most 8 comparable homes, chosen once (same property type, sim
 re-checked once per issue. The report shows what changed that week: new listing, price change, went pending,
 sold (price and days on market), taken off the market, back on the market.
 
-**The one lookup.** `nearby_update.py plan --folder <folder> --asked` checks the rules and writes
+**The one lookup**, on the public site (below) or on the MLS ("From the MLS", further down).
+`nearby_update.py plan --folder <folder> --asked` checks the rules and writes
 `work\nearby_call.js`: the snippet `scripts\web\nearby_lookup.js` plus one line of arguments for this listing.
 Open one public redfin.com page (the page for the listing's city is enough), run that text once as it is, save
 what it returns, then `nearby_update.py store --result <file>`.
@@ -129,7 +136,7 @@ per issue: `report_date`, `as_of`, `homes[]` with `status`, `list_price`, `list_
 the rule is unchanged: never where a buyer went, never another client's home. The ship gate fails a watched
 home's address anywhere outside the section, a unit in the listing's own building included.
 
-**Traps the snippet already handles** (each caused a wrong number once; `seller-marketing-report\references\data-sources.md`):
+**Traps the snippet already handles** (each caused a wrong number once; `market-and-marketing.md`, section 3):
 
 - Event times are turned into Pacific dates first. A UTC date is a day off for an evening MLS event.
 - The list date is the earliest copy of the latest "Listed" event; the contract date is the first Pending or
@@ -141,6 +148,62 @@ home's address anywhere outside the section, a unit in the listing's own buildin
 Tested against a pretend site under Node (`tests\test_web_snippets.py`). **Not yet proven against the live
 site from this skill:** on Oct 13, 2026 the first request of a lookup was answered 403 and the lookup was
 skipped, as rule 4 says.
+
+### From the MLS: one Matrix search on MLSListings
+
+What worked on Oct 13, 2026 for both listings, when the public site answered 403. It is the same one lookup
+per issue (rule 2), planned with `--site mls`, and it is used only when Graeham is there to sign in.
+
+1. `nearby_update.py plan --folder <folder> --asked --site mls`. It writes `work\nearby_call.js`
+   (`scripts\web\matrix_grid.js` plus the call `globalThis.srMatrixGrid()`) and prints the steps below with this
+   listing's type, beds and city filled in.
+2. **Graeham signs in** to MLSListings in the in-app browser himself. A sign-in page is a stop like a block:
+   the grid script answers `{"ok": false, "reason": "signed_out"}` and nobody works around it.
+3. **The search**, once: Matrix Residential Search
+   (`https://search.mlslistings.com/Matrix/Search/Residential/ResidentialSearch`) with
+   - Status: Active, Contingent, Pending, Sold
+   - Property sub type: the listing's (condominium, townhouse, single family)
+   - Beds: the listing's bedroom count
+   - City, or the zip code for a tighter area
+   - COE Date with a start date and a plus, in the form `6/1/2026+`. The close date applies to sold rows only,
+     so active, contingent and pending homes all still come back.
+4. **Two displays of the same results** (switching the display is not a new search). Show every row on one
+   page: a grid that says "1 - 50 of 73" is refused whole.
+   - `my:Closed date template`: Price, Sale Price, Close Date and DOM. Run the call text, save exactly what it
+     returns to `work\mls_grid_closed.json`.
+   - `Agent 1 Line Hotsheet`: Change Date and Change Type. Run the same text again, save it to
+     `work\mls_grid_hotsheet.json`.
+   The script reads only these columns, from whatever of them the display has, by their headings: status, MLS
+   number, address, city, property sub type, list price, previous price, sale price, close date, DOM, beds,
+   baths, sq ft, change date, change type, and the M.O. (Members Only) flag. Each row comes back as the cell
+   text, nothing worked out.
+5. `nearby_from_mls.py --folder <folder> --grid work\mls_grid_closed.json --grid work\mls_grid_hotsheet.json
+   [--city "<city>"] [--type <sub type>]` writes `work\nearby_mls_result.json`, then
+   `nearby_update.py store --result work\nearby_mls_result.json` keeps it, and on first use `choose` makes the
+   watch list from it as usual.
+
+**The rules `nearby_from_mls.py` holds** (`tests\test_nearby_mls.py`):
+
+- **Members only is left out.** A listing flagged in the M.O. column never goes into a seller-facing report.
+  A home that only appears in a display without the M.O. column is refused, because nothing says it may be shown.
+- **The listing itself is left out**, by its MLS number (`listing.json` `mls`) and by its address.
+- **Contingent counts as pending.** Its pending date is the change date, when the change type is a status
+  change. When the latest change is something else (a price change after it went under contract), the home has
+  no pending date and the operator line says so.
+- **Sold:** the close date is the sold date and the Sale Price is the sold price. The Price column of a sold
+  home is never read, in either display, because a display may put the list price or the sale price there.
+- **The MLS's own DOM** is carried as `dom`, and `nearby_update.days_on_market` takes it at its word.
+- **One sale, one day count.** When the same sale is also in the time on the market chart (`market.json`
+  `sales[]`, matched by address) with a different `days_to_contract`, the `dom` is dropped from the nearby home,
+  so the report never shows one sale with two day counts. When the chart prints the same number, or no number,
+  the `dom` stays.
+- **Refused, never guessed.** A row with a status, price, date, count or members-only flag in a form the script
+  does not know, a sold home without a sale price or close date, an active or pending home without a price, or a
+  home the two displays disagree about is left out and listed by MLS number in the output.
+- **More than 12 homes** keeps the 12 closest to the listing, ranked as `choose --auto` ranks them.
+- **The source line** of the section reads "MLSListings, checked Oct 13, 2026" (the day the grids were read).
+  `store` copies it into `nearby.json` `source`; a later result from the public site puts that site's own line
+  back.
 
 ## 4. Online ads and marketing
 
@@ -172,7 +235,15 @@ wide, with its size. Then `hero_photo.py set --folder <folder> --result <file>` 
 address for its headers once to confirm it answers as an image. A photo over 1.5 MB is kept and the chat reply
 says it will load slowly on a phone. Anything that is not https is left off the page.
 
-No photo is fine. Never open an extra page only to find one.
+Two places that have worked (Oct 13, 2026):
+
+- Graeham's own property page for the listing, `graehamwatts.com/<address-slug>`: its share image.
+- The Compass listing page's `og:image`, with the size part of the address changed to `1360x906`
+  (`https://www.compass.com/m/<id>/1360x906.jpg`).
+
+No photo is fine. Never open an extra page only to find one. The photo is in the email only: the Gmail-safe copy
+that goes into the draft has no photo row, because the Gmail connector drops every image
+(`references\data-contract.md`, section 7).
 
 ## 6. Settings in listing.json
 

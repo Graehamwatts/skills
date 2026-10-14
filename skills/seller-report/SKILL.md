@@ -1,130 +1,112 @@
 ---
 name: seller-report
-description: "Builds the weekly seller report for one of Graeham Watts's active listings: an email a homeowner reads on a phone that shows everyone the team followed up with, what each agent and buyer said (the team's paraphrase, never a harsh quote), a ranked count of what people are saying with price always a row, open houses, the numbers week by week and the running record since launch, plus a link copy with no offer details and an optional PDF. It reports feedback and activity only and never recommends a price. Use this skill ANY time the user mentions: seller report, weekly seller report, weekly listing update, Monday update, Monday seller email, weekly status report for a listing, weekly update for an address, run the weekly for an address, seller marketing report or update, marketing update for the seller, campaign report or ad results report for a listing, 'show the seller what we are doing', showing feedback report, follow-up log, who have we followed up with, disclosure downloads report, open house recap for a seller, days on market against similar sales for a listing, or building the record for a price conversation. Also use it when someone hands over or points to a listing's View Activity sheet, the client care weekly status email, or Glide and Supra notification emails and names an address, and when the user has read a report draft and says what to change. It runs only when a person asks. Not for CMAs or pricing opinions (cma-generator), launch content plans and call sheets (listing-launch-engine), disclosure analysis (disclosure-analyzer) or price reduction scripts (price-reduction-angle-generator)."
+description: "Builds Graeham Watts's weekly seller report for one listing: a phone email to the seller (numbers, what people said, everyone followed up with), as an unsent Gmail draft, plus optional extras and the 10 page marketing update PDF. Feedback only, never a price recommendation. Use it ANY time someone mentions a seller report, weekly seller report, weekly listing update, Monday update, Monday seller email, weekly status report for a listing, seller marketing report or update, campaign or ad results report for a listing, 'show the seller what we are doing', showing feedback report, follow-up log, disclosure downloads report, open house recap for a seller, similar homes or comps tracking for a seller's report, or building the record for a price conversation, or hands over a View Activity sheet or report corrections. Not for CMAs or pricing opinions (cma-generator), launch content plans (listing-launch-engine), disclosure analysis (disclosure-analyzer) or price reduction scripts (price-reduction-angle-generator)."
 ---
 
 # Seller Report
 
-> **Absorbed on 2026-10-13:** `weekly-listing-update` was merged into this skill. All capabilities of `weekly-listing-update` (list: the Monday weekly seller status report for an active listing; reading the team's showing, disclosure and open house log; week by week numbers rebuilt from the cumulative log, with a quiet week kept as a row of zeros; agents named as First L.; offers shown near the top with the received, accepted and pending states kept apart; a ranked summary of what buyers said; the wrong-seller check before anything is drafted; no dashes in seller copy; an unsent Gmail draft for Graeham; a hosted copy, now a link copy with no offer details that is published only on his word; portal view counts as an optional input) now live here. Left out on purpose: the status strip verdict, the Decision Required block and the ranked concern cards (this report gives feedback only), publishing before anyone has read it, and the placeholder template with its two scripts (the pipeline in `scripts/` replaces them). The folder `skills/weekly-listing-update/` was deleted in the same commit. If you find any reference to `skills/weekly-listing-update/` anywhere in this repo, that reference is a bug: it should point here.
+> **Absorbed on 2026-10-13:** `weekly-listing-update` was merged into this skill. All capabilities of `weekly-listing-update` (list: the Monday weekly status report for an active listing; the cumulative activity log rebuilt week by week, with a quiet week kept as a row of zeros; agents as First L.; "Invited by" buyers counted once, under their agent; any offer near the top with received, countered, accepted and pending kept apart; a ranked summary of what buyers said; the wrong-seller check before anything is drafted; no dashes and plain human prose; the unsent Gmail draft to the seller; the hosted copy, now a link copy with no offer details that is published only on Graeham's word; portal view counts, now one page and only when asked; the brand tripwire) now live here. Left out on purpose: the status strip verdict, the Decision Required block, the ranked concern cards and the calendar button (this report gives feedback only), the web-search market context, scraping four portals every week, publishing before anyone read it, and the placeholder template with its two scripts (the pipeline in `scripts/` replaces them). The Monday reminder email is a scheduled task, not part of either skill. The folder `skills/weekly-listing-update/` was deleted in the same commit. If you find any reference to `skills/weekly-listing-update/` anywhere in this repo, that reference is a bug: it should point here.
 
 > **Absorbed on 2026-10-13:** `seller-marketing-report` was merged into this skill. All capabilities of `seller-marketing-report` (list: days on market against comparable closed sales, with the method and every trap; search demand from Google Keyword Planner; ad and creative status wording; platform exports when ads have really delivered; the 10 page seller marketing update PDF and its builder; the 13 page full campaign report; the internal SAMPLE mode with its marker rules; the real-file check before a PDF goes near a seller; the email with the PDF attached; copying creative to Google Drive; filing and the Superseded folder) now live here, in `references/market-and-marketing.md` and `references/marketing-update/`. The folder `skills/seller-marketing-report/` was deleted in the same commit. If you find any reference to `skills/seller-marketing-report/` anywhere in this repo, that reference is a bug: it should point here.
 
 ## What this is and who reads it
 
-A weekly letter to the seller of a listing. Graeham's words: "put together a fully detailed seller report to show the seller that we are doing our job and following up with people and showing them what that feedback is... So it's a lot easier for me when I need to come back and say, Hey, we need a price reduction, look at all the seller reports, this is what everyone's saying... they also can't ever complain that I'm not doing my job following up with everyone. I can clearly show them a log of everything and everyone is being followed up with."
+A weekly letter to the seller of one listing, in Graeham's name. His words: "put together a fully detailed seller report to show the seller that we are doing our job and following up with people and showing them what that feedback is... So it's a lot easier for me when I need to come back and say, Hey, we need a price reduction, look at all the seller reports, this is what everyone's saying."
 
-The reader is a homeowner on a phone. Feedback and follow-up lead every issue. A market check and a marketing status are short optional sections. Each issue is numbered, is dated a Monday, and covers the Monday to Sunday week that just ended.
+The reader is a homeowner on a phone, and the draft does go to them. Each issue is numbered, dated a Monday, and covers the Monday to Sunday week that just ended. Top to bottom: a short brief, one numbers table (this week, last week, since we listed), the weekly charts, "What people are saying" with price as plain counts; then "The details", grouped by what people did (offers and likely offers, agents who showed the home, the disclosure package list, open houses, other inquiries), this week's people in full and earlier people one line each; then the optional sections, next week, and the running record since listing. The look is his CMA system: black #1A1A1A, gold #C5A55A, cream #F5EFDC, Montserrat and Inter. `references/report-structure.md` says what each part is for.
 
-Each issue produces three things from one dataset:
+One build writes, into `issues\NN\`: `email.html` (the report), `email_gmail.html` (the same words, made safe for the Gmail connector: this is the one that goes into the draft), `link.html` (the forwardable copy with no offer details), `print.html` and `report.pdf`, and phone pictures in `previews\`.
 
-| File | What it is |
-|---|---|
-| `email.html` | The full report, for the body of an email. Under 95,000 bytes, because Gmail clips near 102 KB |
-| `link.html` | The copy that can be forwarded. No offer price, no offer terms, no name of an agent who wrote an offer or may be weighing one. Marked noindex. Holds the complete person by person record |
-| `report.pdf` | Optional, printed from the print layout of the link copy |
+## What the operator does: three steps
 
-## What the person asking does: three steps
+1. Hand over the information or say where it is ("run the weekly for Sample Glen, the sheet is up to date").
+2. Get the finished report as an **unsent Gmail draft**, To the seller, CC Adrian.
+3. Read it like any draft and say in plain words what to change ("Jordan never said it was overpriced", "take out the part about the neighbour"). Claude applies it, rebuilds and replaces the draft body. The correction is saved and holds in every later week.
 
-1. They hand over the information or say where it is ("run the weekly for the Sample Glen listing, the sheet is up to date").
-2. They get the finished report as an **unsent Gmail draft**.
-3. They read it like any draft and say in plain words what to change ("Jordan never said it was overpriced", "take out the part about the neighbour"). You apply it and rebuild. The correction is saved and holds in every later week.
-
-That is the whole experience. There is no review table, no confirm step and no sign-off, and nobody is ever asked to look over how the notes were read. Graeham saw an earlier version with such a step and said: "Don't know what it is or what it does, but I don't know why we need it. This is not what I had in mind." The words tag, tagging, curation, ledger, provenance and validation are workshop words. Keep them out of everything the operator or a seller reads, your chat replies included.
+That is the whole experience. No review table, no confirm step, no sign-off, and nobody is asked to look over how the notes were read. Graeham saw a version with a review step and said: "Don't know what it is or what it does, but I don't know why we need it. This is not what I had in mind." Keep workshop words (tag, tagging, curation, ledger, provenance, validation) out of the report, the operator guide and every chat reply.
 
 ## The rules, and why each exists
 
-1. **Draft, never send. One build.** The email goes into Gmail as a draft and Graeham sends it himself, because it speaks to his client in his name. Every build is the clean report: no notice on top, no panel at the end, nothing addressed to anyone but the seller, so a draft can never go out with working material on it.
-2. **Feedback only.** Graeham: "The system shouldn't do anything in regards to that [raising price]. The system should only provide feedback." The report never recommends a price change, never suggests a number, and never says what silence on price means, in either direction. He makes the pricing case himself, in person, with the stack of reports as his evidence. A report that argues for him reads as pressure and weakens that evidence.
-3. **Tone.** Graeham: "Friendly, but concise and direct, but should be nuanced to also not offend people that sometimes might be a little sensitive about certain things. You know, whereas a buyer might say, that was absolutely terrible and horrific. We don't want to be quoting those kinds of terrible things about someone's home. We can just say they provided negative feedback and specifically said that the pricing was too high. That's all that needs to be said in that situation." Harsh wording is never quoted. The substance stays. Every comment is the team's paraphrase, labeled "as reported to our team".
-4. **Privacy.** Nothing a seller could see carries a phone number, an email address, a lockbox or door code, a buyer's health, disability, family or finances, a first-person aside from the caller's notes, or the address of another listing (say "chose another property"). Agents appear as First L. plus brokerage when known. Sellers forward these reports, and the people in them never agreed to be in them.
-5. **Real data only.** No invented numbers, names, quotes or dates. Where a fact is not recorded the report says so ("not recorded", "no count kept"). A report built by another AI once used invented ad results and could not be sent. One made-up number makes every true number in the stack worthless as evidence.
-6. **Only when asked, and only what was asked for.** The skill never runs on a schedule. Read only the sources the operator handed over or pointed to in this session. Read, sort or file Glide and Supra emails only when asked. Never create a Gmail filter. It is his inbox and his client relationship.
-7. **One way to count.** Every number is computed in code from the log by `references/counting-rules.md`, and the checks recount it. A hand-built report once miscounted empty open houses, showed one buyer as both passed and active, and double counted agents with their own buyers. Never type or adjust a number.
-8. **Brand from identity.json.** Name, REALTOR line with the registered mark, the brokerage line, DRE, phone, email and the Compass disclaimer are read from `skills/shared-references/identity.json` at run time. Never type any of them from memory: a wrong DRE has leaked into client work before, and the repo tripwire blocks the push when a blocked value appears.
-9. **No client data in this repo.** The skills folder publishes to GitHub. Real names, notes, feedback and reports live only in `C:\Users\Graeham Watts\Documents\Skills LLMS\Claude\reports\seller-reports\<slug>\`. The scripts refuse to write private files inside a git repo. Examples and tests here use invented people.
-10. **What you are unsure about goes in the chat reply, never in the report.** At most five short plain lines under "Worth a glance before you send". The checks run silently, and the operator hears about one only when it fails and you cannot fix it yourself.
+1. **Draft, never send. One clean build.** It speaks to his client in his name, so Graeham sends it himself. Every build is the finished report: no notice on top, no panel at the end, nothing addressed to anyone but the seller, so no working material can ever go out.
+2. **Feedback only.** His words: "The system should only provide feedback." Never recommend a price change, never suggest a number, never say what silence on price means. He makes the pricing case in person with the stack of reports as evidence; a report that argues for him reads as pressure and weakens that evidence.
+3. **Tone.** His words: "Friendly, but concise and direct, but should be nuanced to also not offend people... We don't want to be quoting those kinds of terrible things about someone's home. We can just say they provided negative feedback and specifically said that the pricing was too high." The substance stays, the sting goes, every comment is the team's paraphrase "as reported to our team", and nothing is in quote marks.
+4. **Privacy.** No phone numbers, emails, lockbox or door codes, buyer health, family or finances, first-person asides from the notes, or the address of any other listing outside the similar homes section. Agents print as "First L." with brokerage. Sellers forward these, and the people in them never agreed to be in them.
+5. **Real data only.** No invented numbers, names, quotes or dates; "not recorded" where a fact is missing. Another AI once put invented ad results in a seller report and it could not be sent. One made-up number makes the whole stack worthless as evidence.
+6. **Only when asked, only what was asked for.** Nothing runs on a schedule. Read only sources the operator handed over or pointed to in this session. The extras (online views, similar homes, ads, photo) are occasional: "we might not do it all week, every week, every time until we have our PropertyIQ system up and running."
+7. **One way to count.** Every number is computed in code by `references/counting-rules.md` and recounted by the checks. Never type or adjust a number. A hand-built report once miscounted empty open houses and double counted agents with their own buyers.
+8. **Brand from identity.json.** Name, REALTOR with the registered mark, brokerage line, DRE, phone, email and the Compass disclaimer come from `skills/shared-references/identity.json` at run time. Never write a blocklisted value from that file anywhere: a wrong DRE has leaked into client work before.
+9. **No client data in the skills repo.** It syncs to GitHub. Real data lives only in `C:\Users\Graeham Watts\Documents\Skills LLMS\Claude\reports\seller-reports\<slug>\`; the sheet export goes in the session scratchpad. Nothing is written inside `Documents\Listings` unless Graeham asks for a final copy filed there. Tests use invented people.
+10. **Doubt goes in the chat reply, never in the report.** At most five plain lines under "Worth a glance before you send". The checks run silently; mention one only when it fails and you cannot fix it.
 
 ## Workflow
 
-Scripts are in `C:\Users\Graeham Watts\Documents\Skills LLMS\Claude\Skills\skills\seller-report\scripts\` (written `<scripts>` below). A listing's private folder is `C:\Users\Graeham Watts\Documents\Skills LLMS\Claude\reports\seller-reports\<slug>\` (written `<listing>`). Quote every path: they contain spaces. Python 3 with openpyxl. Microsoft Edge prints the PDF and the phone pictures.
+`<scripts>` is `C:\Users\Graeham Watts\Documents\Skills LLMS\Claude\Skills\skills\seller-report\scripts`, `<listing>` is the listing's folder under `reports\seller-reports\`, `<scratch>` is the session scratchpad. Quote every path. Needs Python 3 with openpyxl, and Microsoft Edge for the PDF, the phone pictures and the layout check.
 
-1. **Find the listing.** One listing per run, one folder, one draft. If `<listing>\listing.json` does not exist, set the listing up first (`references/intake.md`, "A new listing"). If the listing is under contract or pending, ask whether a report is still wanted before building one.
-2. **Get what was handed over.** Usually the live "<address> - View Activity" Google Sheet, exported to xlsx through the Drive connector and saved in the session scratchpad. `references/intake.md` covers every source, which one wins when two disagree, and what to do when one is missing.
-3. **Run the issue.**
+1. **Pick the listing.** One listing, one folder, one draft per run. With no `<listing>\listing.json`, set the listing up first (`references/intake.md`, section 2). Under contract or pending: ask whether a report is still wanted.
+2. **Get the live sheet** through the Drive connector: `search_files` for `title contains 'View Activity' and title contains '<street>'` (skip it when `listing.json` has `sheet.drive_id`), then `download_file_content` with `exportMimeType` `application/vnd.openxmlformats-officedocument.spreadsheetml.sheet`, and decode the saved result into `<scratch>` (the one-line decoder is in `references/intake.md`). Never `read_file_content`: it cuts the long feedback cells short.
+3. **Numbering and the cross-check.** `python "<scripts>\snapshot_issue.py" next --folder "<listing>"` gives the number. On a listing's first issue, or when the number is in doubt, ask how many reports the seller has had and, with the operator's go-ahead, search Gmail for Adrian's weekly status emails for this address: count what actually reached the seller (sent to them, not drafts), and the series continues from that. When pointed to this week's status email, its counts are a cross-check, never a source (`references/intake.md`, sections 3 and 7).
+4. **Run the issue.**
    ```
-   python "<scripts>\run_issue.py" --folder "<listing>" --sheet "<export.xlsx>" --as-of <YYYY-MM-DD the sheet was exported>
+   python "<scripts>\run_issue.py" --folder "<listing>" --sheet "<scratch>\<slug>-view-activity.xlsx" --as-of <export day> --source "status_email|The team's weekly status email|<its date>" --glance "<a plain line>"
    ```
-   Add `--source "KIND|LABEL|YYYY-MM-DD"` once for every other source used this session. For an issue built late, add `--report-date <that Monday>` and `--through <the Sunday before it>`. `python "<scripts>\run_issue.py" --help` lists every switch.
-4. **Follow the NEXT line.** Every stop prints one line that starts `NEXT:`.
-
-   | Exit | Meaning | What you do |
-   |---|---|---|
-   | 0 | READY | Go to step 6 |
-   | 2 | An input is missing | Supply it: `listing.json`, the sheet, a readable path |
-   | 3 | That issue was already sent | Ask whether a corrected copy should replace it. Only then add `--replace-sent` |
-   | 10 | New notes to read | Step 5 |
-   | 11 | The numbers could not be built | Fix what is named: a row to place, a date to give. Never adjust a count |
-   | 20 | A page did not render | A fault in the data or the code, not the operator's. Fix what is named |
-   | 30 | A check failed | Nothing was kept and nothing goes in a draft. Fix the cause, rebuild |
-5. **Read the new notes** (exit 10). Open `<listing>\work\todo.json`. It lists only what is new since last week. For each note write the seller-safe wording and what it says, following `references/tagging-and-tone.md`, into a readings file in `<listing>\work\`, then:
+   `--source` once per extra source used, `--glance` for your own lines. Built late: `--report-date <that Monday>`. `--help` lists the rest. Each stop prints one line starting `NEXT:` with the exact command to run again; use it, because it keeps your switches. Exit codes: 0 READY; 2 an input is missing; 3 that issue was already sent (ask before `--replace-sent`); 10 notes to read (step 5); 11 the numbers could not be built (place the row or give the date it names, never adjust a count); 20 a page did not render (a data or code fault, fix what is named); 30 a check failed (nothing was kept; fix the wording with step 10 and rebuild).
+5. **Read the new notes** (exit 10). `<listing>\work\todo.json` lists only what is new. Write the seller-safe wording and what each note says into a readings file in `<listing>\work\` by `references/reading-and-tone.md`, put the open house recaps in plain words in the same pass, then:
    ```
    python "<scripts>\curation_tools.py" apply --folder "<listing>" --readings "<listing>\work\readings.json"
-   python "<scripts>\run_issue.py" --folder "<listing>"
    ```
-   Put the open house recaps in plain words in the same pass. This reading is silent: do not show it to anyone or ask anyone to confirm it.
-6. **Look at it yourself.** Read the phone pictures in `<listing>\issues\NN\previews\` (the first three tiles and anything that changed). If a sentence is wrong or reads badly, fix it now with step 8 and rebuild.
-7. **Hand it over.** Put `issues\NN\email.html` in the body of an unsent Gmail draft (`references/delivery.md` has the recipe and what to verify), record the draft, and reply in chat:
+   and run the NEXT line again. This reading is silent: never show it or ask anyone to confirm it.
+6. **Extras, only when asked this session** (or when `listing.json` `extras.<source>.every_issue` is true), before the final run: online views (`online_views.py`), similar homes nearby (`nearby_update.py`, with `--site mls` and `nearby_from_mls.py` when Graeham signs in to MLSListings), the photo (`hero_photo.py`), the ads status (`marketing.json`), time on the market (`market.json`). One lookup each, a block is a stop. Commands and rules: `references/extras.md` and `references/market-and-marketing.md`. Then run the NEXT line again.
+7. **Look at it yourself** when it says READY. Read the phone pictures in `<listing>\issues\NN\previews\` (`email_phone_01.png` onward: the first three tiles and anything that changed). Check the address, the greeting and that every name belongs to this listing. Fix a sentence that reads badly now (step 10).
+8. **Make the draft** from `issues\NN\email_gmail.html`, never `email.html`. The Gmail connector removes every image, turns call links into dead links, strips background styles, the head, style blocks and class and data attributes, and turns web links and plain-text domains into redirects; the Gmail-safe copy is drawn for exactly that. `references/delivery.md` has the full recipe; in short: `create_draft` with `to` the seller, `cc` graehamwattsclientcare@gmail.com, the `subject` exactly as run_issue printed it (`Weekly Seller Report No. NN · <Month D, YYYY> - <address>`), and `htmlBody` the file's text copied exactly. Then `get_draft` with `messageFormat` RAW, and on the file the harness saves:
    ```
+   python "<scripts>\draft_check.py" --issue "<listing>\issues\NN" --draft "<saved get_draft result>"
    python "<scripts>\snapshot_issue.py" record --folder "<listing>" --issue <N> --gmail-draft-id <id>
    ```
-   The reply is short: which report, that it is in drafts unsent, then "Worth a glance before you send" with the lines from `<listing>\notes_for_operator.json` (`worth_a_glance`), most important first, five at most, in plain words. Leave the heading out when there is nothing. Add your own with `--glance "..."` on `run_issue.py`. `also_noted` is for you. Close by inviting changes in their own words. No list of checks, no file inventory.
-8. **Apply what they say.** Map the plain words to one correction and rebuild with the same command:
-   ```
-   python "<scripts>\curation_tools.py" correct --folder "<listing>" --find "<words>"
-   python "<scripts>\curation_tools.py" correct --folder "<listing>" --who "<name as the report prints it>" --set price_reaction=not_raised --why "<their words>"
-   python "<scripts>\curation_tools.py" correct --folder "<listing>" --who "<name>" --reword "<old sentence>" --to "<new sentence>"
-   python "<scripts>\curation_tools.py" correct --folder "<listing>" --who "<name>" --remove "<words in the sentence to take out>"
-   python "<scripts>\run_issue.py" --folder "<listing>"
-   ```
-   After `--set`, the command prints every sentence the report still prints about that person: bring the wording into line with `--reword`. Then replace the body of the same draft and say in one or two plain sentences what changed.
-9. **When they say it went out,** record it. This locks the issue folder as the record of what the seller received:
-   ```
-   python "<scripts>\snapshot_issue.py" record --folder "<listing>" --issue <N> --sent-on <YYYY-MM-DD>
-   ```
-   Publishing the link copy, attaching or filing the PDF, and the first-send test in real mail clients are in `references/delivery.md`. Publish only on Graeham's word.
+   Ask for the seller's address if you do not have it; never store it in a file.
+9. **Reply in chat**, short: which report, that it is in drafts unsent, To and CC, then "Worth a glance before you send" with the lines from `<listing>\notes_for_operator.json` `worth_a_glance` (five at most, most important first; leave the heading out when empty), then an invitation to say what to change. No list of checks, no file inventory.
+10. **Apply what they say.** Map the plain words to one correction (`references/reading-and-tone.md`, section 12):
+    ```
+    python "<scripts>\curation_tools.py" correct --folder "<listing>" --find "<words>"
+    python "<scripts>\curation_tools.py" correct --folder "<listing>" --who "<name as printed>" --set price_reaction=not_raised --why "<their words>"
+    python "<scripts>\curation_tools.py" correct --folder "<listing>" --who "<name>" --reword "<old sentence>" --to "<new sentence>"
+    ```
+    After `--set`, bring every sentence it prints about that person into line. Rebuild with the run line from step 4 minus `--sheet` and `--as-of` (or the NEXT line), replace the same draft's body with `update_draft` (`draftId`, `htmlBody` only), run `draft_check.py` again, and say in one or two plain sentences what changed. If `update_draft` is refused, tell Graeham what to change in the draft himself, and never work around the refusal.
+11. **When they say it went out:** `python "<scripts>\snapshot_issue.py" record --folder "<listing>" --issue <N> --sent-on <YYYY-MM-DD>`. The issue folder is then the record of what the seller received, and a rebuild of it needs `--replace-sent` on Graeham's word.
 
-Use `--waive`, `--allow-name`, `--allow-term`, `--brief-file`, `--issue` and `--replace-sent` only when Graeham says so. Do not pass `--no-pdf` on a rebuild: the older PDF would stay in the issue folder.
+Use `--waive`, `--allow-name`, `--allow-term`, `--brief-file`, `--issue` and `--replace-sent` only when Graeham says so. Do not pass `--no-pdf` on a rebuild: the older PDF would stay. The link copy is published, and the PDF attached or filed, only on his word (`references/delivery.md`).
 
-## Optional sections and the marketing update PDF
+## The marketing update PDF
 
-- **Market check and marketing status** print only when `<listing>\market.json` or `<listing>\marketing.json` exists. Build or refresh them only when asked, from sources read in this session. A channel is called running only if it was checked for this issue. See `references/market-and-marketing.md`.
-- **The 10 page seller marketing update PDF** (days on market against comparable sales, creative, ad status, search plan) is still available when Graeham asks for it by name. It is a separate deliverable with its own builder: `references/marketing-update/README.md`.
+The 10 page seller marketing update (days on market against comparable sales, creative, ad status, search plan) and its internal SAMPLE twin are separate deliverables, built only when Graeham asks for one by name: `references/marketing-update/README.md`.
 
 ## Known limits (say so, do not paper over)
 
-- Nothing has been opened in a real mail client yet. The first real send follows the test in `references/delivery.md`.
-- No script reads Glide or Supra emails, pasted notes or forwarded emails. Those are entered by hand (`references/intake.md`).
+- The Gmail connector strips images, call links and background colors, so the draft has no photo and the phone is plain text. The photo shows in the link copy and the PDF.
+- No script reads Glide or Supra emails, pasted notes or forwarded emails: they are entered by hand (`references/intake.md`).
 - One workbook per run. The live sheet and an attached copy are not merged.
-- A photo or link that is not https is left off the page. Without a hosted photo the masthead has none, and without a published link copy the email offers to send the record on request.
-- The seller's email address is not stored anywhere by this skill. Ask for it, or leave the draft without a recipient.
+- What a date in the sheet's Email, Call and Text columns means is an open question to Adrian (`references/counting-rules.md`, section 5). Keep the current reading and say in a glance line when it moves a count.
+- The hand-written reports counted cancelled tours, questions and open house hosts; this one does not, so its totals run lower. Be ready to say so when asked.
+- The MLS grid script has been tested on synthetic pages only. A heading it does not know may need an alias after the first live run.
 
 ## Done means
 
-- `run_issue.py` ended with READY, so every number was recounted and every page passed privacy, tone, feedback only, brand, hygiene, email safety, wrong file and phone layout.
-- You read the phone pictures, and the address, greeting and recipient all belong to this one listing.
-- The email is an unsent Gmail draft whose body matches `issues\NN\email.html`, and the draft id is recorded.
-- The chat reply is short and plain, carries at most five glance lines, and uses no workshop words.
-- Nothing was sent, published, labeled or filtered without being asked. Nothing private was written inside a git repo or inside `Documents\Listings`.
+- `run_issue.py` ended READY: every number recounted, every page (email, Gmail-safe copy, link copy, print) passed privacy, tone, feedback only, brand, hygiene, email safety, wrong file and phone layout.
+- You read the phone pictures, and the address, greeting and names belong to this one listing.
+- There is one unsent draft, To the seller and CC Adrian (or Graeham was told to add the CC), with the printed subject, built from `email_gmail.html`, and `draft_check.py` passed on its RAW read-back. The draft id is recorded.
+- The chat reply is short and plain, with at most five glance lines and no workshop words.
+- Nothing was sent, published, labeled or filtered without being asked, and nothing private was written in a git repo.
 
 ## Reference map
 
 | When you are | Read |
 |---|---|
-| Setting up a listing, finding and reading a source, deciding which source wins | `references/intake.md` |
-| Reading new notes: seller-safe wording, what a note counts as, tone examples, applying a correction | `references/tagging-and-tone.md` |
-| Asked what a section is for, how the page is built, why the email is shorter than the link copy | `references/report-structure.md` |
-| Making the Gmail draft, publishing the link copy, the PDF, filing, the first-send test | `references/delivery.md` |
-| Explaining to Adrian what to hand over and how to log so it reads cleanly | `references/operator-guide.md` |
-| Building the market check or marketing status, or asked for the marketing update PDF | `references/market-and-marketing.md`, then `references/marketing-update/README.md` |
+| Setting up a listing, getting a source, deciding which source wins, numbering | `references/intake.md` |
+| Reading new notes, seller-safe wording, what a note counts as, applying a correction | `references/reading-and-tone.md` |
+| Asked what a section is for, why the email is shorter than the link copy | `references/report-structure.md` |
+| Making, checking and replacing the Gmail draft; the link copy, the PDF, filing | `references/delivery.md` |
+| Helping Adrian: what to hand over, how to log a follow-up so it reads cleanly | `references/operator-guide.md` |
+| Online views, similar homes nearby, the photo | `references/extras.md` |
+| Time on the market, ads and marketing status, search demand, platform exports | `references/market-and-marketing.md` |
+| Asked for the 10 page marketing update PDF or the SAMPLE | `references/marketing-update/README.md`, `references/marketing-update/sample-mode.md` |
 | Unsure how a number is counted | `references/counting-rules.md` |
-| Writing or reading any file in a listing folder | `references/data-contract.md` |
+| Writing or reading any file in a listing folder | `references/data-contract.md` (changes over time: `references/contract-changes.md`) |

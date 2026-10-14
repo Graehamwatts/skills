@@ -233,5 +233,97 @@ class GateOnTheCopy(unittest.TestCase):
         self.assertEqual(self.level(self.gate(gmail=page), "size"), "fail")
 
 
+def connector(html):
+    """What the Gmail connector did to the HTML on Oct 13, 2026: no head, no style, no conditional comments, no
+    role, class, scope or data attributes, no image, tel: links dead, no background declarations, web links
+    through a redirect."""
+    h = re.sub(r"<head>.*?</head>", "", html, flags=re.S)
+    h = re.sub(r"<!--\[if mso\]>.*?<!\[endif\]-->", "", h, flags=re.S)
+    h = re.sub(r'\s(?:role|class|scope|data-[\w-]+)="[^"]*"', "", h)
+    h = re.sub(r"<img\b[^>]*>", "", h)
+    h = h.replace('href="tel:', 'data-x="').replace('data-x="', 'href="javascript:void(0);" data-gone="')
+    h = re.sub(r"background:[^;\"]*;?", "", h)
+    h = re.sub(r'href="(https?://[^"]*)"', lambda m: 'href="https://www.google.com/url?q=%s&amp;source=gmail"' % m.group(1), h)
+    return h
+
+
+def mime(html, subject, cc="client care <care@example.com>"):
+    """A raw draft as get_draft hands it back: a MIME message, base64url encoded, inside JSON."""
+    from email.message import EmailMessage
+    import base64
+    msg = EmailMessage()
+    msg["To"] = "seller@example.com"
+    if cc:
+        msg["Cc"] = cc
+    msg["Subject"] = subject
+    msg.set_content("plain text part")
+    msg.add_alternative(html, subtype="html", cte="quoted-printable")
+    return json.dumps({"id": "r-1", "message": {"raw": base64.urlsafe_b64encode(msg.as_bytes()).decode("ascii")}})
+
+
+class DraftCheck(unittest.TestCase):
+    """draft_check.py: the draft read back from Gmail against the issue's Gmail-safe copy."""
+
+    @classmethod
+    def setUpClass(cls):
+        import draft_check
+        cls.D = draft_check
+        cls.dir = tempfile.mkdtemp(prefix="sr draft check ")
+        d = load("ledger_small.json")
+        email, gmail = render_email_pair(d, hero=HERO)
+        cls.email, cls.gmail = email["html"], gmail["html"]
+        for name, body in (("email.html", cls.email), ("email_gmail.html", cls.gmail)):
+            with open(os.path.join(cls.dir, name), "w", encoding="utf-8", newline="\n") as f:
+                f.write(body)
+        with open(os.path.join(cls.dir, "ledger.json"), "w", encoding="utf-8") as f:
+            json.dump(d, f)
+        with open(os.path.join(cls.dir, "manifest.json"), "w", encoding="utf-8") as f:
+            json.dump({"issue_number": d["report"]["issue_number"], "report_date": d["report"]["report_date"]}, f)
+        cls.subject = draft_check.subject_line(d["report"]["issue_number"], d["report"]["report_date"], d["listing"]["address"])
+
+    @classmethod
+    def tearDownClass(cls):
+        shutil.rmtree(cls.dir, True)
+
+    def test_the_subject_line(self):
+        self.assertEqual(self.D.subject_line(7, "2026-10-12", "14 Sample Fern Ln"), "Weekly Seller Report No. 07 · October 12, 2026 - 14 Sample Fern Ln")
+        self.assertFalse(C.has_dash(self.subject))
+
+    def test_the_gmail_safe_copy_comes_back_with_the_same_words(self):
+        code, lines = self.D.check(self.dir, mime(connector(self.gmail), self.subject))
+        self.assertEqual(code, self.D.EXIT_OK, lines)
+        self.assertIn("read the draft from a base64url MIME message", lines)
+        self.assertTrue(any(ln.startswith("subject: Weekly Seller Report No. 05") for ln in lines))
+        code, lines = self.D.check(self.dir, connector(self.gmail))                 # the HTML part, already decoded
+        self.assertEqual(code, self.D.EXIT_OK, lines)
+
+    def test_the_email_itself_in_the_draft_is_caught(self):
+        code, lines = self.D.check(self.dir, mime(self.email, self.subject))
+        self.assertEqual(code, self.D.EXIT_DIFFERENT)
+        self.assertTrue(any("no_images" in ln for ln in lines))
+        code, lines = self.D.check(self.dir, mime(connector(self.email), self.subject))
+        self.assertEqual(code, self.D.EXIT_DIFFERENT)
+        self.assertTrue(any("dead link" in ln for ln in lines))
+
+    def test_a_changed_word_a_wrong_subject_and_a_missing_cc(self):
+        changed = connector(self.gmail).replace(">Issued ", ">Issued on ", 1)
+        self.assertNotEqual(changed, connector(self.gmail))
+        code, lines = self.D.check(self.dir, mime(changed, self.subject))
+        self.assertEqual(code, self.D.EXIT_DIFFERENT)
+        self.assertTrue(any("same_words" in ln for ln in lines))
+        code, lines = self.D.check(self.dir, mime(connector(self.gmail), "Weekly Seller Report No. 04", cc=None))
+        self.assertEqual(code, self.D.EXIT_DIFFERENT)
+        self.assertTrue(any(ln.startswith("DIFFERENT subject") for ln in lines))
+        self.assertTrue(any("add Adrian (client care) himself" in ln for ln in lines))
+
+    def test_nothing_readable_is_said_plainly(self):
+        code, lines = self.D.check(self.dir, json.dumps({"id": "r-1", "snippet": "hello"}))
+        self.assertEqual(code, self.D.EXIT_INPUT)
+        with open(os.path.join(SCRIPTS, "draft_check.py"), encoding="utf-8") as f:
+            src = f.read()
+        for word in ("send_message", "create_draft(", "update_draft(", "delete_draft("):
+            self.assertNotIn(word, src)
+
+
 if __name__ == "__main__":
     unittest.main()
