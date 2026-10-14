@@ -179,11 +179,12 @@ def _more_claims(ctx, m):
         Claim("no_final_answer", "people who gave no final answer", T["open_no_final_answer"],
               shapes=[(r"\b%s gave no final answer" % N, 1), (r"No final answer \(%s\)" % N, 1)]),
         Claim("no_final_interested", "no final answer, interested", NF["interested"],
-              shapes=[(r"No final answer \(%s\): %s interested" % (N, N), 2)]),
+              shapes=[(r"No final answer \(%s\): %s interested" % (N, N), 2), (r"No final answer \(%s\): all interested" % N, 1)]),
         Claim("no_final_undecided", "no final answer, undecided", NF["undecided"],
-              shapes=[(r"No final answer \(%s\):[^.]*?\b%s undecided" % (N, N), 2)]),
+              shapes=[(r"No final answer \(%s\):[^.]*?\b%s undecided" % (N, N), 2), (r"No final answer \(%s\): all undecided" % N, 1)]),
         Claim("no_final_no_read", "no final answer, no read yet", NF["no_read"],
-              shapes=[(r"No final answer \(%s\):[^.]*?\b%s with no read yet" % (N, N), 2)]),
+              shapes=[(r"No final answer \(%s\):[^.]*?\b%s with no read yet" % (N, N), 2),
+                      (r"No final answer \(%s\): all with no read yet" % N, 1)]),
         Claim("no_final_quiet", "no final answer and quiet for 30 days", T["open_no_final_answer_quiet"],
               shapes=[(r"\b%s of them have had no contact with us in the last 30 days" % N, 1)]),
         Claim("week_conversations", "conversations this week", W.get("conversations_with_feedback"),
@@ -193,7 +194,7 @@ def _more_claims(ctx, m):
         Claim("liked_people", "people who named something they liked", X["liked_people"],
               shapes=[(r"\b%s of the %s people named something they liked" % (N, N), 1)]),
         Claim("weeks_on_market", "weeks on the market", X["weeks_on_market"],
-              shapes=[(r"\b%s weeks? on the market, every week" % N, 1)]),
+              shapes=[(r"\b%s weeks? on the market, (?:week by week|every week)" % N, 1)]),
         Claim("week_showings", "showings this week, where restated", W.get("showings"),
               shapes=[(r"\b%s showings? since we listed, %s this week" % (N, N), 2)]),
         Claim("conversations_people", "conversations and the people they come from", T["conversations_with_feedback"],
@@ -410,7 +411,7 @@ def _label_rows(ctx, label):
     """The smallest rows that print the label with a count beside it: [(counts in that row, the row's text)].
     A row is one element (a table row, a list item, a line), so a neighbour's count is never read."""
     lab = core.fold(label)
-    # The row opens with the label, or with its count and then the label ("51 did not bring up price"), and
+    # The row opens with the label, or with its count and then the label ("51 gave no view on price"), and
     # the label is not the first words of a longer one ("Location" inside "Location or surroundings").
     opens = re.compile(r"(?:\d[\d,]* )?%s\s*(?:$|[\d:(\[|,.;*%s-])" % (re.escape(lab), chr(0xB7)))
     home = ctx.page.sections("saying")              # when the page marks the section, rows outside it are not tally rows

@@ -19,7 +19,7 @@ from .sections_numbers import s_numbers, s_charts
 from .sections_saying import s_saying, s_price_periods, s_price_record
 from .sections_lists import s_details_band, s_offers, s_showings, s_disclosure, s_openhouse, s_inquiries, s_history
 from .sections_more import s_nearby, s_market, s_marketing, s_next, next_items
-from .sections_record import s_record_band, s_followup_record, s_stack, s_howcount, s_footer
+from .sections_record import s_record_band, s_followup_record, s_stack, s_howcount, s_footer, TRIES_NOTE, TRIES_USED
 
 # section names in page order, for the tests and for anyone reading a page's data-sr-section hooks
 ORDER = ("masthead", "brief", "numbers", "weekly_chart", "views_chart", "saying",
@@ -40,6 +40,10 @@ def build(m, fit=0):
         s_nearby(m), s_market(m), s_marketing(m), s_next(m),
         # the record since we listed, carried forward in every issue
         s_record_band(m), s_followup_record(m), s_stack(m), s_price_record(m), s_price_periods(m), s_howcount(m), s_footer(m)]
+    # How we count explains "tries" only when an entry on this page counts them
+    said = unesc(re.sub(r"<[^>]+>", " ", without_sections("".join(parts), ("how_we_count",))))
+    if not TRIES_USED.search(said):
+        parts = [p_.replace(TRIES_NOTE, "") for p_ in parts]
     L, R = m.L, m.R
     title = "Weekly Seller Report No. %02d: %s" % (R["issue_number"], L["address"])
     pre = preheader(m)

@@ -29,11 +29,28 @@ def week_price_line(m):
     if not conv:
         return "No conversations with feedback this week."
     if not (hi + fair):
-        return "This week: %s. Price did not come up." % n_(conv, "conversation")
+        return "This week: %s. Nobody gave a view on price." % n_(conv, "conversation")
     rest = conv - hi - fair
     said = join_and([("%d said the price is too high" % hi) if hi else "", ("%d said it is fair or good" % fair) if fair else "",
-                     ("%d did not bring up price" % rest) if rest > 0 else ""])
+                     ("%d gave no view on price" % rest) if rest > 0 else ""])
     return "This week: %s. %s." % (n_(conv, "conversation"), cap1(said))
+
+
+def host_remarks_line(m, rem):
+    """'Since we listed, open house hosts have also passed on 2 remarks about price, none of them this week (the
+    latest was Aug 9).' The line sits right after the sentence about this week's conversations, so it always
+    says how many of the hosts' remarks fall in the report week."""
+    n = len(rem)
+    days = sorted(pd(r["date"]) for r in rem if r.get("date"))
+    s = "Since we listed, open house hosts have also passed on %s about price" % n_(n, "remark")
+    if len(days) != n:
+        return s + "."                              # a remark with no date on file: nothing is said about the week
+    k = len([d for d in days if m.WS <= d <= m.WE])
+    if n == 1:
+        return s + (", and it came this week." if k else ", on %s, before this week." % md(days[-1]))
+    if not k:
+        return s + ", none of them this week (the latest was %s)." % md(days[-1])
+    return s + ", %s of them this week." % ("all" if k == n else "%d" % k)
 
 
 def s_saying(m):
@@ -62,8 +79,8 @@ def s_saying(m):
     rem = PT.get("open_house_price_remarks") or []
     if rem:
         where = "listed in the record below" if (m.link or K["price_comments"]) else "in the complete record"
-        notes.append("Open house hosts also passed on %s about price. %s %s and %s not in these counts."
-                     % (n_(len(rem), "remark"), "It is" if len(rem) == 1 else "They are", where, "is" if len(rem) == 1 else "are"))
+        notes.append("%s %s %s and %s not in these counts."
+                     % (host_remarks_line(m, rem), "It is" if len(rem) == 1 else "They are", where, "is" if len(rem) == 1 else "are"))
     if notes:
         price += para(" ".join(notes), SIZE["small"], top=10, color=P["grey"])
     groups = [price]
@@ -109,7 +126,7 @@ def s_saying(m):
         s = keep(s + card(groups[0], pad="16px 16px 14px", top=12)) + "".join(card(g, pad="16px 16px 14px", top=10) for g in groups[1:])
     else:
         s += card((sp(16) + rule_line() + sp(14)).join(groups), pad="16px 16px 14px", top=12)
-    s += para("These counts are our team's reading of each conversation, as reported to our team.", SIZE["small"], top=8, color=P["grey"])
+    s += para("These counts are our team's reading of each conversation.", SIZE["small"], top=8, color=P["grey"])
     return sec(s, name="saying")
 
 

@@ -12,12 +12,18 @@ from .sections_numbers import week_groups, week_val
 from .sections_saying import by_price, approx_words
 
 
+TRIES_NOTE = " Tries are the separate days we followed up since their last answer."
+# an entry counts tries ("after 3 tries", "Last tried Mar 2", "tried on 3 or more days"). The sentence that every
+# email carries about "every date we tried" does not.
+TRIES_USED = re.compile(r"\b\d+ tr(?:y|ies)\b|\b(?:Last|First) tried\b|\btried on \d|\bor more tries\b")
+
+
 def s_record_band(m):
     L = m.L
     s = kicker("The record since we listed", P["gold"])
-    s += '<h2 class="h2" style="margin:5px 0 0;%s;color:%s">%s on the market, every week on the page</h2>' % (
+    s += '<h2 class="h2" style="margin:5px 0 0;%s;color:%s">%s on the market, week by week</h2>' % (
         hf(SIZE["h2"], 700, 1.25), P["on_dark"], cap1(n_(len(m.W), "week")))
-    s += para("From here down is the running record since %s. It is carried forward and grows by one row every Monday."
+    s += para("From here down is the running record since %s. It is carried forward from report to report."
               % md(L["list_date"]), SIZE["text"], top=6, color=P["on_dark_soft"])
     inner = table("<tr>%s%s</tr>" % (c("&nbsp;", "dark", w=6, bg=P["gold"], st="font-size:0;line-height:0"),
                                     c(keep(s, "dark"), "dark", pad="20px 0 20px 14px")))
@@ -79,8 +85,11 @@ def s_followup_record(m):
         intr = len([x for x in m.open if x.get("interest") in ("warm", "hot")])
         und = len([x for x in m.open if x.get("interest") == "cold"])
         oth = len(m.open) - intr - und
-        t = join_and([("%d interested" % intr) if intr else "", ("%d undecided" % und) if und else "",
-                      ("%d with no read yet" % oth) if oth else ""]) + "."
+        kinds = [(intr, "interested"), (und, "undecided"), (oth, "with no read yet")]
+        if len(m.open) > 1 and max(intr, und, oth) == len(m.open):
+            t = "all %s." % next(w for k_, w in kinds if k_)          # "No final answer (12): 12 undecided" says the number twice
+        else:
+            t = join_and([("%d %s" % (k_, w)) for k_, w in kinds if k_]) + "."
         # by the last contact in either direction, so a follow-up we made counts as contact too
         old_ = T["open_no_final_answer_quiet"]
         if old_:
@@ -185,8 +194,15 @@ def s_stack(m):
         sd = r["straddle"]
         if sd:
             # the weeks above are whole weeks: say what the week of the price change holds at the other list price
+            # open house traffic keeps the unit the hosts counted in: groups stay groups
+            where = "the open house" if sd.get("oh_sessions", 1) <= 1 else "the open houses"
+            unit = sd.get("oh_unit") or m.oh_unit
+            traffic = ""
+            if sd["oh_groups"]:
+                traffic = ("%s at %s" % (unit_count(sd["oh_groups"], unit), where)) if unit else (
+                    "%s open house visits, as each host counted" % num(sd["oh_groups"]))
             got = [n_(sd["keybox"] + sd["tours"], "showing") if (sd["keybox"] + sd["tours"]) else "",
-                   ("%s at the open house" % unit_count(sd["oh_groups"], m.oh_unit)) if sd["oh_groups"] else "",
+                   traffic,
                    n_(sd["offers"], "offer") if sd["offers"] else ""]
             got = join_and(got) or "nothing dated on those days"
             rows += "<tr>%s</tr>" % c("Week %d includes %s at %s: %s." % (sd["week"], days_words(sd["a"], sd["b"]), money(sd["price"]), got),
@@ -210,8 +226,14 @@ def s_stack(m):
     if T.get("tours_undated"):
         notes.append("%s no date on file, so %s in the total since we listed and in no week." % (
             cap1(n_(T["tours_undated"], "showing has", "showings have")), "it is" if T["tours_undated"] == 1 else "they are"))
-    notes.append("<b>Open house</b>: %s. None means no open house. Held means one took place with no count kept." % (
-        ("%s counted" % UNIT[m.oh_unit][1]) if m.oh_unit else "traffic as each host counted it"))
+    oh_note = "<b>Open house</b>: %s." % (("%s counted" % UNIT[m.oh_unit][1]) if m.oh_unit else "traffic as each host counted it")
+    # the two words are explained only when the table prints them (a row of its own for one week; blocks print sums)
+    alone = [ws[0] for _, groups in week_groups(m, "table_weeks") for ws in groups if len(ws) == 1]
+    if any(week_val(m, w, "open_house_groups")[0] == "none held" for w in alone):
+        oh_note += " None means no open house."
+    if any(week_val(m, w, "open_house_groups")[0] == "no count" for w in alone):
+        oh_note += " Held means one took place with no count kept."
+    notes.append(oh_note)
     fu = "calls, voicemails, texts and emails we made."
     if wk_sum("touches_outbound") != T["touches_outbound"]:
         fu += " %d more were made before the first week, %d in all." % (T["touches_outbound"] - wk_sum("touches_outbound"), T["touches_outbound"])
@@ -249,7 +271,8 @@ def s_howcount(m):
     if k:
         wait += " %s answered an earlier one." % (("All %d" % k) if (k == nw and k > 1) else ("%d of the %d" % (k, nw)) if nw > 1 else "That person")
     items.append(("Answered", "they have answered our latest follow-up, or told us where they stand."))
-    items.append(("Still waiting", wait + " Tries are the separate days we followed up since their last answer."))
+    # (assemble.build takes the sentence about tries out again when nothing on the page counts tries)
+    items.append(("Still waiting", wait + TRIES_NOTE))
     fu = ("each call, voicemail, text or email we made counts once, so a voicemail plus a text on one day is two. "
           "Each person's entry also gives the number of separate days.")
     dead = T.get("calls_not_connected") or 0
@@ -260,10 +283,10 @@ def s_howcount(m):
     items.append(("Follow-ups", fu))
     items.append(("Separate days", "calendar dates with a follow-up, each counted once however many people we tried that day."))
     items.append(("Replies", "a day on which someone answered us or got in touch, counted once per person per day."))
-    tours = ("key-box showings plus tours an agent or buyer told us about. A question, or a showing request that was "
-             "cancelled or postponed, is an inquiry and is never counted as a showing.")
-    if not m.track.get("keybox_showings"):
-        tours += " Key-box showings are not recorded for this listing."
+    # a listing with no separate key-box record never says so: its showing log is the record
+    tours = ("%s plus tours an agent or buyer told us about. A question, or a showing request that was "
+             "cancelled or postponed, is an inquiry and is never counted as a showing."
+             % ("key-box showings" if m.track.get("keybox_showings") else "tours on the showing log"))
     unc = T.get("tours_unconfirmed") or 0
     if unc:
         tours += " %s on the showing list with no confirmation that the tour took place." % cap1(n_(unc, "tour is", "tours are"))
@@ -292,7 +315,7 @@ def s_howcount(m):
         items.append(("Open house hosts", h.strip()))
     items.append(("What people are saying", "counts are out of the people who told us something themselves. When a person spoke about "
                   "price more than once, their latest remark decides their row."))
-    items.append(("Did not bring up price", "we spoke and the person did not mention price."))
+    items.append(("Gave no view on price", "we spoke and the person did not say what they think of the price."))
     dts = []
     if T.get("tours_approximate_date"):
         dts.append("%s, taken from the first note that mentions the tour." % cap1(approx_words(m)))

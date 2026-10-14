@@ -336,6 +336,20 @@ class GateTests(GateHarness):
                      "numbers.person_dates", "numbers.page_dates"):
             self.assertIn(rule, passed)
 
+    def test_no_final_answer_said_as_all_of_one_kind_is_still_checked(self):
+        def both_interested(d, t):
+            for c in d["contacts"]:
+                if C.is_counted(c) and c["status"] == "replied":
+                    c["interest"] = "warm"
+            C.finish_ledger(d)
+        rep = self.gate(led=both_interested, edit=para("No final answer (2): all interested."))
+        self.assertClean(rep)
+        self.assertIn("numbers.no_final_interested", [r.id for r in rep.results if r.level == core.PASS])
+        shutil.rmtree(os.path.join(self.tmp, "root"))
+        # the same sentence on a page whose ledger says otherwise does not pass
+        rep = self.gate(edit=para("No final answer (2): all undecided."))
+        self.assertIn("numbers.no_final_undecided", [r.id for r in rep.blocking], rep.as_text())
+
     def test_weeks_folded_into_one_row(self):
         def fold(off):
             def edit(h, t):

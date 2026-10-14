@@ -91,6 +91,10 @@ def offers_outcome(m):
         else:
             open_ += 1
     bits = ["%d %s %s" % (k, "was" if k == 1 else "were", st) if st != "expired" else "%d expired" % k for st, k in sorted(closed.items())]
+    if closed:
+        # some offers have an outcome on record: the line states those and stops. Where the other buyers stand
+        # is on each card ("Latest from this agent"), so nothing is said here that nobody recorded.
+        return cap1(join_and(bits)) + "."
     if gone:
         elsewhere = all("chose_another_home" in (x.get("themes") or []) for x in gone)
         bits.append("%d of those buyers %s since %s" % (len(gone), "has" if len(gone) == 1 else "have",
@@ -123,8 +127,17 @@ def s_offers(m):
         k = len(m.fresh_leads)
         title = "No offer this week. %s %s still deciding." % (hk("leads_live", num(k)), "buyer is" if k == 1 else "buyers are")
     else:
-        title = "No offer this week, and no one has told us one is coming"
+        title = "No offer this week"
     s = head("Offers and likely offers", title)
+    # an offer was talked about after the week closed: the note is in the box at the top, and this section points
+    # to it. Only an offer that is itself on record after the week closed is called an offer that came in.
+    later = sorted((d, dname(m, m.byid[cid])) for cid, d in m.after_offer.items() if cid in m.byid)
+    pointer = ""
+    if later:
+        came = any(it.get("kind") == "offer" for it in m.after)
+        pointer = "%s after the week closed: see the %s from %s at the top of this report." % (
+            "An offer came in" if came else "A possible offer was discussed",
+            "note" if len(later) == 1 else "notes", join_and(["%s (%s)" % (nm, md(d)) for d, nm in later]))
     for o in m.offers_week:
         s += card(offer_block(m, o, terms=True), top=10)
     rows = ""
@@ -151,6 +164,8 @@ def s_offers(m):
             tail = " %s on next week's list." % ("Both are" if len(listed) == 2 else "All are" if len(listed) > 2 else "It is")
         s += para("<b>Earlier interest we are going back to:</b> %s.%s" % (names, tail), SIZE["text"], top=12)
     ob = m.offers_before
+    if pointer and m.offers:
+        s += para(pointer, SIZE["text"], top=12)
     if ob:
         wks = sorted(set((m.week_of(o["date"]) or {}).get("n") for o in ob if m.week_of(o["date"])))
         lede = ""
@@ -167,7 +182,7 @@ def s_offers(m):
         rows = "".join("<tr>%s</tr>" % c(offer_block(m, o), "card", pad="10px 0", line=i > 0) for i, o in enumerate(ob))
         s += keep(h3("Earlier offers (%d)" % len(ob), lede.strip() or None, top=18) + card(table(rows, SIZE["text"]), pad="4px 14px", top=10))
     elif not m.offers:
-        s += para("No offers have come in since we listed.", SIZE["text"], top=10)
+        s += para("No offers have come in since we listed." + ((" " + pointer) if pointer else ""), SIZE["text"], top=10)
     return sec(s, name="offers")
 
 
@@ -191,7 +206,7 @@ def list_people(m, key):
     if m.link:
         if now:
             cards = [entry_full(m, x, key) for x in now]
-            out += keep(subhead("This week%s%d" % (DOT, len(now)), top=14) + cards[0]) + "".join(cards[1:])
+            out += keep(subhead("In touch this week%s%d" % (DOT, len(now)), top=14) + cards[0]) + "".join(cards[1:])
         if earlier:
             cards = [entry_full(m, x, key) for x in earlier]
             out += keep(subhead("Earlier%s%d" % (DOT, len(earlier)), top=18 if now else 14) + cards[0]) + "".join(cards[1:])
@@ -199,7 +214,7 @@ def list_people(m, key):
         full, extra = now[:K["full"]], now[K["full"]:]
         if now:
             cards = [entry_full(m, x, key, K["days"]) for x in full]
-            out += subhead("This week%s%d" % (DOT, len(now)), top=14) + "".join(cards)
+            out += subhead("In touch this week%s%d" % (DOT, len(now)), top=14) + "".join(cards)
             if extra:
                 out += lines_card("".join(entry_line(m, x, key, max(0, K["line_detail"]), first=(i == 0), this_week=True) for i, x in enumerate(extra)))
         elif earlier and not any(x["_active"] for x in ptr):
@@ -227,8 +242,7 @@ def count_title(m, key, title):
 def s_showings(m):
     T, cur = m.T, m.cur
     xs = m.lists["showings"]
-    agents_only = all(x.get("kind") == "agent" for x in xs)
-    title = count_title(m, "showings", LIST_TITLE["showings"] if agents_only else "Agents and buyers who toured the home")
+    title = count_title(m, "showings", list_title(m, "showings"))
     if not xs:
         return sec(head("Showings", title, "No agent has shown the home yet."), name="list_showings")
     lede = "%s since we listed, %s this week." % (n_(T["showings"], "showing"), "none" if not cur["showings"] else num(cur["showings"]))
@@ -250,8 +264,24 @@ def via_sentence(m):
     k = T.get("disclosure_shared_buyers") or 0
     if not k:
         return ""
-    s = "%s got the package from their own agent or an open house host. We follow up with them through that agent, so they are not in this list." % (
-        cap1(hk("shared_buyers", num(k)) + (" more buyer" if k == 1 else " more buyers")))
+    lead = cap1(hk("shared_buyers", num(k)) + (" more buyer" if k == 1 else " more buyers"))
+    through = [m.byid.get(x.get("represented_by")) or {} for x in m.via]
+    hosts = len([a for a in through if a.get("is_open_house_host")])
+    if len(through) != k:
+        src, via = "their own agent or an open house host", "that agent or host"
+    elif not hosts:
+        src, via = "their own agent", "that agent"
+    elif hosts == k:
+        src, via = "an open house host", "that host"
+    else:
+        src, via = "their own agent or an open house host", "that agent or host"
+    one = through[0] if (k == 1 and len(through) == 1) else None
+    if one and one.get("id") and not hosts and not m.link and one["id"] not in m.masked and one.get("name_recorded") is not False:
+        s = "%s got the package from their own agent, %s. We follow up through that agent, so that buyer is not in this list." % (lead, dname(m, one))
+    elif k == 1:
+        s = "%s got the package from %s. We follow up through %s, so that buyer is not in this list." % (lead, src, via)
+    else:
+        s = "%s got the package from %s. We follow up with them through %s, so they are not in this list." % (lead, src, via)
     if m.link and m.via:
         by = {}
         for x in m.via:

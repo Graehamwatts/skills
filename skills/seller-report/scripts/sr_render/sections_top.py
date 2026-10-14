@@ -170,8 +170,8 @@ def brief_sentences(m):
     else:
         off = "no offers came in" if m.offers else "no offers have come in yet"
     if conv and not (hi + fair):
-        where = "that conversation" if conv == 1 else "either conversation" if conv == 2 else "any of the %d conversations" % conv
-        out.append("Price did not come up in %s, and %s." % (where, off))
+        where = "this week's one conversation" if conv == 1 else "either conversation" if conv == 2 else "the %d conversations" % conv
+        out.append("Nobody gave a view on price in %s, and %s." % (where, off))
     elif conv == 1:
         out.append("In this week's one conversation we were told the price is %s, and %s." % ("too high" if hi else "fair or good", off))
     elif conv:
@@ -195,6 +195,89 @@ def preheader(m):
         s += " Nobody is on the log to follow up with yet."
     tail = " %s this week." % (cap1(n_(len(m.offers_week), "new offer")) if m.offers_week else "No offers")
     return s + (tail if len(s) + len(tail) <= 135 else "")
+
+
+SINCE_VERB = (("call", "called"), ("voicemail", "called"), ("text", "texted"), ("email", "emailed"))
+SINCE_ABOUT = re.compile(r"\babout ([^.,;:]+)")
+SINCE_MAX_LINES = 10            # past this many lines the box prints the people who answered and counts the rest
+
+
+def _since_text(it):
+    s = (it.get("summary_safe") or "").strip()
+    for rx in ASIDES:
+        s = rx.sub("", s).strip()
+    return s
+
+
+def _since_answer(text):
+    """Their answer as a sentence with a subject: 'Said his clients ...' reads 'He said his clients ...'."""
+    mt = re.match(r"(Said|Replied|Wrote back|Answered)\b", text)
+    if not mt:
+        return text
+    who = re.search(r"\b(his|her) (clients?|buyers?)\b", text)
+    subj = {"his": "He", "her": "She"}.get(who.group(1), "They") if who else "They"
+    return "%s %s%s" % (subj, mt.group(1).lower(), text[mt.end():])
+
+
+def since_line(items):
+    """(text, answered) for one person on one day after the week closed: what we did in one short sentence,
+    then their answer if they gave one. A single entry prints as it was written."""
+    answered = any(it.get("kind") != "touch" or C.is_reply(it) for it in items)
+    texts = [_since_text(it) for it in items]
+    typed = all(it.get("kind") == "touch" and it.get("direction") in ("outbound", "inbound") for it in items)
+    if len(items) == 1 or not typed:
+        return " ".join(t for t in texts if t), answered
+    tries = [it for it in items if it["direction"] == "outbound" and not C.is_reply(it)]
+    reached = [it for it in items if it["direction"] == "outbound" and C.is_reply(it)]
+    theirs = [it for it in items if it["direction"] == "inbound"]
+    dead = [it for it in tries if it.get("outcome") == "did_not_connect"]
+    did = set(it.get("channel") for it in tries)             # a call that did not connect is still a call we made
+    if any(it.get("our_call") for it in theirs):
+        did.add("call")
+    verbs = []
+    for ch, verb in SINCE_VERB:
+        if ch in did and verb not in verbs:
+            verbs.append(verb)
+    other = len([it for it in tries if it not in dead and it.get("channel") not in dict(SINCE_VERB)])
+    if other and not verbs:
+        verbs.append("followed up")
+    about = set(mt.group(1).strip() for it in tries for mt in [SINCE_ABOUT.search(_since_text(it))] if mt)
+    topic = (" about " + about.pop()) if len(about) == 1 else ""
+    out = [_since_text(it) for it in reached]                 # a call that reached them is already a full sentence
+    if verbs:
+        out.append("We %s%s%s." % ("also " if reached else "", join_and(verbs), "" if reached else topic))
+    if dead:
+        live = [it for it in tries if it not in dead and it.get("channel") in ("call", "voicemail")]
+        out.append("The calls did not connect." if len(dead) > 1 else "One call did not connect." if live else "The call did not connect.")
+    out += [_since_answer(_since_text(it)) for it in theirs]
+    if not answered and not dead:
+        out.append("No answer yet.")
+    return " ".join(t for t in out if t), answered
+
+
+def since_lines(m):
+    """The 'since the week closed' box: [(date, contact or None, name, text, answered)], one per person per day,
+    and the number of people folded into the closing sentence when the box would run long."""
+    groups, order = {}, []
+    for i, it in enumerate(m.after):
+        who = it.get("contact_id") or it.get("name_short")
+        k = (it["date"], who if who else "#%d" % i)
+        if k not in groups:
+            groups[k] = []
+            order.append(k)
+        groups[k].append(it)
+    rows = []
+    for k in order:
+        items = groups[k]
+        x = m.byid.get(items[0].get("contact_id"))
+        name = dname(m, x) if x else (safe(m, items[0]["name_short"]) if items[0].get("name_short") else "")
+        text, answered = since_line(items)
+        rows.append(dict(date=k[0], x=x, name=name, text=text, answered=answered, who=k[1]))
+    folded = []
+    if len(rows) > SINCE_MAX_LINES:
+        folded = [r for r in rows if not r["answered"]]
+        rows = [r for r in rows if r["answered"]]
+    return rows, len(set(r["who"] for r in folded))
 
 
 def override_paragraphs(text):
@@ -222,11 +305,14 @@ def s_brief(m):
     s = bar("This week in brief") + card(body, pad="14px 16px 14px", top=10, edge=True)
     if m.after:
         rows = ""
-        for it in m.after:
-            x = m.byid.get(it.get("contact_id"))
-            who = dname(m, x) if x else (safe(m, it["name_short"]) if it.get("name_short") else "")
-            rows += para("<b>%s%s:</b> %s" % (md(it["date"]), (DOT + who) if who else "", safe(m, it.get("summary_safe") or "", x)),
+        lines, folded = since_lines(m)
+        for r in lines:
+            rows += para("<b>%s%s:</b> %s" % (md(r["date"]), (DOT + r["name"]) if r["name"] else "", safe(m, r["text"], r["x"])),
                          SIZE["small"], top=4)
+        if folded:
+            rows += para("We also followed up with %s who %s not answered yet." % (
+                n_(folded, "more person", "more people") if lines else n_(folded, "person", "people"), "has" if folded == 1 else "have"),
+                SIZE["small"], top=4)
         s += card(kicker("Since the week closed" + DOT + "as reported to our team", P["ink"]) + rows +
                   para("Logged after Sunday, so it is not in this week's numbers.", SIZE["sub"], top=5, color=P["grey"]),
                   sf="card", pad="12px 16px 12px", top=8, at=mark("section", "since_week_closed"))

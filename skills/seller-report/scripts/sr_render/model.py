@@ -85,6 +85,20 @@ class Model(object):
         if link:
             self.after = [it for it in self.after if not it.get("offer_related") and it.get("kind") != "offer"
                           and it.get("contact_id") not in self.offer_people]
+        # who is in the "since the week closed" box of this copy: nobody there may read as stale further down the page
+        self.after_ids = set(it["contact_id"] for it in self.after if it.get("contact_id"))
+        self.after_answer, self.after_offer = {}, {}       # contact id -> the first day they answered / of a note about an offer
+        self.after_tried = {}                              # contact id -> the first day we tried them after the week closed
+        for it in sorted(self.after, key=lambda it: it["date"]):
+            cid = it.get("contact_id")
+            if not cid:
+                continue
+            if it.get("kind") == "feedback" or (it.get("kind") == "touch" and C.is_reply(it)):
+                self.after_answer.setdefault(cid, pd(it["date"]))
+            elif it.get("kind") == "touch" and it.get("direction") == "outbound":
+                self.after_tried.setdefault(cid, pd(it["date"]))
+            if it.get("offer_related") or it.get("kind") == "offer":
+                self.after_offer.setdefault(cid, pd(it["date"]))
         self.entries = {}               # list key -> [(contact id, 'full' | 'line' | 'pointer')] as printed in this document
         self.checks_run = 0
         self._verify()
@@ -111,8 +125,10 @@ class Model(object):
         x["_active"] = bool(x.get("active_this_week"))
 
     def _active_key(self, x):
-        """This week's people: those who said something first, most engaged first, then people still waiting."""
+        """This week's people: those who did something this week first (a showing, a package, a visit, an inquiry
+        dated in the week), then those who said something, most engaged first, then people still waiting."""
         cm = x["_wk_comments"]
+        did = any(e.get("date") and self.WS <= pd(e["date"]) <= self.WE for e in x.get("engagements") or [])
         if x["status"] in ("offer_submitted", "writing_offer"):
             rank = 0
         elif x.get("offer_intent") in ("yes", "maybe"):
@@ -121,7 +137,7 @@ class Model(object):
             rank = {"hot": 2, "warm": 2, "cold": 3}.get(x.get("interest"), 4)
         if x["status"] == "passed":
             rank = 5
-        return (0 if cm else 1, rank, -(pd(cm[-1][0]).toordinal()) if cm else 0, -len(x["_wk_t"]), x["name_short"])
+        return (0 if did else 1, 0 if cm else 1, rank, -(pd(cm[-1][0]).toordinal()) if cm else 0, -len(x["_wk_t"]), x["name_short"])
 
     def members(self, key):
         """(this week's people, earlier people, people shown in full under an earlier list) of one list.
@@ -197,12 +213,19 @@ class Model(object):
     def _straddle(self, band, week, a, b, price, forward):
         inr = lambda day: a <= pd(day) <= b
         ses = [o for o in self.oh if inr(o["date"])]
+        units = set(o.get("counted_unit") for o in ses if o.get("groups"))
         band["straddle"] = dict(
             week=week["n"], a=a, b=b, price=price, forward=forward,
+            oh_sessions=len([o for o in ses if o.get("groups")]),
+            oh_unit=list(units)[0] if (len(units) == 1 and list(units)[0]) else None,       # the hosts' own unit, when they agree
             keybox=len([1 for _, e in self.events(("keybox_showing",)) if inr(e["date"])]),
             tours=len([1 for _, e in self.events(("agent_reported_tour",)) if inr(e["date"])]),
             oh_groups=sum(o.get("groups") or 0 for o in ses),
             offers=len([1 for o in self.offers if inr(o["date"])]))
+
+    def week_end_words(self):
+        """'Sunday, Oct 11': the last day of the report week, as the page says it."""
+        return "%s, %s" % (C.WEEKDAYS[self.WE.weekday()], C.fmt_date(self.WE))
 
     def price_on(self, day):
         return C.price_on(self.L["price_history"], day)
@@ -251,7 +274,7 @@ class Model(object):
             chk.append(("list heading, " + k, len(self.lists[k]), T["lists"][k]))
             chk.append(("this week's people, " + k, len([x for x in self.lists[k] if x.get("primary_list") == k and x["_active"]]),
                         T["lists_active_this_week"][k]))
-        for k, lab in (("too_high", "said too high"), ("fair_or_positive", "said fair or good"), ("not_raised", "did not bring up price")):
+        for k, lab in (("too_high", "said too high"), ("fair_or_positive", "said fair or good"), ("not_raised", "gave no view on price")):
             chk.append(("price row, " + lab, len([x for x in self.fed if x.get("price_reaction") == k]), PT[k]))
         for i, r in enumerate(self.regimes):
             sd = r["straddle"]

@@ -83,7 +83,8 @@ class OnlineViewsOnThePage(unittest.TestCase):
             row = text_of(page.split('<tr data-sr-row="online_views">')[1].split("</tr>")[0]).strip()
             self.assertEqual(row, "Online views Zillow not recorded not recorded 812 31 saved")
             self.assertIn("Online views are the running count Zillow showed on Apr 13. A weekly figure needs two readings a week apart, "
-                          "so it starts with the next report.", text_of(page))
+                          "so there is none yet.", text_of(page))
+            self.assertNotIn("next report.", text_of(page).split("THE NUMBERS")[1].split("WHAT PEOPLE ARE SAYING")[0])
             self.assertNotIn('data-sr-table="chart_views"', page)                 # no weekly figure yet: no chart, no column
             self.assertNotIn('data-sr-col="online_views"', page.split('data-sr-table="weeks"')[1].split("</table>")[0])
             self.assertIn("online", r["info"]["flags"]["sections"])
@@ -119,6 +120,16 @@ class NearbyOnThePage(unittest.TestCase):
             self.assertIn("Source: Public listing pages.", t)
             self.assertEqual(page.count("7 Sample Elm Pl"), 1)
             self.assertNotIn("Sample Fern Ln", page.replace(page[page.index('data-sr-section="nearby"'):page.index('data-sr-section="market"')], ""))
+
+    def test_a_blank_day_count_is_explained(self):
+        nb = self.block()
+        note = "A blank means we have no confirmed day count for that home."
+        self.assertTrue(all(h.get("days_on_market") is not None for h in nb["homes"]))
+        self.assertNotIn(note, section(render(small(nearby=nb), identity=ID, no_hero=True)["html"], "nearby"))
+        nb["homes"][1]["days_on_market"] = None
+        for mode in sr_render.MODES:
+            t = section(render(small(nearby=nb), identity=ID, mode=mode, no_hero=True)["html"], "nearby")
+            self.assertIn("for a home still for sale. " + note + " Source:", t)
 
     def test_a_quiet_week_and_a_change_seen_without_a_date(self):
         nb = self.block()

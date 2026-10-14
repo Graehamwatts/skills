@@ -151,7 +151,7 @@ and never explains what silence on price means, in either direction.
   house recap are listed on their own (`open_house_price_remarks`) and are outside the tally, because the
   other visitors at that session cannot be counted.
 - **Price is always a row**, with three plain counts that add up to the denominator: said the price is too
-  high, said the price is fair or good, did not bring up price. When a person spoke about price more than
+  high, said the price is fair or good, gave no view on price. When a person spoke about price more than
   once, their latest remark decides their row.
 - `price_asked` records whether price was asked directly. The page may state it as a count ("asked directly:
   6 of 9"). It adds no sentence about what an answer or a silence means.

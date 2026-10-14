@@ -215,6 +215,9 @@ class Ledger(Base):
         self.assertEqual(since["through"], "2026-04-13")
         self.assertEqual([(i["date"], i["kind"], i["contact_id"], i["offer_related"]) for i in since["items"]],
                          [("2026-04-13", "touch", None, False)] * 3 + [("2026-04-13", "touch", "c001", True)])
+        for i in since["items"]:                                    # each says what kind of touch it was, for the one line per person per day
+            self.assertIn(i.get("direction"), ("outbound", "inbound"), i)
+            self.assertTrue(i.get("channel"), i)
         self.assertNotIn("c014", [c["id"] for c in self.ledger["contacts"]], "someone first logged on Monday is not in last week's counts")
         self.assertEqual(person(self.ledger, "c001")["followup"]["last_touch_date"], "2026-04-07")
 

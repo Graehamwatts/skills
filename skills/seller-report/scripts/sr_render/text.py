@@ -41,7 +41,7 @@ def dname(m, x, lower=False):
     if x["id"] in m.masked:
         return OFFER_MASK if lower else cap1(OFFER_MASK)
     if x.get("name_recorded") is False and x.get("kind") == "agent":
-        return "an agent who did not leave a name" if lower else "An agent who did not leave a name"
+        return "an agent whose name we do not have" if lower else "An agent whose name we do not have"
     return safe(m, x["name_short"])
 
 
@@ -91,7 +91,8 @@ def engaged(m, x):
         elif t == "open_house_visit":
             s = "Came to the open house" + when
         elif t == "disclosure_shared_by_agent":
-            s = "Got the disclosure package from their agent"
+            through = m.byid.get(x.get("represented_by")) or {}
+            s = "Got the disclosure package from %s" % ("the open house host" if through.get("is_open_house_host") else "their agent")
         else:
             continue
         if s not in out:
@@ -118,11 +119,20 @@ def status_chip(m, x):
         return chip("Writing an offer", "offer")
     if st == "passed":
         return chip("Passed", "hold")
+    later = m.after_answer.get(x["id"]) if st in ("awaiting_reply", "not_yet_contacted") else None
+    if later:
+        # they answered after the week closed and the box at the top says so: the card must not read as stale beside
+        # it. The counts are as of the week end and do not change.
+        return chip("Answered %s" % md(later), "good")
     if st == "awaiting_reply":
         # "awaiting reply" read as "never replied"; some of these people answered an earlier follow-up
         return chip("Still waiting", "wait")
     if st == "not_yet_contacted":
         return chip("Not yet reached", "hold")
+    if x["_via"]:
+        # we follow up through someone else, so this person has given us no answer of their own
+        through = m.byid.get(x.get("represented_by")) or {}
+        return chip("Through the host" if through.get("is_open_house_host") else "Through their agent", "hold")
     if x in m.fresh_leads and not m.link:
         return chip("Still deciding", "lean")
     return chip("Replied", "good")

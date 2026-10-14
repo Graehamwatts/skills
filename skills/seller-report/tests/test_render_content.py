@@ -33,13 +33,13 @@ class WhatPeopleAreSaying(unittest.TestCase):
                     with self.subTest(slug=d["meta"]["slug"], mode=mode, row=key):
                         self.assertIn("%s %d of %d %s" % (label, d["pricing_tally"][key], n, unit), t)
         self.assertEqual([lab for _, lab in PRICE_ROWS],
-                         ["Said the price is too high", "Said the price is fair or good", "Did not bring up price"])
+                         ["Said the price is too high", "Said the price is fair or good", "Gave no view on price"])
 
     def test_zero_price_rows_at_zero(self):
         d = load("ledger_small.json")                       # nobody raised price
         t = text_of(render(d, identity=ID, no_hero=True)["html"])
         self.assertIn("Said the price is too high 0 of 2 people", t)
-        self.assertIn("Did not bring up price 2 of 2 people", t)
+        self.assertIn("Gave no view on price 2 of 2 people", t)
 
     def test_ranked_points_with_counts_and_what_the_week_added(self):
         d = load("ledger_busy.json")
@@ -474,8 +474,9 @@ class ZeroAndThin(unittest.TestCase):
         self.assertIsNone(d["totals"]["keybox_showings"])
         self.assertEqual(d["totals"]["showings"], d["totals"]["agent_reported_tours"])
         t = text_of(render(d, identity=ID, mode="link", no_hero=True)["html"])
-        self.assertIn("Showings are the tours agents told us about. This listing has no key-box record.", t)
-        self.assertIn("Key-box showings are not recorded for this listing.", t)
+        self.assertIn("Showings are tours on the showing log plus tours agents told us about.", t)
+        self.assertNotIn("no key-box record", t)                    # a listing with no separate key-box record never says so
+        self.assertNotIn("Key-box showings are not recorded", t)
         self.assertNotIn("key-box showings (", t)                   # no count is printed for a kind that is not recorded
         self.assertIn("Pkgs", t.split("Every week in one table")[1])
 

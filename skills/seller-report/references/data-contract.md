@@ -355,6 +355,11 @@ Rules that hold everywhere in the ledger:
 - `since_week_closed.items[].kind` is `touch`, `feedback`, `engagement`, `open_house`, `offer`,
   `price_change` or `note`. An `offer` item carries no price or terms. Set `offer_related: true` on any item
   that hints at who may be weighing an offer: the link copy drops those.
+- A `touch` item also carries `channel`, `direction` and `outcome` when the log gives them, and `our_call: true`
+  when the answer came on a call dated in the team's own Call column. The page uses them to print one line per
+  person per day: what we did first, then their answer. Past ten lines the box prints the people who answered
+  and counts the rest in one closing sentence. Someone who answered after the week closed keeps their counts
+  as of the week end; their entry further down points to the box instead of reading "no reply".
 - `as_of_note` is an operator note and is never printed to a seller.
 - `brief_override` (optional) is the agent's own words for "This week in brief", for this issue only: plain
   text, blank lines between paragraphs. The email prints it in place of the counted brief; the link copy and

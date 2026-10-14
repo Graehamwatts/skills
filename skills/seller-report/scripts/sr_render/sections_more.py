@@ -100,6 +100,8 @@ def s_nearby(m):
     s += sheet(table(rows, SIZE["sub"], 1.4, data=True, name="nearby"), top=12 if moved else 10)
     notes = ["Price is the list price, or the sale price for a home that sold.",
              "Days run from the list date to an accepted offer, a sale or the day the home left the market, and to the day we checked for a home still for sale."]
+    if any(h.get("days_on_market") is None for _, h in order):
+        notes.append("A blank means we have no confirmed day count for that home.")
     if nb.get("source"):
         notes.append("Source: %s." % esc(nb["source"]).rstrip("."))
     s += para(" ".join(notes), SIZE["sub"], top=8, color=P["grey"])

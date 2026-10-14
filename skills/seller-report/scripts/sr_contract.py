@@ -171,7 +171,7 @@ def themes_vocabulary():
         "liked": [{"key": k, "label": lab} for k, lab in LIKED],
         "price_rows": [{"key": "too_high", "label": "Said the price is too high"},
                        {"key": "fair_or_positive", "label": "Said the price is fair or good"},
-                       {"key": "not_raised", "label": "Did not bring up price"}],
+                       {"key": "not_raised", "label": "Gave no view on price"}],
     }
 
 

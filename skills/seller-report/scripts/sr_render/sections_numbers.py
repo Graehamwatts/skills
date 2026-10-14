@@ -49,7 +49,9 @@ def number_rows(m):
         if len(nm) == cur["showings"]:
             sub = small(join_and(nm))
     rows.append(("Showings", sub, "showings", T["showings"], None))
-    sub = small("new people sent the package" if tr.get("disclosure_sent") else "new people on the package list")
+    # the figure counts people who joined the package list. Sends and opens are stated on their own and are never
+    # folded into it (counting-rules.md, section 4), so the label never says "sent".
+    sub = small("new people on the package list")
     rows.append(("Disclosure packages", sub, "disclosure_contacts_new", T["disclosure_contacts"],
                  ("disclosure_opened", "disclosure_opened_confirmed", "opened") if tr.get("disclosure_opened") else None))
     sub = small("as each host counted") if (not m.oh_unit and T.get("open_house_groups") is not None) else ""
@@ -78,7 +80,7 @@ def online_note(m):
     else:
         s = "Online views are as counted by %s, read on %s." % (sites, md(o["as_of"]))
     if running and m.cur.get("online_views") is None:
-        s += " A weekly figure needs two readings a week apart, so it starts with the next report."
+        s += " A weekly figure needs two readings a week apart, so there is none yet."
     return s
 
 
@@ -144,7 +146,8 @@ def s_numbers(m):
         notes.append("Showings count key-box showings (%s since we listed) and tours agents told us about (%s)."
                      % (hk("total:keybox_showings", num(T["keybox_showings"])), hk("total:agent_reported_tours", num(T["agent_reported_tours"]))))
     else:
-        notes.append("Showings are the tours agents told us about. This listing has no key-box record.")
+        # a listing with no separate key-box record never says so: the showing log is the record
+        notes.append("Showings are tours on the showing log plus tours agents told us about.")
     notes.append("A question or a cancelled request is an inquiry, not a showing.")
     blind = [w["n"] for w in m.W if w.get("disclosure_opened") is None]
     if m.track.get("disclosure_opened") and blind:

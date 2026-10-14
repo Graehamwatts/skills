@@ -244,9 +244,16 @@ class People(object):
                                    "summary_safe": t["_feedback"]["text_safe"], "offer_related": bool(_OFFER_WORD.search(t["_feedback"]["text_safe"]))})
             else:
                 flag = t.get("_offer_related")
-                self.since.append({"date": t["date"], "kind": "touch", "contact_id": cid, "name_short": name,
-                                   "summary_safe": t["summary_safe"],
-                                   "offer_related": bool(_OFFER_WORD.search(t["summary_safe"])) if flag is None else bool(flag)})
+                item = {"date": t["date"], "kind": "touch", "contact_id": cid, "name_short": name,
+                        "summary_safe": t["summary_safe"],
+                        "offer_related": bool(_OFFER_WORD.search(t["summary_safe"])) if flag is None else bool(flag)}
+                # what kind of touch it was, so the page can say one line per person per day: what we did, then their answer
+                for k in ("channel", "direction", "outcome"):
+                    if t.get(k):
+                        item[k] = t[k]
+                if t.get("_our_call"):
+                    item["our_call"] = True            # the answer came on a call dated in the team's own Call column
+                self.since.append(item)
         for e in engs_later:
             self.since.append({"date": e["date"], "kind": "engagement", "contact_id": cid, "name_short": name,
                                "summary_safe": SINCE_TEXT[e["type"]], "offer_related": False})
@@ -328,6 +335,7 @@ class People(object):
                 if ch == "call" and answered:
                     for t in answered:
                         t["channel"] = "call"
+                        t["_our_call"] = True
                     self.stats["reply_channel_from_column"] += len(answered)
                     continue
                 target.append(self.touch(N.column_touch(ch), d, "exact", "column", seq))

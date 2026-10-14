@@ -264,7 +264,9 @@ def follow_value(m, x, limit=None):
     '3 days (2 calls, 1 text): Sept 20 call · Sept 22 text · Oct 5 call.'"""
     od, out = x["_out_days"], x["_out"]
     if not od:
-        return "None needed so far. They contacted us." if x["_n_rep"] else "None logged yet."
+        if x["_n_rep"]:
+            return "None needed. They contacted us." if x["status"] == "passed" else "None needed so far. They contacted us."
+        return "None logged yet."
     if x["_via_host"]:
         return follow_line(m, x)
     days = follow_days(m, x, limit)
@@ -288,20 +290,29 @@ def responded_value(m, x):
         return "We follow up through the open house host" if through.get("is_open_house_host") else "We follow up through their agent"
     if x["_via_host"]:
         return "Reached only through the open house host so far"
+    later = m.after_answer.get(x["id"])          # they answered after the week closed: the box at the top has it
     if st == "not_yet_contacted":
+        if later:
+            return "Not reached by %s. Answered %s, see the top of this report." % (m.week_end_words(), md(later))
+        if m.after_tried.get(x["id"]):
+            return "Not reached by %s. First tried %s, see the top of this report." % (m.week_end_words(), md(m.after_tried[x["id"]]))
         return "Not yet reached"
     if st == "awaiting_reply":
+        if later:
+            return "%sNo reply by %s. Answered %s%s, see the top of this report." % (
+                ("Answered %s. " % md(last_in)) if last_in else "", m.week_end_words(), "again " if last_in else "", md(later))
         if last_in and tries:
             return "Answered %s. No reply to %s since." % (md(last_in), n_(tries, "try", "tries"))
         if last_in:
             return "Answered %s. Nothing since." % md(last_in)
         return ("No reply yet after %s" % n_(tries, "try", "tries")) if tries else "No reply yet"
+    more = (". More on %s, see the top of this report." % md(later)) if later else ""
     if not last_in:
-        return "Yes"
+        return "Yes" + more
     s = green("Yes") + ", %s" % md(last_in)
     if x["_n_rep"] > 1:
         s += " (%s in all)" % n_(x["_n_rep"], "reply", "replies")
-    return s
+    return s + more
 
 
 def offer_value(m, x):
@@ -315,13 +326,18 @@ def offer_value(m, x):
         elif x["status"] == "passed":
             s += ". Has since passed."
         return s
+    # a note about an offer logged after the week closed is in the box at the top: this row points there
+    later = m.after_offer.get(x["id"])
+    more = (". See the %s note at the top of this report." % md(later)) if later else ""
     if w in ("writing_one", "possibly"):
         lead = x.get("_lead") or {}
         when = lead.get("basis_date") or x.get("offer_basis_date")
         s = OFFER_WORD[w]
         if lead.get("lead_state") == "earlier_interest":
             return s + (", as of %s. No word since." % md(when) if when else ". No word in the last %d days." % LIMITS["lead_fresh_days"])
-        return s + ((", as of %s" % md(when)) if when else "")
+        return s + ((", as of %s" % md(when)) if when else "") + more
+    if later:
+        return "%s by %s%s" % (OFFER_WORD[w], m.week_end_words(), more)
     return OFFER_WORD[w]
 
 
@@ -333,7 +349,13 @@ def stands_words(m, x):
         return "Followed through the open house host" if through.get("is_open_house_host") else "Followed through their agent"
     if x["_via_host"]:
         return "Reached only through the open house host"
+    later = m.after_answer.get(x["id"])
+    if later and st in ("not_yet_contacted", "awaiting_reply"):
+        return "%s by %s. Answered %s, see the top of this report" % (
+            "Not reached" if st == "not_yet_contacted" else "No reply", m.week_end_words(), md(later))
     if st == "not_yet_contacted":
+        if m.after_tried.get(x["id"]):
+            return "Not reached by %s. First tried %s, see the top of this report" % (m.week_end_words(), md(m.after_tried[x["id"]]))
         return "Not yet reached"
     if st == "awaiting_reply":
         if last_in:
@@ -394,9 +416,10 @@ def entry_full(m, x, key, limit=None):
             c(body, "cream", pad="8px 12px 9px", at=' data-sr="comment"')))
     elif masked:
         fields += _field("Said", "Kept to the email copy.")
-    elif not m.link:
+    elif not m.link and x["id"] not in m.after_ids:
         # The link copy prints no empty "Said:" line: there, a missing comment may be one whose sentences about an
-        # offer were taken out, and the page must not say which.
+        # offer were taken out, and the page must not say which. Someone in the "since the week closed" box at the
+        # top gets no such line either: the box already says what has happened since.
         fields += _field("Said", "No feedback from them yet.")
     if not m.link:
         fields += _field("Offer", offer_value(m, x))
@@ -418,23 +441,79 @@ def line_bits(m, x, key, detail):
         for i, b in enumerate(did):
             for long_, short_ in SHORT_IN_LIST:
                 if b.startswith(long_):
+                    if b.startswith("Disclosure package sent through"):
+                        short_ = "Package sent"          # "Sent through the host" could be read as the visitor being sent
                     did[i] = (short_ + b[len(long_):]).rstrip(")")
                     break
-    bits = list(did) + [stands_words(m, x)]
-    if x.get("price_reaction") in ("too_high", "fair_or_positive") and x["id"] not in m.masked:
+    stands = stands_words(m, x)
+    if stands == "Passed" and detail <= 1:
+        # with no "Last contact" date on the line, say when: every answer this person gave us falls in one month
+        months = set((d.year, d.month) for d in x["_reply_days"])
+        if len(months) == 1 and x["_reply_days"][-1] < m.WS:
+            y, mo = months.pop()
+            stands = "Passed in %s%s" % (MONTH_NAMES[mo - 1], "" if y == m.WE.year else " %d" % y)
+    bits = list(did) + [stands]
+    if x.get("price_reaction") in ("too_high", "fair_or_positive") and x["id"] not in m.masked and price_view_current(m, x):
         bits.append(PRICE_TAG[x["price_reaction"]])
+    if m.after_answer.get(x["id"]) and x["status"] not in ("awaiting_reply", "not_yet_contacted"):
+        bits.append("More on %s at the top of this report" % md(m.after_answer[x["id"]]))
     if detail > 1 and x["_last"] and x["status"] != "awaiting_reply":
         bits.append("Last contact %s" % md(x["_last"]))
-    elif detail > 1 and x["_last_out"] and x["status"] == "awaiting_reply":
-        bits.append("Last tried %s" % md(x["_last_out"]))
+    elif detail > 1 and x["_last_out"] and x["status"] == "awaiting_reply" and not x["_via_host"]:
+        # (someone reached only through a host has one dated step, the package, and the line already gives it)
+        # a date the log does not give exactly is never printed as if it did
+        loose = any(t.get("date_quality") == "approximate" for t in x["_out"] if pd(t["date"]) == x["_last_out"])
+        bits.append("Last tried %s%s" % ("about " if loose else "", md(x["_last_out"])))
     return bits
+
+
+MONTH_NAMES = ("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December")
+WEEK_ABOUT = re.compile(r"\babout ([^.,;:]+)")
+
+
+def price_view_current(m, x):
+    """True when the person's view on price was given at today's list price. A one-line entry has no room to say
+    which price a remark was about, so a remark made at an earlier list price is left to the price record."""
+    said = [e["date"] for e in C.counted_feedback(x, m.WE) if e.get("price_reaction") == x.get("price_reaction")]
+    return bool(said) and m.price_on(max(said)) == m.L["list_price"]
+
+
+def week_words(m, x):
+    """What a one-line entry says about this week: 'Answered this week' when they did, with the point they raised
+    ('Answered this week: chose or preferred another property'). When only we reached out
+    it says so, and about what when there was one subject ('Told about the new list price this week'). Someone
+    who only did something (came to an open house, say) is 'In touch this week'."""
+    out = m.wk(x, "out")
+    if out and not m.wk(x, "rep") and x["id"] not in m.masked:
+        topics = set(mt.group(1).strip() for t in out for mt in [WEEK_ABOUT.search(t.get("summary_safe") or "")] if mt)
+        if len(topics) == 1:
+            return "Told about %s this week" % esc(topics.pop())
+        return "We followed up this week"
+    if not m.wk(x, "rep"):
+        return "In touch this week"
+    # the point they raised this week, in the words of the tally on top (at most two), so the line says why
+    keys = []
+    for e in C.counted_feedback(x, m.WE):
+        if pd(e["date"]) >= m.WS:
+            keys += [k for k in e.get("themes") or [] if k not in keys and k not in ("other", "no_reason")]
+    labels = dict((t["key"], t["label"]) for t in m.d["themes_vocabulary"]["themes"])
+    if keys and x["id"] not in m.masked:
+        return "Answered this week: " + join_and([low1(labels[k]) for k in keys[:2] if k in labels])
+    return "Answered this week"
 
 
 def entry_line(m, x, key, detail=2, first=False, this_week=False):
     """One line for an earlier person: the name, what they did, where it stands, the last contact."""
     m.entries.setdefault(key, []).append((x["id"], "line"))
     b = brokerage(m, x)
-    bits = line_bits(m, x, key, detail) + (["In touch this week"] if this_week else [])
+    bits = line_bits(m, x, key, detail)
+    if this_week:
+        wk = week_words(m, x)
+        if wk.startswith("Answered this week"):
+            # "Answered, undecided. Answered this week." says it twice: the standing keeps only how they lean
+            lean = {"Answered, interested": "Interested", "Answered, undecided": "Undecided", "Answered": None}
+            bits = [lean.get(b, b) for b in bits if lean.get(b, b)]
+        bits.append(wk)
     name = dname(m, x)
     lead = (", %s. " % b) if (b and detail > 1) else (" " if name.endswith(".") else ". ")       # 'Odalys V. Toured ...', never 'V..'
     return '<div%s style="padding:6px 0%s"><b>%s</b>%s%s.</div>' % (
@@ -447,19 +526,31 @@ def line_names(m, xs, key):
     for x in xs:
         m.entries.setdefault(key, []).append((x["id"], "line"))
         st = stands_words(m, x)
-        st = "No reply yet" if x["status"] == "awaiting_reply" else st
+        if x["status"] in ("awaiting_reply", "not_yet_contacted") and m.after_answer.get(x["id"]):
+            st = "Answered after the week closed, see the top of this report"
+        elif x["status"] == "awaiting_reply":
+            st = "No reply yet"
         if st not in groups:
             groups[st] = []
             order.append(st)
-        groups[st].append('<span%s>%s</span>' % (entry_mark(m, x, "line"), dname(m, x)))
+        more = m.after_answer.get(x["id"]) if x["status"] not in ("awaiting_reply", "not_yet_contacted") else None
+        groups[st].append('<span%s>%s</span>%s' % (entry_mark(m, x, "line"), dname(m, x), (" (more on %s at the top)" % md(more)) if more else ""))
     return "".join('<p style="margin:6px 0 0"><b>%s (%d):</b> %s</p>' % (st, len(groups[st]), ", ".join(groups[st])) for st in order)
+
+
+def list_title(m, key):
+    """The heading a list carries on this page, without its count. The showings list is 'Agents who showed the
+    home' only when everyone in it is an agent."""
+    if key == "showings" and not all(x.get("kind") == "agent" for x in m.lists["showings"]):
+        return "Agents and buyers who toured the home"
+    return LIST_TITLE[key]
 
 
 def entry_pointer(m, x, key, first=False):
     """A person shown in full under an earlier list: 'Odalys V.: see Agents who showed the home'."""
     m.entries.setdefault(key, []).append((x["id"], "pointer"))
     return '<div%s style="padding:5px 0%s"><b>%s</b>: see %s</div>' % (
-        entry_mark(m, x, "pointer"), "" if first else ";border-top:1px solid %s" % P["line"], dname(m, x), LIST_TITLE[x["primary_list"]])
+        entry_mark(m, x, "pointer"), "" if first else ";border-top:1px solid %s" % P["line"], dname(m, x), list_title(m, x["primary_list"]))
 
 
 def pointer_names(m, xs, key):
@@ -472,4 +563,4 @@ def pointer_names(m, xs, key):
             groups[k] = []
             order.append(k)
         groups[k].append('<span%s>%s</span>' % (entry_mark(m, x, "pointer"), dname(m, x)))
-    return "<br>".join("See %s: %s" % (LIST_TITLE[k], ", ".join(groups[k])) for k in order)
+    return "<br>".join("See %s: %s" % (list_title(m, k), ", ".join(groups[k])) for k in order)

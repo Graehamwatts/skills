@@ -185,7 +185,7 @@ class TheNumbers(unittest.TestCase):
         d = load("ledger_small.json")                           # opens are tracked
         page = render(d, identity=ID, no_hero=True)["html"]
         row = self.rows(page)["disclosure_contacts_new"]
-        self.assertIn("new people sent the package", row[0])
+        self.assertIn("new people on the package list", row[0])      # sends and opens are never folded into the label
         self.assertEqual(row[3], "%d %d opened" % (d["totals"]["disclosure_contacts"], d["totals"]["disclosure_opened_confirmed"]))
         self.assertEqual(hooked(page, "total:disclosure_opened_confirmed"), ["%d opened" % d["totals"]["disclosure_opened_confirmed"]])
         busy = self.rows(render(load("ledger_busy.json"), identity=ID, no_hero=True)["html"])["disclosure_contacts_new"]
@@ -306,7 +306,7 @@ class Lists(unittest.TestCase):
                 self.assertEqual(sorted(set(form for v in got.values() for form, _ in v)), ["full", "pointer"])
         t = text_of(render(load("ledger_small.json"), identity=ID, no_hero=True)["html"])
         shown = t.split("SHOWINGS")[1].split("DISCLOSURE PACKAGES")[0]
-        self.assertIn("THIS WEEK · 1", shown)
+        self.assertIn("IN TOUCH THIS WEEK · 1", shown)
         self.assertIn("EARLIER · 1", shown)
         self.assertIn("Thaddeus K., Northgate Homes. Toured the week of Mar 16. Passed. Last contact Mar 26.", shown)
 
@@ -329,7 +329,7 @@ class Lists(unittest.TestCase):
         self.assertIn("Responded: Yes, %s" % C.fmt_date(f["last_reply_date"]), card)
         waiting = text_of(page.split('data-sr-entry="full:c003"')[1].split('data-sr-entry=')[0])
         self.assertIn("STILL WAITING", waiting)
-        self.assertIn("Said: No feedback from them yet.", waiting)
+        self.assertNotIn("No feedback from them yet", waiting)          # she is in the box at the top (a text on Monday)
         self.assertIn("Offer: Not discussed", waiting)
         self.assertIn("Responded: No reply yet after 3 tries", waiting)
 
