@@ -345,10 +345,16 @@ def s_footer(m):
         note = ("This copy leaves out offer prices, offer terms, the names of agents with an offer on file and who may be "
                 "weighing one.")
     realtor = esc(ID["realtor_line"]).upper().replace(chr(0xAE), "&reg;")
-    links = '<a href="tel:+1%s" %s>%s</a><a href="mailto:%s" %s>%s</a>' % (
-        re.sub(r"[^0-9]", "", ID["phone"]), a, esc(ID["phone"]), esc(ID["email"]), a, esc(ID["email"]))
-    if web:
-        links += '<a href="https://%s" %s>%s</a>' % (esc(web), a, esc(web))
+    if gmail_safe():
+        # the Gmail-safe copy: the phone and the website keep their look as plain text (see htmlkit.gmail_safe)
+        links = plain(a, esc(ID["phone"])) + '<a href="mailto:%s" %s>%s</a>' % (esc(ID["email"]), a, esc(ID["email"]))
+        if web:
+            links += plain(a, no_autolink(web, P["on_dark"]))
+    else:
+        links = '<a href="tel:+1%s" %s>%s</a><a href="mailto:%s" %s>%s</a>' % (
+            re.sub(r"[^0-9]", "", ID["phone"]), a, esc(ID["phone"]), esc(ID["email"]), a, esc(ID["email"]))
+        if web:
+            links += '<a href="https://%s" %s>%s</a>' % (esc(web), a, esc(web))
     return (
         '<tr><td class="g" data-sr-section="footer" bgcolor="%s" style="padding:28px %dpx 32px;background:%s;color:%s">'
         '<div style="%s;letter-spacing:.2em;color:%s">%s</div>'

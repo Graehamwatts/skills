@@ -279,20 +279,65 @@ CHIP = {"offer": ("ink", "gold"), "lean": ("tint", "ink"), "good": ("good_bg", "
         "wait": ("wait_bg", "wait_fg"), "hold": ("hold_bg", "hold_fg")}
 
 
-def chip(text, kind):
+def gmail_safe():
+    """True while the Gmail-safe copy of the email is being drawn (api.render(..., gmail_safe=True)).
+
+    The Gmail connector that makes the draft rewrites what it is handed: it drops every <img>, turns a tel: link
+    into a dead javascript:void(0), drops every "background:" declaration (a cell keeps its bgcolor attribute),
+    and routes website links, and any plain-text web address it finds, through a short-lived google.com
+    redirect. The Gmail-safe copy is drawn so that nothing in it depends on any of those: no photo, the phone
+    and the website as plain text, and every colored chip on a one-cell table with a bgcolor. Text and numbers
+    are the same as in the email, word for word."""
+    return bool(OPT.get("gmail"))
+
+
+def chip(text, kind, inline=False):
+    """A small colored status label. In the email it is a span with a background. In the Gmail-safe copy the
+    color is carried on a one-cell table with a bgcolor, because the connector drops every background
+    declaration: aligned right when the chip sits alone at the right of an entry, inline-table when it sits in
+    a line of text (inline=True)."""
     bg, fg = CHIP[kind]
+    words = esc(text).upper().replace(" ", "&nbsp;") if len(text) <= 18 else esc(text).upper()
+    if gmail_safe():
+        place = 'style="display:inline-table;vertical-align:middle"' if inline else 'align="right"'
+        return ('<table %s %s><tr><td bgcolor="%s" style="padding:3px 9px;border-radius:10px;color:%s;'
+                'font-size:%dpx;line-height:1.4;font-weight:700;letter-spacing:.06em">%s</td></tr></table>'
+                % (TBL, place, P[bg], P[fg], SIZE["micro"], words))
     return ('<span style="display:inline-block;padding:3px 9px;border-radius:10px;background:%s;color:%s;'
             'font-size:%dpx;line-height:1.4;font-weight:700;letter-spacing:.06em">%s</span>'
-            % (P[bg], P[fg], SIZE["micro"], esc(text).upper().replace(" ", "&nbsp;") if len(text) <= 18 else esc(text).upper()))
+            % (P[bg], P[fg], SIZE["micro"], words))
+
+
+def no_autolink(address, color):
+    """A web address written so that a mail program cannot turn it into a link: every dot and the part after it
+    sit in a span of their own, so no single run of text holds a whole address. What a reader sees, and what
+    they copy, is the address exactly ("graehamwatts.com"). Spans are used rather than an invisible character
+    (a zero-width non-joiner before ".com") because an invisible character travels into a copied address and
+    a browser then looks up a different name. The span states the color it sits on, so the connector, which
+    keeps a style attribute, keeps the span."""
+    head, dot, rest = str(address).partition(".")
+    if not dot:
+        return esc(address)
+    tail = "".join('<span style="color:%s">.%s</span>' % (color, esc(part)) for part in rest.split("."))
+    return esc(head) + tail
+
+
+def plain(attrs, label):
+    """The look of a link, as text: the same style, no href. Used in the Gmail-safe copy for the phone (a tel:
+    link becomes a dead link there) and the website (a link becomes a redirect). A line break follows it, so
+    whatever comes next never runs into the number or the address when the text is read back."""
+    return '<span %s>%s</span>\n' % (attrs, label)
 
 
 def button(href, label, sf="dark"):
-    """A full-width link, at least 46 px tall: an inline text link is too small a target on a phone."""
+    """A full-width link, at least 46 px tall: an inline text link is too small a target on a phone.
+    In the Gmail-safe copy a phone button keeps its look and its words and is not a link."""
     bg, fg = (P["ink"], P["gold"]) if sf == "dark" else (P["white"], P["ink"])
     edge = P["ink"] if sf == "dark" else P["gold_dark"]
+    look = 'style="display:block;padding:14px 10px;%s;letter-spacing:.06em;color:%s;text-decoration:none"' % (hf(SIZE["small"], 700, 1.4), fg)
+    inner = plain(look, label) if (gmail_safe() and str(href).startswith("tel:")) else '<a href="%s" %s>%s</a>' % (esc(href), look, label)
     return ('<table %s width="100%%"><tr><td align="center" bgcolor="%s" style="color:%s;border:1px solid %s;border-radius:4px">'
-            '<a href="%s" style="display:block;padding:14px 10px;%s;letter-spacing:.06em;color:%s;text-decoration:none">%s</a>'
-            '</td></tr></table>' % (TBL, bg, fg, edge, esc(href), hf(SIZE["small"], 700, 1.4), fg, label))
+            '%s</td></tr></table>' % (TBL, bg, fg, edge, inner))
 
 
 def bar_td(v, vmax, color, w, bg):

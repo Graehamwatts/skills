@@ -34,7 +34,7 @@ if _HERE not in sys.path:
 import sr_contract as C          # noqa: E402
 import sr_files as F             # noqa: E402
 
-KNOWN_FILES = ("ledger.json", "email.html", "link.html", "print.html", "report.pdf")
+KNOWN_FILES = ("ledger.json", "email.html", "email_gmail.html", "link.html", "print.html", "report.pdf")
 NEVER_COPIED = ("manifest.json", "ledger.json")
 EXIT_REFUSED = 3
 NO_DELIVERY = {"gmail_draft_id": None, "link_published_url": None, "link_published_on": None, "sent_on": None}
@@ -133,7 +133,9 @@ def freeze(folder, source=None, ledger_path=None, flags=None, page_checks=0, bui
         "report_date": R["report_date"], "week_start": R["week_start"], "week_end": R["week_end"],
         "built_at": built_at or datetime.datetime.now().astimezone().replace(microsecond=0).isoformat(),
         "ledger_sha256": F.sha256_file(os.path.join(target, "ledger.json")),
-        "files": files, "email_bytes": os.path.getsize(os.path.join(target, "email.html")), "flags": base,
+        "files": files, "email_bytes": os.path.getsize(os.path.join(target, "email.html")),
+        "email_gmail_bytes": os.path.getsize(os.path.join(target, "email_gmail.html")) if os.path.exists(os.path.join(target, "email_gmail.html")) else None,
+        "flags": base,
         "checks": checks, "delivery": delivery,
     }
     F.save_json(os.path.join(target, "manifest.json"), manifest)

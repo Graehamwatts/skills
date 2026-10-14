@@ -31,7 +31,7 @@ def s_masthead(m):
              "dark", pad="12px 0 0", line=True, va="bottom"),
            c('<span style="%s;color:%s">No.&nbsp;%s</span>' % (hf(SIZE["issue_no"], 700, 1.0), P["gold"], hk("issue", "%02d" % R["issue_number"])),
              "dark", al="right", w=84, pad="12px 0 0", line=True, va="bottom")))
-    hero = OPT.get("hero")
+    hero = None if gmail_safe() else OPT.get("hero")        # the connector drops every image, so the Gmail-safe copy has no photo row
     if hero:
         # With images blocked this cell shows the alt text, so the text is centered and the slot is kept short.
         w, h = SIZE["maxw"], SIZE["hero_h"]

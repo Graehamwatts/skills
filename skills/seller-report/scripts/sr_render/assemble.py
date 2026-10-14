@@ -44,6 +44,8 @@ def build(m, fit=0):
     said = unesc(re.sub(r"<[^>]+>", " ", without_sections("".join(parts), ("how_we_count",))))
     if not TRIES_USED.search(said):
         parts = [p_.replace(TRIES_NOTE, "") for p_ in parts]
+    if gmail_safe():
+        parts = [guard_addresses(p_) for p_ in parts]
     L, R = m.L, m.R
     title = "Weekly Seller Report No. %02d: %s" % (R["issue_number"], L["address"])
     pre = preheader(m)
@@ -66,6 +68,8 @@ def build(m, fit=0):
     stamp = "".join('<meta name="sr:%s" content="%s">' % kv for kv in (
         ("kind", OPT["mode"]), ("slug", esc(m.d["meta"]["slug"])),
         ("issue", R["issue_number"]), ("week", "%s/%s" % (R["week_start"], R["week_end"]))))
+    if gmail_safe():
+        stamp += '<meta name="sr:copy" content="gmail">'          # the Gmail-safe copy of the email (the ship gate reads it)
     doc = (
         '<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">'
         '<meta name="viewport" content="width=device-width,initial-scale=1">'
@@ -101,6 +105,52 @@ def build(m, fit=0):
                 ln = ln.replace(end, end + "\n")
         out.append(ln)
     return "\n".join(out)
+
+
+# A web address in running text, which a mail program would turn into a link: an optional scheme or www, then
+# a name and a common ending. An email address is not one (the name is not preceded by @).
+ADDRESS = re.compile(r"(?<![\w@.-])(?:https?://)?(?:www\.)?[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*"
+                     r"\.(?:com|net|org|io|ai|co|us|info|biz|edu|gov|homes|realty|realtor|me|app|house|properties|estate)\b(?![@\w-])", re.I)
+
+
+def guard_addresses(html):
+    """The Gmail-safe copy: any web address in running text (outside a link, a tag or a comment) is written with
+    htmlkit.no_autolink, so the connector cannot turn it into a redirect. The words do not change."""
+    out, in_a = [], 0
+    for bit in re.split(r"(<!--.*?-->|<[^>]+>)", html, flags=re.S):
+        if bit.startswith("<"):
+            if re.match(r"<a\b", bit, re.I):
+                in_a += 1
+            elif re.match(r"</a\s*>", bit, re.I):
+                in_a = max(0, in_a - 1)
+            out.append(bit)
+        elif in_a or not bit:
+            out.append(bit)
+        else:
+            out.append(ADDRESS.sub(lambda mt: no_autolink(unesc(mt.group(0)), "inherit"), bit))
+    return "".join(out)
+
+
+def gmail_problems(doc):
+    """What the Gmail connector would break in the Gmail-safe copy. Each one stops the build."""
+    err = []
+    if re.search(r"<img\b", doc, re.I):
+        err.append("the Gmail-safe copy has an image (the connector drops every image)")
+    if re.search(r'href="tel:', doc, re.I):
+        err.append("the Gmail-safe copy has a tel: link (the connector turns it into a dead link)")
+    web = [h for h in re.findall(r'<a\b[^>]*href="(https?:[^"]*)"', doc, re.I) if h != OPT.get("link_url")]
+    if web:
+        err.append("the Gmail-safe copy links to %s (the connector rewrites web links into redirects)" % web[0][:60])
+    bg = re.findall(r'<(?!t[dhr]\b|table\b|body\b)(\w+)\b[^>]*style="[^"]*background', doc, re.I)
+    if bg:
+        err.append("the Gmail-safe copy colors a %s with a background, which the connector drops (%d)" % (bg[0], len(bg)))
+    body = doc[doc.find("<body"):]
+    for bit in re.split(r"<a\b.*?</a>", body, flags=re.S | re.I):
+        hit = next((h for h in (ADDRESS.search(unesc(t)) for t in re.split(r"<[^>]+>", bit)) if h), None)
+        if hit:
+            err.append("the Gmail-safe copy has a web address a mail program would turn into a link: " + hit.group(0))
+            break
+    return err
 
 
 def _ledger_text(d):
@@ -274,6 +324,8 @@ def checks(doc, m):
         pad = re.search(r"padding:(\d+)px", a)
         if "display:block" not in a or not pad or int(pad.group(1)) < 11:
             err.append("a link is not a block at least %d px tall: %s" % (LIMITS["tap_px"], a[:80]))
+    if gmail_safe():
+        err += gmail_problems(doc)
     longest = max(len(ln) for ln in doc.split("\n"))
     if longest > 990:
         warn.append("longest line is %d characters" % longest)

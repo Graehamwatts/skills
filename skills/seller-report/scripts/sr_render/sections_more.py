@@ -199,7 +199,7 @@ def s_marketing(m):
         asof = ('<div style="%s">%s</div>' % (fz(SIZE["sub"], 1.4, 700, P["grey"]), " ".join(when))) if when else ""
         # the whole detail is printed: the later sentences are where the caveats live
         rows += "<tr%s>%s</tr>" % (mark("row", "channel:%d" % mk["channels"].index(ch)), c(
-            '<b style="color:%s">%s</b>&nbsp; %s%s%s' % (P["ink"], esc(ch["channel"]), chip(lab, kind), asof,
+            '<b style="color:%s">%s</b>&nbsp; %s%s%s' % (P["ink"], esc(ch["channel"]), chip(lab, kind, inline=True), asof,
                                                          para(safe(m, ch.get("detail") or ""), SIZE["text"], top=3)),
             "card", pad="10px 0", line=i > 0, va="top"))
     if rows:

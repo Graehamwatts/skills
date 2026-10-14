@@ -9,11 +9,24 @@ Runs on email builds only.
   images          every image has alt, width and height
   font_size       no text under 12 px
   line_length     no line over 998 characters, or a note that the sender must use quoted-printable
+
+The Gmail-safe copy (email_gmail.html, or a page marked <meta name="sr:copy" content="gmail">) is the one that
+goes into a Gmail draft through the connector, which drops every image, turns a tel: link into a dead link,
+drops every "background:" declaration and rewrites web links and plain-text web addresses into short-lived
+google.com redirects. On that copy, also:
+  gmail_images       no image at all
+  gmail_links        no tel: link and no web link (the complete-record button, when the operator gave a link
+                     copy address, is the one web link allowed, with a note)
+  gmail_backgrounds  no span, div or other element colored with a background (a chip sits on a table cell
+                     with a bgcolor)
+  gmail_addresses    no web address in running text that a mail program would turn into a link
+  gmail_same_words   the words a reader sees are exactly those of email.html beside it
 """
+import os
 import re
 
 from . import core
-from .page import SILENT
+from .page import SILENT, BLOCK, CELL, Page
 
 MAX_BYTES = 95000
 MIN_FONT_PX = 12.0
@@ -77,11 +90,110 @@ def small_text(page, floor=MIN_FONT_PX):
     return out
 
 
+GMAIL_FILE = "email_gmail.html"
+BREAKS = ("block", "inline-block", "table", "inline-table", "list-item")
+# a web address in running text: an optional scheme or www, a name and a common ending, not part of an email address
+ADDRESS = re.compile(r"(?<![\w@.-])(?:https?://)?(?:www\.)?[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*"
+                     r"\.(?:com|net|org|io|ai|co|us|info|biz|edu|gov|homes|realty|realtor|me|app|house|properties|estate)\b(?![@\w-])", re.I)
+RECORD_BUTTON = "OPEN THE COMPLETE RECORD"
+
+
+def is_gmail_copy(ctx):
+    return ctx.file_name.lower() == GMAIL_FILE or ctx.page.metas.get("sr:copy") == "gmail"
+
+
+def reading_words(page):
+    """The words a reader sees, in order, with white space collapsed. An element shown as a block (by its tag
+    or by its display style) and a table cell both end a word, so a link and a span drawn as the same block
+    read the same, and a chip on a span reads the same as a chip on a table cell."""
+    out = []
+
+    def walk(n):
+        if n.tag is None:
+            out.append(n.data.replace(core.NBSP, " "))
+            return
+        if n.tag in SILENT or n.tag == "img":
+            return
+        if n.tag == "br":
+            out.append(" ")
+            return
+        brk = n.tag in BLOCK or n.tag in CELL or (n.style.get("display") or "").strip().lower() in BREAKS
+        if brk:
+            out.append(" ")
+        for ch in n.children:
+            walk(ch)
+        if brk:
+            out.append(" ")
+
+    walk(page.body)
+    return core.squash("".join(out))
+
+
+def first_difference(a, b, pad=50):
+    i = next((k for k in range(min(len(a), len(b))) if a[k] != b[k]), min(len(a), len(b)))
+    return ["email.html: ...%s..." % a[max(0, i - pad):i + pad], "this copy:  ...%s..." % b[max(0, i - pad):i + pad]]
+
+
+def gmail_checks(ctx, B):
+    page = ctx.page
+    imgs = [n for n in page.elements if n.tag == "img"]
+    B.judge("gmail_images", ["<img> at line %d" % n.line for n in imgs], "no image (the connector drops every image)",
+            "the Gmail-safe copy has an image, which the connector drops")
+    bad, note = [], []
+    for n in page.elements:
+        if n.tag != "a":
+            continue
+        href = (n.get("href") or "").strip()
+        if href.lower().startswith("tel:"):
+            bad.append("a tel: link at line %d (the connector turns it into a dead link)" % n.line)
+        elif href.lower().startswith(("http:", "https:")):
+            if core.squash(page.flat(root=n)).upper() == RECORD_BUTTON:
+                note.append(href[:80])
+            else:
+                bad.append("a web link at line %d to %s (the connector rewrites it into a redirect)" % (n.line, href[:60]))
+    B.judge("gmail_links", bad, "no tel: link and no web link", "the Gmail-safe copy has a link the connector breaks")
+    if note:
+        B.warn("gmail_record_button", "the complete-record button is a web link. The connector routes it through a google.com "
+               "redirect; it still opens the record", note)
+    bad = ["<%s> at line %d" % (n.tag, n.line) for n in page.elements
+           if n.tag not in ("table", "tr", "td", "th", "body") and re.search(r"(?<![\w-])background\s*:", n.get("style") or "", re.I)]
+    B.judge("gmail_backgrounds", bad, "no span, div or other element is colored with a background (the connector drops them)",
+            "the Gmail-safe copy colors an element with a background, which the connector drops", limit=6)
+    bad = []
+
+    def walk(n, in_link):
+        if n.tag is None:
+            hit = ADDRESS.search(n.data)
+            if hit and not in_link:
+                bad.append("'%s' at line %d" % (hit.group(0), n.line or 0))
+            return
+        if n.tag in SILENT:
+            return
+        for ch in n.children:
+            walk(ch, in_link or n.tag == "a")
+    walk(page.body, False)
+    B.judge("gmail_addresses", bad, "no web address in running text that a mail program would turn into a link",
+            "the Gmail-safe copy has a web address the connector would turn into a redirect")
+    twin = os.path.join(os.path.dirname(ctx.html_path), "email.html")
+    if not os.path.isfile(twin):
+        B.fail("gmail_same_words", "there is no email.html beside the Gmail-safe copy, so its words could not be compared",
+               ["looked for %s" % twin])
+        return
+    with open(twin, "rb") as f:
+        mine, theirs = reading_words(page), reading_words(Page(f.read().decode("utf-8", "replace")))
+    if mine == theirs:
+        B.ok("gmail_same_words", "the words are exactly those of email.html (%s characters)" % "{:,}".format(len(mine)))
+    else:
+        B.fail("gmail_same_words", "the Gmail-safe copy does not say exactly what email.html says", first_difference(theirs, mine))
+
+
 def check(ctx):
     B = core.Bag("email_safety")
     if ctx.kind != "email":
         B.skip("applies", "email checks run on the email build only (this is the %s copy)" % ctx.kind)
         return B.results
+    if is_gmail_copy(ctx):
+        gmail_checks(ctx, B)
     page = ctx.page
     size = len(ctx.raw_bytes)
     if size < MAX_BYTES:

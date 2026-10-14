@@ -12,7 +12,9 @@ stop prints one line that starts with NEXT: and says what to do.
                    Claude reads those notes, writes a readings file and runs curation_tools.py apply
     3. ledger      raw + curation + listing become ledger.json and notes_for_operator.json. A row nobody
                    placed, or numbers that do not add up, STOP the run (exit 11)
-    4. render      the email, the link copy and the print layout, into work\build (exit 20 when refused)
+    4. render      the email, its Gmail-safe copy (email_gmail.html), the link copy and the print layout, into
+                   work\build (exit 20 when refused). The Gmail-safe copy says exactly what the email says and is
+                   the one that goes into a Gmail draft through the connector (sr_render.htmlkit.gmail_safe)
     5. PDF         printed from the print layout, when Edge is on this computer
     6. checks      the ship gate recounts every number and reads every page: privacy, tone, feedback only,
                    brand, hygiene, email safety, wrong file, phone layout. A failure STOPs the run (exit 30)
@@ -49,6 +51,7 @@ import sr_files as F             # noqa: E402
 
 EXIT_READY, EXIT_INPUT, EXIT_SENT, EXIT_TO_READ, EXIT_LEDGER, EXIT_RENDER, EXIT_CHECKS = 0, 2, 3, 10, 11, 20, 30
 PAGES = (("email", "email.html"), ("link", "link.html"), ("print", "print.html"))
+GMAIL_PAGE = "email_gmail.html"          # drawn with the email (render_email_pair), never on its own
 # work list items Claude must settle before a ledger can be built, and how each is said in plain words
 MUST_READ = (("relink_candidates", "sheet row(s) whose name or number changed and need joining to the person they were"),
              ("new_people", "new person or people on the sheet"),
@@ -185,8 +188,8 @@ def run(a):
         F.say("      %-34s %s" % (k, v))
 
     # ---- 4. render ----------------------------------------------------------------------------
-    step(4, "rendering issue %02d: the email, the link copy and the print layout" % R["issue_number"])
-    from sr_render import render, RenderRefused
+    step(4, "rendering issue %02d: the email, its Gmail-safe copy, the link copy and the print layout" % R["issue_number"])
+    from sr_render import render, render_email_pair, RenderRefused
     stage = os.path.join(paths["work"], "build")
     if os.path.isdir(stage):
         shutil.rmtree(stage)
@@ -194,25 +197,29 @@ def run(a):
     identity = C.load_identity()
     infos = {}
     for mode, name in PAGES:
-        kw = dict(mode=mode, hero=a.hero, no_hero=a.no_hero, greeting=a.seller_greeting, no_greeting=a.no_greeting,
+        kw = dict(hero=a.hero, no_hero=a.no_hero, greeting=a.seller_greeting, no_greeting=a.no_greeting,
                   market=not a.no_market, marketing=not a.no_marketing, nearby=not a.no_nearby)
-        if mode == "email":
-            kw.update(link_url=a.link_url, no_link=a.no_link)
         try:
-            r = render(ledger, identity=identity, **kw)
+            if mode == "email":
+                # the email and its Gmail-safe copy are drawn together, at one fit level, so they say the same words
+                kw.update(link_url=a.link_url, no_link=a.no_link)
+                built = list(zip(("email", "email_gmail"), (name, GMAIL_PAGE), render_email_pair(ledger, identity=identity, **kw)))
+            else:
+                built = [(mode, name, render(ledger, identity=identity, mode=mode, **kw))]
         except RenderRefused as e:
             return stop(EXIT_RENDER, "the %s could not be rendered (%s)" % (name, e.stage), e.problems[:30],
                         "this is a fault in the data or the renderer, not something the operator did. Fix what is named above, then run:  " + remake)
-        with open(os.path.join(stage, name), "w", encoding="utf-8", newline="\n") as f:
-            f.write(r["html"])
-        infos[mode] = r["info"]
-        for w in r["info"]["warnings"]:
-            F.say("      note (%s): %s" % (name, w))
+        for key, fname, r in built:
+            with open(os.path.join(stage, fname), "w", encoding="utf-8", newline="\n") as f:
+                f.write(r["html"])
+            infos[key] = r["info"]
+            for w in r["info"]["warnings"]:
+                F.say("      note (%s): %s" % (fname, w))
     shutil.copyfile(paths["ledger"], os.path.join(stage, "ledger.json"))
     F.save_json(os.path.join(stage, "notes_for_operator.json"), notes)
-    F.say("      email.html %s bytes of %s allowed (fit level %d). link.html %s bytes. print.html %s bytes."
-          % (C.fmt_num(infos["email"]["bytes"]), C.fmt_num(C.LIMITS["email_max_bytes"]), infos["email"]["fit_level"],
-             C.fmt_num(infos["link"]["bytes"]), C.fmt_num(infos["print"]["bytes"])))
+    F.say("      email.html %s bytes of %s allowed (fit level %d). %s %s bytes. link.html %s bytes. print.html %s bytes."
+          % (C.fmt_num(infos["email"]["bytes"]), C.fmt_num(C.LIMITS["email_max_bytes"]), infos["email"]["fit_level"], GMAIL_PAGE,
+             C.fmt_num(infos["email_gmail"]["bytes"]), C.fmt_num(infos["link"]["bytes"]), C.fmt_num(infos["print"]["bytes"])))
 
     # ---- 5. PDF -------------------------------------------------------------------------------
     import render_previews
@@ -285,7 +292,8 @@ def run(a):
     F.say("")
     F.say("READY: Weekly Seller Report No. %02d for %s, dated %s, covering %s."
           % (R["issue_number"], ledger["listing"]["address"], R["report_date"], C.fmt_range(R["week_start"], R["week_end"])))
-    F.say("  email (goes in the body of an unsent Gmail draft): %s" % os.path.join(issue_dir, "email.html"))
+    F.say("  email: %s" % os.path.join(issue_dir, "email.html"))
+    F.say("  Gmail-safe copy (this one goes in the body of the unsent Gmail draft): %s" % os.path.join(issue_dir, GMAIL_PAGE))
     F.say("  link copy (published only when the operator says so): %s" % os.path.join(issue_dir, "link.html"))
     if os.path.exists(os.path.join(issue_dir, "report.pdf")):
         F.say("  PDF: %s" % os.path.join(issue_dir, "report.pdf"))
@@ -293,7 +301,7 @@ def run(a):
         F.say("  Worth a glance before you send (for the chat reply, never for the report):")
         for line in notes["worth_a_glance"]:
             F.say("    - " + line)
-    F.say("NEXT: put email.html in the body of an unsent Gmail draft for the operator (never send it), then record it:  "
+    F.say("NEXT: put %s in the body of an unsent Gmail draft for the operator (never send it), then record it:  " % GMAIL_PAGE +
           "python \"%s\" record --folder \"%s\" --issue %d --gmail-draft-id <id>" % (here("snapshot_issue.py"), folder, R["issue_number"]))
     return EXIT_READY
 

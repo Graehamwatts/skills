@@ -5,8 +5,8 @@ Run it on every build, silently, before anything is put in a Gmail draft. The op
 only when it fails, in plain words. It reads the built page and the data it was built from. It never imports
 the renderer. There is one build mode, so every page is checked as the report a seller will read.
 
-    Check a whole folder of pages (email.html, link.html, print.html with ledger.json, and manifest.json when
-    the issue has been kept):
+    Check a whole folder of pages (email.html, email_gmail.html, link.html, print.html with ledger.json, and
+    manifest.json when the issue has been kept):
 
         python check_report.py --issue "<data root>\<slug>\issues\07"
         python check_report.py --issue "<data root>\<slug>\work\build"
@@ -41,7 +41,8 @@ if HERE not in sys.path:
 import sr_checks                      # noqa: E402
 from sr_checks import core            # noqa: E402
 
-PAGES = (("email.html", "email"), ("link.html", "link"), ("print.html", "print"))
+# email_gmail.html is the Gmail-safe copy of the email: checked as the email, and against it (sr_checks.email_safety)
+PAGES = (("email.html", "email"), ("email_gmail.html", "email"), ("link.html", "link"), ("print.html", "print"))
 
 
 def parse_args(argv):

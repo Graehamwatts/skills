@@ -29,4 +29,4 @@ _SCRIPTS = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if _SCRIPTS not in sys.path:
     sys.path.insert(0, _SCRIPTS)          # sr_contract lives beside this package
 
-from .api import render, RenderRefused, MODES        # noqa: E402,F401
+from .api import render, render_email_pair, RenderRefused, MODES        # noqa: E402,F401

@@ -76,12 +76,12 @@ class RunIssue(unittest.TestCase):
                         "--glance", "The team's status email counts 2 tours. This report counts 3, because one was logged later.", *FAST)
         self.assertEqual(code, RI.EXIT_READY, out)
         issue = os.path.join(self.folder, "issues", "05")
-        self.assertEqual(sorted(os.listdir(issue)), ["email.html", "ledger.json", "link.html", "manifest.json", "notes_for_operator.json", "print.html"])
+        self.assertEqual(sorted(os.listdir(issue)), ["email.html", "email_gmail.html", "ledger.json", "link.html", "manifest.json", "notes_for_operator.json", "print.html"])
         self.assertFalse(os.path.exists(os.path.join(issue, "draft")))
         m = F.load_json(os.path.join(issue, "manifest.json"))
         self.assertNotIn("build_kind", m)
         self.assertNotIn("tag_review", m)
-        self.assertEqual((m["checks"]["ship_gate"]["passed"], m["checks"]["ship_gate"]["blocking"], m["checks"]["ship_gate"]["pages"]), (True, 0, 3))
+        self.assertEqual((m["checks"]["ship_gate"]["passed"], m["checks"]["ship_gate"]["blocking"], m["checks"]["ship_gate"]["pages"]), (True, 0, 4))
         with open(os.path.join(issue, "email.html"), encoding="utf-8") as f:
             page = f.read()
         self.assertLess(len(page.encode("utf-8")), 95000)
@@ -93,12 +93,40 @@ class RunIssue(unittest.TestCase):
         self.assertIn("READY: Weekly Seller Report No. 05", out)
         self.assertIn("Worth a glance before you send", out)
         self.assertIn("The team's status email counts 2 tours.", out)
-        self.assertIn("all checks passed on 3 page(s)", out)
-        self.assertRegex(out, r"NEXT: put email\.html in the body of an unsent Gmail draft")
+        self.assertIn("all checks passed on 4 page(s)", out)
+        self.assertRegex(out, r"NEXT: put email_gmail\.html in the body of an unsent Gmail draft")
         self.assertIsNone(re.search(r"\b(un)?tag(s|ged|ging)?\b|unreviewed|confirm the tags", out.lower()))
         notes = F.load_json(os.path.join(issue, "notes_for_operator.json"))
         self.assertLessEqual(len(notes["worth_a_glance"]), 5)
         self.assertEqual(F.load_json(os.path.join(self.folder, "ledger.json")), F.load_json(os.path.join(issue, "ledger.json")))
+
+    def test_every_build_keeps_a_gmail_safe_copy_that_says_the_same_words(self):
+        self.prepared()
+        hero = "https://example.com/sample-photo.jpg"
+        code, out = run("--folder", self.folder, "--hero", hero, *FAST)
+        self.assertEqual(code, RI.EXIT_READY, out)
+        issue = os.path.join(self.folder, "issues", "05")
+        with open(os.path.join(issue, "email.html"), encoding="utf-8") as f:
+            email = f.read()
+        with open(os.path.join(issue, "email_gmail.html"), encoding="utf-8") as f:
+            gmail = f.read()
+        self.assertIn(hero, email)
+        self.assertIn('href="tel:', email)
+        self.assertNotIn("<img", gmail)
+        self.assertNotIn("tel:", gmail)
+        self.assertEqual(re.findall(r'href="(https?:[^"]*)"', gmail), [])
+        self.assertIsNone(re.search(r'<span[^>]*background', gmail))
+        self.assertLess(len(gmail.encode("utf-8")), 95000)
+        self.assertIn("Gmail-safe copy (this one goes in the body of the unsent Gmail draft)", out)
+        m = F.load_json(os.path.join(issue, "manifest.json"))
+        self.assertIn("email_gmail.html", [x["name"] for x in m["files"]])
+        self.assertEqual(m["email_gmail_bytes"], len(gmail.encode("utf-8")))
+        self.assertEqual(m["email_bytes"], len(email.encode("utf-8")))
+        gate = F.load_json(os.path.join(self.folder, "work", "gate.json"))
+        page = next(p for p in gate["pages"] if p["file"].endswith("email_gmail.html"))
+        rules = dict((r["id"], r["level"]) for r in page["results"])
+        for rule in ("gmail_images", "gmail_links", "gmail_backgrounds", "gmail_addresses", "gmail_same_words", "size"):
+            self.assertEqual(rules.get("email_safety." + rule), "pass", rule)
 
     def test_a_plain_correction_then_the_same_command_rebuilds_the_report(self):
         self.prepared()

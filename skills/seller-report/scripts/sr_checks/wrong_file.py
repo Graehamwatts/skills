@@ -252,7 +252,7 @@ def check(ctx):
             bad.append("the file is %d bytes; the manifest recorded %s" % (len(ctx.raw_bytes), entry["bytes"]))
     if ctx.ledger_path and mf.get("ledger_sha256") and mf["ledger_sha256"] != core.sha256_file(ctx.ledger_path):
         bad.append("the ledger file is not the one the manifest was written for (ledger_sha256 differs)")
-    if ctx.kind == "email" and mf.get("email_bytes") is not None and mf["email_bytes"] != len(ctx.raw_bytes):
+    if ctx.file_name == "email.html" and mf.get("email_bytes") is not None and mf["email_bytes"] != len(ctx.raw_bytes):
         bad.append("the manifest's email_bytes is %s; the file is %d bytes" % (mf["email_bytes"], len(ctx.raw_bytes)))
     B.judge("manifest", bad, "the file is byte for byte the one in the snapshot manifest",
             "the file is not the one the snapshot manifest describes")
