@@ -8,6 +8,26 @@ not match its rows. If a rule here and the code ever disagree, that is a bug: fi
 The report states what happened and what people said. It never recommends a price, never suggests a number,
 and never explains what silence on price means, in either direction.
 
+## Contents
+
+1. The week
+2. Who counts as a contact
+3. Showings, and what is never a showing
+4. Disclosure package: three states
+5. Follow-up: days first, touches second (and the open question to Adrian)
+6. Replies, answered, still waiting
+7. Open houses
+8. What people are saying
+9. Anything per list price
+10. Offers
+11. Dates
+12. Market and marketing (optional sections)
+13. What Claude is unsure about
+14. The summary on top: the numbers table, the line under it, the charts
+15. The details: people grouped by what they did
+16. Do not repeat: five errors caught in a hand-built report
+17. Quick reference
+
 ## 1. The week
 
 - A week runs **Monday to Sunday**. The report is issued on a Monday and covers the week that just ended.
@@ -115,15 +135,17 @@ and never explains what silence on price means, in either direction.
   `totals.outbound_person_days` adds up each person's days and is not a count of days: never call it "days".
 - A touch where the log does not say who called (`direction: unknown`) is not counted as a follow-up. It is
   reported as `touches_direction_not_recorded`.
-- **Open question (asked of Adrian, Oct 13, 2026): what a date in the sheet's Email, Call and Text columns
+- **Open question, to be confirmed with Adrian: what a date in the sheet's Email, Call and Text columns
   means.** It may be the day our team made that call, text or email; the day someone typed the row in; or, at
-  times, the day the agent called us. Graeham's own reading is that it is the day they called or entered it.
-  It is also not known whether Adrian overwrites an earlier date with a later one. Until Adrian answers, keep
-  the current reading: a date in those columns is a follow-up our team made on that day, except where the
-  row's note says the agent called us, which makes it a reply (one listing, Oct 12, 2026: 15 older Call dates read
-  as the agent calling us, so follow-ups since we listed read 290; read as our calls the total would be 305).
-  Say which reading was used in "Worth a glance" whenever it moves a count, and change nothing until Adrian's
-  answer is in. When it comes, record it here and drop this note.
+  times, the day the agent called us. Graeham's reading (Oct 13, 2026): the date is when they called or when it
+  was entered. He asked for an email to Adrian to confirm it; as of Oct 13 that email had not gone out, and
+  sending it is Graeham's (or a session he tells to send it). It is also not known whether Adrian overwrites an
+  earlier date with a later one. Until Adrian answers, keep the current reading: a date in those columns is a
+  follow-up our team made on that day, except where the row's note says the agent called us, which makes it a
+  reply (one listing, Oct 12, 2026: 15 older Call dates read as the agent calling us, so follow-ups since we
+  listed read 290; read as our calls the total would be 305). The build does not work out the other reading by
+  itself: when a readings file turned any of those dates into a reply, put one glance line with both totals, and
+  change nothing until Adrian's answer is in. When it comes, record it here and drop this note.
 - **The hand-written reports count differently.** The series the team wrote by hand before this skill counted
   cancelled tours, questions and open house hosts. This report does not (sections 2 and 3), so its totals are
   lower (one listing, Oct 12, 2026: 35 showings against 37, and 44 on the package list against 52 agents). When a

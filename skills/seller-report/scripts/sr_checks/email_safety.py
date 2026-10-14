@@ -92,9 +92,12 @@ def small_text(page, floor=MIN_FONT_PX):
 
 GMAIL_FILE = "email_gmail.html"
 BREAKS = ("block", "inline-block", "table", "inline-table", "list-item")
-# a web address in running text: an optional scheme or www, a name and a common ending, not part of an email address
-ADDRESS = re.compile(r"(?<![\w@.-])(?:https?://)?(?:www\.)?[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*"
-                     r"\.(?:com|net|org|io|ai|co|us|info|biz|edu|gov|homes|realty|realtor|me|app|house|properties|estate)\b(?![@\w-])", re.I)
+# a web address in running text: an optional scheme or www, a name and any ending of 2 to 24 letters, not part of
+# an email address. The same text as sr_render.assemble.ADDRESS_PATTERN (written out here so the checks do not
+# depend on the renderer; a test keeps the two equal)
+ADDRESS_PATTERN = r"(?<![\w@.-])(?:https?://)?(?:www\.)?[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,24}\b(?![@\w-])"
+ADDRESS = re.compile(ADDRESS_PATTERN, re.I)
+LINKABLE = re.compile(r"https?://|\bwww\.", re.I)          # a scheme, or www and a dot, left in one run of text
 RECORD_BUTTON = "OPEN THE COMPLETE RECORD"
 
 
@@ -163,7 +166,7 @@ def gmail_checks(ctx, B):
 
     def walk(n, in_link):
         if n.tag is None:
-            hit = ADDRESS.search(n.data)
+            hit = ADDRESS.search(n.data) or LINKABLE.search(n.data)
             if hit and not in_link:
                 bad.append("'%s' at line %d" % (hit.group(0), n.line or 0))
             return

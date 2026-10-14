@@ -64,6 +64,12 @@ class Snippets(unittest.TestCase):
         self.assertEqual(gone["price_change"], {"date": "2026-02-01", "from": 1300000, "to": 1250000})
         self.assertEqual(self.out["nearby"]["watch_calls"], 5)            # two searches and one history each
 
+    def test_a_watched_id_the_site_does_not_know_comes_back_with_no_status(self):
+        r = self.out["nearby"]["watch_mls_ids"]
+        self.assertTrue(r["ok"])
+        self.assertEqual([h["id"] for h in r["homes"]], ["ML80000103"])
+        self.assertNotIn("status", r["homes"][0])                          # never 'withdrawn' for a home nothing is known about
+
     def test_a_block_or_a_human_check_stops_at_the_first_request(self):
         n = self.out["nearby"]
         self.assertEqual(n["blocked"], {"ok": False, "blocked": True, "status": 403, "requests": 1})
@@ -137,6 +143,26 @@ class Snippets(unittest.TestCase):
         self.assertEqual(result["excluded"], {"members_only": 1, "this_listing": 1})
         self.assertEqual(homes["ML80000102"]["pending_date"], "2026-04-09")
         self.assertEqual((homes["ML80000103"]["sold_price"], homes["ML80000103"]["sold_date"]), (1190000, "2026-04-07"))
+
+    def test_a_members_only_flag_with_no_words_is_refused_not_read_as_no(self):
+        import sys
+        import tempfile
+        sys.path.insert(0, os.path.join(SKILL, "scripts"))
+        sys.path.insert(0, os.path.join(HERE, "fixtures"))
+        import nearby_from_mls as M
+        import make_workbook as W
+        import sr_files as F
+        g = self.out["matrix"]["icons"]
+        self.assertTrue(g["rows"][0][-1].startswith("[icon "), g["rows"][0])
+        self.assertEqual(g["rows"][1][-1], "")
+        with tempfile.TemporaryDirectory(prefix="sr matrix ") as tmp:
+            folder = os.path.join(tmp, "sample-glen")
+            os.makedirs(folder)
+            F.save_json(os.path.join(folder, "listing.json"), dict(W.LISTING, mls="ML80000100"))
+            result, _ = M.build(folder, [g])
+        self.assertEqual([h["id"] for h in result["homes"]], ["ML80000202"])
+        self.assertEqual([x["mls"] for x in result["refused"]], ["ML80000201"])
+        self.assertIn("neither yes nor no", result["refused"][0]["why"])
 
     def test_no_snippet_types_into_a_page_or_sends_anything_elsewhere(self):
         for name in os.listdir(WEB):

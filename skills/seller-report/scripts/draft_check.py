@@ -13,8 +13,13 @@ web links become redirects). Text and numbers come through the connector intact,
     same_words    the words a reader sees in the draft are exactly those of email_gmail.html
     no_images     the draft has no image (an image means email.html went in, not the Gmail-safe copy)
     no_dead_links no javascript:void(0) link (a dead link means a tel: link went in)
-    subject       when the saved result has headers: "Weekly Seller Report No. NN · <Month D, YYYY> - <address>"
-    cc            when the saved result has headers: whether the draft has a CC. If not, Graeham adds Adrian himself
+    no_web_links  no web link but the record button (a google.com/url link means the website or a plain-text
+                  domain was auto-linked by the connector, which the Gmail-safe copy exists to prevent)
+    subject       when the saved result has headers: "Weekly Seller Report No. NN · <Month D, YYYY> - <address>",
+                  the address from listing.json subject_address when set. A difference only in the street suffix
+                  (Ct / Court) is a note line, not a failure
+    to            someone other than the team's own addresses (the seller)
+    cc            Adrian (client care) when a CC is present. No CC at all is a note: Graeham adds Adrian himself
 
 It never sends, changes or deletes a draft. It reads two files and prints what it found.
 Exit 0 when the draft matches, 1 when it does not, 2 when the inputs cannot be read.
@@ -39,12 +44,42 @@ from sr_checks.page import Page                                          # noqa:
 
 EXIT_OK, EXIT_DIFFERENT, EXIT_INPUT = 0, 1, 2
 GMAIL_FILE = "email_gmail.html"
+# Adrian, client care: the CC on every draft (references\delivery.md, section 1, holds the same address)
+CLIENT_CARE = "graehamwattsclientcare@gmail.com"
+RECORD_BUTTON = "OPEN THE COMPLETE RECORD"
+SUFFIXES = {"ct": "court", "rd": "road", "st": "street", "ave": "avenue", "av": "avenue", "dr": "drive", "ln": "lane",
+            "ter": "terrace", "terr": "terrace", "pl": "place", "blvd": "boulevard", "wy": "way", "cir": "circle",
+            "hwy": "highway", "pkwy": "parkway"}
+
+
+def subject_address(listing):
+    """The address as the seller's series writes it: listing.json subject_address when set, else the address."""
+    listing = listing or {}
+    return listing.get("subject_address") or listing.get("address") or ""
 
 
 def subject_line(issue_number, report_date, address):
     """'Weekly Seller Report No. 07 · October 12, 2026 - 1982 Sample Rd #2' (a middle dot and a plain hyphen)."""
     d = datetime.date(*[int(x) for x in str(report_date)[:10].split("-")])
     return "Weekly Seller Report No. %02d · %s %d, %d - %s" % (int(issue_number), d.strftime("%B"), d.day, d.year, address)
+
+
+def _suffix_free(s):
+    """A subject with every street suffix written out in full, for a comparison that ignores Ct / Court."""
+    words = re.findall(r"[A-Za-z0-9#]+|[^A-Za-z0-9#\s]", s.lower())
+    return " ".join(SUFFIXES.get(w, w) for w in words)
+
+
+def _addresses(value):
+    return [x.lower() for x in re.findall(r"[\w.+'-]+@[\w-]+(?:\.[\w-]+)+", value or "")]
+
+
+def _agent_email():
+    try:
+        from sr_contract import load_identity
+        return (load_identity().get("email") or "").lower()
+    except Exception:                                    # identity.json missing: the To check still runs
+        return ""
 
 
 def _mime_html(raw):
@@ -130,24 +165,50 @@ def check(issue_dir, draft_text):
         lines.append("DIFFERENT no_dead_links: the draft has %d dead link(s) (a tel: link went in)" % dead)
     if not imgs and not dead:
         lines.append("no_images, no_dead_links: none")
+    links = re.findall(r'<a\b[^>]*href="(https?:[^"]*)"[^>]*>(.*?)</a>', html, re.S | re.I)
+    button = [h for h, x in links if " ".join(re.sub(r"<[^>]+>", " ", x).split()).upper() == RECORD_BUTTON]
+    web = [(h, x) for h, x in links if " ".join(re.sub(r"<[^>]+>", " ", x).split()).upper() != RECORD_BUTTON]
+    if web:
+        bad += 1
+        lines.append("DIFFERENT no_web_links: the draft has %d web link(s) the connector made, e.g. '%s' -> %s"
+                     % (len(web), " ".join(re.sub(r"<[^>]+>", "", web[0][1]).split())[:40], web[0][0][:70]))
+    else:
+        lines.append("no_web_links: none")
+    if button:
+        lines.append("note: the record button links to %s (a redirect the connector made is fine for a published copy)" % button[0][:70])
     manifest = os.path.join(issue_dir, "manifest.json")
     ledger = os.path.join(issue_dir, "ledger.json")
     if head is None:
-        lines.append("subject, cc: the saved result has no headers, so they were not checked")
+        lines.append("subject, to, cc: the saved result has no headers, so they were not checked")
     elif os.path.isfile(manifest) and os.path.isfile(ledger):
         with open(manifest, encoding="utf-8") as f:
             mf = json.load(f)
         with open(ledger, encoding="utf-8") as f:
-            addr = (json.load(f).get("listing") or {}).get("address") or ""
+            addr = subject_address(json.load(f).get("listing"))
         want = subject_line(mf["issue_number"], mf["report_date"], addr)
         got = " ".join((head.get("Subject") or "").split())
         if got == want:
             lines.append("subject: %s" % got)
+        elif _suffix_free(got) == _suffix_free(want):
+            lines.append("subject: %s" % got)
+            lines.append("note: the subject writes the street suffix differently from '%s'. Keep the form the seller's series "
+                         "uses (listing.json subject_address holds it once Graeham says which)" % want)
         else:
             bad += 1
             lines.append("DIFFERENT subject: the draft says '%s'; it should be '%s'" % (got, want))
-        lines.append(("cc: %s" % head["Cc"]) if head.get("Cc") else
-                     "cc: the draft has no CC. Tell Graeham to add Adrian (client care) himself; never work around a refused update_draft")
+        to, agent = _addresses(head.get("To")), _agent_email()
+        lines.append("to: %s" % (", ".join(to) or "(nobody)"))
+        if not [x for x in to if x not in (CLIENT_CARE, agent)]:
+            bad += 1
+            lines.append("DIFFERENT to: the draft is not addressed to the seller (it has %s)" % ("no To" if not to else "only the team's own address"))
+        cc = _addresses(head.get("Cc"))
+        if not cc:
+            lines.append("cc: the draft has no CC. Tell Graeham to add Adrian (client care) himself; never work around a refused update_draft")
+        elif CLIENT_CARE not in cc:
+            bad += 1
+            lines.append("DIFFERENT cc: the draft is copied to %s, not to Adrian (%s)" % (", ".join(cc), CLIENT_CARE))
+        else:
+            lines.append("cc: %s" % ", ".join(cc))
     return (EXIT_DIFFERENT if bad else EXIT_OK), lines
 
 

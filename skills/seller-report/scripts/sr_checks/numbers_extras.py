@@ -7,6 +7,7 @@
                          on with the day it was last checked, prepared, on hold, not launched), the scheduled
                          end, no ad spend amount, and no section at all when nothing was on or recorded
   online views           the day the figures were read
+  one day count          a sale printed in both the similar homes list and the market chart has one day count
 
 The section is found by data-sr-section="nearby" or "marketing". The watch list table is found by
 data-sr-table="nearby" (rows data-sr-row="<index in ledger.nearby.homes>", columns status, price, days) or by
@@ -265,7 +266,28 @@ def _online(B, ctx):
                 "the day the online views were read is wrong")
 
 
+def _key(address):
+    return re.sub(r"[^a-z0-9]+", " ", str(address or "").lower()).strip()
+
+
+def _one_day_count(B, ctx):
+    """One sale, one day count: a sold home printed in the nearby list and in the time on the market chart never
+    carries two different day counts."""
+    nb = ctx.ledger.get("nearby") if isinstance(ctx.ledger.get("nearby"), dict) else None
+    mk = ctx.ledger.get("market") if isinstance(ctx.ledger.get("market"), dict) else None
+    if not nb or not mk or not ctx.page.sections("nearby") or not ctx.page.sections("market"):
+        return
+    chart = dict((_key(s.get("address")), s.get("days_to_contract")) for s in mk.get("sales") or []
+                 if isinstance(s, dict) and s.get("address") and s.get("days_to_contract") is not None)
+    bad = ["%s: %s days in the similar homes list, %s in the time on the market chart" % (h.get("address"), h["days_on_market"], chart[_key(h.get("address"))])
+           for h in nb.get("homes") or [] if isinstance(h, dict) and h.get("status") == "sold" and h.get("days_on_market") is not None
+           and _key(h.get("address")) in chart and chart[_key(h.get("address"))] != h["days_on_market"]]
+    B.judge("one_day_count", bad, "no sale shows two different day counts across the similar homes list and the market chart",
+            "one sale shows two day counts on the page")
+
+
 def check_extras(B, ctx):
     _nearby(B, ctx)
     _marketing(B, ctx)
     _online(B, ctx)
+    _one_day_count(B, ctx)

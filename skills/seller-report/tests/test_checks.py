@@ -135,6 +135,8 @@ case("comment_in_quote_marks", "tone.no_quoted_comments",
 case("comment_in_a_blockquote", "tone.no_quoted_comments",
      swap(lambda t: "<div>%s</div>" % comment_of(t), lambda t: "<blockquote>%s</blockquote>" % comment_of(t)))
 case("harsh_word", "tone.harsh_words", para("The agent said the kitchen was awful."))
+case("bracing_opener", "tone.voice_phrases", para("Let me be honest about this week."))
+case("no_agenda_phrasing", "tone.voice_phrases", para("Here is a no-pressure update on your home."))
 case("harsh_word_in_the_preheader", "tone.harsh_words",
      swap('<body style="margin:0;padding:0;background:#F5EFDC">',
           '<body style="margin:0;padding:0;background:#F5EFDC"><div style="display:none">One agent called it a dump.</div>'))

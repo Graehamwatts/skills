@@ -20,8 +20,8 @@ One unsent Gmail draft per issue:
 | Field | Value |
 |---|---|
 | To | The seller's email address. Ask the operator, or take it from a status email thread to the seller that was read this session. Never write it in any file |
-| CC | Adrian, client care: graehamwattsclientcare@gmail.com |
-| Subject | Exactly the line `run_issue.py` printed after READY: `Weekly Seller Report No. NN · <Month D, YYYY> - <address>` (a middle dot, then a plain hyphen before the address). `draft_check.subject_line` makes it |
+| CC | Adrian, client care: graehamwattsclientcare@gmail.com (the same address is `draft_check.CLIENT_CARE`; change both together) |
+| Subject | `Weekly Seller Report No. NN · <Month D, YYYY> - <address>` (a middle dot, then a plain hyphen before the address). Copy it from `"subject"` in `<listing>\issues\NN\manifest.json`, which `run_issue.py` writes after READY, never from the console: a window that is not UTF-8 prints the middle dot as a replacement character. `draft_check.subject_line` makes it. The address is `listing.json` `subject_address` when set (the form the seller's series already uses, such as "Court" for "Ct"), else `address` |
 | Body | `<listing>\issues\NN\email_gmail.html`, never `email.html` |
 
 **Never send.** Never call `send_message`, never send through any other route. Graeham reads the draft and sends it himself, because it speaks to his client in his name. The workspace rule that internal reports are sent, not drafted, does not apply here: this report goes to a client. Never touch an earlier draft unless asked.
@@ -41,7 +41,7 @@ So every build also writes `email_gmail.html`, drawn by the renderer from the sa
 
 - no photo row
 - the phone (footer and call button) and the website are plain text with the look of the links they replace; the email address stays a `mailto:` link
-- the website, and any other web address in running text, is split so no single run of text holds a whole address: each dot and the part after it sits in its own span with an explicit color (`htmlkit.no_autolink`). Nothing can turn it into a link, and a reader sees and copies exactly the domain. A zero-width character was rejected because it travels into a copied address
+- the website, and any other web address in running text (any ending of 2 to 24 letters, so short links such as bit.ly and youtu.be too), is split so no single run of text holds a whole address: each dot and the part after it sits in its own span with an explicit color (`htmlkit.no_autolink`), and a scheme's `://` sits in a span of its own. Nothing can turn it into a link, and a reader sees and copies exactly the domain. A zero-width character was rejected because it travels into a copied address
 - every status chip sits on a one-cell table whose cell carries `bgcolor`
 - `<meta name="sr:copy" content="gmail">` marks it for the checks
 
@@ -51,25 +51,35 @@ The phone pictures in `issues\NN\previews\` show `email.html`, photo included. T
 
 ## 3. Making the draft
 
+0. **Look for a draft that is already there.** First `manifest.json` `delivery.gmail_draft_id` in the issue folder. If it is empty, `list_drafts` with the query `subject:"Weekly Seller Report No. NN" "<street name>"`. A draft found either way is this issue's draft: replace its body (section 4) and record its id (step 4); never make a second one. On Oct 13, 2026 both real issues went into drafts but the ids were never recorded, so a session that skipped this look would have made duplicates.
 1. **Read the file into the call exactly.** `email_gmail.html` runs 70 to 95 KB. Read it in line ranges, in order, and join them into `htmlBody` with nothing added, dropped, reflowed or "fixed". A missing line changes what the seller reads and fails the check in step 3.
-2. **Create it:** `create_draft` with `to` [the seller], `cc` ["graehamwattsclientcare@gmail.com"], `subject` as printed, `htmlBody` the file's text. No `body`, no attachments unless the PDF was asked for (section 6). Keep the draft id it returns.
+2. **Create it:** `create_draft` with `to` [the seller], `cc` ["graehamwattsclientcare@gmail.com"], `subject` from the manifest, `htmlBody` the file's text. No `body`, no attachments unless the PDF was asked for (section 6). Keep the draft id it returns.
 3. **Read it back and check it.** `get_draft` with that `draftId` and `messageFormat` `RAW`. The result is large, so the harness saves it to a file and gives you the path. Then:
    ```
    python "<scripts>\draft_check.py" --issue "<listing>\issues\NN" --draft "<the saved get_draft result>"
    ```
-   It finds the HTML part (raw MIME, base64url MIME inside JSON, or the decoded part), compares the words with `email_gmail.html` after the clean-up rules in section 2, and fails on an image or a `javascript:void` link (either means `email.html` went in), on words that differ, and on a subject that is not the printed line. It reports whether there is a CC. Exit 0 matches, 1 does not, 2 an input could not be read. On 1, read what it names, fix the cause (usually a dropped line range), replace the body (section 4) and check again.
+   It finds the HTML part (raw MIME, base64url MIME inside JSON, or the decoded part), compares the words with `email_gmail.html` after the clean-up rules in section 2, and fails on:
+   - an image or a `javascript:void` link (either means `email.html` went in)
+   - any web link other than the record button, such as `<a href="https://www.google.com/url?q=http://graehamwatts.com...">`: the connector auto-linked a domain the copy should have split (`no_web_links`)
+   - words that differ
+   - a subject that is not the manifest's line (a difference only in the street suffix, Ct against Court, is a note line, not a failure)
+   - a To that holds nobody but the team's own addresses, or a CC that is present but is not Adrian
+
+   No CC at all is a note: Graeham adds Adrian himself (section 5). Exit 0 matches, 1 does not, 2 an input could not be read. On 1, read what it names, fix the cause (usually a dropped line range), replace the body (section 4) and check again.
+
+   The split website in `email_gmail.html` is proven only by a draft made from it that passes this check. The two drafts made on Oct 13, 2026 came from an earlier hand-made copy that wrote the domain as plain text, and both read back with the website as a google.com redirect link; they pass every other check.
 4. **Record it:**
    ```
    python "<scripts>\snapshot_issue.py" record --folder "<listing>" --issue <N> --gmail-draft-id <id>
    ```
-5. **Hand it over** in chat (SKILL.md, step 9): which report, that it is in drafts unsent, To and CC, the "Worth a glance before you send" lines, and an invitation to say what to change.
+5. **Hand it over** in chat (SKILL.md, step 10): which report, that it is in drafts unsent, To and CC, the "Worth a glance before you send" lines, and an invitation to say what to change.
 
 ## 4. Replacing the body after a correction
 
 After a correction and a rebuild, put the new `email_gmail.html` into the **same draft**: `update_draft` with `draftId` and `htmlBody` only. Fields left out keep their values, so To, CC and subject stay. Two traps:
 
 - `update_draft` drops attachments unless they are given again in the same call. If the PDF was attached, attach it again.
-- Never create a second draft for the same issue unless the first is gone; two drafts invite sending the wrong one.
+- Never create a second draft for the same issue unless the first is gone; two drafts invite sending the wrong one. When the id is not in the manifest, find the draft with `list_drafts` (section 3, step 0) before doing anything else.
 
 Then `get_draft` RAW and `draft_check.py` again, and tell the operator in one or two plain sentences what changed.
 

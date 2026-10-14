@@ -6,6 +6,7 @@ just say they provided negative feedback and specifically said that the pricing 
 
   no_quoted_comments   no quote marks around or inside a comment, and no <q> or <blockquote>
   harsh_words          a list of harsh words never appears in the text a seller reads
+  voice_phrases        no opener that braces the reader, no "no agenda" phrasing, no apology for the data or tools
   comment_labeled      every comment sits under an "as reported" label
 """
 import re
@@ -23,6 +24,13 @@ HARSH = (r"terribl[ey]|horribl[ey]|horrific\w*|horrendous\w*|disgust\w*|awful\w*
 REVIEW = (r"dirty|cheap(?:ly)?|cramped|weird|scary|unsafe|messy|noisy|outdated|overpriced|underpriced|neglected|sloppy"
           r"|trash(?! (?:enclosure|pickup|bins?|cans?|area|room|service|collection|chute))")
 HEAD = "<H>"                       # stands where a heading starts, so a label can be tied to its block
+# cma-generator references\report-build.md Part 3, for client copy: openers that brace the reader for bad news,
+# "no agenda" phrasing, and apologies for the data source or the tools. They take the place of the old weekly
+# skill's humanizer pass for the sentences Claude writes (the brief, readings, recaps, next week).
+VOICE = (r"first of all|let me be (?:honest|clear|straight)|to be (?:blunt|honest|frank)|i(?:'| wi)ll be (?:direct|honest|blunt)"
+         r"|real talk|(?:i|we) want to be (?:straight|honest|upfront|up front) with you|no[ -]agenda|no[ -]pressure"
+         r"|(?:i|we) like to check in|mls access|(?:was|were) not signed in|public (?:real estate )?data is"
+         r"|less precise than|solid estimate rather than")
 
 
 def comment_strings(ledger, week_end=None):
@@ -122,6 +130,10 @@ def check(ctx):
            for mt in re.finditer(r"(?<![\w'\-])(?:%s)(?![\w'\-])" % HARSH, flat, re.I)]
     B.judge("harsh_words", bad, "no harsh word in the text a seller reads",
             "a harsh word is in the text a seller reads (say what the concern was, without the wording)")
+    bad = ["'%s' in '%s'" % (mt.group(0), core.excerpt(flat, mt.start(), mt.end(), 35))
+           for mt in re.finditer(r"(?<![\w'\-])(?:%s)(?![\w'\-])" % VOICE, flat.replace("’", "'"), re.I)]
+    B.judge("voice_phrases", bad, "no bracing opener, no 'no agenda' phrasing and no apology for the data or the tools",
+            "the page braces the reader, says it has no agenda, or apologizes for the data source (report-build.md Part 3)")
     soft = sorted(set("'%s' in '%s'" % (mt.group(0), core.excerpt(flat, mt.start(), mt.end(), 30))
                       for mt in re.finditer(r"(?<![\w'\-])(?:%s)(?![\w'\-])" % REVIEW, flat, re.I)))
     if soft:

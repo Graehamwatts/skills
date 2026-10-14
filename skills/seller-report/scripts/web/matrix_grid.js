@@ -47,9 +47,13 @@ globalThis.srMatrixGrid = function (env) {
   const fieldOf = label => { const k = key(label); const hit = FIELDS.find(f => f[1].indexOf(k) >= 0); return hit ? hit[0] : null; };
   const text = el => {
     let t = String((el.innerText !== undefined && el.innerText !== null ? el.innerText : el.textContent) || '').split(NBSP).join(' ').replace(/\s+/g, ' ').trim();
-    if (!t && el.querySelector) {                                   // a flag drawn as an icon: its title or alt
-      const icon = el.querySelector('[title],[alt]');
-      if (icon) t = String(icon.getAttribute('title') || icon.getAttribute('alt') || '').trim();
+    if (!t && el.querySelector) {                                   // a flag drawn as an icon: its title, alt or label
+      const icon = el.querySelector('[title],[alt],[aria-label]');
+      if (icon) t = String(icon.getAttribute('title') || icon.getAttribute('alt') || icon.getAttribute('aria-label') || '').trim();
+      if (!t) {                                                     // an icon with no words (a class, an svg, a ticked box):
+        const mark = el.querySelector('img,svg,i,input[type=checkbox]:checked,span[class]');   // never read as "no"
+        if (mark) t = '[icon ' + String((typeof mark.className === 'string' && mark.className) || mark.tagName || 'unnamed').slice(0, 30) + ']';
+      }
     }
     return t;
   };

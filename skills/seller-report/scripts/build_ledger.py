@@ -268,11 +268,30 @@ def fill_market(market, days_listed, report_date):
     return market
 
 
+def one_day_count(nearby, market):
+    """One sale, one day count: a sold home in the nearby list that is also in the market chart with a different
+    day count loses its nearby count (the chart's is the one the page explains). Changes `nearby` in place and
+    returns plain lines for Claude. nearby_from_mls.py applies the same rule at import, against the market.json
+    on file then; this catches a chart written or refreshed after the nearby lookup."""
+    if not nearby or not market:
+        return []
+    chart = dict((C._norm(s.get("address")), s["days_to_contract"]) for s in market.get("sales") or []
+                 if s.get("address") and s.get("days_to_contract") is not None)
+    out = []
+    for h in nearby.get("homes") or []:
+        k = C._norm(h.get("address"))
+        if h.get("status") == "sold" and h.get("days_on_market") is not None and k in chart and chart[k] != h["days_on_market"]:
+            out.append("%s: the market chart counts %d days for this sale and the nearby list %d, so the nearby list leaves its count out."
+                       % (h["address"], chart[k], h["days_on_market"]))
+            h["days_on_market"] = None
+    return out
+
+
 # ---------------------------------------------------------------------------------------------
 # the build
 # ---------------------------------------------------------------------------------------------
 def build(folder, report_date=None, run_date=None, through=None, issue=None, sources=(), as_of_note=None, built_at=None, glance=(),
-          brief=None):
+          brief=None, online=True):
     """Returns (ledger or None, problems, info). The ledger is None when there is a hard stop."""
     paths = F.listing_paths(folder)
     listing, raw = F.load_json(paths["listing"]), F.load_json(paths["raw"])
@@ -337,11 +356,20 @@ def build(folder, report_date=None, run_date=None, through=None, issue=None, sou
     # the optional sources: only what is already on file. Nothing is fetched here (sr_lookups holds the rules)
     views, nearby = F.load_json(paths["online_views"], default={}), F.load_json(paths["nearby"], default={})
     extra_sources = []
-    if views:
+    if views and not online:
+        optional["also"].append("Online views are on file but were left out of this build (--no-online).")
+    if views and online:
         problems += ["online_views.json: " + p for p in online_views.validate_store(views)]
         if not problems:
-            d["online"], notes = online_views.ledger_block(views, listing, d["report"])
-            extra_sources += online_views.sources(views, d["online"], d["report"])
+            block, notes = online_views.ledger_block(views, listing, d["report"])
+            # printed only when a reading was taken for this issue: a reading from an earlier week would print an
+            # old "since we listed" figure on a week nobody asked for the views (SKILL.md, rule 6)
+            if block and any(r.get("week_start") == ws for r in views.get("rows") or []):
+                d["online"] = block
+                extra_sources += online_views.sources(views, d["online"], d["report"])
+            elif block:
+                notes["also"].append("Online views were not read for this issue, so the report leaves them out (the last reading is "
+                                     "from an earlier week). Read them again with online_views.py when they are asked for.")
             for k in optional:
                 optional[k] += notes[k]
     if nearby:
@@ -350,6 +378,7 @@ def build(folder, report_date=None, run_date=None, through=None, issue=None, sou
             d["nearby"], notes = nearby_update.ledger_block(nearby, listing, d["report"])
             if d["nearby"]:
                 extra_sources.append("nearby_lookup|%s|%s" % (d["nearby"]["source"], d["nearby"]["as_of"]))
+                optional["also"] += one_day_count(d["nearby"], d.get("market"))
             for k in optional:
                 optional[k] += notes[k]
     if problems:
@@ -393,6 +422,7 @@ def main(argv=None):
                          "for this issue, such as a count that differs from the team's status email and why")
     ap.add_argument("--notes-out", help="default: notes_for_operator.json beside the ledger")
     ap.add_argument("--brief-file", help="a text file with the agent's own words for 'This week in brief' (this issue only, email only)")
+    ap.add_argument("--no-online", action="store_true", help="leave the online views on file out of this issue")
     ap.add_argument("--out", help="default: <folder>\\ledger.json")
     ap.add_argument("--rejected-out", help="when the build stops, also save the list of problems to this file")
     a = ap.parse_args(argv)
@@ -400,7 +430,8 @@ def main(argv=None):
     if a.brief_file:
         with open(a.brief_file, encoding="utf-8") as f:
             brief = f.read()
-    ledger, problems, info = build(a.folder, a.report_date, a.run_date, a.through, a.issue, a.source, a.as_of_note, glance=a.glance, brief=brief)
+    ledger, problems, info = build(a.folder, a.report_date, a.run_date, a.through, a.issue, a.source, a.as_of_note, glance=a.glance, brief=brief,
+                                    online=not a.no_online)
     if problems:
         F.shout("the ledger was NOT written. %d problem(s):" % len(problems))
         for p in problems:

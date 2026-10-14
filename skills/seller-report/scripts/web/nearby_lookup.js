@@ -100,7 +100,9 @@ globalThis.srNearby = async function (A, env) {
     const held = /pending|contingent|under contract/i.test(h.mls);
     if (h.live) out.status = held || (pend && !/active/i.test(h.mls)) ? 'pending' : 'active';
     else if (sold || h.sold) { out.status = 'sold'; if (!out.sold_date && h.sold) out.sold_date = h.sold; if (!out.sold_price && h.price) out.sold_price = h.price; }
-    else out.status = 'withdrawn';
+    else if (!(h.unseen && !ev.length)) out.status = 'withdrawn';
+    // a watched home found in neither search and with no history at all comes back with no status: nothing is
+    // known about it (its id may be another site's number), so it is listed as missing, never as taken off the market
     return out;
   };
 
@@ -122,7 +124,7 @@ globalThis.srNearby = async function (A, env) {
     let picked, dropped = {};
     if (A.mode === 'watch') {
       const want = (A.watch || []).map(w => (typeof w === 'object' ? w : { id: w }));
-      picked = want.map(w => all.find(h => String(h.id) === String(w.id)) || { id: w.id, address: w.address || null, city: null, beds: null, baths: null, sqft: null, price: null, mls: '', live: false });
+      picked = want.map(w => all.find(h => String(h.id) === String(w.id)) || { id: w.id, address: w.address || null, city: null, beds: null, baths: null, sqft: null, price: null, mls: '', live: false, unseen: true });
     } else {
       const tol = A.size_tol === undefined ? 0.25 : A.size_tol, bt = A.beds_tol || 0;
       const drop = k => { dropped[k] = (dropped[k] || 0) + 1; return false; };

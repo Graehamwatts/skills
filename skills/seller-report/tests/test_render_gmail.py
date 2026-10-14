@@ -117,6 +117,23 @@ class GmailSafeCopy(unittest.TestCase):
                          '<a href="mailto:a@b.com">a@b.com</a></p>')
         self.assertIsNone(ADDRESS.search("write to pat@example.com"))
 
+    def test_short_links_other_endings_and_a_full_address_are_guarded_too(self):
+        from sr_render.assemble import ADDRESS_PATTERN, gmail_problems
+        from sr_checks.email_safety import ADDRESS_PATTERN as GATE_PATTERN
+        self.assertEqual(ADDRESS_PATTERN, GATE_PATTERN)                       # one pattern for the renderer and the gate
+        for text in ("Ad at bit.ly/abc123 today", "Tour on youtu.be/x1", "See sample.ca", "Our page at example.link/x",
+                     "Ad at https://www.example-portal.com/x and more"):
+            page = guard_addresses("<p>%s</p>" % text)
+            self.assertEqual(words(page), text, text)                          # the words do not change
+            runs = [t for t in re.split(r"<[^>]+>", page) if t]
+            self.assertFalse(any(ADDRESS.search(t) for t in runs), (text, runs))
+            self.assertFalse(any(re.search(r"https?://|\bwww\.", t, re.I) for t in runs), (text, runs))
+            self.assertEqual(gmail_problems("<body>" + page), [], text)
+            self.assertNotEqual(gmail_problems("<body><p>%s</p>" % text), [], text)
+        self.assertNotEqual(gmail_problems('<body><p>see https://<span style="color:inherit">x</span></p>'), [])
+        for text in ("2.5 baths", "No. 07", "i.e. the deck", "$1.2M"):           # not addresses
+            self.assertIsNone(ADDRESS.search(text), text)
+
     def test_the_record_button_is_the_one_web_link_the_copy_keeps(self):
         email, gmail = render_email_pair(load("ledger_small.json"), link_url=RECORD)
         self.assertIn('href="%s"' % RECORD, gmail["html"])
@@ -247,12 +264,13 @@ def connector(html):
     return h
 
 
-def mime(html, subject, cc="client care <care@example.com>"):
+def mime(html, subject, cc="client care <graehamwattsclientcare@gmail.com>", to="seller@example.com"):
     """A raw draft as get_draft hands it back: a MIME message, base64url encoded, inside JSON."""
     from email.message import EmailMessage
     import base64
     msg = EmailMessage()
-    msg["To"] = "seller@example.com"
+    if to:
+        msg["To"] = to
     if cc:
         msg["Cc"] = cc
     msg["Subject"] = subject
@@ -315,6 +333,61 @@ class DraftCheck(unittest.TestCase):
         self.assertEqual(code, self.D.EXIT_DIFFERENT)
         self.assertTrue(any(ln.startswith("DIFFERENT subject") for ln in lines))
         self.assertTrue(any("add Adrian (client care) himself" in ln for ln in lines))
+
+    def test_a_website_the_connector_turned_into_a_link_is_caught(self):
+        site = ID["website"]
+        linked = connector(self.gmail).replace(no_autolink(site, "#FFFFFF"),
+                                               '<a href="https://www.google.com/url?q=http://%s&amp;source=gmail&amp;ust=1">%s</a>' % (site, site), 1)
+        self.assertNotEqual(linked, connector(self.gmail))
+        code, lines = self.D.check(self.dir, mime(linked, self.subject))
+        self.assertEqual(code, self.D.EXIT_DIFFERENT, lines)
+        self.assertTrue(any(ln.startswith("DIFFERENT no_web_links") and "google.com/url" in ln for ln in lines), lines)
+        code, lines = self.D.check(self.dir, mime(connector(self.gmail), self.subject))
+        self.assertIn("no_web_links: none", lines)
+
+    def test_the_record_button_through_a_redirect_is_a_note_not_a_failure(self):
+        _, gmail = render_email_pair(load("ledger_small.json"), link_url=RECORD)
+        keep = os.path.join(self.dir, "email_gmail.html")
+        with open(keep, encoding="utf-8") as f:
+            before = f.read()
+        try:
+            with open(keep, "w", encoding="utf-8", newline="\n") as f:
+                f.write(gmail["html"])
+            code, lines = self.D.check(self.dir, mime(connector(gmail["html"]), self.subject))
+        finally:
+            with open(keep, "w", encoding="utf-8", newline="\n") as f:
+                f.write(before)
+        self.assertEqual(code, self.D.EXIT_OK, lines)
+        self.assertTrue(any(ln.startswith("note: the record button") for ln in lines), lines)
+
+    def test_to_and_cc_are_read(self):
+        page = connector(self.gmail)
+        code, lines = self.D.check(self.dir, mime(page, self.subject, cc="someone <wrong@example.com>"))
+        self.assertEqual(code, self.D.EXIT_DIFFERENT)
+        self.assertTrue(any(ln.startswith("DIFFERENT cc") for ln in lines), lines)
+        code, lines = self.D.check(self.dir, mime(page, self.subject, to=None))
+        self.assertEqual(code, self.D.EXIT_DIFFERENT)
+        self.assertTrue(any(ln.startswith("DIFFERENT to") for ln in lines), lines)
+        code, lines = self.D.check(self.dir, mime(page, self.subject, to=self.D.CLIENT_CARE))
+        self.assertEqual(code, self.D.EXIT_DIFFERENT)
+        code, lines = self.D.check(self.dir, mime(page, self.subject))
+        self.assertEqual(code, self.D.EXIT_OK, lines)
+        self.assertIn("to: seller@example.com", lines)
+
+    def test_a_street_suffix_written_out_is_a_note_not_a_failure(self):
+        self.assertEqual(self.D._suffix_free("No. 07 - 14 Sample Fern Ln"), self.D._suffix_free("No. 07 - 14 Sample Fern Lane"))
+        led = os.path.join(self.dir, "ledger.json")
+        with open(led, encoding="utf-8") as f:
+            addr = json.load(f)["listing"]["address"]
+        long_form = re.sub(r"\b(Ct|Ln|Dr|Rd|St|Ave|Way|Pl|Ter|Blvd)$", lambda m: self.D.SUFFIXES.get(m.group(1).lower(), m.group(1)).title(), addr)
+        if long_form == addr:
+            self.skipTest("the fixture address has no short suffix")
+        other = self.subject.replace(addr, long_form)
+        code, lines = self.D.check(self.dir, mime(connector(self.gmail), other))
+        self.assertEqual(code, self.D.EXIT_OK, lines)
+        self.assertTrue(any(ln.startswith("note: the subject writes the street suffix") for ln in lines), lines)
+        self.assertEqual(self.D.subject_address({"address": addr, "subject_address": long_form}), long_form)
+        self.assertEqual(self.D.subject_address({"address": addr}), addr)
 
     def test_nothing_readable_is_said_plainly(self):
         code, lines = self.D.check(self.dir, json.dumps({"id": "r-1", "snippet": "hello"}))

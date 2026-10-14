@@ -46,6 +46,7 @@ import nearby_update as NU       # noqa: E402
 
 EXIT_OK, EXIT_INPUT = 0, 2
 SITE = "mlslistings"
+MIN_PRICE = 10000                 # a Price or Sale Price under this is not a home price ($0 on a grid is a blank)
 GRID_MAX_BYTES = 200000
 FIELDS = ("status", "mls", "address", "city", "type", "list_price", "previous_price", "sale_price", "close_date", "dom",
           "beds", "baths", "sqft", "change_date", "change_type", "members_only")
@@ -76,14 +77,18 @@ def money(s):
     mt = re.fullmatch(r"\$?\s*(\d{1,3}(?:,\d{3})+|\d+)(?:\.00)?", t)
     if not mt:
         raise Unreadable("a price in a form not known: %r" % t)
-    return int(mt.group(1).replace(",", ""))
+    v = int(mt.group(1).replace(",", ""))
+    if v < MIN_PRICE:
+        raise Unreadable("a price too small to be a home price: %r" % t)
+    return v
 
 
 def day(s):
+    """'4/7/2026', '4/7/26', '2026-04-07', also with a time after it ('4/7/2026 2:15 PM'): the date only."""
     t = (s or "").strip()
     if not t:
         return None
-    mt = re.fullmatch(r"(\d{1,2})/(\d{1,2})/(\d{2}|\d{4})", t)
+    mt = re.fullmatch(r"(\d{1,2})/(\d{1,2})/(\d{2}|\d{4})(?:\s+\d{1,2}:\d{2}(?::\d{2})?\s*(?:[AaPp]\.?[Mm]\.?)?)?", t)
     try:
         if mt:
             y = int(mt.group(3))
@@ -318,6 +323,10 @@ def build(folder, grids, city=None, kind=None, as_of=None, mode=None):
     values, refused, seen_on = merge(grids)
     as_of = C.iso(as_of or seen_on or datetime.date.today())
     mode = mode or ("watch" if store.get("watch") else "candidates")
+    if mode == "watch" and store.get("watch") and not any(NU.is_mls_id(w.get("id")) for w in store["watch"]):
+        raise SystemExit("the watch list on file was chosen from the public site (its ids are that site's property numbers, not MLS "
+                         "numbers), so no MLS row can match it. Run nearby_update.py plan --site redfin, or choose a new watch "
+                         "list from the MLS (nearby_from_mls.py --mode candidates, then nearby_update.py store and choose)")
     own_mls, own_addr = str(listing.get("mls") or "").strip().upper(), C._norm(listing.get("address"))
     chart = market_days(folder)
     homes, notes = [], []

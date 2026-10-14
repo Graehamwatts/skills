@@ -578,12 +578,67 @@ class Snapshot(Base):
         self.assertTrue(any("Gmail clips" in x for x in msgs))
         self.assertFalse(os.path.exists(os.path.join(folder, "issues", "05", "manifest.json")))
 
+    def test_a_rebuild_without_the_gmail_safe_copy_removes_the_old_one(self):
+        folder, d, render = self.ready()
+        with open(os.path.join(render, "email_gmail.html"), "w", encoding="utf-8") as f:
+            f.write("<html>synthetic gmail copy</html>")
+        self.assertEqual(S.freeze(folder, render)[0], 0)
+        target = os.path.join(folder, "issues", "05")
+        self.assertTrue(os.path.exists(os.path.join(target, "email_gmail.html")))
+        os.remove(os.path.join(render, "email_gmail.html"))
+        with open(os.path.join(render, "email.html"), "w", encoding="utf-8") as f:
+            f.write("<html>the email after a correction</html>")
+        code, m, msgs = S.freeze(folder, render)
+        self.assertEqual(code, 0, msgs)
+        self.assertFalse(os.path.exists(os.path.join(target, "email_gmail.html")))
+        self.assertNotIn("email_gmail.html", [x["name"] for x in m["files"]])
+        self.assertIsNone(m["email_gmail_bytes"])
+        self.assertTrue(any("old one was removed" in x for x in msgs))
+
     def test_there_must_be_an_email_to_keep(self):
         folder, d, render = self.ready()
         os.remove(os.path.join(render, "email.html"))
         code, m, msgs = S.freeze(folder, render)
         self.assertEqual(code, 2)
         self.assertTrue(any("no rendered email.html" in x for x in msgs))
+
+
+class OptionalSections(Base):
+    """The extras print only when they were read for this issue, and one sale never shows two day counts."""
+
+    def views(self, folder, weeks):
+        rows = [{"week_start": w, "portal": "Zillow", "views": 400 + 100 * i, "saves": 10 + i, "counts": "since_listing",
+                 "as_of": w, "source": "operator"} for i, w in enumerate(weeks)]
+        F.save_json(os.path.join(folder, "online_views.json"), {"schema_version": 1, "slug": "sample-glen", "rows": rows, "lookups": []})
+
+    def test_online_views_print_only_when_read_for_this_issue(self):
+        folder = self.variant()
+        self.views(folder, ["2026-03-23", "2026-03-30"])                    # readings from earlier weeks only
+        d, problems, info = build(folder)
+        self.assertEqual(problems, [])
+        self.assertIsNone(d["online"])
+        n = info["notes_for_operator"]
+        self.assertTrue(any("not read for this issue" in x for x in (n.get("worth_a_glance") or []) + (n.get("also_noted") or [])), n)
+        self.views(folder, ["2026-03-30", "2026-04-06"])                    # one taken for this issue's week
+        d, problems, info = build(folder)
+        self.assertEqual(problems, [])
+        self.assertIsNotNone(d["online"])
+        d, problems, info = build(folder, online=False)                     # --no-online
+        self.assertEqual(problems, [])
+        self.assertIsNone(d["online"])
+
+    def test_one_sale_one_day_count_even_when_the_chart_came_later(self):
+        nearby = {"homes": [{"address": "52 Sample Birch Dr", "status": "sold", "days_on_market": 28},
+                            {"address": "9 Sample Cedar Ct", "status": "pending", "days_on_market": 15},
+                            {"address": "3 Sample Same Rd", "status": "sold", "days_on_market": 20}]}
+        market = {"sales": [{"address": "52 SAMPLE BIRCH DR", "days_to_contract": 26}, {"address": "3 Sample Same Rd", "days_to_contract": 20},
+                            {"address": "9 Sample Cedar Ct", "days_to_contract": 4}]}
+        lines = B.one_day_count(nearby, market)
+        days = dict((h["address"], h["days_on_market"]) for h in nearby["homes"])
+        self.assertEqual(days, {"52 Sample Birch Dr": None, "9 Sample Cedar Ct": 15, "3 Sample Same Rd": 20})
+        self.assertEqual(len(lines), 1)
+        self.assertIn("26 days", lines[0])
+        self.assertEqual(B.one_day_count(nearby, None), [])
 
 
 class NotesForOperator(Base):

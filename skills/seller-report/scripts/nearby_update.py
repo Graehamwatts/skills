@@ -69,6 +69,24 @@ def family_of(property_type):
     return None
 
 
+def is_mls_id(x):
+    """An MLS number (ML80000101, SF40000001) rather than the public site's property number, which is all digits."""
+    t = str(x if x is not None else "").strip()
+    return bool(t) and not t.isdigit()
+
+
+def watch_site(store):
+    """Where the watch list was chosen: 'mlslistings', 'redfin', or None with no watch list. Read from
+    store.watch_site (set by choose), else from the ids and the source line of a store made before that key."""
+    if not store.get("watch"):
+        return None
+    if store.get("watch_site"):
+        return store["watch_site"]
+    if any(is_mls_id(w.get("id")) for w in store["watch"]) or str(store.get("source") or "").startswith("MLSListings"):
+        return "mlslistings"
+    return "redfin"
+
+
 def blank_store(slug):
     return {"schema_version": C.SCHEMA_VERSION, "slug": slug, "source": SOURCE, "search": {}, "scope": None, "chosen_on": None,
             "watch": [], "candidates": None, "snapshots": [], "lookups": []}
@@ -222,6 +240,11 @@ def choose(store, listing, ids=None, auto=False, why=None, scope=None, on=None):
     store["watch"] = [{"id": str(h["id"]), "address": h["address"], "beds": h.get("beds"), "baths": h.get("baths"), "sqft": h.get("sqft"),
                        "type": h.get("type"), "why": C.strip_dashes((why or {}).get(str(h["id"])) or why_chosen(h, listing))} for h in picked]
     store["chosen_on"] = on
+    if cand.get("site"):
+        store["watch_site"] = cand["site"]
+    else:
+        store.pop("watch_site", None)
+        store["watch_site"] = watch_site(store)
     store["scope"] = C.strip_dashes(scope) if scope else scope_sentence(store["watch"], listing, on)
     snap = {"report_date": cand["report_date"], "as_of": cand["as_of"], "homes": [clean_home(h) for h in picked]}
     store["snapshots"] = [s for s in store["snapshots"] if s["report_date"] != snap["report_date"]] + [snap]
@@ -272,6 +295,8 @@ def change_of(prev, cur, first_day, as_of):
         return "price_change", pc["date"], pc["from"], False
     if prev is not None:
         was = prev.get("status")
+        if was == "sold" and st != "sold":
+            return "none", None, None, False         # a sale is final: an approximate difference never undoes it
         if was != st:
             word = {"pending": "went_pending", "sold": "sold", "withdrawn": "withdrawn", "active": "back_on_market"}[st]
             return word, as_of, None, True
@@ -326,10 +351,15 @@ def ledger_block(store, listing, report):
     homes, missing = [], []
     for w in store["watch"]:
         cur = now.get(str(w["id"]))
-        if cur is None:
+        if cur is None or not cur.get("status"):
             missing.append(w["address"])
             continue
-        change, when, before, approx = change_of(was.get(cur["id"]), cur, first_day, snap["as_of"])
+        old = was.get(cur["id"])
+        if old and old.get("status") == "sold" and cur.get("status") != "sold":
+            notes["also"].append("%s sold before the last check and now reads as %s; a sale is final, so the report keeps the sale."
+                                 % (w["address"], cur.get("status")))
+            cur = old
+        change, when, before, approx = change_of(old, cur, first_day, snap["as_of"])
         h = {"address": w["address"], "beds": w.get("beds"), "baths": w.get("baths"), "sqft": w.get("sqft"), "status": cur["status"],
              "list_price": cur.get("list_price"), "sold_price": cur.get("sold_price"), "days_on_market": days_on_market(cur, snap["as_of"]),
              "change": change, "change_date": when}
@@ -387,6 +417,17 @@ def cmd_plan(a):
     paths = F.listing_paths(a.folder)
     listing = F.load_json(paths["listing"])
     store, rd = load(a.folder, listing.get("slug")), _issue(a)
+    # the site follows the watch list: a list chosen from the MLS holds MLS numbers, which the public site cannot match
+    on = watch_site(store)
+    site = getattr(a, "site", None) or ("mls" if on == "mlslistings" else "redfin")
+    ids = [str(w.get("id")) for w in store.get("watch") or []]
+    if site == "redfin" and any(is_mls_id(i) for i in ids):
+        F.say("REFUSED: the watch list was chosen from the MLS (its ids are MLS numbers). Run plan --site mls, or choose a new watch list.")
+        return EXIT_REFUSED
+    if site == "mls" and ids and not any(is_mls_id(i) for i in ids):
+        F.say("REFUSED: the watch list was chosen from the public site (its ids are that site's property numbers). Run plan --site redfin, "
+              "or choose a new watch list from the MLS.")
+        return EXIT_REFUSED
     try:
         LK.plan(store, KEY, rd, C.LIMITS["nearby_lookups_per_issue"], asked=a.asked, by_setting=LK.setting(listing, "nearby"),
                 what="similar homes nearby")
@@ -395,7 +436,7 @@ def cmd_plan(a):
         return EXIT_REFUSED
     save(a.folder, store)
     me = os.path.join(_HERE, "nearby_update.py")
-    if getattr(a, "site", "redfin") == "mls":
+    if site == "mls":
         return plan_mls(a, paths, listing, store, rd, me)
     call = F.save_text(os.path.join(paths["work"], "nearby_call.js"), call_text(store, listing, rd))
     F.say("planned: ONE lookup of similar homes nearby for the issue dated %s (%s)."
@@ -442,6 +483,11 @@ def cmd_store(a):
     store, rd = load(a.folder, listing.get("slug")), _issue(a)
     try:
         data = LK.read_result(a.result, C.LIMITS["nearby_json_max_bytes"], "similar homes")
+        on, came = watch_site(store), data.get("site")
+        if data.get("mode") == "watch" and on and came and came != on:
+            F.say("REFUSED: this result came from %s, but the watch list was chosen from %s, so its homes cannot be matched. "
+                  "Nothing was stored. Plan the lookup on %s (plan --site %s)." % (came, on, on, "mls" if on == "mlslistings" else "redfin"))
+            return EXIT_REFUSED
         why = LK.blocked_reason(data)
         if why is None and not isinstance(data.get("homes"), list):
             why = "failed"
@@ -450,7 +496,11 @@ def cmd_store(a):
             save(a.folder, store)
             F.say("SKIPPED: the lookup gave no homes (%s). The report is built without the section. Do not try another way." % LK.SKIP_WORDS[why])
             return EXIT_OK
-        homes = [clean_home(h) for h in data["homes"] if isinstance(h, dict)]
+        unknown = [h for h in data["homes"] if isinstance(h, dict) and not h.get("status")]
+        if unknown:                                    # nothing known about these: listed as missing, never guessed
+            F.say("note: %d home(s) came back with nothing known about them and are left out of this check: %s"
+                  % (len(unknown), ", ".join(str(h.get("address") or h.get("id")) for h in unknown[:8])))
+        homes = [clean_home(h) for h in data["homes"] if isinstance(h, dict) and h.get("status")]
         problems = [p for i, h in enumerate(homes) for p in home_problems(h, "homes[%d]" % i)]
         if problems:
             raise SystemExit("the result is not in the expected shape: " + "; ".join(problems[:4]))
@@ -481,7 +531,8 @@ def cmd_store(a):
         return EXIT_OK
     own = C._norm(listing.get("address"))
     homes = [h for h in homes if C._norm(h["address"]) != own][:C.LIMITS["nearby_candidates_max"]]
-    store["candidates"] = {"report_date": C.iso(rd), "as_of": as_of, "homes": homes, "dropped": data.get("dropped") or {}}
+    store["candidates"] = {"report_date": C.iso(rd), "as_of": as_of, "homes": homes, "dropped": data.get("dropped") or {},
+                           "site": data.get("site")}
     save(a.folder, store)
     F.say("stored: %s for the watch list, as checked on %s. Nothing is watched yet." % (C.fmt_count(len(homes), "candidate"), C.fmt_date(as_of)))
     for h in rank_candidates(homes, listing):
@@ -552,8 +603,9 @@ def main(argv=None):
         return p
     p = common(sub.add_parser("plan", help="before the lookup: checks the rules, logs it, writes work\\nearby_call.js"))
     p.add_argument("--asked", action="store_true", help="the operator asked for this in this session")
-    p.add_argument("--site", choices=("redfin", "mls"), default="redfin",
-                   help="redfin: the public site snippet. mls: one Matrix search on MLSListings, after Graeham signs in (nearby_from_mls.py)")
+    p.add_argument("--site", choices=("redfin", "mls"), default=None,
+                   help="redfin: the public site snippet. mls: one Matrix search on MLSListings, after Graeham signs in (nearby_from_mls.py). "
+                        "Default: the site the watch list was chosen from (redfin before there is one)")
     p.set_defaults(fn=cmd_plan)
     p = common(sub.add_parser("store", help="keep what the snippet returned (candidates on first use, the snapshot after)"))
     p.add_argument("--result", required=True, help="a file holding exactly what the snippet returned")

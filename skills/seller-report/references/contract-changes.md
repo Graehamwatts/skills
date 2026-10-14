@@ -73,3 +73,15 @@ and `curation.json` only and is rejected in a ledger.
     read), no longer only the weeks added up.
 23. New source kinds `portal_page`, `operator_numbers`, `nearby_lookup`. New limits for the lookups
     (`sr_contract.LIMITS`). A marketing block with nothing on and nothing checked for the issue is left out.
+
+**Added after the first two real issues (2026-10-13, late):**
+
+24. `listing.json` may carry `subject_address` (the address as the seller's subject line writes it) and
+    `tracking.lockbox` (a combination lockbox, so no electronic showing record). `hero_photo` is an https
+    address or null, never a local path.
+25. `nearby.json` gains `watch_site` (`mlslistings` or `redfin`) and `candidates.site`. `plan` follows the watch
+    list's site; a watch result from the other site is refused.
+26. `ledger.online` is built only when a reading for the issue's week is on file. `build_ledger.py` drops a
+    nearby sale's day count when the market chart gives the same sale a different one (`one_day_count`).
+27. `issues\NN\manifest.json` gains `subject`. `freeze` removes an old `email_gmail.html` when an email is kept
+    without a new one.

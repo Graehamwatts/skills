@@ -6,10 +6,17 @@ const dir = process.argv[2];
 for (const f of ['portal_views.js', 'hero_photo.js', 'nearby_lookup.js', 'matrix_grid.js']) (0, eval)(fs.readFileSync(path.join(dir, f), 'utf8'));
 
 // a pretend Matrix results page: tables of rows of cells, the way the browser hands them to a page script
-const cellOf = (t, o) => { o = o || {}; return { innerText: t, textContent: t, colSpan: o.span || 1, getAttribute: () => null, querySelector: () => o.icon || null }; };
+const cellOf = (t, o) => { o = o || {}; return { innerText: t, textContent: t, colSpan: o.span || 1, getAttribute: () => null,
+                                                 querySelector: s => (s.indexOf('[title]') >= 0 ? o.icon : (o.mark || o.icon)) || null }; };
 const rowOf = cells => ({ cells: cells.map(c => (c && typeof c === 'object') ? c : cellOf(c)) });
 const tableOf = rows => ({ rows: rows.map(rowOf) });
 const MO = cellOf('', { icon: { getAttribute: k => (k === 'title' ? 'Members Only' : null) } });          // the flag drawn as an icon
+const MARK = cellOf('', { mark: { className: 'mo-flag', tagName: 'I' } });                               // a flag drawn with a class only
+const ICONS = tableOf([
+  ['MLS #', 'Status', 'Address', 'Price', 'Change Date', 'Change Type', 'M.O.'],
+  ['ML80000201', 'Active', '3 Sample Iris Ln', '$1,150,000', '4/8/2026 2:15 PM', 'New Listing', MARK],
+  ['ML80000202', 'Active', '5 Sample Iris Ln', '$1,160,000', '4/8/2026', 'New Listing', '']
+]);
 const pageOf = (tables, body, display) => ({
   querySelectorAll: s => (s === 'table' ? tables : []),
   querySelector: s => (display && /select/.test(s) ? { options: [{ innerText: display }], selectedIndex: 0 } : null),
@@ -100,6 +107,8 @@ function site(opts) {
   s = site({ typeBelow: true });
   out.nearby.watch = await globalThis.srNearby(Object.assign({ mode: 'watch', watch: [{ id: '9003' }, { id: 9004 }, { id: 9020, address: '60 Sample Gone Way' }] }, base), { fetch: s.fetch, now: now });
   out.nearby.watch_calls = s.calls.length;
+  s = site({});                    // a watch list of MLS numbers sent to the public site: nothing is known about any of them
+  out.nearby.watch_mls_ids = await globalThis.srNearby(Object.assign({ mode: 'watch', watch: [{ id: 'ML80000103', address: '52 Sample Birch Dr' }] }, base), { fetch: s.fetch, now: now });
   s = site({ block: true });
   out.nearby.blocked = await globalThis.srNearby(Object.assign({ mode: 'watch', watch: [{ id: 9003 }] }, base), { fetch: s.fetch, now: now });
   out.nearby.blocked_calls = s.calls.length;
@@ -133,7 +142,8 @@ function site(opts) {
     hotsheet: mg([LAYOUT, HOT], 'Residential results 1 - 5 of 5', 'Agent 1 Line Hotsheet'),
     partial: mg([HOT], 'Residential results 1 - 50 of 73', null),
     signed_out: mg([], 'Sign in to continue. Username Password', null),
-    no_grid: mg([LAYOUT], 'Nothing here', null)
+    no_grid: mg([LAYOUT], 'Nothing here', null),
+    icons: mg([ICONS], 'Residential results 1 - 2 of 2', 'Agent 1 Line Hotsheet')
   };
   console.log(JSON.stringify(out));
 })().catch(e => { console.error(e); process.exit(1); });

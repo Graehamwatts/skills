@@ -126,6 +126,9 @@ def run(a):
     if a.sheet:
         import intake_sheet
         step(1, "reading the activity sheet export")
+        if os.path.normcase(os.path.abspath(a.sheet)).startswith(os.path.normcase(folder) + os.sep):
+            F.shout("the sheet export is inside the listing folder (%s). It holds phone numbers and belongs in the session "
+                    "scratchpad; raw.json keeps what the report needs (references\\intake.md, section 3)." % a.sheet)
         argv = [a.sheet, "--folder", folder] + (["--as-of", a.as_of] if a.as_of else []) + (["--kind", a.sheet_kind] if a.sheet_kind else [])
         try:
             code, text = quiet_call(intake_sheet.main, argv)
@@ -169,7 +172,8 @@ def run(a):
             brief = f.read()
     try:
         (ledger, problems, info), text = quiet_call(build_ledger.build, folder, report_date=rd, through=through, issue=a.issue,
-                                                    sources=a.source, as_of_note=a.as_of_note, glance=a.glance, brief=brief)
+                                                    sources=a.source, as_of_note=a.as_of_note, glance=a.glance, brief=brief,
+                                                    online=not a.no_online)
     except SystemExit as e:
         return stop(EXIT_LEDGER, "the ledger could not be built: %s" % e, nxt="fix what the line above names, then run:  " + remake)
     if text.strip():
@@ -293,7 +297,13 @@ def run(a):
     F.say("READY: Weekly Seller Report No. %02d for %s, dated %s, covering %s."
           % (R["issue_number"], ledger["listing"]["address"], R["report_date"], C.fmt_range(R["week_start"], R["week_end"])))
     import draft_check
-    F.say("  subject: %s" % draft_check.subject_line(R["issue_number"], R["report_date"], ledger["listing"]["address"]))
+    subject = draft_check.subject_line(R["issue_number"], R["report_date"], draft_check.subject_address(ledger["listing"]))
+    mpath = os.path.join(issue_dir, "manifest.json")
+    kept_manifest = F.load_json(mpath)
+    kept_manifest["subject"] = subject                       # the one place to copy it from: a console may mangle the middle dot
+    F.save_json(mpath, kept_manifest)
+    F.say("  subject: %s" % subject)
+    F.say("  (copy the subject from \"subject\" in %s, not from this window)" % mpath)
     F.say("  email: %s" % os.path.join(issue_dir, "email.html"))
     F.say("  Gmail-safe copy (this one goes in the body of the unsent Gmail draft): %s" % os.path.join(issue_dir, GMAIL_PAGE))
     F.say("  link copy (published only when the operator says so): %s" % os.path.join(issue_dir, "link.html"))
@@ -310,6 +320,11 @@ def run(a):
 
 
 def main(argv=None):
+    for stream in (sys.stdout, sys.stderr):                  # the subject's middle dot, names with accents
+        try:
+            stream.reconfigure(encoding="utf-8", errors="replace")
+        except (AttributeError, ValueError):
+            pass
     ap = argparse.ArgumentParser(description="Run one issue of the seller report from the sheet export to the checked files.",
                                  epilog="Exit 0 ready. 2 an input is missing. 3 the issue was already sent. 10 Claude has notes to read. "
                                         "11 the ledger did not build. 20 a page did not render. 30 a check failed.")
@@ -333,9 +348,10 @@ def main(argv=None):
     ap.add_argument("--no-link", action="store_true")
     ap.add_argument("--seller-greeting", help="the line above the brief, for example \"Hi Pat and Sam,\"")
     ap.add_argument("--no-greeting", action="store_true")
-    ap.add_argument("--no-market", action="store_true")
-    ap.add_argument("--no-marketing", action="store_true")
+    ap.add_argument("--no-market", action="store_true", help="leave time on the market (market.json) out of this build")
+    ap.add_argument("--no-marketing", action="store_true", help="leave the online ads and marketing status (marketing.json) out of this build")
     ap.add_argument("--no-nearby", action="store_true", help="leave the similar homes nearby section out of this build")
+    ap.add_argument("--no-online", action="store_true", help="leave the online views out of this build")
     ap.add_argument("--no-pdf", action="store_true")
     ap.add_argument("--no-previews", action="store_true")
     ap.add_argument("--no-probe", action="store_true", help="skip the phone layout check in Edge")

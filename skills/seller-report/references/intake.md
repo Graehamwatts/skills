@@ -86,7 +86,7 @@ One Google Sheet per listing, titled "<address> - View Activity", kept by hand b
    A good file starts with the two letters `PK`. If the keys differ, look at the saved result before decoding.
 4. Run the issue with `--sheet "<that file>" --as-of <today>`. `--as-of` is the day of the export. It places dates typed without a year and sets how far "since the week closed" reaches.
 
-The export holds phone numbers and blunt notes. Keep it in the scratchpad. Never save it in the skills folder or the listing folder under `Documents\Listings`.
+The export holds phone numbers and blunt notes. Keep it in the session scratchpad and nowhere else: not in the skills folder, not in the listing's folder under `Documents\Listings`, and not in the listing's report folder (`reports\seller-reports\<slug>`), which keeps only what the scripts write. `raw.json` already holds everything the report needs from it. `run_issue.py` prints a warning when `--sheet` points inside the report folder. (The two exports saved under the report folders' `work\` on Oct 13, 2026 predate this line.)
 
 ### The client care weekly status email and its Excel attachment
 
@@ -195,7 +195,8 @@ Do not ask them to confirm how you read a note. Read it, count it, and put real 
 Issue numbers continue what the seller has already received, so the stack reads as one series. On Oct 12, 2026 one listing continued a hand-written series at No. 07 and another at No. 10.
 
 - `listing.json` `numbering.first_issue_number` is the number this skill's first issue carries. If the seller already received No. 04 to No. 06 written by hand, set it to 7, set `first_issue_date` to that Monday, and say so in `note`.
-- **Count what reached the seller, not what was written.** For a listing's first issue, or whenever the number is in doubt, ask the operator how many reports the seller has had and offer to check. With their go-ahead (or when they point you there), search Gmail for Adrian's status emails for this address (`subject:"Weekly Status Report" "<street name>"`) and look at the ones that went to the seller. A draft, or a report sent only to Graeham, is not in the series. The highest number that reached the seller, plus one, is this issue. If nothing can be found, ask; never start again at 1 on a listing that has been reported on.
+- **When the number is settled, no check is needed.** With `numbering.first_issue_number` in `listing.json` and an issue already on file, `snapshot_issue.py next` gives the number and Gmail is not searched.
+- **Count what reached the seller, not what was written.** For a listing's first issue under this skill (no `numbering` yet, no issue on file), or whenever the number is in doubt, ask the operator how many reports the seller has had and offer to check. With their go-ahead (or when they point you there), search Gmail for Adrian's status emails for this address (`subject:"Weekly Status Report" "<street name>"`) and look at the ones that went to the seller. A draft, or a report sent only to Graeham, is not in the series. The highest number that reached the seller, plus one, is this issue. If nothing can be found, ask; never start again at 1 on a listing that has been reported on.
 - After the first issue, the number is one more than the highest issue on file. A week with no report does not skip a number. A rebuild for the same report date keeps its number.
 - Check what comes next at any time:
   ```
@@ -206,4 +207,6 @@ Issue numbers continue what the seller has already received, so the stack reads 
 
 The report date is always the Monday after the week covered, whatever day the report is built. Built on a Thursday, it still covers the same week and carries the same Monday.
 
-**Why the counts differ from the hand-written series.** Those reports counted cancelled tours, questions and open house hosts; this one does not (`counting-rules.md`, sections 2, 3 and 5). The first issue of a listing that had hand-written reports carries a glance line saying so, with both figures, and that is the answer if the seller asks.
+**Why the counts differ from the hand-written series.** Those reports counted cancelled tours, questions and open house hosts; this one does not (`counting-rules.md`, sections 2, 3 and 5). No code writes that explanation. On a listing's first issue under this skill, pass it yourself as one glance line, with both figures: the totals in the last hand-written status email that reached the seller (the one found for the numbering check above) and this report's totals, for example `--glance "The last hand-written report counted 14 showings; this one counts 11, because cancelled tours, questions and open house hosts are not counted."`. It is also the answer if the seller asks. When no hand-written report is at hand, leave the line out rather than guess a figure.
+
+**A hand-written report for the same week.** Before the first run, check whether a hand-written status email for the same Monday to Sunday week already reached the seller (the same Gmail search). If one did, say so in a glance line, and with Graeham's word open the brief with one sentence saying this report covers the same week as that update (`--brief-file`; on Oct 13, 2026 that was done for one listing).

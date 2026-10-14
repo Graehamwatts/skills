@@ -10,6 +10,13 @@ with none of them is a complete report. `run_issue.py` fetches nothing: it reads
 | Online ads and marketing | `marketing.json` | written by hand from a status note | each channel with its status word |
 | Masthead photo | `listing.json` (`hero_photo`) | `scripts\hero_photo.py` | the photo under the masthead band |
 
+**What prints, and the switches for a week they were not asked for.** Online views and similar homes nearby
+print only from a reading or a snapshot taken for this issue's week, so a week nobody asked for them has no such
+row or section by itself. Time on the market (`market.json`) prints whenever the file is on file, and online ads
+(`marketing.json`) while any channel is on or something was checked for this issue. On a week the operator did
+not ask for an extra, leave it out with `run_issue.py` `--no-market`, `--no-marketing`, `--no-nearby` or
+`--no-online`, and keep those switches on every rebuild of that issue (the NEXT line keeps them).
+
 **When the email is long** these sections give way first, before anything about people (`sr_render\fit.py`,
 `extras`): similar homes nearby keeps what changed and says the rest in one sentence ("The other 5 homes did not
 change: 3 active, 1 pending and 1 sold."), the chart of online views is left out (its row in the numbers table
@@ -69,6 +76,9 @@ apart: the first reading of a portal only gives the "since we listed" number.
 
 A reading belongs to the week the report covers (read on Monday or Tuesday, it closes the week that just ended).
 `--week` or `--report-date` says otherwise. One row per week per portal: a later figure replaces the earlier one.
+The report carries online views only when a row for this issue's week is on file (`build_ledger.py`): older
+readings stay in the file for next time's weekly figure but never print an old "since we listed" count on their
+own, and the operator line says the views were not read for this issue.
 
 ```json
 {"schema_version": 1, "slug": "sample-glen", "lookups": [],
@@ -95,7 +105,16 @@ A watch list of at most 8 comparable homes, chosen once (same property type, sim
 re-checked once per issue. The report shows what changed that week: new listing, price change, went pending,
 sold (price and days on market), taken off the market, back on the market.
 
-**The one lookup**, on the public site (below) or on the MLS ("From the MLS", further down).
+**The one lookup**, on the public site (below) or on the MLS ("From the MLS", further down). **The site follows
+the watch list.** A list chosen from the MLS holds MLS numbers (ML80000101) and a list chosen from the public site
+holds that site's property numbers (all digits); neither site can match the other's. `choose` records where the
+list came from (`nearby.json` `watch_site`), `plan` with no `--site` uses that site, and `plan --site redfin` on an
+MLS list (or `--site mls` on a public site list) is refused before the lookup is used up. `store` refuses a watch
+result from the other site, and `nearby_from_mls.py` stops when no watched id is an MLS number. Both watch lists on
+file on Oct 13, 2026 came from the MLS. A home the public site cannot find and has no history for comes back with
+no status and is listed as missing, never as taken off the market, and a home that sold stays sold however a
+later check reads it.
+
 `nearby_update.py plan --folder <folder> --asked` checks the rules and writes
 `work\nearby_call.js`: the snippet `scripts\web\nearby_lookup.js` plus one line of arguments for this listing.
 Open one public redfin.com page (the page for the listing's city is enough), run that text once as it is, save
@@ -186,6 +205,11 @@ per issue (rule 2), planned with `--site mls`, and it is used only when Graeham 
 
 - **Members only is left out.** A listing flagged in the M.O. column never goes into a seller-facing report.
   A home that only appears in a display without the M.O. column is refused, because nothing says it may be shown.
+  The grid script reads a flag drawn as an icon from its title, alt text or label; an icon with no words (only a
+  class, an svg, a ticked box) comes back as `[icon <its class>]`, which is neither yes nor no, so that home is
+  refused and listed by MLS number. If every home is refused with an `[icon ...]` reason, the live M.O. column
+  draws its flag in a way the script cannot read: stop, say so, and build without the section. Never treat
+  such a home as "not members only".
 - **The listing itself is left out**, by its MLS number (`listing.json` `mls`) and by its address.
 - **Contingent counts as pending.** Its pending date is the change date, when the change type is a status
   change. When the latest change is something else (a price change after it went under contract), the home has
@@ -196,9 +220,11 @@ per issue (rule 2), planned with `--site mls`, and it is used only when Graeham 
 - **One sale, one day count.** When the same sale is also in the time on the market chart (`market.json`
   `sales[]`, matched by address) with a different `days_to_contract`, the `dom` is dropped from the nearby home,
   so the report never shows one sale with two day counts. When the chart prints the same number, or no number,
-  the `dom` stays.
+  the `dom` stays. `build_ledger.py` applies the same rule again at every build (`one_day_count`), so a market
+  chart written or refreshed after the nearby lookup cannot bring the second count back.
 - **Refused, never guessed.** A row with a status, price, date, count or members-only flag in a form the script
-  does not know, a sold home without a sale price or close date, an active or pending home without a price, or a
+  does not know (a date with a time after it is read as the date; a price under $10,000, such as a $0 placeholder,
+  is not a home price), a sold home without a sale price or close date, an active or pending home without a price, or a
   home the two displays disagree about is left out and listed by MLS number in the output.
 - **More than 12 homes** keeps the 12 closest to the listing, ranked as `choose --auto` ranks them.
 - **The source line** of the section reads "MLSListings, checked Oct 13, 2026" (the day the grids were read).
@@ -241,9 +267,10 @@ Two places that have worked (Oct 13, 2026):
 - The Compass listing page's `og:image`, with the size part of the address changed to `1360x906`
   (`https://www.compass.com/m/<id>/1360x906.jpg`).
 
-No photo is fine. Never open an extra page only to find one. The photo is in the email only: the Gmail-safe copy
-that goes into the draft has no photo row, because the Gmail connector drops every image
-(`references\data-contract.md`, section 7).
+No photo is fine. Never open an extra page only to find one. The photo is in `email.html`, the link copy and the
+PDF. The Gmail-safe copy that goes into the draft has no photo row, because the Gmail connector drops every image
+(`references\data-contract.md`, section 7). Keep the photo in `listing.json` with `hero_photo.py set`, not only as
+`--hero` on one run line: a rebuild without that switch would lose it from the link copy and the PDF.
 
 ## 6. Settings in listing.json
 

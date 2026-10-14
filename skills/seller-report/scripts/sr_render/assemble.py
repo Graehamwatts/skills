@@ -108,14 +108,27 @@ def build(m, fit=0):
 
 
 # A web address in running text, which a mail program would turn into a link: an optional scheme or www, then
-# a name and a common ending. An email address is not one (the name is not preceded by @).
-ADDRESS = re.compile(r"(?<![\w@.-])(?:https?://)?(?:www\.)?[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*"
-                     r"\.(?:com|net|org|io|ai|co|us|info|biz|edu|gov|homes|realty|realtor|me|app|house|properties|estate)\b(?![@\w-])", re.I)
+# a name and any ending of 2 to 24 letters (bit.ly, youtu.be, a .ca or a .link address as much as a .com). An
+# email address is not one (the name is not preceded by @). Guarding more than an address is harmless: the
+# words do not change. sr_checks.email_safety.ADDRESS_PATTERN is the same text (a test keeps them equal).
+ADDRESS_PATTERN = r"(?<![\w@.-])(?:https?://)?(?:www\.)?[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,24}\b(?![@\w-])"
+ADDRESS = re.compile(ADDRESS_PATTERN, re.I)
+# what is left linkable in one run of text: a scheme, or www with a dot after it
+LINKABLE = re.compile(r"https?://|\bwww\.", re.I)
+
+
+def _guard_one(address):
+    scheme = re.match(r"https?://", address, re.I)
+    if not scheme:
+        return no_autolink(address, "inherit")
+    return (esc(scheme.group(0)[:-3]) + '<span style="color:inherit">://</span>'
+            + no_autolink(address[scheme.end():], "inherit"))
 
 
 def guard_addresses(html):
     """The Gmail-safe copy: any web address in running text (outside a link, a tag or a comment) is written with
-    htmlkit.no_autolink, so the connector cannot turn it into a redirect. The words do not change."""
+    htmlkit.no_autolink, so the connector cannot turn it into a redirect, and a scheme's '://' sits in a span of
+    its own. The words do not change."""
     out, in_a = [], 0
     for bit in re.split(r"(<!--.*?-->|<[^>]+>)", html, flags=re.S):
         if bit.startswith("<"):
@@ -127,7 +140,7 @@ def guard_addresses(html):
         elif in_a or not bit:
             out.append(bit)
         else:
-            out.append(ADDRESS.sub(lambda mt: no_autolink(unesc(mt.group(0)), "inherit"), bit))
+            out.append(ADDRESS.sub(lambda mt: _guard_one(unesc(mt.group(0))), bit))
     return "".join(out)
 
 
@@ -146,7 +159,8 @@ def gmail_problems(doc):
         err.append("the Gmail-safe copy colors a %s with a background, which the connector drops (%d)" % (bg[0], len(bg)))
     body = doc[doc.find("<body"):]
     for bit in re.split(r"<a\b.*?</a>", body, flags=re.S | re.I):
-        hit = next((h for h in (ADDRESS.search(unesc(t)) for t in re.split(r"<[^>]+>", bit)) if h), None)
+        runs = [unesc(t) for t in re.split(r"<[^>]+>", bit)]
+        hit = next((h for h in (ADDRESS.search(t) or LINKABLE.search(t) for t in runs) if h), None)
         if hit:
             err.append("the Gmail-safe copy has a web address a mail program would turn into a link: " + hit.group(0))
             break

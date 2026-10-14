@@ -55,7 +55,22 @@ def led_stale_marketing(d, t):
         ch.update(status="prepared", checked="2026-03-20")
 
 
+def led_two_day_counts(d, t):
+    """The sold home on the watch list is also a sale in the market chart, with another day count."""
+    led_nearby(d, t)
+    sold = next(h for h in d["nearby"]["homes"] if h["status"] == "sold" and h.get("days_on_market") is not None)
+    sale = next(s for s in d["market"]["sales"] if s.get("days_to_contract") is not None)
+    sale_days = sale["days_to_contract"]
+    d["market"]["sales"] = [dict(s) for s in d["market"]["sales"]]
+    next(s for s in d["market"]["sales"] if s.get("days_to_contract") is not None)["address"] = sold["address"].upper()
+    if sale_days == sold["days_on_market"]:
+        sold["days_on_market"] += 1
+
+
 ROW = ">31 Sample Alder Way</th>"
+case("one_sale_with_two_day_counts", "numbers.one_day_count",
+     swap(UNDER, UNDER + '<div data-sr-section="market"><p style="margin:4px 0">Time on the market against recent sales.</p></div>'),
+     led=led_two_day_counts)
 case("nearby_count_wrong", "numbers.nearby_counts", swap('data-sr="nearby_changed">4<', 'data-sr="nearby_changed">3<'), led=led_nearby)
 case("nearby_count_wrong_in_the_sentence", "numbers.nearby_counts",
      swap('<span data-sr="nearby_changed">4</span> of the <span data-sr="nearby_homes">5</span> homes', "2 of the 5 homes"), led=led_nearby)

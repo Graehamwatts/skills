@@ -217,6 +217,61 @@ class FromMatrix(unittest.TestCase):
         code, out = quiet(NU.main, ["plan", "--folder", self.folder, "--asked", "--site", "mls", "--report-date", W.REPORT_DATE])
         self.assertEqual(code, NU.EXIT_REFUSED, out)
 
+    def mls_watch_list(self):
+        res = os.path.join(self.folder, "work", "nearby_mls_result.json")
+        result, _ = M.build(self.folder, [closed(), hotsheet()])
+        F.save_json(res, result)
+        quiet(NU.main, ["plan", "--folder", self.folder, "--asked", "--site", "mls", "--report-date", W.REPORT_DATE])
+        self.assertEqual(quiet(NU.main, ["store", "--folder", self.folder, "--result", res, "--report-date", W.REPORT_DATE])[0], 0)
+        self.assertEqual(quiet(NU.main, ["choose", "--folder", self.folder, "--auto", "--report-date", W.REPORT_DATE])[0], 0)
+        store = F.load_json(os.path.join(self.folder, "nearby.json"))
+        self.assertEqual(store["watch_site"], "mlslistings")
+        return store
+
+    def test_a_watch_list_from_the_mls_is_never_looked_up_on_the_public_site(self):
+        self.mls_watch_list()
+        nxt = "2026-04-20"
+        code, out = quiet(NU.main, ["plan", "--folder", self.folder, "--asked", "--site", "redfin", "--report-date", nxt])
+        self.assertEqual(code, NU.EXIT_REFUSED, out)
+        self.assertIn("Run plan --site mls", out)
+        self.assertEqual(LK_for(self.folder, nxt), [])                 # the refusal does not use up the one lookup
+        code, out = quiet(NU.main, ["plan", "--folder", self.folder, "--asked", "--report-date", nxt])    # the default follows the list
+        self.assertEqual(code, 0, out)
+        self.assertIn("on MLSListings", out)
+        with open(os.path.join(self.folder, "work", "nearby_call.js"), encoding="utf-8") as f:
+            self.assertNotIn("srNearby(", f.read())
+        # a result from the public site for that list is refused, never stored
+        res = os.path.join(self.folder, "work", "redfin.json")
+        F.save_json(res, {"ok": True, "site": "redfin", "mode": "watch", "as_of": "2026-04-20",
+                          "homes": [{"id": "ML80000103", "address": "52 Sample Birch Dr", "status": "withdrawn"}]})
+        code, out = quiet(NU.main, ["store", "--folder", self.folder, "--result", res, "--report-date", nxt])
+        self.assertEqual(code, NU.EXIT_REFUSED, out)
+        self.assertIsNone(NU.snapshot_for(F.load_json(os.path.join(self.folder, "nearby.json")), nxt))
+
+    def test_a_public_site_watch_list_is_not_read_from_the_mls(self):
+        store = NU.blank_store("sample-glen")
+        store.update(watch=[{"id": "9001", "address": "14 Sample Fern Ln", "why": "Same city"}], scope="One home", chosen_on="2026-04-06")
+        F.save_json(os.path.join(self.folder, "nearby.json"), store)
+        with self.assertRaises(SystemExit) as e:
+            M.build(self.folder, [closed(), hotsheet()])
+        self.assertIn("chosen from the public site", str(e.exception))
+        code, out = quiet(NU.main, ["plan", "--folder", self.folder, "--asked", "--site", "mls", "--report-date", W.REPORT_DATE])
+        self.assertEqual(code, NU.EXIT_REFUSED, out)
+
+    def test_a_sale_is_never_undone_by_a_later_check(self):
+        sold = {"id": "ML80000103", "address": "52 Sample Birch Dr", "status": "sold", "sold_price": 1190000, "sold_date": "2026-04-07"}
+        self.assertEqual(NU.change_of(sold, {"id": "ML80000103", "address": "52 Sample Birch Dr", "status": "withdrawn"}, "2026-04-14", "2026-04-20"),
+                         ("none", None, None, False))
+        store = NU.blank_store("sample-glen")
+        store.update(watch=[{"id": "ML80000103", "address": "52 Sample Birch Dr", "why": "Same city"}], scope="One home", chosen_on="2026-04-06",
+                     snapshots=[{"report_date": "2026-04-13", "as_of": "2026-04-13", "homes": [sold]},
+                                {"report_date": "2026-04-20", "as_of": "2026-04-20", "homes": [{"id": "ML80000103", "address": "52 Sample Birch Dr",
+                                                                                                "status": "withdrawn"}]}])
+        block, notes = NU.ledger_block(store, W.LISTING, NU._report(C.parse_date("2026-04-20")))
+        self.assertEqual((block["homes"][0]["status"], block["homes"][0]["change"], block["homes"][0]["sold_price"]), ("sold", "none", 1190000))
+        self.assertTrue(any("a sale is final" in x for x in notes["also"]))
+        self.assertNotIn("taken off the market", notes["summary"])
+
     def test_a_public_site_result_puts_back_its_own_source(self):
         store = NU.blank_store("sample-glen")
         store["source"] = "MLSListings, checked Apr 13, 2026"
@@ -242,6 +297,15 @@ class FromMatrix(unittest.TestCase):
                 M.money(bad)
         with self.assertRaises(M.Unreadable):
             M.day("13/45/2026")
+        self.assertEqual([M.day(x) for x in ("4/7/2026 2:15 PM", "4/7/2026 14:15", "4/7/26 9:05:00 am")], ["2026-04-07"] * 3)
+        for bad in ("$0", "0", "$500"):                                   # never a home price: a seller must not read "sold for $0"
+            with self.assertRaises(M.Unreadable):
+                M.money(bad)
+
+
+def LK_for(folder, rd):
+    import sr_lookups as LK
+    return LK.for_issue(F.load_json(os.path.join(folder, "nearby.json")), C.parse_date(rd), NU.KEY)
 
 
 if __name__ == "__main__":

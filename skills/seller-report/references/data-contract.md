@@ -6,6 +6,18 @@ code side of the contract is `scripts/sr_contract.py` (enumerations, helpers, `v
 
 Schema version: **1** (`sr_contract.SCHEMA_VERSION`).
 
+## Contents
+
+1. Where the data lives
+2. listing.json
+3. raw.json (PRIVATE)
+4. curation.json
+5. events.json (optional); market.json, marketing.json, online_views.json, nearby.json (optional)
+6. ledger.json: top level, report, contacts, open houses, offers, weeks and totals, tallies, the optional blocks
+7. notes_for_operator.json, issues\NN\manifest.json, and email_gmail.html (the Gmail-safe copy and the draft)
+8. Changes against the approved mockup shape
+9. What builders must know
+
 **One build mode.** Every build is the report, clean and ready to send. There is no draft and final split, no
 review step, no confirm step, and nothing in any file waits on a person confirming anything. The operator
 hands over the information, receives the finished report as an unsent Gmail draft, reads it, and says in
@@ -72,18 +84,23 @@ Only the renderer's input, `ledger.json`, has to be seller-safe. `raw.json`, `cu
   "price_history": [{"date": "2026-03-12", "price": 1195000, "event": "listed"}],
   "status": "Active", "status_checked": "2026-04-13",
   "mls": "ML00000218",
-  "hero_photo": "https://... or a local path, or null",
+  "hero_photo": "https://... or null",
   "property_page": null,
   "seller_first_names": ["Pat", "Sam"],
+  "subject_address": null,
   "numbering": {"first_issue_number": 1, "first_issue_date": "2026-03-16", "note": null},
   "sheet": {"drive_id": "...", "title": "<address> - View Activity"},
   "keybox_number": null,
   "listing_folder": null,
-  "tracking": {"keybox_showings": true, "disclosure_sent": true, "disclosure_opened": true},
+  "tracking": {"keybox_showings": true, "disclosure_sent": true, "disclosure_opened": true,
+               "lockbox": "combo lockbox, so there is no electronic showing record"},
   "tracking_since": {"disclosure_opened": "2026-03-23"},
   "operator_notes": []
 }
 ```
+
+(`tracking.lockbox` is written only for a combination lockbox, and then `keybox_showings` is false:
+`intake.md`, section 2, and `counting-rules.md`, section 3.)
 
 - `price_history` is oldest first and starts with the `listed` entry. Later entries are `price_change`.
 - `list_price` is the price in effect on the report date.
@@ -102,7 +119,12 @@ Only the renderer's input, `ledger.json`, has to be seller-safe. `raw.json`, `cu
   email has no greeting unless `--seller-greeting` is given.
 - Optional facts a listing may carry (`year_built`, `hoa_monthly`, `community`, `hero_photo_note`,
   `status_source`, `facts_checked`) pass through to `ledger.listing` unchanged.
-- `hero_photo` is used only when it is an https address (`hero_photo.py set`). `extras` holds the settings of
+- `subject_address` (optional) is the address as the subject line of the seller's series writes it, when that
+  differs from `address` (for example "Court" where the MLS says "Ct"). It passes through to `ledger.listing`;
+  `draft_check.subject_address` uses it for the subject, and `address` everywhere else. Set it only on
+  Graeham's word.
+- `hero_photo` is used only when it is an https address (`hero_photo.py set`); a local path is never put on a
+  page, so never store one here. `extras` holds the settings of
   the optional sources (`online_views`, `nearby`, `hero`; see `extras.md`, section 6) and stays in this file.
 
 ## 3. raw.json (PRIVATE)
@@ -279,8 +301,12 @@ when a channel is on or something was checked for this issue (`sr_contract.marke
 
 `online_views.json` and `nearby.json` are described in `extras.md` with their tools. The builder turns them into
 `ledger.online` and `ledger.nearby` (`online_views.ledger_block`, `nearby_update.ledger_block`): rows and
-snapshots dated after the issue are left alone, so a rebuild of an older issue does not change. A file that
-fails its `validate_store` stops the build. A lookup logged as skipped leaves its section out.
+snapshots dated after the issue are left alone, so a rebuild of an older issue does not change. Online views
+print only when a row for this issue's week is on file, and the nearby section only from a snapshot taken for
+this issue. `run_issue.py --no-online` (and `--no-nearby`, `--no-market`, `--no-marketing`) leaves a section out
+of one build. A file that fails its `validate_store` stops the build. A lookup logged as skipped leaves its
+section out. `nearby.json` `watch_site` (`mlslistings` or `redfin`, written by `choose`) says where the watch
+list came from; a store made before that key is read from its ids and source line (`nearby_update.watch_site`).
 
 ## 6. ledger.json
 
@@ -626,9 +652,15 @@ words "Worth a glance before you send". It is never in the report and it is not 
   "flags": {"webfonts": false, "hero": null, "link_url": null, "sections": ["online", "nearby", "market", "marketing"], "fit_level": 0},
   "checks": {"ledger_problems": 0, "page_checks_run": 26,
              "ship_gate": {"passed": true, "checked_at": "...", "pages": 4, "blocking": 0, "warnings": 0}},
-  "delivery": {"gmail_draft_id": null, "link_published_url": null, "link_published_on": null, "sent_on": null}
+  "delivery": {"gmail_draft_id": null, "link_published_url": null, "link_published_on": null, "sent_on": null},
+  "subject": "Weekly Seller Report No. 05 · April 13, 2026 - 218 Sample Glen Ct"
 }
 ```
+
+`subject` is written by `run_issue.py` after READY and is the line to copy into the draft (a console that is
+not UTF-8 prints the middle dot wrongly). A rebuild with `snapshot_issue.py freeze` alone leaves it out; with an
+email but no Gmail-safe copy staged, `freeze` also removes the old `email_gmail.html`, so a draft is never
+compared with a copy of an older email.
 
 There is one build per issue and it lives in `issues\NN\`. A rebuild after a correction replaces the files.
 Once the operator says the issue went to the seller (`snapshot_issue.py record --sent-on`), the folder is the
@@ -662,8 +694,9 @@ afterwards:
 - no photo row
 - the phone (in the footer and on the call button) and the website are plain text with the same look as the
   links they replace. The email address stays a `mailto:` link, which the connector keeps
-- the website, and any other web address in running text, is written with every dot and the part after it in
-  a span of its own (`htmlkit.no_autolink`): `example<span style="color:#FFFFFF">.com</span>` for the website
+- the website, and any other web address in running text (any ending of 2 to 24 letters, short links such as
+  bit.ly included; one pattern, `sr_render.assemble.ADDRESS_PATTERN`, kept equal to the gate's), is written with
+  every dot and the part after it in a span of its own, and a scheme's `://` in its own span (`htmlkit.no_autolink`): `example<span style="color:#FFFFFF">.com</span>` for the website
   in identity.json. No single
   run of text holds a whole address, so nothing can turn it into a link, and a reader sees and copies exactly
   the address. A zero-width character before ".com" would do the same on screen, but it travels into a copied
@@ -688,9 +721,11 @@ line ranges and join them with care, nothing added and nothing dropped. Then che
 `get_draft` with the raw view (the harness saves the large result to a file), then
 `scripts\draft_check.py --issue <issues\NN> --draft <that file>`. It finds the HTML part (raw MIME, base64url
 MIME inside JSON, or the part already decoded), compares the words with `email_gmail.html` after the clean-up
-rules above, and fails on an image or a dead link (the email itself went in) and on a subject that is not
+rules above, and fails on an image or a dead link (the email itself went in), on any web link but the record
+button (a domain the connector auto-linked into a `google.com/url` redirect), on a subject that is not
 `Weekly Seller Report No. NN · <Month D, YYYY> - <address>` (`draft_check.subject_line`, which `run_issue.py`
-also prints). It says when the draft has no CC. These routes did not
+also writes into the manifest; a street suffix written out, Ct against Court, is only a note), on a To with
+nobody but the team's own addresses, and on a CC that is not Adrian. It says when the draft has no CC. These routes did not
 work and are not tried: signing in to Gmail from a script with a stored app password (the session's permission
 rules block it), and the Chrome extension's browser (it may be on another computer). If a later
 `update_draft`, for example to add the CC, is refused as unrequested, tell Graeham to add it himself, and

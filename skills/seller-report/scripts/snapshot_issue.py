@@ -106,6 +106,11 @@ def freeze(folder, source=None, ledger_path=None, flags=None, page_checks=0, bui
         return 2, None, ["email.html is %s bytes. The limit is %s (Gmail clips near 102 KB). Nothing was written."
                          % (C.fmt_num(os.path.getsize(email_src)), C.fmt_num(limit))]
     os.makedirs(target, exist_ok=True)
+    stale = os.path.join(target, "email_gmail.html")
+    if "email.html" in staged and "email_gmail.html" not in staged and os.path.exists(stale):
+        os.remove(stale)                    # it said what the old email said: a draft must never be compared with it
+        msgs.append("the Gmail-safe copy was not rendered with this email, so the old one was removed; build with run_issue.py "
+                    "before making a draft")
     shutil.copyfile(ledger_path, os.path.join(target, "ledger.json"))
     for name, src in staged.items():
         shutil.copyfile(src, os.path.join(target, name))
