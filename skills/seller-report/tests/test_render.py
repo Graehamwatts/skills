@@ -330,7 +330,7 @@ class PageRules(unittest.TestCase):
                          ("#1A1A1A", "#C5A55A", "#A88B3D", "#F5EFDC", "#666666", "#FFFFFF"))
         self.assertTrue(F["head"].startswith("Montserrat,") and F["body"].startswith("Inter,"))
         for _, page in self.each():
-            self.assertIn('<body style="margin:0;padding:0;background:#F5EFDC">', page)
+            self.assertIn('<body style="margin:0;padding:0;background:#FFFFFF">', page)      # a white page, so no band shows beside the column
             self.assertIn("font-family:Inter,", page)
             # section header: a gold left border cell, then gold caps on black
             self.assertRegex(page, r'<td width="6" bgcolor="#C5A55A"[^>]*>&nbsp;</td><td bgcolor="#1A1A1A" style="[^"]*color:#C5A55A;font:800 15px')

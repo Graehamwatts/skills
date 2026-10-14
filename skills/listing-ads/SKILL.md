@@ -1,11 +1,11 @@
 ---
 name: listing-ads
-description: "Paid ads for one listing, from an address to campaigns that are set up. Give it a property address plus whatever the team has already made, and it builds the ad set from that, or it first researches the area (days on market against comparable sales, competing listings, Google Keyword Planner search volume, keywords, local hooks) and proposes ad angles. It then writes the copy inside each platform's limits, runs the housing and Compass compliance checks, sets up Facebook and Instagram, YouTube and Google Search campaigns paused until Graeham says go, and briefs Peter by email for any creative that is missing. Use for: generate ads for this listing, ads for [address], ad ideas for this property, what should we advertise for this listing, keyword research or search volume for a listing, set up the listing ads, launch the ads, YouTube ads for a listing, Google Search ads for a listing, Facebook and Instagram ads for a listing, what do we need from Peter for the ads, brief Peter on the ads. Not for the shoot plan or call sheet (listing-launch-engine), the report to the seller (seller-marketing-report), ChatGPT ads (chatgpt-ads), or auditing the Meta account (meta-ads)."
+description: "Paid ads for one listing, from an address to campaigns that are set up. Give it a property address plus whatever the team has already made, and it builds the ad set from that, or it first researches the area (days on market against comparable sales, competing listings, Google Keyword Planner search volume, keywords, local hooks) and proposes ad angles. It then writes the copy inside each platform's limits, runs the housing and Compass compliance checks, sets up Facebook and Instagram, YouTube and Google Search campaigns paused until Graeham says go, and briefs Peter by email for any creative that is missing. Use for: generate ads for this listing, ads for [address], ad ideas for this property, what should we advertise for this listing, keyword research or search volume for a listing, set up the listing ads, launch the ads, YouTube ads for a listing, Google Search ads for a listing, Facebook and Instagram ads for a listing, what do we need from Peter for the ads, brief Peter on the ads. Not for the shoot plan or call sheet (listing-launch-engine), the report to the seller (seller-report), ChatGPT ads (chatgpt-ads), or auditing the Meta account (meta-ads)."
 ---
 
 # Listing ads
 
-One listing per run. It turns an address into an ad plan Graeham can approve with a yes, then does the setup work. First built in October 2026 on a one bedroom East Palo Alto condo, and each rule below was learned there. Paths such as `shared-references/identity.json` and `seller-marketing-report/references/...` are relative to the skills toolkit, `C:\Users\Graeham Watts\Documents\Skills LLMS\Claude\Skills\skills\`, whichever assistant is running this.
+One listing per run. It turns an address into an ad plan Graeham can approve with a yes, then does the setup work. First built in October 2026 on a one bedroom East Palo Alto condo, and each rule below was learned there. Paths such as `shared-references/identity.json` and `seller-report/references/...` are relative to the skills toolkit, `C:\Users\Graeham Watts\Documents\Skills LLMS\Claude\Skills\skills\`, whichever assistant is running this.
 
 ## Where it fits
 
@@ -17,7 +17,7 @@ One listing per run. It turns an address into an ad plan Graeham can approve wit
 | Hooks and concept packages | concept-forge |
 | Ad copy craft, psychology audit, final polish | copywriter, marketing-psychology, humanizer |
 | Comps and pricing | cma-generator |
-| The report the seller reads | seller-marketing-report (this skill hands it the status notes) |
+| The report the seller reads (the weekly seller report and the 10 page marketing update) | seller-report (this skill hands it the status notes it writes into marketing.json) |
 
 ## Who does what
 

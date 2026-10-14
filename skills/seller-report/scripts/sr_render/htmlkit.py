@@ -232,8 +232,8 @@ def row_cards(make, n, heading="", pad="4px 16px", top=10, first=3):
 
 
 def band_gap(h=30):
-    """Cream space above a black band, so the band never sits against the section before it."""
-    return '<tr><td height="%d" bgcolor="%s" style="font-size:0;line-height:0">&nbsp;</td></tr>' % (h, P["cream"])
+    """White space above a black band, so the band never sits against the section before it."""
+    return '<tr><td height="%d" bgcolor="%s" style="font-size:0;line-height:0">&nbsp;</td></tr>' % (h, P["white"])
 
 
 def kicker(text, color=None):

@@ -15,7 +15,7 @@ What the seller sees, top to bottom, why each part is there, and how the email d
 
 A homeowner reads this on a phone, often between other things, and forwards it to family. So the top must answer "how did this week go" in one screen, and everything under it is there for the reader who wants to check. Graeham's aim: show the seller the team is following up with everyone and what each person said, so the stack of reports is the record he points to in a price conversation. The report never makes that case itself.
 
-The look is Graeham's CMA system (`cma-generator`): black #1A1A1A, gold #C5A55A, cream #F5EFDC, white cards, Montserrat for headings and Inter for body, with system fonts behind them because Gmail does not load web fonts. One column, 680 px at most, 16 px gutters, nothing under 12 px, every link at least 40 px tall. Section headers are gold capitals on a black bar. All of it lives in `sr_render\tokens.py`; brand facts come from `identity.json` at run time.
+The look is Graeham's CMA system (`cma-generator`): black #1A1A1A, gold #C5A55A, cream #F5EFDC (only for alternate table rows and bar tracks), on a plain white page, Montserrat for headings and Inter for body, with system fonts behind them because Gmail does not load web fonts. One column that fills the reading pane up to 1,000 px (changed from 680 px on Oct 14, 2026 after the first two sent reports looked like a narrow band), 16 px gutters, nothing under 12 px, every link at least 40 px tall. Section headers are gold capitals on a black bar. All of it lives in `sr_render\tokens.py`; brand facts come from `identity.json` at run time.
 
 ## 2. The files one build writes
 

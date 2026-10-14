@@ -18,10 +18,10 @@ Save all three to the outputs folder and present them to Graeham first. Hosting 
 
 ## How the emails go out — DRAFTS, not auto-send (be honest about this)
 
-The Gmail connector available here (`mcp__…__create_draft`) **creates drafts only — it cannot auto-send, and cannot attach files yet.** That is both the real capability limit and the safer pattern (it matches `weekly-listing-update`, which drafts for Graeham's review). So the flow is:
+The Gmail connector available here (`mcp__…__create_draft`) **creates drafts only — it cannot auto-send.** That is both the real capability limit and the safer pattern (it matches `seller-report`, which drafts for Graeham's review). It can attach files: `create_draft` takes `attachments`, and `update_draft` drops them unless they are given again (`seller-report/references/delivery.md`, section 4). So the flow is:
 
 1. Build the HTML for each recipient's piece.
-2. Create one Gmail **draft per recipient** with that HTML as the `htmlBody` (inline — no attachments supported). If the master is hosted, include its link near the top of the body.
+2. Create one Gmail **draft per recipient** with that HTML as the `htmlBody` (inline, not as an attachment). If the master is hosted, include its link near the top of the body.
 3. Tell Graeham the drafts are sitting in Gmail for his review, and he hits **Send** on each (or says "send them" and — when a send capability exists — they go). **Never imply the skill blind-sends.**
 
 ### Recipient matrix (create one draft each)

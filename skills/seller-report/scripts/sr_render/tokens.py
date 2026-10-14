@@ -28,10 +28,10 @@ F = dict(
 )
 # surface name -> (background token, text token, hairline token)
 SURF = {
-    "page": ("cream", "ink", "line"), "card": ("white", "ink", "line"), "cream": ("cream", "ink", "line"),
+    "page": ("white", "ink", "line"), "card": ("white", "ink", "line"), "cream": ("cream", "ink", "line"),
     "tint": ("tint", "ink", "line"), "dark": ("ink", "on_dark", "dark_line"), "gold": ("gold", "ink", "gold_dark"),
 }
-SIZE = dict(maxw=680, gutter=16, gutter_wide=32, lede=17, body=16, text=15, small=14, sub=13, micro=12,
+SIZE = dict(maxw=1000, gutter=16, gutter_wide=32, lede=17, body=16, text=15, small=14, sub=13, micro=12,
             h1=27, h2=21, h3=18, radius=8,
             bar=15,                     # section header bar: gold caps on black
             stat=30,                    # the large gold numbers in a black callout

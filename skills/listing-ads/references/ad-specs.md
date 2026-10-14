@@ -62,4 +62,4 @@ One file per listing, at the path named in SKILL.md under Where files go. Read e
 
 `<date> <time> PT | Meta | ads A and D2 | switched on | ends <date> <time> PT | first check: no spend, no clicks | budget total <amount, internal only>`
 
-Also log campaigns created paused, copy and creative versions, Peter briefs sent (date and thread), deliveries received, and each platform record you read. Budget amounts stay in the log and out of every seller document. When Graeham asks for the seller report, give the seller-marketing-report skill this log and the platform records, never your memory of what happened.
+Also log campaigns created paused, copy and creative versions, Peter briefs sent (date and thread), deliveries received, and each platform record you read. Budget amounts stay in the log and out of every seller document. When Graeham asks for the seller report, give the seller-report skill this log and the platform records (it writes marketing.json from them: `seller-report/references/market-and-marketing.md`, sections 5 and 6), never your memory of what happened.

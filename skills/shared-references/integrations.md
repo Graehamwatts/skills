@@ -410,4 +410,5 @@ Quick reference for which skills touch which integrations:
 | Skill | Touches |
 |---|---|
 | `cma-generator` | MLSListings (Chrome), Santa Clara records, San Mateo records, Apify Zillow, GitHub (publishing) |
-| `content-calendar` (includes absorbed `social-media-analyzer`) | GSC (W+D), Instagram (Windsor), Facebook (Windsor), YouTube (W+D), Apify Reddit, Apify scrapers (IG/FB/YT post-level), Google Trends, GHL (read), GMB (Windsor), Supadata (c
+| `content-calendar` (includes absorbed `social-media-analyzer`) | GSC (W+D), Instagram (Windsor), Facebook (Windsor), YouTube (W+D), Apify Reddit, Apify scrapers (IG/FB/YT post-level), Google Trends, GHL (read), GMB (Windsor), Supadata (competitor transcripts) |
+| `seller-report` (includes absorbed `weekly-listing-update` and `seller-marketing-report`) | Google Drive (View Activity sheet export, creative folder), Gmail (unsent drafts only; Glide and Supra notices and status emails only when asked), MLSListings Matrix (in-app browser, Graeham signs in), Redfin public pages (403 on 2026-10-13), one Zillow listing page when asked, GitHub online-content (link copy only on Graeham's word), Google Ads Keyword Planner and Meta (marketing update PDF), Box (creative source, never linked) |

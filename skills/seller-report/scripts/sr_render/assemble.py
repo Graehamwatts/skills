@@ -63,7 +63,7 @@ def build(m, fit=0):
     mso = "td,th,div,p,a,h1,h2,h3,span,b{font-family:Arial,sans-serif!important}" + "".join(
         ".t%d td,.t%d th{font-size:%dpx}" % (k, k, k) for k in sorted(set([SIZE["micro"], SIZE["sub"], SIZE["small"], SIZE["text"], SIZE["body"], SIZE["lede"]])))
     link = ('<link rel="preconnect" href="https://fonts.googleapis.com"><link href="%s" rel="stylesheet">' % F["href"]) if OPT["webfonts"] else ""
-    page = P["cream"]
+    page = P["white"]
     # what this file is, for the ship gate: which page, which listing, issue and week
     stamp = "".join('<meta name="sr:%s" content="%s">' % kv for kv in (
         ("kind", OPT["mode"]), ("slug", esc(m.d["meta"]["slug"])),

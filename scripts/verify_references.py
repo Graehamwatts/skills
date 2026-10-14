@@ -178,7 +178,7 @@ def main() -> int:
             # never in the thing every future report is built from. Two cma-generator
             # "templates" were finished client CMAs with zero placeholders, published
             # publicly, and seeding every new report with the original client's
-            # identity. weekly-listing-update had the same bug with a seller's data.
+            # identity. The retired weekly-listing-update skill had the same bug with a seller's data.
             if re.search(r"/(references|templates)/", "/" + rel):
                 for pat, kind in (
                     (r"Prepared for\s+[A-Z][a-z]+\s+[A-Z][a-z]+", "client name"),

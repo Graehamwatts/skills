@@ -31,7 +31,7 @@ Full reasoning + the per-skill wiring table: `switchy-engine/references/architec
 - **newsletter-generator** → wrap every EPA Report CTA (highest-value: opted-in consumers).
 - **content-creation-engine** → wrap YouTube CTAs, social links, link-in-bio.
 - **html-email** → wrap *consumer* emails only; B2B/coach emails track-only.
-- **weekly-listing-update** → track-only (audience is one known seller).
+- **seller-report** → track-only (audience is one known seller).
 - **listing-remarks-writer** → **no wrap** — MLS public remarks legally can't carry
   URLs. Tracked links go on the listing's collateral (property page, flyers, QR), not the remarks.
 - **postcards** → **the gap** (see §5).
