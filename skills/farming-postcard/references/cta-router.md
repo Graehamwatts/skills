@@ -71,3 +71,15 @@ not just a one-way mailer. Engine: `skills/switchy-engine`.
 If the token isn't active yet, fall back to a QR on the UTM'd landing URL (GA tracks
 sessions; no pixel/scan layer). The printed QR can't change later, so mint the Switchy
 link BEFORE the print run whenever possible.
+
+---
+
+## Live destinations, verified 2026-10-15 (this table is the current truth; the one above is stale)
+
+| CTA type | What to print | Notes |
+|---|---|---|
+| Home valuation | New Switchy link per card to `https://graehamwatts.com/real-local-comps` (page returns 200) | minted `epa-year-end-statement-1101`, `epa-winter-window-1215`; older `hi.switchy.io/epa-home-eval-0901` also live |
+| Seller consultation | New Switchy link per card to `https://graehamwatts.github.io/online-content/east-palo-alto/seller-consultation/` | minted `epa-quiet-holiday-1115` |
+| Sold homes map | `https://hi.switchy.io/epa-sold-homes-0901` (reuse) | Switchy rejects `.php` URLs, so no new link to the IDX widget is possible; scans combine across cards |
+| Call / text | static QR `SMSTO:+16503084727:KEYWORD` or no QR | no Switchy link needed |
+| Prop 19 guide, off-market buyers, market report, AI score | NOT BUILT | would break the call/text monotony if someone builds them |

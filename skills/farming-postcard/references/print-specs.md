@@ -1,10 +1,13 @@
 # Print Specs — Universal Mail Works Defaults
 
-## ⚠️ CORRECTION 2026-09-30: real mailed size is 11 x 6 in, NOT 6 x 4
+## ⚠️ REAL PRINTER SPEC (verified 2026-10-15 from the Canva-finished 10 01 26 PDF)
 
-Checked every PDF in `Documents\Farming List & mailers & letters\Farming Flyers to mail\Farming Flyers 2026\`. The cards that actually mailed are jumbo: trim 11.0 x 6.0 in, exported from Canva as 11.472 x 6.472 in (0.118 in / 3 mm bleed plus a 0.118 in crop-mark band each side; TrimBox inset 0.236 in, BleedBox inset 0.118 in). Only the first 2025 cards were 8.5 x 5.5 or 11.3 x 6.3. The 6 x 4 layouts below (and every HTML preview built from `postcard-template.html`) are design mocks, not printable files. Do not send a 6.25 x 4.25 PDF to the printer.
-
-For a printable card use `templates/jumbo-11x6/` (render.py writes the 11.472 x 6.472 page with crop marks and sets the Trim/Bleed boxes). Back-side rule from the real cards: keep the right half of the back clear for the address block; the contact lockup can sit in the bottom band.
+Mailed cards are jumbo, not 6 x 4. The printer's template (the file that actually went to print on 10/01/26) is:
+- Page 11.667 x 6.667 in (840 x 480 pt). TrimBox inset 24 pt = 11 x 6 in trim. BleedBox inset 15 pt (0.125 in bleed). Safe zone about 9 pt inside the trim line.
+- Back carries a postal indicia box top right: PRSRT STD / US POSTAGE / PAID / HUNT. BCH CA / PERMIT #608 (about 107 x 72 px at 96 dpi, 24 pt inside trim from the top and 32 px from the right edge). Keep the right half of the back clear for the address; the contact lockup sits in the bottom band; the legal disclaimer runs vertically on the right edge inside the safe zone.
+- Older mailed PDFs (05/15 to 09/15) were 11.472 x 6.472 Canva exports; the 10/01 file is the newer, correct template.
+- Gold on the mailed cards is about #BFAB6D (191,171,109), ink about #231F20. Front headlines are Canva's Eagle Bold; back headlines Anton; body Montserrat.
+The 6 x 4 steps and the `postcard-template.html` below are design mocks only. Never send a 6.25 x 4.25 PDF to the printer. Build with `templates/jumbo-11x6/` (README inside).
 
 Original notes (6 x 4 mock era, kept for reference):
 

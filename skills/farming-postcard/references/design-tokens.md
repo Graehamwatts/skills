@@ -8,8 +8,8 @@ These tokens are NEVER negotiable per card. Continuity is the brand.
 
 | Token | Hex | CMYK (approx) | Use |
 |---|---|---|---|
-| Gold (primary) | `#C2A14E` | C:25 M:35 Y:75 K:5 | Border, headline highlights, CTA color, logo roof accent — the ONLY gold used anywhere on the card, flat, no gradient |
-| Dark ink | `#1A1D2E` | C:80 M:75 Y:50 K:60 | Headlines, body text, logo |
+| Gold (primary) | `#BFAB6D` (sampled 2026-10-15 from the mailed 08/01 and 09/15 PDFs; the old `#C2A14E` was more orange than anything that actually printed) | C:25 M:28 Y:65 K:0 | Border, headline highlights, CTA color, logo roof accent — the ONLY gold used anywhere on the card, flat, no gradient |
+| Dark ink | `#231F20` (mailed cards; template rich black) | C:70 M:67 Y:64 K:74 | Headlines, body text, logo |
 | Pattern color | `#E6DABC` (~35% opacity) | n/a | Chevron house pattern overlay |
 | White | `#FFFFFF` | 0,0,0,0 | Postcard background — FRONT AND BACK. No panel, no cream box, no fill color changes anywhere. Copy sits directly on the white chevron background exactly like the QR side. |
 
@@ -133,3 +133,10 @@ Source: `Documents\Go High Level\Compass Compliance Reference - Website and Prof
 - Gold left border
 - Chevron pattern background
 - Aspect ratio (6×4 default — can scale to 6×9 for Corefact jumbo but proportions lock)
+
+
+## Update 2026-10-15 (read first)
+- The real gold is `#BFAB6D`. Wherever this file or `postcard-template.html` says `#C2A14E`, use `#BFAB6D` for anything new.
+- Front headline font on the mailed cards is Canva's Eagle Bold, not Anton. The jumbo builder uses Montserrat 900 as a stand-in; swap the font in Canva when finishing.
+- Front headshot (pointing) lower left and the gold rounded "CALL OR TEXT ME THIS WEEK" pill are how the card was actually printed on 10/01/26 (Peter's finish), so they are now the default front layout. Photo cutouts live in `templates/jumbo-11x6/` (`photo_point.png`; the finger-up pose is in the mailed 09/15 PDF, page 2).
+- Back has the postal indicia box top right (see print-specs.md).

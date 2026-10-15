@@ -73,7 +73,7 @@ Structure (always):
 
 ### Step 4 — Render
 
-**Updated 2026-09-30: build the real size.** Mailed cards are 11 x 6 in jumbo, not 6 x 4. Use `templates/jumbo-11x6/` (README inside): copy it to the session scratchpad, edit `card.html`, run `render.py`, and put ONLY the final PDF in `Documents\Farming List & mailers & letters\Farming Flyers to mail\Farming Flyers 2026\` as `Farming Postcard EPA MM DD YY.pdf`. Do not write drafts to Downloads. Photo-free cards are approved (design-tokens.md). The 6 x 4 steps below (and the `C:\Users\Admin\Downloads` paths) are the old mock workflow.
+**Updated 2026-09-30: build the real size.** Mailed cards are 11 x 6 in jumbo, not 6 x 4. Use `templates/jumbo-11x6/` (README inside; rebuilt 2026-10-15 on the printer's real 11.667 x 6.667 in template, with indicia, headshot and real brand art): copy it to the session scratchpad, edit the `CARDS` list in `build_cards.py`, run it, and put ONLY the final PDF in `Documents\Farming List & mailers & letters\Farming Flyers to mail\Farming Flyers 2026\` as `Farming Postcard EPA MM DD YY.pdf`. Do not write drafts to Downloads. Plan ahead: Graeham asked on 2026-10-15 for five cards at once (11/01 to 01/01) because drops keep getting missed, so when the next card is due, offer to build the following four too. Check the folder for an existing file with the target name first. The 6 x 4 steps below (and the `C:\Users\Admin\Downloads` paths) are the old mock workflow.
 
 Substitute slots in `templates/postcard-template.html` (6 x 4 mock only):
 - `{{MAIL_DATE}}`, `{{ARCHETYPE}}`, `{{FRONT_HEADLINE_HTML}}`, `{{FRONT_SUBLINE_HTML}}`, `{{BACK_HEADLINE_HTML}}`, `{{BACK_BODY_HTML}}`, `{{BACK_CTA_LINE}}`, `{{QR_SCAN_LABEL}}`, `{{QR_IMAGE_SRC}}`, `{{FRONT_PHOTO_SRC}}`, `{{BACK_PHOTO_SRC}}`
