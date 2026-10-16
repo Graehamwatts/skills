@@ -28,6 +28,17 @@ The DRE number must **never** appear in any script line, text overlay, caption, 
 - On the **HERO moment** (the one climax beat that gets the Watts Gold treatment), **music drops to silence for ~1.5s**, then fades back — per `watts-motion-graphics`. Flag the HERO beat in the editor packet so the editor knows where to drop the music.
 - Avatar-source clips: on-set audio is reference only; the deliverable voice is the ElevenLabs clone.
 
+## 6. Marketing describes the home the way the MLS lists it (Graeham's standing rule, 2026-10-15)
+
+If a property has an unpermitted, unverified or questionable feature (an unpermitted conversion, an unfinished addition, an unknown permit history), **it does not appear in the call sheet at all**: not in a script, hook, caption, ad, graphic, brief, checklist video or "disclosure" asset built around it, and not as a rule or warning inside the sheet either (the sheet should not even name it). Never build a video, an ad or a concept around it.
+
+- **Describe the home as the MLS does** (for example "three-bedroom, two-bath"). Do not call a room or feature permitted, legal or approved unless the record is in hand, and do not invent a name for the space.
+- **One small standard disclaimer, only where the numbers are stated.** Wherever a video beat, graphic, caption or ad states bedrooms, baths or square footage: on screen, small, at the bottom of the frame: `Square footage, bedroom and bath counts not verified by agent or others. Buyer to investigate.` In captions and ads, the same idea as the closing sentence: `Square footage, bedroom and bath counts are not verified by the agent or others. Buyer to investigate.` Nothing else about the rooms.
+- **Permit status and the history of any room belong in the formal disclosure documents** (seller disclosures, AVID, inspection and permit records). This skill never edits those and never repeats their contents in marketing.
+- **"Put it in the disclosures" means those documents, not the marketing.** If Graeham has not said how a feature should be described, ask him once. Never invent a disclosure line and spread it across every asset.
+- A generic Disclosure Drop ("here is what I would read first: the seller disclosures, the inspection reports, the natural hazard report, the dates") is fine and must not point at any one feature.
+- Live takes already recorded with banned content are marked "audio not used" in the editor packet; never script around a take that says more than the plain description.
+
 ## Final scan checklist (run before delivering)
 
 - [ ] Every place reference is a real Peninsula market, no generic suburb.
@@ -40,3 +51,4 @@ The DRE number must **never** appear in any script line, text overlay, caption, 
 - [ ] Launch Content Plan present — all 8 phases instantiated for this listing, CORE assets flagged; every footage-dependent asset has a clip on the shot list (incl. the 4-photo status set).
 - [ ] No price/rate/credit in any VIDEO (VO or on-screen); price only in captions/static slides.
 - [ ] New keywords (TOUR / DOCS / OPEN) flagged to Graeham to create in GHL or map to existing.
+- [ ] Rule 6: no unpermitted, unverified or questionable feature is named, hinted at or built around anywhere in the sheet (scan the finished HTML text, not just the data); every bedroom, bath or square-footage statement carries the small standard disclaimer.
